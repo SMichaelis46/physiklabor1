@@ -1,13 +1,9 @@
 ```html
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>S.Michaelis – Physiklabor</title>
 
@@ -18,202 +14,104 @@ box-sizing:border-box;
 }
 
 body{
-
 margin:0;
-
-font-family:
-Arial,
-Helvetica,
-sans-serif;
-
+font-family:Arial,Helvetica,sans-serif;
 min-height:100vh;
-
 color:white;
 
 background:
-radial-gradient(
-circle at 20% 20%,
-#164e63 0%,
-transparent 35%
-),
-
-radial-gradient(
-circle at 80% 80%,
-#312e81 0%,
-transparent 35%
-),
-
+radial-gradient(circle at 20% 20%,#164e63 0%,transparent 35%),
+radial-gradient(circle at 80% 80%,#312e81 0%,transparent 35%),
 #061326;
-
 }
 
-
-/* =========================
-HEADER
-========================= */
-
 header{
-
 text-align:center;
-
-padding:
-55px 20px 30px;
-
+padding:55px 20px 30px;
 }
 
 .logo{
-
 width:95px;
 height:95px;
-
 margin:auto;
 
 border-radius:25px;
 
 background:
-radial-gradient(
-circle,
-#38bdf8,
-#0f3b60 65%,
-#061326
-);
+radial-gradient(circle,#38bdf8,#0f3b60 65%,#061326);
 
-border:
-2px solid #7dd3fc;
+border:2px solid #7dd3fc;
 
 display:flex;
-
 align-items:center;
 justify-content:center;
 
 font-size:52px;
-
 font-weight:bold;
 
-box-shadow:
-0 0 40px #38bdf855;
-
+box-shadow:0 0 40px #38bdf855;
 }
 
 .brand{
-
 font-size:34px;
-
 font-weight:bold;
-
 letter-spacing:5px;
-
 margin-top:18px;
-
 }
 
 .subtitle{
-
 font-size:13px;
-
 letter-spacing:3px;
-
 color:#bae6fd;
-
 margin-top:8px;
-
 }
 
 .title{
-
 font-size:40px;
-
 margin-top:35px;
-
 }
 
 .description{
-
 max-width:700px;
-
-margin:
-12px auto 0;
-
+margin:12px auto 0;
 font-size:16px;
-
 line-height:1.6;
-
 color:#cbd5e1;
-
 }
 
-
-/* =========================
-LABOR CONTAINER
-========================= */
-
 .container{
-
 max-width:1100px;
-
 margin:auto;
-
-padding:
-30px 20px 70px;
-
+padding:30px 20px 70px;
 }
 
 .section-title{
-
 text-align:center;
-
 font-size:18px;
-
 letter-spacing:2px;
-
 color:#bae6fd;
-
 margin-bottom:25px;
-
 }
-
-
-/* =========================
-LAB GRID
-========================= */
 
 .labs{
-
 display:grid;
-
 grid-template-columns:
-repeat(
-auto-fit,
-minmax(280px,1fr)
-);
+repeat(auto-fit,minmax(280px,1fr));
 
 gap:25px;
-
 }
 
-
-/* =========================
-CARD
-========================= */
-
 .card{
-
 display:block;
-
 text-decoration:none;
-
 color:white;
 
-background:
-#ffffff0d;
+background:#ffffff0d;
 
-border:
-1px solid #ffffff22;
-
+border:1px solid #ffffff22;
 border-radius:22px;
 
 padding:30px;
-
 min-height:280px;
 
 backdrop-filter:blur(12px);
@@ -225,133 +123,87 @@ transition:
 transform .25s,
 box-shadow .25s,
 border-color .25s;
-
 }
 
 .card:hover{
+transform:translateY(-8px) scale(1.01);
 
-transform:
-translateY(-8px)
-scale(1.01);
-
-border-color:
-#7dd3fcaa;
+border-color:#7dd3fcaa;
 
 box-shadow:
 0 25px 60px #00000066,
 0 0 30px #38bdf822;
-
 }
 
 .icon{
-
 font-size:58px;
-
 margin-bottom:18px;
-
 }
 
 .card h2{
-
 font-size:27px;
-
-margin:
-0 0 12px;
-
+margin:0 0 12px;
 }
 
 .card p{
-
 font-size:15px;
-
 line-height:1.6;
-
 color:#cbd5e1;
-
 }
 
 .open{
-
 display:inline-block;
 
 margin-top:18px;
 
-padding:
-12px 20px;
+padding:12px 20px;
 
 border-radius:10px;
 
 background:#2563eb;
 
 font-weight:bold;
-
 }
 
 .card:hover .open{
-
 background:#3b82f6;
-
 }
 
-
-/* =========================
-FOOTER
-========================= */
-
 footer{
-
 text-align:center;
 
-padding:
-30px 20px;
+padding:30px 20px;
 
-border-top:
-1px solid #ffffff15;
+border-top:1px solid #ffffff15;
 
 font-size:12px;
 
 color:#94a3b8;
 
 letter-spacing:1px;
-
 }
-
-
-/* =========================
-MOBILE
-========================= */
 
 @media(max-width:600px){
 
 .brand{
-
 font-size:25px;
-
 letter-spacing:3px;
-
 }
 
 .title{
-
 font-size:30px;
-
 }
 
 .card{
-
 min-height:250px;
-
 }
 
 }
 
 </style>
-
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -359,29 +211,21 @@ min-height:250px;
 Σ
 </div>
 
-
 <div class="brand">
 S.MICHAELIS
 </div>
-
 
 <div class="subtitle">
 MATHEMATIK • PHYSIK • SIMULATION
 </div>
 
-
 <div class="title">
 🔬 Interaktives Physiklabor
 </div>
 
-
 <div class="description">
-
-Physikalische Zusammenhänge
-nicht nur berechnen,
-sondern <strong>sehen, verändern
-und verstehen.</strong>
-
+Physikalische Zusammenhänge nicht nur berechnen,
+sondern <strong>sehen, verändern und verstehen.</strong>
 </div>
 
 </header>
@@ -389,25 +233,17 @@ und verstehen.</strong>
 
 <div class="container">
 
-
 <div class="section-title">
-
 LABOR AUSWÄHLEN
-
 </div>
 
 
 <div class="labs">
 
 
-<!-- =====================
-VEKTOR
-===================== -->
+<!-- 1. VEKTOR-LABOR -->
 
-<a
-class="card"
-href="vektorlabor/"
->
+<a class="card" href="vektorlabor/">
 
 <div class="icon">
 🔴
@@ -418,16 +254,11 @@ Vektor-Labor
 </h2>
 
 <p>
-
-Vektoren zeichnen,
-verschieben und berechnen.
-
+Vektoren zeichnen, verschieben und berechnen.
 <br><br>
 
-Addition • Subtraktion •
-Komponenten • Skalarprodukt •
-2D • 3D
-
+Addition • Subtraktion • Komponenten •
+Skalarprodukt • 2D • 3D
 </p>
 
 <div class="open">
@@ -437,14 +268,9 @@ Vektor-Labor öffnen →
 </a>
 
 
-<!-- =====================
-KINEMATIK
-===================== -->
+<!-- 2. KINEMATIK-RECHNER -->
 
-<a
-class="card"
-href="kinematik/"
->
+<a class="card" href="kinematik/">
 
 <div class="icon">
 🟢
@@ -455,20 +281,42 @@ Kinematik-Rechner
 </h2>
 
 <p>
-
-Zusammenhänge zwischen
-Weg, Zeit und Geschwindigkeit
-untersuchen.
-
+Zusammenhänge zwischen Weg, Zeit und Geschwindigkeit untersuchen.
 <br><br>
 
-Berechnen • Verändern •
-Visualisieren
-
+Berechnen • Verändern • Visualisieren
 </p>
 
 <div class="open">
 Kinematik-Rechner öffnen →
+</div>
+
+</a>
+
+
+<!-- 3. FREIER FALL -->
+
+<a class="card" href="freier-fall/">
+
+<div class="icon">
+🟠
+</div>
+
+<h2>
+Freier-Fall-Labor
+</h2>
+
+<p>
+Den freien Fall eines Körpers untersuchen
+und die Bewegung verstehen.
+<br><br>
+
+Fallzeit • Geschwindigkeit • Fallstrecke •
+Erdbeschleunigung
+</p>
+
+<div class="open">
+Freier-Fall-Labor öffnen →
 </div>
 
 </a>
@@ -493,32 +341,6 @@ Interaktive Lernumgebung
 
 </footer>
 
-
 </body>
-
 </html>
-<!-- FREIER FALL -->
-
-<a class="card" href="freier-fall/">
-
-<div class="icon">
-🟠
-</div>
-
-<h2>
-Freier-Fall-Labor
-</h2>
-
-<p>
-Den freien Fall eines Körpers untersuchen und die Bewegung verstehen.
-<br><br>
-
-Fallzeit • Geschwindigkeit • Fallstrecke • Erdbeschleunigung
-</p>
-
-<div class="open">
-Freier-Fall-Labor öffnen →
-</div>
-
-</a>
 ```
