@@ -1,8 +1,13 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>S.Michaelis – Physiklabor</title>
 
@@ -13,246 +18,369 @@ box-sizing:border-box;
 }
 
 body{
+
 margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:
-radial-gradient(circle at 20% 20%,#164e63 0%,transparent 35%),
-radial-gradient(circle at 80% 80%,#312e81 0%,transparent 35%),
-#061326;
-color:white;
+
+font-family:
+Arial,
+Helvetica,
+sans-serif;
+
 min-height:100vh;
+
+color:white;
+
+background:
+radial-gradient(
+circle at 20% 20%,
+#164e63 0%,
+transparent 35%
+),
+
+radial-gradient(
+circle at 80% 80%,
+#312e81 0%,
+transparent 35%
+),
+
+#061326;
+
 }
 
-/* HEADER */
+
+/* =========================
+HEADER
+========================= */
 
 header{
-padding:35px 25px 20px;
+
 text-align:center;
+
+padding:
+55px 20px 30px;
+
 }
 
 .logo{
-width:90px;
-height:90px;
+
+width:95px;
+height:95px;
+
 margin:auto;
 
-border-radius:24px;
+border-radius:25px;
 
 background:
-radial-gradient(circle,#38bdf8,#0f3b60 65%,#061326);
+radial-gradient(
+circle,
+#38bdf8,
+#0f3b60 65%,
+#061326
+);
 
-border:2px solid #7dd3fc;
+border:
+2px solid #7dd3fc;
 
 display:flex;
+
 align-items:center;
 justify-content:center;
 
-font-size:48px;
+font-size:52px;
+
 font-weight:bold;
 
 box-shadow:
-0 0 35px #38bdf855;
+0 0 40px #38bdf855;
+
 }
 
 .brand{
+
 font-size:34px;
+
 font-weight:bold;
+
 letter-spacing:5px;
+
 margin-top:18px;
+
 }
 
 .subtitle{
-color:#bae6fd;
+
 font-size:13px;
+
 letter-spacing:3px;
+
+color:#bae6fd;
+
 margin-top:8px;
+
 }
 
 .title{
-font-size:42px;
-margin:30px 0 10px;
+
+font-size:40px;
+
+margin-top:35px;
+
 }
 
 .description{
-color:#cbd5e1;
-font-size:16px;
+
 max-width:700px;
-margin:auto;
+
+margin:
+12px auto 0;
+
+font-size:16px;
+
 line-height:1.6;
+
+color:#cbd5e1;
+
 }
 
-/* CONTAINER */
+
+/* =========================
+LABOR CONTAINER
+========================= */
 
 .container{
-max-width:1250px;
+
+max-width:1100px;
+
 margin:auto;
-padding:35px 20px 60px;
+
+padding:
+30px 20px 70px;
+
 }
 
-/* LAB GRID */
+.section-title{
+
+text-align:center;
+
+font-size:18px;
+
+letter-spacing:2px;
+
+color:#bae6fd;
+
+margin-bottom:25px;
+
+}
+
+
+/* =========================
+LAB GRID
+========================= */
 
 .labs{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(260px,1fr));
 
-gap:22px;
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(280px,1fr)
+);
+
+gap:25px;
+
 }
 
-/* CARD */
+
+/* =========================
+CARD
+========================= */
 
 .card{
-position:relative;
 
-background:#ffffff0d;
-
-border:1px solid #ffffff20;
-
-border-radius:20px;
-
-padding:25px;
-
-min-height:240px;
-
-backdrop-filter:blur(10px);
-
-box-shadow:
-0 15px 40px #00000040;
-
-transition:
-transform .25s,
-border-color .25s,
-box-shadow .25s;
-}
-
-.card:hover{
-transform:translateY(-7px);
-
-border-color:#7dd3fc99;
-
-box-shadow:
-0 20px 50px #00000066,
-0 0 25px #38bdf822;
-}
-
-.icon{
-font-size:48px;
-margin-bottom:15px;
-}
-
-.card h2{
-margin:0 0 10px;
-font-size:23px;
-}
-
-.card p{
-color:#cbd5e1;
-font-size:14px;
-line-height:1.5;
-min-height:65px;
-}
-
-.open{
-display:inline-block;
-
-margin-top:15px;
-
-padding:11px 17px;
-
-border-radius:10px;
+display:block;
 
 text-decoration:none;
 
-font-weight:bold;
-
 color:white;
+
+background:
+#ffffff0d;
+
+border:
+1px solid #ffffff22;
+
+border-radius:22px;
+
+padding:30px;
+
+min-height:280px;
+
+backdrop-filter:blur(12px);
+
+box-shadow:
+0 15px 45px #00000045;
+
+transition:
+transform .25s,
+box-shadow .25s,
+border-color .25s;
+
+}
+
+.card:hover{
+
+transform:
+translateY(-8px)
+scale(1.01);
+
+border-color:
+#7dd3fcaa;
+
+box-shadow:
+0 25px 60px #00000066,
+0 0 30px #38bdf822;
+
+}
+
+.icon{
+
+font-size:58px;
+
+margin-bottom:18px;
+
+}
+
+.card h2{
+
+font-size:27px;
+
+margin:
+0 0 12px;
+
+}
+
+.card p{
+
+font-size:15px;
+
+line-height:1.6;
+
+color:#cbd5e1;
+
+}
+
+.open{
+
+display:inline-block;
+
+margin-top:18px;
+
+padding:
+12px 20px;
+
+border-radius:10px;
 
 background:#2563eb;
 
-transition:.2s;
+font-weight:bold;
+
 }
 
-.open:hover{
+.card:hover .open{
+
 background:#3b82f6;
-transform:scale(1.04);
+
 }
 
-/* COMING SOON */
 
-.soon{
-background:#ffffff08;
-}
-
-.soon .open{
-background:#475569;
-cursor:default;
-}
-
-/* FOOTER */
+/* =========================
+FOOTER
+========================= */
 
 footer{
+
 text-align:center;
 
-padding:30px 20px;
+padding:
+30px 20px;
 
-border-top:1px solid #ffffff15;
-
-color:#94a3b8;
+border-top:
+1px solid #ffffff15;
 
 font-size:12px;
 
+color:#94a3b8;
+
 letter-spacing:1px;
+
 }
 
-/* RESPONSIVE */
+
+/* =========================
+MOBILE
+========================= */
 
 @media(max-width:600px){
 
 .brand{
+
 font-size:25px;
+
 letter-spacing:3px;
+
 }
 
 .title{
-font-size:30px;
-}
 
-.description{
-font-size:14px;
+font-size:30px;
+
 }
 
 .card{
-min-height:220px;
+
+min-height:250px;
+
 }
 
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
-<div class="logo">Σ</div>
+<div class="logo">
+Σ
+</div>
+
 
 <div class="brand">
 S.MICHAELIS
 </div>
 
+
 <div class="subtitle">
 MATHEMATIK • PHYSIK • SIMULATION
 </div>
+
 
 <div class="title">
 🔬 Interaktives Physiklabor
 </div>
 
+
 <div class="description">
 
-Entdecke physikalische Zusammenhänge durch
-interaktive Simulationen.
-<br>
-<strong>Rechnen • Visualisieren • Experimentieren</strong>
+Physikalische Zusammenhänge
+nicht nur berechnen,
+sondern <strong>sehen, verändern
+und verstehen.</strong>
 
 </div>
 
@@ -261,134 +389,90 @@ interaktive Simulationen.
 
 <div class="container">
 
+
+<div class="section-title">
+
+LABOR AUSWÄHLEN
+
+</div>
+
+
 <div class="labs">
 
 
-<!-- VEKTOR -->
-
-<div class="card">
-
-<div class="icon">🔴</div>
-
-<h2>Vektor-Labor</h2>
-
-<p>
-Vektoren zeichnen, verschieben und berechnen.
-Addition, Subtraktion, Komponenten,
-Skalarprodukt und 3D-Darstellung.
-</p>
+<!-- =====================
+VEKTOR
+===================== -->
 
 <a
-class="open"
+class="card"
 href="vektorlabor/"
 >
-Labor öffnen →
+
+<div class="icon">
+🔴
+</div>
+
+<h2>
+Vektor-Labor
+</h2>
+
+<p>
+
+Vektoren zeichnen,
+verschieben und berechnen.
+
+<br><br>
+
+Addition • Subtraktion •
+Komponenten • Skalarprodukt •
+2D • 3D
+
+</p>
+
+<div class="open">
+Vektor-Labor öffnen →
+</div>
+
 </a>
 
+
+<!-- =====================
+KINEMATIK
+===================== -->
+
+<a
+class="card"
+href="kinematik/"
+>
+
+<div class="icon">
+🟢
 </div>
 
-
-<!-- TRIGONOMETRIE -->
-
-<div class="card soon">
-
-<div class="icon">📐</div>
-
-<h2>Trigonometrie-Labor</h2>
+<h2>
+Kinematik-Rechner
+</h2>
 
 <p>
-Sinus, Kosinus und Tangens
-am rechtwinkligen Dreieck.
-Winkel und Seiten interaktiv untersuchen.
+
+Zusammenhänge zwischen
+Weg, Zeit und Geschwindigkeit
+untersuchen.
+
+<br><br>
+
+Berechnen • Verändern •
+Visualisieren
+
 </p>
 
-<span class="open">
-Bald verfügbar
-</span>
-
+<div class="open">
+Kinematik-Rechner öffnen →
 </div>
 
+</a>
 
-<!-- BEWEGUNG -->
-
-<div class="card soon">
-
-<div class="icon">🟢</div>
-
-<h2>Bewegungs-Labor</h2>
-
-<p>
-Geradlinige Bewegung untersuchen.
-Weg-Zeit- und Geschwindigkeits-Zeit-Diagramme
-interaktiv erforschen.
-</p>
-
-<span class="open">
-Bald verfügbar
-</span>
-
-</div>
-
-
-<!-- FREIER FALL -->
-
-<div class="card soon">
-
-<div class="icon">🍎</div>
-
-<h2>Freier Fall</h2>
-
-<p>
-Untersuche Fallzeit, Geschwindigkeit
-und Fallstrecke und entdecke
-die Bewegung unter dem Einfluss der Gravitation.
-</p>
-
-<span class="open">
-Bald verfügbar
-</span>
-
-</div>
-
-
-<!-- KREISBEWEGUNG -->
-
-<div class="card soon">
-
-<div class="icon">🟣</div>
-
-<h2>Kreisbewegungs-Labor</h2>
-
-<p>
-Winkelgeschwindigkeit, Bahngeschwindigkeit
-und Zentripetalkraft interaktiv untersuchen.
-</p>
-
-<span class="open">
-Bald verfügbar
-</span>
-
-</div>
-
-
-<!-- MECHANIK -->
-
-<div class="card soon">
-
-<div class="icon">⚙️</div>
-
-<h2>Mechanik-Labor</h2>
-
-<p>
-Kräfte, Arbeit, Energie und Bewegung
-mit interaktiven physikalischen Modellen untersuchen.
-</p>
-
-<span class="open">
-Bald verfügbar
-</span>
-
-</div>
 
 </div>
 
@@ -397,13 +481,20 @@ Bald verfügbar
 
 <footer>
 
-S.MICHAELIS • MATHEMATIK • PHYSIK • SIMULATION
+S.MICHAELIS
 
 <br><br>
 
-Interaktive Lernumgebung für den Physik- und Mathematikunterricht
+MATHEMATIK • PHYSIK • SIMULATION
+
+<br><br>
+
+Interaktive Lernumgebung
 
 </footer>
 
+
 </body>
+
 </html>
+```
