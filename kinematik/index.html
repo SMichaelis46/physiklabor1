@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>S.MICHAELIS – Kinematik-Rechner</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef2f7;
+    color:#17202a;
+}
+header{
+    background:#17202a;
+    color:white;
+    padding:18px 28px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+.title{
+    font-size:24px;
+    font-weight:bold;
+}
+.container{
+    max-width:1500px;
+    margin:20px auto;
+    padding:0 18px;
+}
+.modes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:18px;
+}
+button{
+    border:0;
+    border-radius:8px;
+    padding:11px 15px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+.mode{
+    background:#d8dee8;
+    color:#17202a;
+}
+.mode.active{
+    background:#17202a;
+    color:white;
+}
+.main{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+.card{
+    background:white;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 3px 12px rgba(0,0,0,.10);
+}
+h2{
+    margin-top:0;
+    font-size:22px;
+}
+.inputs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+}
+.field{
+    display:flex;
+    flex-direction:column;
+}
+label{
+    font-weight:bold;
+    margin-bottom:5px;
+}
+input,select{
+    padding:11px;
+    border:1px solid #b9c1cc;
+    border-radius:7px;
+    font-size:16px;
+}
+.calculate{
+    margin-top:18px;
+    background:#17202a;
+    color:white;
+    width:100%;
+    font-size:18px;
+    padding:14px;
+}
+.result{
+    margin-top:18px;
+    border-radius:10px;
+    background:#edf7ed;
+    border:2px solid #68a868;
+    padding:18px;
+    display:none;
+}
+.result h3{
+    margin-top:0;
+}
+.line{
+    padding:7px 0;
+    font-size:17px;
+}
+.formula{
+    padding:13px;
+    margin:9px 0;
+    background:#f3f5f8;
+    border-radius:8px;
+    font-family:"Cambria Math",serif;
+    font-size:19px;
+}
+.formula.active{
+    background:#fff1a8;
+    border:2px solid #d6aa00;
+}
+.steps{
+    margin-top:15px;
+    background:#f7f8fa;
+    border-radius:9px;
+    padding:15px;
+}
+.step{
+    font-family:"Cambria Math",serif;
+    font-size:18px;
+    padding:6px 0;
+}
+.unit-info{
+    margin-top:18px;
+    padding:14px;
+    background:#eef3f8;
+    border-radius:9px;
+}
+.error{
+    margin-top:15px;
+    padding:14px;
+    background:#ffe6e6;
+    border:1px solid #cc5555;
+    border-radius:8px;
+    color:#8a2222;
+}
+@media(max-width:900px){
+    .main{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+    .inputs{grid-template-columns:1fr}
+    header{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">S.MICHAELIS</div>
+    <div class="title">KINEMATIK-RECHNER</div>
+</header>
+
+<div class="container">
+
+<div class="modes">
+    <button class="mode active" onclick="setMode('uniform',this)">Gleichförmig</button>
+    <button class="mode" onclick="setMode('accel',this)">Beschleunigt</button>
+    <button class="mode" onclick="setMode('fall',this)">Freier Fall</button>
+    <button class="mode" onclick="setMode('vertical',this)">Senkrechter Wurf</button>
+    <button class="mode" onclick="setMode('horizontal',this)">Waagerechter Wurf</button>
+    <button class="mode" onclick="setMode('projectile',this)">Schräger Wurf</button>
+    <button class="mode" onclick="setMode('average',this)">Durchschnitt</button>
+    <button class="mode" onclick="setMode('units',this)">Einheiten</button>
+</div>
+
+<div class="main">
+
+<div class="card">
+<h2 id="modeTitle">Gleichförmige Bewegung</h2>
+
+<div id="inputArea"></div>
+
+<button class="calculate" onclick="calculate()">BERECHNEN</button>
+
+<div id="result" class="result"></div>
+</div>
+
+<div class="card">
+<h2>📐 Kinematische Gleichungen</h2>
+<div id="formulas"></div>
+
+<div class="unit-info">
+<b>Wichtige Einheiten</b><br><br>
+Weg: <b>m</b><br>
+Zeit: <b>s</b><br>
+Geschwindigkeit: <b>m/s</b><br>
+Beschleunigung: <b>m/s²</b><br>
+Erdbeschleunigung: <b>g = 9,81 m/s²</b><br>
+Winkel: <b>°</b>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+
+let mode="uniform";
+
+const data={
+uniform:{
+title:"Gleichförmige Bewegung",
+fields:[
+["s","Weg s","m"],
+["v","Geschwindigkeit v","m/s"],
+["t","Zeit t","s"]
+],
+formulas:[
+"s(t) = s₀ + v · t",
+"Δs = v · Δt",
+"v = Δs / Δt",
+"t = Δs / v",
+"s = v · t"
+]
+},
+
+accel:{
+title:"Gleichmäßig beschleunigte Bewegung",
+fields:[
+["v0","Anfangsgeschwindigkeit v₀","m/s"],
+["v","Endgeschwindigkeit v","m/s"],
+["a","Beschleunigung a","m/s²"],
+["t","Zeit t","s"],
+["s","Weg s","m"]
+],
+formulas:[
+"v(t) = v₀ + a · t",
+"s(t) = s₀ + v₀ · t + ½ · a · t²",
+"v² = v₀² + 2a(s − s₀)",
+"a = (v − v₀) / t",
+"t = (v − v₀) / a",
+"v₀ = v − a · t",
+"s − s₀ = ½(v₀ + v)t"
+]
+},
+
+fall:{
+title:"Freier Fall",
+fields:[
+["h0","Anfangshöhe h₀","m"],
+["t","Zeit t","s"],
+["g","Erdbeschleunigung g","m/s²"]
+],
+formulas:[
+"s(t) = ½ · g · t²",
+"v(t) = g · t",
+"v² = 2g · s",
+"t = √(2s / g)",
+"h(t) = h₀ − ½ · g · t²",
+"v = √(2g · h₀)"
+]
+},
+
+vertical:{
+title:"Senkrechter Wurf nach oben",
+fields:[
+["v0","Anfangsgeschwindigkeit v₀","m/s"],
+["h0","Anfangshöhe h₀","m"],
+["g","Erdbeschleunigung g","m/s²"]
+],
+formulas:[
+"y(t) = y₀ + v₀t − ½gt²",
+"v(t) = v₀ − gt",
+"a = −g",
+"t↑ = v₀ / g",
+"Δh = v₀² / (2g)",
+"hₘₐₓ = h₀ + v₀² / (2g)",
+"v = 0 am höchsten Punkt"
+]
+},
+
+horizontal:{
+title:"Waagerechter Wurf",
+fields:[
+["v0","Anfangsgeschwindigkeit v₀","m/s"],
+["h0","Anfangshöhe h₀","m"],
+["g","Erdbeschleunigung g","m/s²"]
+],
+formulas:[
+"x(t) = v₀ · t",
+"vₓ = v₀ = konstant",
+"y(t) = h₀ − ½gt²",
+"vᵧ(t) = −gt",
+"t = √(2h₀ / g)",
+"W = v₀ · √(2h₀ / g)",
+"v = √(vₓ² + vᵧ²)"
+]
+},
+
+projectile:{
+title:"Schräger Wurf",
+fields:[
+["v0","Anfangsgeschwindigkeit v₀","m/s"],
+["angle","Abwurfwinkel α","°"],
+["h0","Anfangshöhe h₀","m"],
+["g","Erdbeschleunigung g","m/s²"]
+],
+formulas:[
+"vₓ = v₀ cos(α)",
+"vᵧ₀ = v₀ sin(α)",
+"x(t) = v₀ cos(α) · t",
+"y(t) = h₀ + v₀sin(α)t − ½gt²",
+"vᵧ(t) = v₀sin(α) − gt",
+"t↑ = v₀sin(α) / g",
+"hₘₐₓ = h₀ + v₀²sin²(α)/(2g)",
+"t = [v₀sin(α) + √(v₀²sin²(α)+2gh₀)] / g",
+"W = v₀cos(α) · t"
+]
+},
+
+average:{
+title:"Durchschnittsgeschwindigkeit",
+fields:[
+["s1","Startweg s₁","m"],
+["s2","Endweg s₂","m"],
+["t1","Startzeit t₁","s"],
+["t2","Endzeit t₂","s"]
+],
+formulas:[
+"v̄ = Δs / Δt",
+"Δs = s₂ − s₁",
+"Δt = t₂ − t₁",
+"v̄ = Gesamtweg / Gesamtzeit"
+]
+},
+
+units:{
+title:"Geschwindigkeit – Einheiten",
+fields:[
+["value","Wert",""],
+["direction","Umrechnung",""]
+],
+formulas:[
+"1 m/s = 3,6 km/h",
+"1 km/h = 1/3,6 m/s",
+"v[m/s] = v[km/h] / 3,6",
+"v[km/h] = v[m/s] · 3,6",
+"1 km = 1000 m",
+"1 min = 60 s"
+]
+}
+};
+
+function setMode(m,btn){
+    mode=m;
+    document.querySelectorAll(".mode").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("modeTitle").textContent=data[m].title;
+    buildInputs();
+    buildFormulas();
+    clearResult();
+}
+
+function buildInputs(){
+    const area=document.getElementById("inputArea");
+    area.innerHTML="";
+    
+    const grid=document.createElement("div");
+    grid.className="inputs";
+
+    data[mode].fields.forEach(f=>{
+        const div=document.createElement("div");
+        div.className="field";
+
+        const label=document.createElement("label");
+        label.textContent=f[1]+(f[2] ? " ["+f[2]+"]" : "");
+
+        let input;
+
+        if(f[0]==="direction"){
+            input=document.createElement("select");
+            input.id=f[0];
+            input.innerHTML=`
+                <option value="ms_to_kmh">m/s → km/h</option>
+                <option value="kmh_to_ms">km/h → m/s</option>
+            `;
+        }else{
+            input=document.createElement("input");
+            input.type="number";
+            input.step="any";
+            input.id=f[0];
+
+            if(f[0]==="g"){
+                input.value="9.81";
+            }
+        }
+
+        div.appendChild(label);
+        div.appendChild(input);
+        grid.appendChild(div);
+    });
+
+    area.appendChild(grid);
+}
+
+function buildFormulas(){
+    const area=document.getElementById("formulas");
+    area.innerHTML="";
+
+    data[mode].formulas.forEach((f,i)=>{
+        const div=document.createElement("div");
+        div.className="formula";
+        div.id="formula"+i;
+        div.textContent=f;
+        area.appendChild(div);
+    });
+}
+
+function val(id){
+    const x=parseFloat(document.getElementById(id)?.value);
+    return Number.isFinite(x) ? x : null;
+}
+
+function fmt(x){
+    if(!Number.isFinite(x)) return "—";
+    if(Math.abs(x)<0.000001) x=0;
+    return Number(x.toFixed(4)).toString();
+}
+
+function line(symbol,value,unit){
+    return `<div class="line"><b>${symbol}</b> = ${fmt(value)} ${unit}</div>`;
+}
+
+function show(title,steps,results,formulaIndex){
+    const box=document.getElementById("result");
+
+    let html=`<h3>Ergebnis</h3>`;
+    html+=`<div><b>${title}</b></div>`;
+
+    html+=`<div class="steps"><b>Rechnung:</b>`;
+    steps.forEach(s=>{
+        html+=`<div class="step">${s}</div>`;
+    });
+    html+=`</div>`;
+
+    html+=`<br><b>Ergebnisse mit Einheiten:</b>`;
+    results.forEach(r=>{
+        html+=line(r[0],r[1],r[2]);
+    });
+
+    box.innerHTML=html;
+    box.style.display="block";
+
+    highlight(formulaIndex);
+}
+
+function highlight(i){
+    document.querySelectorAll(".formula").forEach(x=>x.classList.remove("active"));
+    if(i!==undefined && document.getElementById("formula"+i)){
+        document.getElementById("formula"+i).classList.add("active");
+    }
+}
+
+function error(msg){
+    const box=document.getElementById("result");
+    box.innerHTML=`<div class="error"><b>Fehler:</b> ${msg}</div>`;
+    box.style.display="block";
+}
+
+function clearResult(){
+    const box=document.getElementById("result");
+    box.style.display="none";
+    box.innerHTML="";
+    highlight();
+}
+
+function calculate(){
+
+    clearResult();
+
+    if(mode==="uniform"){
+
+        const s=val("s"), v=val("v"), t=val("t");
+
+        if(v!==null && t!==null){
+            const S=v*t;
+            show(
+                "Gleichförmige Bewegung",
+                [
+                    `s = v · t`,
+                    `s = ${fmt(v)} m/s · ${fmt(t)} s`,
+                    `s = ${fmt(S)} m`
+                ],
+                [["s",S,"m"],["v",v,"m/s"],["t",t,"s"]],
+                4
+            );
+        }else if(s!==null && t!==null){
+            const V=s/t;
+            show(
+                "Geschwindigkeit berechnen",
+                [
+                    `v = s / t`,
+                    `v = ${fmt(s)} m / ${fmt(t)} s`,
+                    `v = ${fmt(V)} m/s`
+                ],
+                [["s",s,"m"],["t",t,"s"],["v",V,"m/s"]],
+                2
+            );
+        }else if(s!==null && v!==null){
+            const T=s/v;
+            show(
+                "Zeit berechnen",
+                [
+                    `t = s / v`,
+                    `t = ${fmt(s)} m / ${fmt(v)} m/s`,
+                    `t = ${fmt(T)} s`
+                ],
+                [["s",s,"m"],["v",v,"m/s"],["t",T,"s"]],
+                3
+            );
+        }else{
+            error("Bitte mindestens zwei Größen eingeben.");
+        }
+    }
+
+    else if(mode==="accel"){
+
+        const v0=val("v0");
+        const v=val("v");
+        const a=val("a");
+        const t=val("t");
+        const s=val("s");
+
+        if(v0!==null && a!==null && t!==null){
+
+            const V=v0+a*t;
+            const S=v0*t+0.5*a*t*t;
+
+            show(
+                "Gleichmäßig beschleunigte Bewegung",
+                [
+                    `v = v₀ + a · t`,
+                    `v = ${fmt(v0)} m/s + ${fmt(a)} m/s² · ${fmt(t)} s`,
+                    `v = ${fmt(V)} m/s`,
+                    `s = v₀ · t + ½ · a · t²`,
+                    `s = ${fmt(v0)} · ${fmt(t)} + ½ · ${fmt(a)} · ${fmt(t)}²`,
+                    `s = ${fmt(S)} m`
+                ],
+                [
+                    ["v₀",v0,"m/s"],
+                    ["a",a,"m/s²"],
+                    ["t",t,"s"],
+                    ["v",V,"m/s"],
+                    ["s",S,"m"]
+                ],
+                0
+            );
+
+        }else if(v0!==null && v!==null && t!==null){
+
+            const A=(v-v0)/t;
+
+            show(
+                "Beschleunigung berechnen",
+                [
+                    `a = (v − v₀) / t`,
+                    `a = (${fmt(v)} − ${fmt(v0)}) m/s / ${fmt(t)} s`,
+                    `a = ${fmt(A)} m/s²`
+                ],
+                [
+                    ["v₀",v0,"m/s"],
+                    ["v",v,"m/s"],
+                    ["t",t,"s"],
+                    ["a",A,"m/s²"]
+                ],
+                3
+            );
+
+        }else if(v0!==null && a!==null && s!==null){
+
+            const V=Math.sqrt(Math.max(0,v0*v0+2*a*s));
+
+            show(
+                "Endgeschwindigkeit berechnen",
+                [
+                    `v² = v₀² + 2as`,
+                    `v² = (${fmt(v0)} m/s)² + 2 · ${fmt(a)} m/s² · ${fmt(s)} m`,
+                    `v = ${fmt(V)} m/s`
+                ],
+                [
+                    ["v₀",v0,"m/s"],
+                    ["a",a,"m/s²"],
+                    ["s",s,"m"],
+                    ["v",V,"m/s"]
+                ],
+                2
+            );
+
+        }else{
+            error("Bitte passende Größen eingeben, z. B. v₀, a und t.");
+        }
+    }
+
+    else if(mode==="fall"){
+
+        let h0=val("h0");
+        let t=val("t");
+        let g=val("g");
+
+        if(g===null) g=9.81;
+
+        if(t!==null){
+
+            const s=0.5*g*t*t;
+            const v=g*t;
+            const h=h0!==null ? h0-s : null;
+
+            const results=[
+                ["t",t,"s"],
+                ["g",g,"m/s²"],
+                ["s",s,"m"],
+                ["v",v,"m/s"]
+            ];
+
+            if(h!==null) results.push(["h",h,"m"]);
+
+            show(
+                "Freier Fall",
+                [
+                    `s = ½ · g · t²`,
+                    `s = ½ · ${fmt(g)} m/s² · (${fmt(t)} s)²`,
+                    `s = ${fmt(s)} m`,
+                    `v = g · t`,
+                    `v = ${fmt(g)} m/s² · ${fmt(t)} s`,
+                    `v = ${fmt(v)} m/s`
+                ],
+                results,
+                0
+            );
+
+        }else if(h0!==null){
+
+            const T=Math.sqrt(2*h0/g);
+            const V=g*T;
+
+            show(
+                "Fallzeit aus der Höhe",
+                [
+                    `t = √(2h₀ / g)`,
+                    `t = √(2 · ${fmt(h0)} m / ${fmt(g)} m/s²)`,
+                    `t = ${fmt(T)} s`,
+                    `v = g · t`,
+                    `v = ${fmt(V)} m/s`
+                ],
+                [
+                    ["h₀",h0,"m"],
+                    ["g",g,"m/s²"],
+                    ["t",T,"s"],
+                    ["v",V,"m/s"]
+                ],
+                3
+            );
+
+        }else{
+            error("Bitte h₀ oder t eingeben.");
+        }
+    }
+
+    else if(mode==="vertical"){
+
+        const v0=val("v0");
+        const h0=val("h0") ?? 0;
+        const g=val("g") ?? 9.81;
+
+        if(v0===null){
+            error("Bitte v₀ eingeben.");
+            return;
+        }
+
+        const tup=v0/g;
+        const dh=v0*v0/(2*g);
+        const hmax=h0+dh;
+        const total=(v0+Math.sqrt(v0*v0+2*g*h0))/g;
+
+        show(
+            "Senkrechter Wurf nach oben",
+            [
+                `t↑ = v₀ / g`,
+                `t↑ = ${fmt(v0)} m/s / ${fmt(g)} m/s²`,
+                `t↑ = ${fmt(tup)} s`,
+                `Δh = v₀² / (2g)`,
+                `Δh = (${fmt(v0)} m/s)² / (2 · ${fmt(g)} m/s²)`,
+                `Δh = ${fmt(dh)} m`,
+                `hₘₐₓ = h₀ + Δh`,
+                `hₘₐₓ = ${fmt(hmax)} m`
+            ],
+            [
+                ["v₀",v0,"m/s"],
+                ["g",g,"m/s²"],
+                ["t↑",tup,"s"],
+                ["Δh",dh,"m"],
+                ["hₘₐₓ",hmax,"m"],
+                ["Gesamtflugzeit",total,"s"]
+            ],
+            3
+        );
+    }
+
+    else if(mode==="horizontal"){
+
+        const v0=val("v0");
+        const h0=val("h0");
+        const g=val("g") ?? 9.81;
+
+        if(v0===null || h0===null){
+            error("Bitte v₀ und h₀ eingeben.");
+            return;
+        }
+
+        const t=Math.sqrt(2*h0/g);
+        const W=v0*t;
+        const vy=g*t;
+        const v=Math.sqrt(v0*v0+vy*vy);
+
+        show(
+            "Waagerechter Wurf",
+            [
+                `t = √(2h₀ / g)`,
+                `t = √(2 · ${fmt(h0)} m / ${fmt(g)} m/s²)`,
+                `t = ${fmt(t)} s`,
+                `W = v₀ · t`,
+                `W = ${fmt(v0)} m/s · ${fmt(t)} s`,
+                `W = ${fmt(W)} m`,
+                `vᵧ = g · t = ${fmt(vy)} m/s`
+            ],
+            [
+                ["v₀",v0,"m/s"],
+                ["h₀",h0,"m"],
+                ["g",g,"m/s²"],
+                ["t",t,"s"],
+                ["W",W,"m"],
+                ["vᵧ",vy,"m/s"],
+                ["v",v,"m/s"]
+            ],
+            4
+        );
+    }
+
+    else if(mode==="projectile"){
+
+        const v0=val("v0");
+        const angle=val("angle");
+        const h0=val("h0") ?? 0;
+        const g=val("g") ?? 9.81;
+
+        if(v0===null || angle===null){
+            error("Bitte v₀ und α eingeben.");
+            return;
+        }
+
+        const rad=angle*Math.PI/180;
+
+        const vx=v0*Math.cos(rad);
+        const vy0=v0*Math.sin(rad);
+        const tup=vy0/g;
+        const hmax=h0+(vy0*vy0)/(2*g);
+        const total=(vy0+Math.sqrt(vy0*vy0+2*g*h0))/g;
+        const W=vx*total;
+
+        show(
+            "Schräger Wurf",
+            [
+                `vₓ = v₀ cos(α)`,
+                `vₓ = ${fmt(v0)} m/s · cos(${fmt(angle)}°)`,
+                `vₓ = ${fmt(vx)} m/s`,
+                `vᵧ₀ = v₀ sin(α)`,
+                `vᵧ₀ = ${fmt(v0)} m/s · sin(${fmt(angle)}°)`,
+                `vᵧ₀ = ${fmt(vy0)} m/s`,
+                `t↑ = vᵧ₀ / g = ${fmt(tup)} s`,
+                `hₘₐₓ = ${fmt(hmax)} m`,
+                `W = vₓ · t = ${fmt(W)} m`
+            ],
+            [
+                ["v₀",v0,"m/s"],
+                ["α",angle,"°"],
+                ["vₓ",vx,"m/s"],
+                ["vᵧ₀",vy0,"m/s"],
+                ["g",g,"m/s²"],
+                ["t↑",tup,"s"],
+                ["hₘₐₓ",hmax,"m"],
+                ["Flugzeit",total,"s"],
+                ["Wurfweite W",W,"m"]
+            ],
+            0
+        );
+    }
+
+    else if(mode==="average"){
+
+        const s1=val("s1");
+        const s2=val("s2");
+        const t1=val("t1");
+        const t2=val("t2");
+
+        if(s1===null || s2===null || t1===null || t2===null){
+            error("Bitte alle vier Größen eingeben.");
+            return;
+        }
+
+        const ds=s2-s1;
+        const dt=t2-t1;
+
+        if(dt<=0){
+            error("Die Endzeit muss größer als die Startzeit sein.");
+            return;
+        }
+
+        const v=ds/dt;
+
+        show(
+            "Durchschnittsgeschwindigkeit",
+            [
+                `Δs = s₂ − s₁`,
+                `Δs = ${fmt(s2)} m − ${fmt(s1)} m = ${fmt(ds)} m`,
+                `Δt = t₂ − t₁`,
+                `Δt = ${fmt(t2)} s − ${fmt(t1)} s = ${fmt(dt)} s`,
+                `v̄ = Δs / Δt`,
+                `v̄ = ${fmt(ds)} m / ${fmt(dt)} s`,
+                `v̄ = ${fmt(v)} m/s`
+            ],
+            [
+                ["s₁",s1,"m"],
+                ["s₂",s2,"m"],
+                ["Δs",ds,"m"],
+                ["t₁",t1,"s"],
+                ["t₂",t2,"s"],
+                ["Δt",dt,"s"],
+                ["v̄",v,"m/s"]
+            ],
+            0
+        );
+    }
+
+    else if(mode==="units"){
+
+        const value=val("value");
+        const direction=document.getElementById("direction").value;
+
+        if(value===null){
+            error("Bitte einen Zahlenwert eingeben.");
+            return;
+        }
+
+        if(direction==="ms_to_kmh"){
+
+            const result=value*3.6;
+
+            show(
+                "Umrechnung m/s → km/h",
+                [
+                    `v[km/h] = v[m/s] · 3,6`,
+                    `v = ${fmt(value)} m/s · 3,6`,
+                    `v = ${fmt(result)} km/h`
+                ],
+                [
+                    ["Ausgangswert",value,"m/s"],
+                    ["Ergebnis",result,"km/h"]
+                ],
+                3
+            );
+
+        }else{
+
+            const result=value/3.6;
+
+            show(
+                "Umrechnung km/h → m/s",
+                [
+                    `v[m/s] = v[km/h] / 3,6`,
+                    `v = ${fmt(value)} km/h / 3,6`,
+                    `v = ${fmt(result)} m/s`
+                ],
+                [
+                    ["Ausgangswert",value,"km/h"],
+                    ["Ergebnis",result,"m/s"]
+                ],
+                2
+            );
+        }
+    }
+}
+
+buildInputs();
+buildFormulas();
+
+</script>
+
+</body>
+</html>
