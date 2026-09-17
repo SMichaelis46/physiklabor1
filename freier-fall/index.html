@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>S.MICHAELIS – Freier Fall Komplex-Rechner</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef2f7;
+    color:#17202a;
+}
+
+header{
+    background:#17202a;
+    color:white;
+    padding:18px 28px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.title{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1500px;
+    margin:20px auto;
+    padding:0 18px;
+}
+
+.modes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:18px;
+}
+
+.mode{
+    border:0;
+    border-radius:8px;
+    padding:11px 15px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+    background:#d8dee8;
+    color:#17202a;
+}
+
+.mode.active{
+    background:#17202a;
+    color:white;
+}
+
+.main{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 3px 12px rgba(0,0,0,.10);
+}
+
+h2{
+    margin-top:0;
+    font-size:22px;
+}
+
+.description{
+    background:#f3f5f8;
+    border-left:5px solid #17202a;
+    padding:15px;
+    border-radius:7px;
+    margin-bottom:18px;
+    line-height:1.55;
+}
+
+.inputs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+}
+
+label{
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input{
+    padding:11px;
+    border:1px solid #b9c1cc;
+    border-radius:7px;
+    font-size:16px;
+}
+
+input:focus{
+    outline:2px solid #7f8c9a;
+}
+
+.calculate{
+    margin-top:18px;
+    background:#17202a;
+    color:white;
+    width:100%;
+    font-size:18px;
+    padding:14px;
+    border:0;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.result{
+    margin-top:18px;
+    border-radius:10px;
+    background:#edf7ed;
+    border:2px solid #68a868;
+    padding:18px;
+    display:none;
+}
+
+.result h3{
+    margin-top:0;
+}
+
+.resultBlock{
+    margin-top:15px;
+    padding:13px;
+    background:white;
+    border-radius:8px;
+}
+
+.resultLine{
+    padding:7px 0;
+    font-size:17px;
+    border-bottom:1px solid #e1e5ea;
+}
+
+.resultLine:last-child{
+    border-bottom:0;
+}
+
+.steps{
+    margin-top:15px;
+    background:#f7f8fa;
+    border-radius:9px;
+    padding:15px;
+}
+
+.step{
+    font-family:"Cambria Math","Times New Roman",serif;
+    font-size:18px;
+    padding:7px 0;
+}
+
+.formula{
+    padding:13px;
+    margin:9px 0;
+    background:#f3f5f8;
+    border-radius:8px;
+    font-family:"Cambria Math","Times New Roman",serif;
+    font-size:19px;
+}
+
+.formula.active{
+    background:#fff1a8;
+    border:2px solid #d6aa00;
+}
+
+.explanation{
+    margin-top:15px;
+    padding:15px;
+    background:#eef3f8;
+    border-radius:9px;
+    line-height:1.55;
+}
+
+.error{
+    margin-top:15px;
+    padding:14px;
+    background:#ffe6e6;
+    border:1px solid #cc5555;
+    border-radius:8px;
+    color:#8a2222;
+}
+
+.unit{
+    font-weight:bold;
+}
+
+@media(max-width:900px){
+    .main{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+    .inputs{
+        grid-template-columns:1fr;
+    }
+
+    header{
+        flex-direction:column;
+        gap:8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">S.MICHAELIS</div>
+    <div class="title">FREIER FALL – KOMPLEX-RECHNER</div>
+</header>
+
+<div class="container">
+
+<div class="modes">
+
+<button class="mode active"
+onclick="setMode('height',this)">
+Höhe aus Fallzeit
+</button>
+
+<button class="mode"
+onclick="setMode('falltime',this)">
+Fallzeit aus Höhe
+</button>
+
+<button class="mode"
+onclick="setMode('impact',this)">
+Aufprallgeschwindigkeit
+</button>
+
+<button class="mode"
+onclick="setMode('energy',this)">
+Fallenergie
+</button>
+
+<button class="mode"
+onclick="setMode('soundheight',this)">
+Schallhöhenmessung
+</button>
+
+<button class="mode"
+onclick="setMode('soundvelocity',this)">
+Schallgeschwindigkeit
+</button>
+
+<button class="mode"
+onclick="setMode('complex',this)">
+Komplexe Aufgabe
+</button>
+
+</div>
+
+<div class="main">
+
+<div class="card">
+
+<h2 id="modeTitle">Höhe aus Fallzeit</h2>
+
+<div id="description" class="description"></div>
+
+<div id="inputArea"></div>
+
+<button class="calculate" onclick="calculate()">
+BERECHNEN
+</button>
+
+<div id="result" class="result"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📐 Physikalische Zusammenhänge</h2>
+
+<div id="formulas"></div>
+
+<div class="explanation">
+
+<b>Wichtige Größen</b><br><br>
+
+<höhe>
+Fallhöhe: <b>h [m]</b><br>
+Fallzeit: <b>t [s]</b><br>
+Geschwindigkeit: <b>v [m/s]</b><br>
+Beschleunigung: <b>g [m/s²]</b><br>
+Masse: <b>m [kg]</b><br>
+Energie: <b>E [J]</b><br>
+Schallgeschwindigkeit: <b>c [m/s]</b>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let mode="height";
+
+
+const data={
+
+height:{
+title:"Höhe aus Fallzeit",
+description:
+"Ein Körper fällt aus Ruhe. Aus der gemessenen Fallzeit wird die Fallhöhe bestimmt.",
+fields:[
+["t","Fallzeit t","s"],
+["g","Erdbeschleunigung g","m/s²"]
+],
+formulas:[
+"h = ½ · g · t²",
+"v = g · t",
+"a = g"
+]
+},
+
+falltime:{
+title:"Fallzeit aus Höhe",
+description:
+"Die Höhe ist bekannt. Gesucht sind Fallzeit und Aufprallgeschwindigkeit.",
+fields:[
+["h","Fallhöhe h","m"],
+["g","Erdbeschleunigung g","m/s²"]
+],
+formulas:[
+"t = √(2h / g)",
+"v = g · t",
+"v = √(2gh)"
+]
+},
+
+impact:{
+title:"Aufprallgeschwindigkeit",
+description:
+"Aus einer bekannten Fallhöhe wird die Geschwindigkeit unmittelbar vor dem Aufprall berechnet.",
+fields:[
+["h","Fallhöhe h","m"],
+["g","Erdbeschleunigung g","m/s²"]
+],
+formulas:[
+"v² = 2gh",
+"v = √(2gh)",
+"t = √(2h / g)"
+]
+},
+
+energy:{
+title:"Potenzielle Energie beim freien Fall",
+description:
+"Berechnung der Lageenergie eines Körpers und der Geschwindigkeit beim Aufprall.",
+fields:[
+["m","Masse m","kg"],
+["h","Fallhöhe h","m"],
+["g","Erdbeschleunigung g","m/s²"]
+],
+formulas:[
+"Eₚₒₜ = mgh",
+"Eₖᵢₙ = ½mv²",
+"mgh = ½mv²",
+"v = √(2gh)"
+]
+},
+
+soundheight:{
+title:"Schallhöhenmessung",
+description:
+"Ein Stein wird fallen gelassen. Nach der Fallzeit benötigt der Schall noch zusätzliche Zeit bis zum Beobachter. Die gemessene Gesamtzeit enthält daher Fallzeit UND Schalllaufzeit.",
+fields:[
+["T","Gesamtzeit T","s"],
+["g","Erdbeschleunigung g","m/s²"],
+["c","Schallgeschwindigkeit c","m/s"]
+],
+formulas:[
+"T = t_Fall + t_Schall",
+"t_Fall = √(2h / g)",
+"t_Schall = h / c",
+"T = √(2h/g) + h/c"
+]
+},
+
+soundvelocity:{
+title:"Schallgeschwindigkeit bestimmen",
+description:
+"Die Höhe und die gesamte gemessene Zeit sind bekannt. Daraus wird die Schallgeschwindigkeit bestimmt.",
+fields:[
+["h","Fallhöhe h","m"],
+["T","Gesamtzeit T","s"],
+["g","Erdbeschleunigung g","m/s²"]
+],
+formulas:[
+"t_Fall = √(2h / g)",
+"t_Schall = T − t_Fall",
+"c = h / t_Schall"
+]
+},
+
+complex:{
+title:"Komplexe Freier-Fall-Aufgabe",
+description:
+"Mehrere physikalische Größen werden gleichzeitig bestimmt: Fallzeit, Aufprallgeschwindigkeit, Schalllaufzeit, Gesamtzeit und Energie.",
+fields:[
+["h","Fallhöhe h","m"],
+["m","Masse m","kg"],
+["g","Erdbeschleunigung g","m/s²"],
+["c","Schallgeschwindigkeit c","m/s"]
+],
+formulas:[
+"t_Fall = √(2h / g)",
+"v = √(2gh)",
+"Eₚₒₜ = mgh",
+"Eₖᵢₙ = ½mv²",
+"t_Schall = h / c",
+"T = t_Fall + t_Schall"
+]
+}
+
+};
+
+
+function setMode(m,btn){
+
+mode=m;
+
+document
+.querySelectorAll(".mode")
+.forEach(b=>b.classList.remove("active"));
+
+btn.classList.add("active");
+
+document.getElementById("modeTitle")
+.textContent=data[m].title;
+
+document.getElementById("description")
+.textContent=data[m].description;
+
+buildInputs();
+buildFormulas();
+clearResult();
+
+}
+
+
+function buildInputs(){
+
+const area=document.getElementById("inputArea");
+
+area.innerHTML="";
+
+const grid=document.createElement("div");
+
+grid.className="inputs";
+
+data[mode].fields.forEach(f=>{
+
+const div=document.createElement("div");
+
+div.className="field";
+
+const label=document.createElement("label");
+
+label.textContent=f[1]+" ["+f[2]+"]";
+
+const input=document.createElement("input");
+
+input.type="number";
+
+input.step="any";
+
+input.id=f[0];
+
+if(f[0]==="g"){
+input.value="9.81";
+}
+
+if(f[0]==="c"){
+input.value="343";
+}
+
+div.appendChild(label);
+div.appendChild(input);
+
+grid.appendChild(div);
+
+});
+
+area.appendChild(grid);
+
+}
+
+
+function buildFormulas(){
+
+const area=document.getElementById("formulas");
+
+area.innerHTML="";
+
+data[mode].formulas.forEach((f,i)=>{
+
+const div=document.createElement("div");
+
+div.className="formula";
+
+div.id="formula"+i;
+
+div.textContent=f;
+
+area.appendChild(div);
+
+});
+
+}
+
+
+function val(id){
+
+const element=document.getElementById(id);
+
+if(!element) return null;
+
+const x=parseFloat(element.value);
+
+return Number.isFinite(x)?x:null;
+
+}
+
+
+function fmt(x){
+
+if(!Number.isFinite(x))
+return "—";
+
+if(Math.abs(x)<0.000001)
+x=0;
+
+return Number(x.toFixed(4)).toString();
+
+}
+
+
+function resultLine(symbol,value,unit){
+
+return `
+<div class="resultLine">
+<b>${symbol}</b> = ${fmt(value)} ${unit}
+</div>
+`;
+
+}
+
+
+function show(title,steps,results,index){
+
+const box=document.getElementById("result");
+
+let html=`<h3>${title}</h3>`;
+
+html+=`
+<div class="steps">
+<b>Ausführliche Rechnung:</b>
+`;
+
+steps.forEach(s=>{
+html+=`<div class="step">${s}</div>`;
+});
+
+html+=`</div>`;
+
+html+=`
+<div class="resultBlock">
+<b>Ergebnisse:</b>
+`;
+
+results.forEach(r=>{
+html+=resultLine(r[0],r[1],r[2]);
+});
+
+html+=`</div>`;
+
+box.innerHTML=html;
+
+box.style.display="block";
+
+highlight(index);
+
+}
+
+
+function highlight(index){
+
+document
+.querySelectorAll(".formula")
+.forEach(x=>x.classList.remove("active"));
+
+if(index!==undefined){
+
+const f=document.getElementById("formula"+index);
+
+if(f)
+f.classList.add("active");
+
+}
+
+}
+
+
+function clearResult(){
+
+document.getElementById("result").style.display="none";
+
+document.getElementById("result").innerHTML="";
+
+highlight();
+
+}
+
+
+function error(msg){
+
+const box=document.getElementById("result");
+
+box.innerHTML=
+`<div class="error"><b>Fehler:</b> ${msg}</div>`;
+
+box.style.display="block";
+
+}
+
+
+function calculate(){
+
+
+/* =========================================
+   HÖHE AUS FALLZEIT
+========================================= */
+
+if(mode==="height"){
+
+const t=val("t");
+
+const g=val("g") ?? 9.81;
+
+if(t===null || t<0){
+
+error("Bitte eine gültige Fallzeit eingeben.");
+
+return;
+
+}
+
+const h=0.5*g*t*t;
+
+const v=g*t;
+
+show(
+"Höhe aus Fallzeit",
+[
+"h = ½ · g · t²",
+
+`h = ½ · ${fmt(g)} m/s² · (${fmt(t)} s)²`,
+
+`h = ${fmt(h)} m`,
+
+"v = g · t",
+
+`v = ${fmt(g)} m/s² · ${fmt(t)} s`,
+
+`v = ${fmt(v)} m/s`
+],
+[
+["Fallzeit t",t,"s"],
+["Erdbeschleunigung g",g,"m/s²"],
+["Fallhöhe h",h,"m"],
+["Aufprallgeschwindigkeit v",v,"m/s"]
+],
+0
+);
+
+}
+
+
+/* =========================================
+   FALLZEIT AUS HÖHE
+========================================= */
+
+else if(mode==="falltime"){
+
+const h=val("h");
+
+const g=val("g") ?? 9.81;
+
+if(h===null || h<0){
+
+error("Bitte eine gültige Höhe eingeben.");
+
+return;
+
+}
+
+const t=Math.sqrt(2*h/g);
+
+const v=Math.sqrt(2*g*h);
+
+show(
+"Fallzeit und Aufprallgeschwindigkeit",
+[
+"t = √(2h / g)",
+
+`t = √(2 · ${fmt(h)} m / ${fmt(g)} m/s²)`,
+
+`t = ${fmt(t)} s`,
+
+"v = √(2gh)",
+
+`v = √(2 · ${fmt(g)} m/s² · ${fmt(h)} m)`,
+
+`v = ${fmt(v)} m/s`
+],
+[
+["Fallhöhe h",h,"m"],
+["Erdbeschleunigung g",g,"m/s²"],
+["Fallzeit t",t,"s"],
+["Aufprallgeschwindigkeit v",v,"m/s"]
+],
+0
+);
+
+}
+
+
+/* =========================================
+   AUFPRALLGESCHWINDIGKEIT
+========================================= */
+
+else if(mode==="impact"){
+
+const h=val("h");
+
+const g=val("g") ?? 9.81;
+
+if(h===null || h<0){
+
+error("Bitte eine gültige Fallhöhe eingeben.");
+
+return;
+
+}
+
+const v=Math.sqrt(2*g*h);
+
+const t=Math.sqrt(2*h/g);
+
+show(
+"Aufprallgeschwindigkeit",
+[
+"v² = 2gh",
+
+`v² = 2 · ${fmt(g)} m/s² · ${fmt(h)} m`,
+
+`v = √(${fmt(2*g*h)} m²/s²)`,
+
+`v = ${fmt(v)} m/s`,
+
+"Zusätzlich:",
+
+`t = √(2h/g) = ${fmt(t)} s`
+],
+[
+["Fallhöhe h",h,"m"],
+["Erdbeschleunigung g",g,"m/s²"],
+["Fallzeit t",t,"s"],
+["Aufprallgeschwindigkeit v",v,"m/s"]
+],
+1
+);
+
+}
+
+
+/* =========================================
+   ENERGIE
+========================================= */
+
+else if(mode==="energy"){
+
+const m=val("m");
+
+const h=val("h");
+
+const g=val("g") ?? 9.81;
+
+if(m===null || h===null){
+
+error("Bitte Masse und Höhe eingeben.");
+
+return;
+
+}
+
+if(m<0 || h<0){
+
+error("Masse und Höhe dürfen nicht negativ sein.");
+
+return;
+
+}
+
+const E=m*g*h;
+
+const v=Math.sqrt(2*g*h);
+
+const t=Math.sqrt(2*h/g);
+
+const Ek=0.5*m*v*v;
+
+show(
+"Freier Fall mit Energiebetrachtung",
+[
+"Eₚₒₜ = mgh",
+
+`Eₚₒₜ = ${fmt(m)} kg · ${fmt(g)} m/s² · ${fmt(h)} m`,
+
+`Eₚₒₜ = ${fmt(E)} J`,
+
+"Im idealen freien Fall gilt:",
+
+"Eₚₒₜ = Eₖᵢₙ",
+
+`Eₖᵢₙ = ${fmt(Ek)} J`,
+
+"v = √(2gh)",
+
+`v = ${fmt(v)} m/s`
+],
+[
+["Masse m",m,"kg"],
+["Fallhöhe h",h,"m"],
+["g",g,"m/s²"],
+["Potenzielle Energie Eₚₒₜ",E,"J"],
+["Kinetische Energie Eₖᵢₙ",Ek,"J"],
+["Fallzeit t",t,"s"],
+["Aufprallgeschwindigkeit v",v,"m/s"]
+],
+0
+);
+
+}
+
+
+/* =========================================
+   SCHALLHÖHENMESSUNG
+========================================= */
+
+else if(mode==="soundheight"){
+
+const T=val("T");
+
+const g=val("g") ?? 9.81;
+
+const c=val("c") ?? 343;
+
+if(T===null || T<=0){
+
+error("Bitte eine positive Gesamtzeit eingeben.");
+
+return;
+
+}
+
+if(g<=0 || c<=0){
+
+error("g und Schallgeschwindigkeit müssen positiv sein.");
+
+return;
+
+}
+
+
+/*
+T = sqrt(2h/g) + h/c
+
+Numerische Lösung durch Bisektion
+*/
+
+function equation(h){
+
+return Math.sqrt(2*h/g)+h/c-T;
+
+}
+
+let low=0;
+
+let high=Math.max(1,0.5*g*T*T);
+
+while(equation(high)<0){
+high*=2;
+}
+
+for(let i=0;i<100;i++){
+
+const mid=(low+high)/2;
+
+if(equation(mid)>0)
+high=mid;
+else
+low=mid;
+
+}
+
+const h=(low+high)/2;
+
+const tFall=Math.sqrt(2*h/g);
+
+const tSound=h/c;
+
+const v=Math.sqrt(2*g*h);
+
+show(
+"Schallhöhenmessung – komplexe Rechnung",
+[
+"T = t_Fall + t_Schall",
+
+"t_Fall = √(2h / g)",
+
+"t_Schall = h / c",
+
+"T = √(2h/g) + h/c",
+
+`Eingesetzt: ${fmt(T)} s = √(2h / ${fmt(g)} m/s²) + h / ${fmt(c)} m/s`,
+
+"Die Gleichung wird numerisch nach h gelöst.",
+
+`h ≈ ${fmt(h)} m`,
+
+`t_Fall = ${fmt(tFall)} s`,
+
+`t_Schall = ${fmt(tSound)} s`,
+
+`Kontrolle: ${fmt(tFall)} s + ${fmt(tSound)} s = ${fmt(tFall+tSound)} s`,
+
+`v = √(2gh) = ${fmt(v)} m/s`
+],
+[
+["Gemessene Gesamtzeit T",T,"s"],
+["Fallhöhe h",h,"m"],
+["Fallzeit t_Fall",tFall,"s"],
+["Schalllaufzeit t_Schall",tSound,"s"],
+["Schallgeschwindigkeit c",c,"m/s"],
+["Aufprallgeschwindigkeit v",v,"m/s"]
+],
+3
+);
+
+}
+
+
+/* =========================================
+   SCHALLGESCHWINDIGKEIT
+========================================= */
+
+else if(mode==="soundvelocity"){
+
+const h=val("h");
+
+const T=val("T");
+
+const g=val("g") ?? 9.81;
+
+if(h===null || T===null){
+
+error("Bitte Höhe und Gesamtzeit eingeben.");
+
+return;
+
+}
+
+if(h<=0 || T<=0 || g<=0){
+
+error("Bitte positive Werte eingeben.");
+
+return;
+
+}
+
+const tFall=Math.sqrt(2*h/g);
+
+const tSound=T-tFall;
+
+if(tSound<=0){
+
+error(
+"Die Gesamtzeit ist zu klein. Sie muss größer als die reine Fallzeit sein."
+);
+
+return;
+
+}
+
+const c=h/tSound;
+
+const v=Math.sqrt(2*g*h);
+
+show(
+"Schallgeschwindigkeit bestimmen",
+[
+"t_Fall = √(2h / g)",
+
+`t_Fall = √(2 · ${fmt(h)} m / ${fmt(g)} m/s²)`,
+
+`t_Fall = ${fmt(tFall)} s`,
+
+"t_Schall = T − t_Fall",
+
+`t_Schall = ${fmt(T)} s − ${fmt(tFall)} s`,
+
+`t_Schall = ${fmt(tSound)} s`,
+
+"c = h / t_Schall",
+
+`c = ${fmt(h)} m / ${fmt(tSound)} s`,
+
+`c = ${fmt(c)} m/s`
+],
+[
+["Fallhöhe h",h,"m"],
+["Gesamtzeit T",T,"s"],
+["Fallzeit",tFall,"s"],
+["Schalllaufzeit",tSound,"s"],
+["Schallgeschwindigkeit c",c,"m/s"],
+["Aufprallgeschwindigkeit v",v,"m/s"]
+],
+1
+);
+
+}
+
+
+/* =========================================
+   KOMPLEXE AUFGABE
+========================================= */
+
+else if(mode==="complex"){
+
+const h=val("h");
+
+const m=val("m");
+
+const g=val("g") ?? 9.81;
+
+const c=val("c") ?? 343;
+
+if(h===null || m===null){
+
+error("Bitte Höhe und Masse eingeben.");
+
+return;
+
+}
+
+if(h<0 || m<0 || g<=0 || c<=0){
+
+error("Bitte physikalisch sinnvolle positive Werte eingeben.");
+
+return;
+
+}
+
+const tFall=Math.sqrt(2*h/g);
+
+const v=Math.sqrt(2*g*h);
+
+const Epot=m*g*h;
+
+const Ekin=0.5*m*v*v;
+
+const tSound=h/c;
+
+const T=tFall+tSound;
+
+show(
+"Komplette Freier-Fall-Aufgabe",
+[
+"1. Fallzeit:",
+
+"t_Fall = √(2h / g)",
+
+`t_Fall = √(2 · ${fmt(h)} m / ${fmt(g)} m/s²)`,
+
+`t_Fall = ${fmt(tFall)} s`,
+
+"2. Aufprallgeschwindigkeit:",
+
+"v = √(2gh)",
+
+`v = √(2 · ${fmt(g)} m/s² · ${fmt(h)} m)`,
+
+`v = ${fmt(v)} m/s`,
+
+"3. Potenzielle Energie:",
+
+"Eₚₒₜ = mgh",
+
+`Eₚₒₜ = ${fmt(m)} kg · ${fmt(g)} m/s² · ${fmt(h)} m`,
+
+`Eₚₒₜ = ${fmt(Epot)} J`,
+
+"4. Kinetische Energie beim Aufprall:",
+
+"Eₖᵢₙ = ½mv²",
+
+`Eₖᵢₙ = ${fmt(Ekin)} J`,
+
+"5. Schalllaufzeit:",
+
+"t_Schall = h / c",
+
+`t_Schall = ${fmt(h)} m / ${fmt(c)} m/s`,
+
+`t_Schall = ${fmt(tSound)} s`,
+
+"6. Gesamtzeit bis zum Hören des Aufpralls:",
+
+"T = t_Fall + t_Schall",
+
+`T = ${fmt(tFall)} s + ${fmt(tSound)} s`,
+
+`T = ${fmt(T)} s`
+],
+[
+["Fallhöhe h",h,"m"],
+["Masse m",m,"kg"],
+["Erdbeschleunigung g",g,"m/s²"],
+["Schallgeschwindigkeit c",c,"m/s"],
+["Fallzeit t_Fall",tFall,"s"],
+["Aufprallgeschwindigkeit v",v,"m/s"],
+["Potenzielle Energie Eₚₒₜ",Epot,"J"],
+["Kinetische Energie Eₖᵢₙ",Ekin,"J"],
+["Schalllaufzeit t_Schall",tSound,"s"],
+["Gesamtzeit T",T,"s"]
+],
+0
+);
+
+}
+
+}
+
+
+setMode(
+"height",
+document.querySelector(".mode")
+);
+
+</script>
+
+</body>
+</html>
