@@ -2,904 +2,4664 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>S.MICHAELIS – Kinematik-Rechner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>S.Michaelis – Interaktives Kinematik-Labor 2.0</title>
 
 <style>
-*{box-sizing:border-box}
-body{
+
+*{
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#06111c;
+    --panel:#0c1b2b;
+    --panel2:#10243a;
+    --border:#243c56;
+    --text:#edf5fc;
+    --muted:#91a7bc;
+
+    --green:#22c55e;
+    --cyan:#38bdf8;
+    --yellow:#f59e0b;
+    --red:#ef4444;
+    --purple:#a78bfa;
+
+    --shadow:0 18px 55px rgba(0,0,0,.38);
+}
+
+html,body{
     margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#eef2f7;
-    color:#17202a;
+    padding:0;
+    min-height:100%;
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(34,197,94,.08),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(56,189,248,.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #040b13,
+            #071522 48%,
+            #06101a
+        );
+
+    color:var(--text);
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 }
+
+body{
+    padding:20px;
+}
+
+.app{
+    max-width:1650px;
+    margin:auto;
+}
+
+/* =====================================================
+HEADER
+===================================================== */
+
 header{
-    background:#17202a;
-    color:white;
-    padding:18px 28px;
+
     display:flex;
-    justify-content:space-between;
+
     align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:21px 25px;
+
+    margin-bottom:20px;
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    background:rgba(12,27,43,.92);
+
+    box-shadow:var(--shadow);
+
+    backdrop-filter:blur(14px);
 }
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+}
+
 .logo{
-    font-size:25px;
-    font-weight:bold;
-    letter-spacing:2px;
+
+    width:62px;
+
+    height:62px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:18px;
+
+    font-size:32px;
+
+    font-weight:900;
+
+    background:
+        linear-gradient(
+            135deg,
+            #047857,
+            #22c55e
+        );
+
+    box-shadow:
+        0 0 30px
+        rgba(34,197,94,.22);
 }
-.title{
-    font-size:24px;
-    font-weight:bold;
+
+.brand h1{
+
+    margin:0;
+
+    font-size:
+        clamp(
+            22px,
+            3vw,
+            34px
+        );
+
+    letter-spacing:-.035em;
 }
-.container{
-    max-width:1500px;
-    margin:20px auto;
-    padding:0 18px;
+
+.brand p{
+
+    margin:5px 0 0;
+
+    color:var(--muted);
+
+    font-size:14px;
 }
-.modes{
+
+.header-buttons{
+
     display:flex;
+
+    gap:9px;
+
     flex-wrap:wrap;
-    gap:8px;
-    margin-bottom:18px;
 }
+
+/* =====================================================
+BUTTONS
+===================================================== */
+
 button{
-    border:0;
-    border-radius:8px;
+
+    border:1px solid var(--border);
+
+    background:#12273d;
+
+    color:var(--text);
+
+    border-radius:11px;
+
     padding:11px 15px;
+
+    font-weight:750;
+
     cursor:pointer;
-    font-size:15px;
-    font-weight:bold;
+
+    transition:
+        transform .18s,
+        background .18s,
+        border-color .18s;
 }
-.mode{
-    background:#d8dee8;
-    color:#17202a;
+
+button:hover{
+
+    transform:translateY(-1px);
+
+    background:#18324d;
+
+    border-color:#41617e;
 }
-.mode.active{
-    background:#17202a;
-    color:white;
+
+button.primary{
+
+    background:
+        linear-gradient(
+            135deg,
+            #15803d,
+            #22c55e
+        );
+
+    border-color:#22c55e;
 }
-.main{
+
+button.blue{
+
+    background:
+        linear-gradient(
+            135deg,
+            #0369a1,
+            #38bdf8
+        );
+
+    border-color:#38bdf8;
+}
+
+button.yellow{
+
+    background:
+        linear-gradient(
+            135deg,
+            #a16207,
+            #f59e0b
+        );
+
+    border-color:#f59e0b;
+}
+
+/* =====================================================
+MAIN GRID
+===================================================== */
+
+.main-grid{
+
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        400px;
+
+    gap:20px;
 }
-.card{
-    background:white;
-    border-radius:12px;
-    padding:22px;
-    box-shadow:0 3px 12px rgba(0,0,0,.10);
-}
-h2{
-    margin-top:0;
-    font-size:22px;
-}
-.inputs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:13px;
-}
-.field{
+
+.left-column{
+
     display:flex;
+
     flex-direction:column;
+
+    gap:20px;
 }
-label{
-    font-weight:bold;
-    margin-bottom:5px;
+
+.right-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
 }
-input,select{
-    padding:11px;
-    border:1px solid #b9c1cc;
-    border-radius:7px;
+
+/* =====================================================
+PANELS
+===================================================== */
+
+.panel{
+
+    background:
+        rgba(12,27,43,.91);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+}
+
+.panel-title{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:12px;
+
+    padding:16px 19px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.018);
+}
+
+.panel-title h2{
+
+    margin:0;
+
     font-size:16px;
 }
-.calculate{
-    margin-top:18px;
-    background:#17202a;
-    color:white;
+
+.panel-title span{
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.panel-body{
+
+    padding:19px;
+}
+
+/* =====================================================
+MODEL SELECTOR
+===================================================== */
+
+.model-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:9px;
+}
+
+.model{
+
+    min-height:74px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+
+    text-align:center;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    background:#091827;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.model:hover{
+
+    border-color:#43627e;
+}
+
+.model.active{
+
+    border-color:#22c55e;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.16),
+            rgba(56,189,248,.06)
+        );
+
+    box-shadow:
+        inset 0 0 20px
+        rgba(34,197,94,.04);
+}
+
+.model-icon{
+
+    font-size:22px;
+}
+
+.model-name{
+
+    font-size:11px;
+
+    color:#cbd8e5;
+
+    font-weight:750;
+}
+
+/* =====================================================
+PARAMETER GRID
+===================================================== */
+
+.parameter-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+}
+
+.field label{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+input,select{
+
     width:100%;
-    font-size:18px;
-    padding:14px;
-}
-.result{
-    margin-top:18px;
+
+    border:1px solid #2a425c;
+
+    background:#071522;
+
+    color:#fff;
+
     border-radius:10px;
-    background:#edf7ed;
-    border:2px solid #68a868;
-    padding:18px;
-    display:none;
+
+    padding:11px 12px;
+
+    outline:none;
+
+    font-size:14px;
 }
-.result h3{
-    margin-top:0;
+
+input:focus,
+select:focus{
+
+    border-color:#4f789e;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(56,189,248,.08);
 }
-.line{
-    padding:7px 0;
-    font-size:17px;
+
+.unit{
+
+    color:#6f879e;
+
+    font-size:11px;
+
+    margin-top:4px;
 }
-.formula{
-    padding:13px;
-    margin:9px 0;
-    background:#f3f5f8;
-    border-radius:8px;
-    font-family:"Cambria Math",serif;
-    font-size:19px;
+
+/* =====================================================
+SIMULATION
+===================================================== */
+
+.simulation-wrap{
+
+    position:relative;
+
+    height:
+        min(
+            58vh,
+            620px
+        );
+
+    min-height:430px;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(30,65,95,.20),
+            transparent 60%
+        ),
+        #07111c;
 }
-.formula.active{
-    background:#fff1a8;
-    border:2px solid #d6aa00;
+
+#simulationCanvas{
+
+    width:100%;
+
+    height:100%;
+
+    display:block;
+
+    cursor:crosshair;
 }
-.steps{
-    margin-top:15px;
-    background:#f7f8fa;
-    border-radius:9px;
+
+.sim-info{
+
+    position:absolute;
+
+    left:15px;
+
+    top:15px;
+
+    padding:10px 13px;
+
+    border-radius:11px;
+
+    background:
+        rgba(3,9,16,.76);
+
+    border:1px solid #29425c;
+
+    color:#b9cadb;
+
+    font-size:12px;
+
+    pointer-events:none;
+
+    backdrop-filter:blur(8px);
+}
+
+.sim-legend{
+
+    position:absolute;
+
+    right:15px;
+
+    top:15px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:7px;
+
+    padding:12px;
+
+    border-radius:11px;
+
+    background:
+        rgba(3,9,16,.78);
+
+    border:1px solid #29425c;
+
+    font-size:12px;
+
+    pointer-events:none;
+}
+
+.legend-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.legend-dot{
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+}
+
+.dot-object{
+    background:#22c55e;
+}
+
+.dot-v{
+    background:#38bdf8;
+}
+
+.dot-a{
+    background:#f59e0b;
+}
+
+.dot-trail{
+    background:#a78bfa;
+}
+
+/* =====================================================
+SIM CONTROLS
+===================================================== */
+
+.sim-controls{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:9px;
+
+    padding:14px;
+
+    border-top:
+        1px solid var(--border);
+
+    background:#091827;
+}
+
+.speed{
+
+    margin-left:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.speed select{
+
+    width:95px;
+
+    padding:8px;
+}
+
+/* =====================================================
+LIVE VALUES
+===================================================== */
+
+.live-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:10px;
+}
+
+.live{
+
+    padding:14px;
+
+    border:1px solid var(--border);
+
+    border-radius:13px;
+
+    background:#081623;
+}
+
+.live-label{
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-bottom:5px;
+}
+
+.live-value{
+
+    font-size:21px;
+
+    font-weight:850;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+.live.time .live-value{
+    color:#c4b5fd;
+}
+
+.live.position .live-value{
+    color:#22c55e;
+}
+
+.live.velocity .live-value{
+    color:#38bdf8;
+}
+
+.live.acceleration .live-value{
+    color:#f59e0b;
+}
+
+/* =====================================================
+FORMULA
+===================================================== */
+
+.formula-box{
+
+    padding:17px;
+
+    border-radius:15px;
+
+    background:#07131f;
+
+    border:1px solid var(--border);
+
+    text-align:center;
+}
+
+.formula-main{
+
+    font-family:
+        "Times New Roman",
+        serif;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    margin-bottom:10px;
+}
+
+.formula-explanation{
+
+    color:#91a7bb;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+/* =====================================================
+RESULT
+===================================================== */
+
+.result{
+
+    padding:17px;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.08),
+            rgba(56,189,248,.04)
+        );
+
+    border:1px solid #27533f;
+}
+
+.result-title{
+
+    color:#86efac;
+
+    text-transform:uppercase;
+
+    letter-spacing:.11em;
+
+    font-size:11px;
+
+    margin-bottom:9px;
+}
+
+.result-main{
+
+    font-size:25px;
+
+    font-weight:900;
+
+    margin-bottom:7px;
+}
+
+.result-sub{
+
+    color:#a8bbcd;
+
+    font-size:13px;
+
+    line-height:1.55;
+}
+
+/* =====================================================
+GRAPHS
+===================================================== */
+
+.graph-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+}
+
+.graph-card{
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    background:#07131f;
+}
+
+.graph-title{
+
+    padding:10px 12px;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    color:#b8c9d9;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.graph-card canvas{
+
+    width:100%;
+
+    height:190px;
+
+    display:block;
+}
+
+/* =====================================================
+DATA TABLE
+===================================================== */
+
+.table-wrap{
+
+    max-height:330px;
+
+    overflow:auto;
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    font-size:12px;
+}
+
+th,td{
+
+    padding:9px 7px;
+
+    border-bottom:
+        1px solid #1c3045;
+
+    text-align:right;
+
+    white-space:nowrap;
+}
+
+th{
+
+    color:#91a6bb;
+
+    position:sticky;
+
+    top:0;
+
+    background:#0c1b2b;
+
+    z-index:1;
+}
+
+th:first-child,
+td:first-child{
+
+    text-align:left;
+}
+
+/* =====================================================
+TASK MODE
+===================================================== */
+
+.task{
+
+    padding:17px;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(167,139,250,.09),
+            rgba(56,189,248,.03)
+        );
+
+    border:1px solid #41376b;
+}
+
+.task-badge{
+
+    display:inline-block;
+
+    padding:5px 8px;
+
+    border-radius:7px;
+
+    background:#312e81;
+
+    color:#c4b5fd;
+
+    font-size:10px;
+
+    font-weight:850;
+
+    letter-spacing:.08em;
+}
+
+.task h3{
+
+    margin:12px 0 8px;
+
+    font-size:16px;
+
+    line-height:1.45;
+}
+
+.task p{
+
+    color:#bdccda;
+
+    font-size:13px;
+
+    line-height:1.55;
+}
+
+.answer{
+
+    display:flex;
+
+    gap:8px;
+
+    margin-top:12px;
+}
+
+.feedback{
+
+    min-height:20px;
+
+    margin-top:10px;
+
+    font-size:13px;
+
+    font-weight:750;
+}
+
+/* =====================================================
+PHYSICS NOTE
+===================================================== */
+
+.note{
+
     padding:15px;
+
+    border-left:
+        3px solid #38bdf8;
+
+    background:
+        rgba(56,189,248,.05);
+
+    color:#b5c6d7;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+    border-radius:0 10px 10px 0;
 }
-.step{
-    font-family:"Cambria Math",serif;
-    font-size:18px;
-    padding:6px 0;
+
+/* =====================================================
+PRESENTATION MODE
+===================================================== */
+
+.presentation{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100;
+
+    display:none;
+
+    background:#02070d;
 }
-.unit-info{
-    margin-top:18px;
-    padding:14px;
-    background:#eef3f8;
-    border-radius:9px;
+
+.presentation.active{
+
+    display:block;
 }
-.error{
-    margin-top:15px;
-    padding:14px;
-    background:#ffe6e6;
-    border:1px solid #cc5555;
-    border-radius:8px;
-    color:#8a2222;
+
+.presentation-header{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    right:0;
+
+    z-index:4;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 25px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(2,7,13,.92),
+            transparent
+        );
 }
-@media(max-width:900px){
-    .main{grid-template-columns:1fr}
+
+.presentation-header h2{
+
+    margin:0;
+
+    font-size:22px;
 }
+
+#presentationCanvas{
+
+    width:100%;
+
+    height:100%;
+
+    display:block;
+}
+
+/* =====================================================
+FOOTER
+===================================================== */
+
+footer{
+
+    margin-top:20px;
+
+    padding:17px;
+
+    text-align:center;
+
+    color:#71869b;
+
+    font-size:12px;
+}
+
+/* =====================================================
+RESPONSIVE
+===================================================== */
+
+@media(max-width:1150px){
+
+    .main-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .right-column{
+
+        display:grid;
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
+
+@media(max-width:850px){
+
+    .model-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .parameter-grid{
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .graph-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .right-column{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
 @media(max-width:600px){
-    .inputs{grid-template-columns:1fr}
-    header{flex-direction:column;gap:8px}
+
+    body{
+        padding:9px;
+    }
+
+    header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .parameter-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .simulation-wrap{
+
+        min-height:360px;
+
+        height:52vh;
+    }
+
+    .speed{
+
+        margin-left:0;
+    }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
+<div class="app">
+
+<!-- =====================================================
+HEADER
+===================================================== -->
+
 <header>
-    <div class="logo">S.MICHAELIS</div>
-    <div class="title">KINEMATIK-RECHNER</div>
+
+    <div class="brand">
+
+        <div class="logo">
+            Σ
+        </div>
+
+        <div>
+
+            <h1>
+                S.MICHAELIS –
+                Interaktives Kinematik-Labor 2.0
+            </h1>
+
+            <p>
+                Bewegung berechnen · simulieren · messen · verstehen
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-buttons">
+
+        <button
+            class="blue"
+            id="presentationBtn"
+        >
+            📺 Präsentationsmodus
+        </button>
+
+        <button
+            id="resetBtn"
+        >
+            ↺ Zurücksetzen
+        </button>
+
+    </div>
+
 </header>
 
-<div class="container">
 
-<div class="modes">
-    <button class="mode active" onclick="setMode('uniform',this)">Gleichförmig</button>
-    <button class="mode" onclick="setMode('accel',this)">Beschleunigt</button>
-    <button class="mode" onclick="setMode('fall',this)">Freier Fall</button>
-    <button class="mode" onclick="setMode('vertical',this)">Senkrechter Wurf</button>
-    <button class="mode" onclick="setMode('horizontal',this)">Waagerechter Wurf</button>
-    <button class="mode" onclick="setMode('projectile',this)">Schräger Wurf</button>
-    <button class="mode" onclick="setMode('average',this)">Durchschnitt</button>
-    <button class="mode" onclick="setMode('units',this)">Einheiten</button>
+<!-- =====================================================
+MAIN
+===================================================== -->
+
+<div class="main-grid">
+
+
+<!-- =====================================================
+LEFT COLUMN
+===================================================== -->
+
+<div class="left-column">
+
+
+<!-- MODEL -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            🧭 Bewegungsmodell
+        </h2>
+
+        <span>
+            Wähle das physikalische Modell
+        </span>
+
+    </div>
+
+
+    <div class="panel-body">
+
+        <div class="model-grid">
+
+
+            <div
+                class="model active"
+                data-model="uniform"
+            >
+
+                <div class="model-icon">
+                    ➡️
+                </div>
+
+                <div class="model-name">
+                    Gleichförmig
+                </div>
+
+            </div>
+
+
+            <div
+                class="model"
+                data-model="accelerated"
+            >
+
+                <div class="model-icon">
+                    🏎️
+                </div>
+
+                <div class="model-name">
+                    Beschleunigt
+                </div>
+
+            </div>
+
+
+            <div
+                class="model"
+                data-model="freefall"
+            >
+
+                <div class="model-icon">
+                    🪂
+                </div>
+
+                <div class="model-name">
+                    Freier Fall
+                </div>
+
+            </div>
+
+
+            <div
+                class="model"
+                data-model="vertical"
+            >
+
+                <div class="model-icon">
+                    🚀
+                </div>
+
+                <div class="model-name">
+                    Senkrechter Wurf
+                </div>
+
+            </div>
+
+
+            <div
+                class="model"
+                data-model="horizontal"
+            >
+
+                <div class="model-icon">
+                    ↗️
+                </div>
+
+                <div class="model-name">
+                    Waagerechter Wurf
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PARAMETERS -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            🎛 Parameter
+        </h2>
+
+        <span id="modelDescription">
+            Gleichförmige Bewegung
+        </span>
+
+    </div>
+
+
+    <div class="panel-body">
+
+        <div
+            class="parameter-grid"
+            id="parameterGrid"
+        >
+
+
+            <div class="field">
+
+                <label>
+                    Anfangsposition s₀
+                </label>
+
+                <input
+                    id="s0"
+                    type="number"
+                    value="0"
+                    step="0.1"
+                >
+
+                <div class="unit">
+                    Meter [m]
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Anfangsgeschwindigkeit v₀
+                </label>
+
+                <input
+                    id="v0"
+                    type="number"
+                    value="5"
+                    step="0.1"
+                >
+
+                <div class="unit">
+                    Meter pro Sekunde [m/s]
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Beschleunigung a
+                </label>
+
+                <input
+                    id="acc"
+                    type="number"
+                    value="0"
+                    step="0.1"
+                >
+
+                <div class="unit">
+                    Meter pro Sekunde² [m/s²]
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Simulationsdauer
+                </label>
+
+                <input
+                    id="duration"
+                    type="number"
+                    value="10"
+                    min="0.1"
+                    step="0.1"
+                >
+
+                <div class="unit">
+                    Zeit [s]
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Zeitschritt Δt
+                </label>
+
+                <select id="dt">
+
+                    <option value="0.02">
+                        0,02 s
+                    </option>
+
+                    <option value="0.05">
+                        0,05 s
+                    </option>
+
+                    <option value="0.1">
+                        0,10 s
+                    </option>
+
+                </select>
+
+                <div class="unit">
+                    Simulationsauflösung
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Bewegungsrichtung
+                </label>
+
+                <select id="direction">
+
+                    <option value="right">
+                        +x Richtung
+                    </option>
+
+                    <option value="left">
+                        −x Richtung
+                    </option>
+
+                </select>
+
+                <div class="unit">
+                    Vorzeichenkonvention
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="note"
+            id="physicsNote"
+            style="margin-top:15px;"
+        >
+            Bei der gleichförmigen Bewegung bleibt die
+            Geschwindigkeit konstant. Die Beschleunigung ist
+            a = 0.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SIMULATION -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            🎬 Bewegungssimulation
+        </h2>
+
+        <span>
+            Position · Geschwindigkeit · Beschleunigung
+        </span>
+
+    </div>
+
+
+    <div class="simulation-wrap">
+
+        <canvas
+            id="simulationCanvas"
+        ></canvas>
+
+
+        <div class="sim-info">
+            Mausrad = Zoom
+        </div>
+
+
+        <div class="sim-legend">
+
+            <div class="legend-item">
+
+                <span
+                    class="legend-dot dot-object"
+                ></span>
+
+                Körper
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span
+                    class="legend-dot dot-v"
+                ></span>
+
+                Geschwindigkeitsvektor
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span
+                    class="legend-dot dot-a"
+                ></span>
+
+                Beschleunigungsvektor
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span
+                    class="legend-dot dot-trail"
+                ></span>
+
+                Bewegungsbahn
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="sim-controls">
+
+        <button
+            class="primary"
+            id="startBtn"
+        >
+            ▶ Start
+        </button>
+
+        <button id="pauseBtn">
+            ⏸ Pause
+        </button>
+
+        <button id="stepBtn">
+            ⏭ Schritt
+        </button>
+
+        <button
+            class="yellow"
+            id="endBtn"
+        >
+            ⏩ Ende
+        </button>
+
+        <button id="clearTrailBtn">
+            ✕ Spur löschen
+        </button>
+
+
+        <div class="speed">
+
+            Geschwindigkeit
+
+            <select id="speed">
+
+                <option value="0.25">
+                    0,25×
+                </option>
+
+                <option value="0.5">
+                    0,5×
+                </option>
+
+                <option
+                    value="1"
+                    selected
+                >
+                    1×
+                </option>
+
+                <option value="2">
+                    2×
+                </option>
+
+                <option value="4">
+                    4×
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GRAPHS -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            📈 Bewegungsdiagramme
+        </h2>
+
+        <span>
+            Zeitabhängige Größen
+        </span>
+
+    </div>
+
+
+    <div class="panel-body">
+
+        <div class="graph-grid">
+
+
+            <div class="graph-card">
+
+                <div class="graph-title">
+                    Weg-Zeit-Diagramm · s(t)
+                </div>
+
+                <canvas
+                    id="positionGraph"
+                ></canvas>
+
+            </div>
+
+
+            <div class="graph-card">
+
+                <div class="graph-title">
+                    Geschwindigkeits-Zeit-Diagramm · v(t)
+                </div>
+
+                <canvas
+                    id="velocityGraph"
+                ></canvas>
+
+            </div>
+
+
+            <div class="graph-card">
+
+                <div class="graph-title">
+                    Beschleunigungs-Zeit-Diagramm · a(t)
+                </div>
+
+                <canvas
+                    id="accelerationGraph"
+                ></canvas>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DATA TABLE -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            📊 Messwerttabelle
+        </h2>
+
+        <span>
+            Simulierte Messwerte
+        </span>
+
+    </div>
+
+
+    <div class="panel-body">
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        t [s]
+                    </th>
+
+                    <th>
+                        s [m]
+                    </th>
+
+                    <th>
+                        v [m/s]
+                    </th>
+
+                    <th>
+                        a [m/s²]
+                    </th>
+
+                    <th>
+                        Δs [m]
+                    </th>
+
+                </tr>
+
+                </thead>
+
+                <tbody
+                    id="dataTable"
+                ></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
 </div>
 
-<div class="main">
 
-<div class="card">
-<h2 id="modeTitle">Gleichförmige Bewegung</h2>
+<!-- =====================================================
+RIGHT COLUMN
+===================================================== -->
 
-<div id="inputArea"></div>
+<div class="right-column">
 
-<button class="calculate" onclick="calculate()">BERECHNEN</button>
 
-<div id="result" class="result"></div>
+<!-- LIVE VALUES -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            📡 Live-Messwerte
+        </h2>
+
+        <span>
+            aktuell
+        </span>
+
+    </div>
+
+
+    <div class="panel-body">
+
+        <div class="live-grid">
+
+
+            <div class="live time">
+
+                <div class="live-label">
+                    Zeit t
+                </div>
+
+                <div
+                    class="live-value"
+                    id="liveTime"
+                >
+                    0,00 s
+                </div>
+
+            </div>
+
+
+            <div class="live position">
+
+                <div class="live-label">
+                    Position s
+                </div>
+
+                <div
+                    class="live-value"
+                    id="livePosition"
+                >
+                    0,00 m
+                </div>
+
+            </div>
+
+
+            <div class="live velocity">
+
+                <div class="live-label">
+                    Geschwindigkeit v
+                </div>
+
+                <div
+                    class="live-value"
+                    id="liveVelocity"
+                >
+                    5,00 m/s
+                </div>
+
+            </div>
+
+
+            <div class="live acceleration">
+
+                <div class="live-label">
+                    Beschleunigung a
+                </div>
+
+                <div
+                    class="live-value"
+                    id="liveAcceleration"
+                >
+                    0,00 m/s²
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FORMULA -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            📐 Modellgleichung
+        </h2>
+
+        <span>
+            aktuelles Modell
+        </span>
+
+    </div>
+
+
+    <div class="panel-body">
+
+        <div class="formula-box">
+
+            <div
+                class="formula-main"
+                id="formulaMain"
+            >
+                s(t) = s₀ + v₀ · t
+            </div>
+
+            <div
+                class="formula-explanation"
+                id="formulaExplanation"
+            >
+                Bei einer gleichförmigen Bewegung
+                bleibt v konstant und a = 0.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- RESULTS -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            🧮 Berechnung
+        </h2>
+
+        <span>
+            automatisch
+        </span>
+
+    </div>
+
+
+    <div class="panel-body">
+
+        <div class="result">
+
+            <div class="result-title">
+                Endzustand
+            </div>
+
+            <div
+                class="result-main"
+                id="resultMain"
+            >
+                s = 50,00 m
+            </div>
+
+            <div
+                class="result-sub"
+                id="resultSub"
+            >
+                v = 5,00 m/s · a = 0,00 m/s²
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TASK -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            🎯 Aufgabenmodus
+        </h2>
+
+        <span>
+            Selbstkontrolle
+        </span>
+
+    </div>
+
+
+    <div class="panel-body">
+
+        <div class="task">
+
+            <span class="task-badge">
+                AUFGABE
+            </span>
+
+
+            <h3
+                id="taskTitle"
+            >
+                Berechne die Endposition.
+            </h3>
+
+
+            <p
+                id="taskText"
+            >
+                Welche Position besitzt der Körper
+                nach der angegebenen Zeit?
+            </p>
+
+
+            <div class="answer">
+
+                <input
+                    id="taskAnswer"
+                    type="number"
+                    step="0.01"
+                    placeholder="Ergebnis"
+                >
+
+                <button
+                    class="primary"
+                    id="checkTask"
+                >
+                    Prüfen
+                </button>
+
+            </div>
+
+
+            <div
+                class="feedback"
+                id="taskFeedback"
+            ></div>
+
+
+            <button
+                id="newTask"
+                style="
+                    width:100%;
+                    margin-top:9px;
+                "
+            >
+                Neue Aufgabe
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PHYSICS -->
+
+<section class="panel">
+
+    <div class="panel-title">
+
+        <h2>
+            ⚛ Physikalisches Modell
+        </h2>
+
+    </div>
+
+
+    <div class="panel-body">
+
+        <div
+            class="note"
+            id="modelInfo"
+        >
+            Die gleichförmige Bewegung ist dadurch
+            gekennzeichnet, dass die Geschwindigkeit
+            konstant bleibt.
+        </div>
+
+    </div>
+
+</section>
+
+
 </div>
 
-<div class="card">
-<h2>📐 Kinematische Gleichungen</h2>
-<div id="formulas"></div>
-
-<div class="unit-info">
-<b>Wichtige Einheiten</b><br><br>
-Weg: <b>m</b><br>
-Zeit: <b>s</b><br>
-Geschwindigkeit: <b>m/s</b><br>
-Beschleunigung: <b>m/s²</b><br>
-Erdbeschleunigung: <b>g = 9,81 m/s²</b><br>
-Winkel: <b>°</b>
-</div>
 </div>
 
+
+<footer>
+
+    S.Michaelis · Interaktives Physiklabor ·
+    Kinematik-Labor 2.0
+
+</footer>
+
 </div>
+
+
+<!-- =====================================================
+PRESENTATION
+===================================================== -->
+
+<div
+    class="presentation"
+    id="presentation"
+>
+
+    <div class="presentation-header">
+
+        <div>
+
+            <h2>
+                Σ S.MICHAELIS – KINEMATIK
+            </h2>
+
+            <div
+                id="presentationModel"
+                style="
+                    color:#91a7bb;
+                    font-size:13px;
+                    margin-top:4px;
+                "
+            >
+                Gleichförmige Bewegung
+            </div>
+
+        </div>
+
+
+        <button
+            id="closePresentation"
+        >
+            ✕ Schließen
+        </button>
+
+    </div>
+
+
+    <canvas
+        id="presentationCanvas"
+    ></canvas>
+
 </div>
+
 
 <script>
 
-let mode="uniform";
+/* =====================================================
+STATE
+===================================================== */
 
-const data={
-uniform:{
-title:"Gleichförmige Bewegung",
-fields:[
-["s","Weg s","m"],
-["v","Geschwindigkeit v","m/s"],
-["t","Zeit t","s"]
-],
-formulas:[
-"s(t) = s₀ + v · t",
-"Δs = v · Δt",
-"v = Δs / Δt",
-"t = Δs / v",
-"s = v · t"
-]
-},
+const state = {
 
-accel:{
-title:"Gleichmäßig beschleunigte Bewegung",
-fields:[
-["v0","Anfangsgeschwindigkeit v₀","m/s"],
-["v","Endgeschwindigkeit v","m/s"],
-["a","Beschleunigung a","m/s²"],
-["t","Zeit t","s"],
-["s","Weg s","m"]
-],
-formulas:[
-"v(t) = v₀ + a · t",
-"s(t) = s₀ + v₀ · t + ½ · a · t²",
-"v² = v₀² + 2a(s − s₀)",
-"a = (v − v₀) / t",
-"t = (v − v₀) / a",
-"v₀ = v − a · t",
-"s − s₀ = ½(v₀ + v)t"
-]
-},
+    model:"uniform",
 
-fall:{
-title:"Freier Fall",
-fields:[
-["h0","Anfangshöhe h₀","m"],
-["t","Zeit t","s"],
-["g","Erdbeschleunigung g","m/s²"]
-],
-formulas:[
-"s(t) = ½ · g · t²",
-"v(t) = g · t",
-"v² = 2g · s",
-"t = √(2s / g)",
-"h(t) = h₀ − ½ · g · t²",
-"v = √(2g · h₀)"
-]
-},
+    time:0,
 
-vertical:{
-title:"Senkrechter Wurf nach oben",
-fields:[
-["v0","Anfangsgeschwindigkeit v₀","m/s"],
-["h0","Anfangshöhe h₀","m"],
-["g","Erdbeschleunigung g","m/s²"]
-],
-formulas:[
-"y(t) = y₀ + v₀t − ½gt²",
-"v(t) = v₀ − gt",
-"a = −g",
-"t↑ = v₀ / g",
-"Δh = v₀² / (2g)",
-"hₘₐₓ = h₀ + v₀² / (2g)",
-"v = 0 am höchsten Punkt"
-]
-},
+    running:false,
 
-horizontal:{
-title:"Waagerechter Wurf",
-fields:[
-["v0","Anfangsgeschwindigkeit v₀","m/s"],
-["h0","Anfangshöhe h₀","m"],
-["g","Erdbeschleunigung g","m/s²"]
-],
-formulas:[
-"x(t) = v₀ · t",
-"vₓ = v₀ = konstant",
-"y(t) = h₀ − ½gt²",
-"vᵧ(t) = −gt",
-"t = √(2h₀ / g)",
-"W = v₀ · √(2h₀ / g)",
-"v = √(vₓ² + vᵧ²)"
-]
-},
+    lastFrame:null,
 
-projectile:{
-title:"Schräger Wurf",
-fields:[
-["v0","Anfangsgeschwindigkeit v₀","m/s"],
-["angle","Abwurfwinkel α","°"],
-["h0","Anfangshöhe h₀","m"],
-["g","Erdbeschleunigung g","m/s²"]
-],
-formulas:[
-"vₓ = v₀ cos(α)",
-"vᵧ₀ = v₀ sin(α)",
-"x(t) = v₀ cos(α) · t",
-"y(t) = h₀ + v₀sin(α)t − ½gt²",
-"vᵧ(t) = v₀sin(α) − gt",
-"t↑ = v₀sin(α) / g",
-"hₘₐₓ = h₀ + v₀²sin²(α)/(2g)",
-"t = [v₀sin(α) + √(v₀²sin²(α)+2gh₀)] / g",
-"W = v₀cos(α) · t"
-]
-},
+    trail:[],
 
-average:{
-title:"Durchschnittsgeschwindigkeit",
-fields:[
-["s1","Startweg s₁","m"],
-["s2","Endweg s₂","m"],
-["t1","Startzeit t₁","s"],
-["t2","Endzeit t₂","s"]
-],
-formulas:[
-"v̄ = Δs / Δt",
-"Δs = s₂ − s₁",
-"Δt = t₂ − t₁",
-"v̄ = Gesamtweg / Gesamtzeit"
-]
-},
+    zoom:1,
 
-units:{
-title:"Geschwindigkeit – Einheiten",
-fields:[
-["value","Wert",""],
-["direction","Umrechnung",""]
-],
-formulas:[
-"1 m/s = 3,6 km/h",
-"1 km/h = 1/3,6 m/s",
-"v[m/s] = v[km/h] / 3,6",
-"v[km/h] = v[m/s] · 3,6",
-"1 km = 1000 m",
-"1 min = 60 s"
-]
-}
+    task:null
+
 };
 
-function setMode(m,btn){
-    mode=m;
-    document.querySelectorAll(".mode").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    document.getElementById("modeTitle").textContent=data[m].title;
-    buildInputs();
-    buildFormulas();
-    clearResult();
+
+/* =====================================================
+ELEMENTS
+===================================================== */
+
+const simCanvas =
+    document.getElementById(
+        "simulationCanvas"
+    );
+
+const simCtx =
+    simCanvas.getContext("2d");
+
+
+const pCanvas =
+    document.getElementById(
+        "presentationCanvas"
+    );
+
+const pCtx =
+    pCanvas.getContext("2d");
+
+
+const positionGraph =
+    document.getElementById(
+        "positionGraph"
+    );
+
+const velocityGraph =
+    document.getElementById(
+        "velocityGraph"
+    );
+
+const accelerationGraph =
+    document.getElementById(
+        "accelerationGraph"
+    );
+
+
+/* =====================================================
+HELPERS
+===================================================== */
+
+function value(id){
+
+    return parseFloat(
+        document.getElementById(id).value
+    ) || 0;
+
 }
 
-function buildInputs(){
-    const area=document.getElementById("inputArea");
-    area.innerHTML="";
-    
-    const grid=document.createElement("div");
-    grid.className="inputs";
-
-    data[mode].fields.forEach(f=>{
-        const div=document.createElement("div");
-        div.className="field";
-
-        const label=document.createElement("label");
-        label.textContent=f[1]+(f[2] ? " ["+f[2]+"]" : "");
-
-        let input;
-
-        if(f[0]==="direction"){
-            input=document.createElement("select");
-            input.id=f[0];
-            input.innerHTML=`
-                <option value="ms_to_kmh">m/s → km/h</option>
-                <option value="kmh_to_ms">km/h → m/s</option>
-            `;
-        }else{
-            input=document.createElement("input");
-            input.type="number";
-            input.step="any";
-            input.id=f[0];
-
-            if(f[0]==="g"){
-                input.value="9.81";
-            }
-        }
-
-        div.appendChild(label);
-        div.appendChild(input);
-        grid.appendChild(div);
-    });
-
-    area.appendChild(grid);
-}
-
-function buildFormulas(){
-    const area=document.getElementById("formulas");
-    area.innerHTML="";
-
-    data[mode].formulas.forEach((f,i)=>{
-        const div=document.createElement("div");
-        div.className="formula";
-        div.id="formula"+i;
-        div.textContent=f;
-        area.appendChild(div);
-    });
-}
-
-function val(id){
-    const x=parseFloat(document.getElementById(id)?.value);
-    return Number.isFinite(x) ? x : null;
-}
 
 function fmt(x){
-    if(!Number.isFinite(x)) return "—";
-    if(Math.abs(x)<0.000001) x=0;
-    return Number(x.toFixed(4)).toString();
+
+    return Number(x).toFixed(2);
+
 }
 
-function line(symbol,value,unit){
-    return `<div class="line"><b>${symbol}</b> = ${fmt(value)} ${unit}</div>`;
-}
 
-function show(title,steps,results,formulaIndex){
-    const box=document.getElementById("result");
+function physics(){
 
-    let html=`<h3>Ergebnis</h3>`;
-    html+=`<div><b>${title}</b></div>`;
+    let s0 =
+        value("s0");
 
-    html+=`<div class="steps"><b>Rechnung:</b>`;
-    steps.forEach(s=>{
-        html+=`<div class="step">${s}</div>`;
-    });
-    html+=`</div>`;
+    let v0 =
+        value("v0");
 
-    html+=`<br><b>Ergebnisse mit Einheiten:</b>`;
-    results.forEach(r=>{
-        html+=line(r[0],r[1],r[2]);
-    });
+    let a =
+        value("acc");
 
-    box.innerHTML=html;
-    box.style.display="block";
-
-    highlight(formulaIndex);
-}
-
-function highlight(i){
-    document.querySelectorAll(".formula").forEach(x=>x.classList.remove("active"));
-    if(i!==undefined && document.getElementById("formula"+i)){
-        document.getElementById("formula"+i).classList.add("active");
-    }
-}
-
-function error(msg){
-    const box=document.getElementById("result");
-    box.innerHTML=`<div class="error"><b>Fehler:</b> ${msg}</div>`;
-    box.style.display="block";
-}
-
-function clearResult(){
-    const box=document.getElementById("result");
-    box.style.display="none";
-    box.innerHTML="";
-    highlight();
-}
-
-function calculate(){
-
-    clearResult();
-
-    if(mode==="uniform"){
-
-        const s=val("s"), v=val("v"), t=val("t");
-
-        if(v!==null && t!==null){
-            const S=v*t;
-            show(
-                "Gleichförmige Bewegung",
-                [
-                    `s = v · t`,
-                    `s = ${fmt(v)} m/s · ${fmt(t)} s`,
-                    `s = ${fmt(S)} m`
-                ],
-                [["s",S,"m"],["v",v,"m/s"],["t",t,"s"]],
-                4
-            );
-        }else if(s!==null && t!==null){
-            const V=s/t;
-            show(
-                "Geschwindigkeit berechnen",
-                [
-                    `v = s / t`,
-                    `v = ${fmt(s)} m / ${fmt(t)} s`,
-                    `v = ${fmt(V)} m/s`
-                ],
-                [["s",s,"m"],["t",t,"s"],["v",V,"m/s"]],
-                2
-            );
-        }else if(s!==null && v!==null){
-            const T=s/v;
-            show(
-                "Zeit berechnen",
-                [
-                    `t = s / v`,
-                    `t = ${fmt(s)} m / ${fmt(v)} m/s`,
-                    `t = ${fmt(T)} s`
-                ],
-                [["s",s,"m"],["v",v,"m/s"],["t",T,"s"]],
-                3
-            );
-        }else{
-            error("Bitte mindestens zwei Größen eingeben.");
-        }
-    }
-
-    else if(mode==="accel"){
-
-        const v0=val("v0");
-        const v=val("v");
-        const a=val("a");
-        const t=val("t");
-        const s=val("s");
-
-        if(v0!==null && a!==null && t!==null){
-
-            const V=v0+a*t;
-            const S=v0*t+0.5*a*t*t;
-
-            show(
-                "Gleichmäßig beschleunigte Bewegung",
-                [
-                    `v = v₀ + a · t`,
-                    `v = ${fmt(v0)} m/s + ${fmt(a)} m/s² · ${fmt(t)} s`,
-                    `v = ${fmt(V)} m/s`,
-                    `s = v₀ · t + ½ · a · t²`,
-                    `s = ${fmt(v0)} · ${fmt(t)} + ½ · ${fmt(a)} · ${fmt(t)}²`,
-                    `s = ${fmt(S)} m`
-                ],
-                [
-                    ["v₀",v0,"m/s"],
-                    ["a",a,"m/s²"],
-                    ["t",t,"s"],
-                    ["v",V,"m/s"],
-                    ["s",S,"m"]
-                ],
-                0
-            );
-
-        }else if(v0!==null && v!==null && t!==null){
-
-            const A=(v-v0)/t;
-
-            show(
-                "Beschleunigung berechnen",
-                [
-                    `a = (v − v₀) / t`,
-                    `a = (${fmt(v)} − ${fmt(v0)}) m/s / ${fmt(t)} s`,
-                    `a = ${fmt(A)} m/s²`
-                ],
-                [
-                    ["v₀",v0,"m/s"],
-                    ["v",v,"m/s"],
-                    ["t",t,"s"],
-                    ["a",A,"m/s²"]
-                ],
-                3
-            );
-
-        }else if(v0!==null && a!==null && s!==null){
-
-            const V=Math.sqrt(Math.max(0,v0*v0+2*a*s));
-
-            show(
-                "Endgeschwindigkeit berechnen",
-                [
-                    `v² = v₀² + 2as`,
-                    `v² = (${fmt(v0)} m/s)² + 2 · ${fmt(a)} m/s² · ${fmt(s)} m`,
-                    `v = ${fmt(V)} m/s`
-                ],
-                [
-                    ["v₀",v0,"m/s"],
-                    ["a",a,"m/s²"],
-                    ["s",s,"m"],
-                    ["v",V,"m/s"]
-                ],
-                2
-            );
-
-        }else{
-            error("Bitte passende Größen eingeben, z. B. v₀, a und t.");
-        }
-    }
-
-    else if(mode==="fall"){
-
-        let h0=val("h0");
-        let t=val("t");
-        let g=val("g");
-
-        if(g===null) g=9.81;
-
-        if(t!==null){
-
-            const s=0.5*g*t*t;
-            const v=g*t;
-            const h=h0!==null ? h0-s : null;
-
-            const results=[
-                ["t",t,"s"],
-                ["g",g,"m/s²"],
-                ["s",s,"m"],
-                ["v",v,"m/s"]
-            ];
-
-            if(h!==null) results.push(["h",h,"m"]);
-
-            show(
-                "Freier Fall",
-                [
-                    `s = ½ · g · t²`,
-                    `s = ½ · ${fmt(g)} m/s² · (${fmt(t)} s)²`,
-                    `s = ${fmt(s)} m`,
-                    `v = g · t`,
-                    `v = ${fmt(g)} m/s² · ${fmt(t)} s`,
-                    `v = ${fmt(v)} m/s`
-                ],
-                results,
-                0
-            );
-
-        }else if(h0!==null){
-
-            const T=Math.sqrt(2*h0/g);
-            const V=g*T;
-
-            show(
-                "Fallzeit aus der Höhe",
-                [
-                    `t = √(2h₀ / g)`,
-                    `t = √(2 · ${fmt(h0)} m / ${fmt(g)} m/s²)`,
-                    `t = ${fmt(T)} s`,
-                    `v = g · t`,
-                    `v = ${fmt(V)} m/s`
-                ],
-                [
-                    ["h₀",h0,"m"],
-                    ["g",g,"m/s²"],
-                    ["t",T,"s"],
-                    ["v",V,"m/s"]
-                ],
-                3
-            );
-
-        }else{
-            error("Bitte h₀ oder t eingeben.");
-        }
-    }
-
-    else if(mode==="vertical"){
-
-        const v0=val("v0");
-        const h0=val("h0") ?? 0;
-        const g=val("g") ?? 9.81;
-
-        if(v0===null){
-            error("Bitte v₀ eingeben.");
-            return;
-        }
-
-        const tup=v0/g;
-        const dh=v0*v0/(2*g);
-        const hmax=h0+dh;
-        const total=(v0+Math.sqrt(v0*v0+2*g*h0))/g;
-
-        show(
-            "Senkrechter Wurf nach oben",
-            [
-                `t↑ = v₀ / g`,
-                `t↑ = ${fmt(v0)} m/s / ${fmt(g)} m/s²`,
-                `t↑ = ${fmt(tup)} s`,
-                `Δh = v₀² / (2g)`,
-                `Δh = (${fmt(v0)} m/s)² / (2 · ${fmt(g)} m/s²)`,
-                `Δh = ${fmt(dh)} m`,
-                `hₘₐₓ = h₀ + Δh`,
-                `hₘₐₓ = ${fmt(hmax)} m`
-            ],
-            [
-                ["v₀",v0,"m/s"],
-                ["g",g,"m/s²"],
-                ["t↑",tup,"s"],
-                ["Δh",dh,"m"],
-                ["hₘₐₓ",hmax,"m"],
-                ["Gesamtflugzeit",total,"s"]
-            ],
-            3
+    let duration =
+        Math.max(
+            .1,
+            value("duration")
         );
+
+
+    if(state.model==="uniform"){
+
+        a=0;
+
     }
 
-    else if(mode==="horizontal"){
 
-        const v0=val("v0");
-        const h0=val("h0");
-        const g=val("g") ?? 9.81;
+    if(state.model==="freefall"){
 
-        if(v0===null || h0===null){
-            error("Bitte v₀ und h₀ eingeben.");
-            return;
-        }
+        s0 =
+            Math.max(
+                0,
+                s0
+            );
 
-        const t=Math.sqrt(2*h0/g);
-        const W=v0*t;
-        const vy=g*t;
-        const v=Math.sqrt(v0*v0+vy*vy);
+        v0=0;
 
-        show(
+        a=-9.81;
+
+    }
+
+
+    if(state.model==="vertical"){
+
+        a=-9.81;
+
+    }
+
+
+    if(state.model==="horizontal"){
+
+        a=-9.81;
+
+    }
+
+
+    return {
+        s0,
+        v0,
+        a,
+        duration
+    };
+
+}
+
+
+/* =====================================================
+MODEL INFORMATION
+===================================================== */
+
+const modelData = {
+
+    uniform:{
+
+        name:
+            "Gleichförmige Bewegung",
+
+        note:
+            "Bei der gleichförmigen Bewegung bleibt die Geschwindigkeit konstant. Die Beschleunigung ist a = 0.",
+
+        formula:
+            "s(t) = s₀ + v₀ · t",
+
+        explanation:
+            "Die Position wächst linear mit der Zeit. Im v(t)-Diagramm entsteht eine horizontale Linie.",
+
+        info:
+            "Ein Körper bewegt sich mit konstanter Geschwindigkeit. Gleiche Zeitintervalle entsprechen gleichen Wegstrecken."
+
+    },
+
+
+    accelerated:{
+
+        name:
+            "Gleichmäßig beschleunigte Bewegung",
+
+        note:
+            "Die Beschleunigung bleibt konstant. Dadurch verändert sich die Geschwindigkeit gleichmäßig mit der Zeit.",
+
+        formula:
+            "s(t) = s₀ + v₀ · t + ½ · a · t²",
+
+        explanation:
+            "Die Position folgt einer quadratischen Funktion. Die Geschwindigkeit verändert sich linear.",
+
+        info:
+            "Beispiele sind das Anfahren eines Fahrzeugs oder eine Bewegung auf einer geraden Bahn mit konstanter Beschleunigung."
+
+    },
+
+
+    freefall:{
+
+        name:
+            "Freier Fall",
+
+        note:
+            "Beim idealisierten freien Fall wirkt nur die Erdbeschleunigung. Luftwiderstand wird vernachlässigt.",
+
+        formula:
+            "s(t) = s₀ − ½ · g · t²",
+
+        explanation:
+            "Mit g = 9,81 m/s² nimmt die Geschwindigkeit in jedem Zeitintervall weiter zu.",
+
+        info:
+            "Der freie Fall ist eine gleichmäßig beschleunigte Bewegung mit a = −g, wenn die positive Richtung nach oben zeigt."
+
+    },
+
+
+    vertical:{
+
+        name:
+            "Senkrechter Wurf",
+
+        note:
+            "Ein Körper wird senkrecht nach oben oder unten gestartet. Die Erdbeschleunigung wirkt ständig nach unten.",
+
+        formula:
+            "s(t) = s₀ + v₀ · t − ½ · g · t²",
+
+        explanation:
+            "Die Anfangsgeschwindigkeit und die Erdbeschleunigung bestimmen gemeinsam die Flugbahn.",
+
+        info:
+            "Beim Aufwärtsflug wird der Körper langsamer. Am höchsten Punkt ist v = 0."
+
+    },
+
+
+    horizontal:{
+
+        name:
             "Waagerechter Wurf",
-            [
-                `t = √(2h₀ / g)`,
-                `t = √(2 · ${fmt(h0)} m / ${fmt(g)} m/s²)`,
-                `t = ${fmt(t)} s`,
-                `W = v₀ · t`,
-                `W = ${fmt(v0)} m/s · ${fmt(t)} s`,
-                `W = ${fmt(W)} m`,
-                `vᵧ = g · t = ${fmt(vy)} m/s`
-            ],
-            [
-                ["v₀",v0,"m/s"],
-                ["h₀",h0,"m"],
-                ["g",g,"m/s²"],
-                ["t",t,"s"],
-                ["W",W,"m"],
-                ["vᵧ",vy,"m/s"],
-                ["v",v,"m/s"]
-            ],
-            4
-        );
+
+        note:
+            "Horizontal bleibt die Geschwindigkeit konstant. Vertikal wirkt die Erdbeschleunigung.",
+
+        formula:
+            "x(t) = v₀ · t   ;   y(t) = h − ½ · g · t²",
+
+        explanation:
+            "Die horizontale und vertikale Bewegung werden unabhängig voneinander betrachtet.",
+
+        info:
+            "Der waagerechte Wurf verbindet gleichförmige Bewegung in x-Richtung mit freiem Fall in y-Richtung."
+
     }
 
-    else if(mode==="projectile"){
+};
 
-        const v0=val("v0");
-        const angle=val("angle");
-        const h0=val("h0") ?? 0;
-        const g=val("g") ?? 9.81;
 
-        if(v0===null || angle===null){
-            error("Bitte v₀ und α eingeben.");
-            return;
-        }
+/* =====================================================
+POSITION
+===================================================== */
 
-        const rad=angle*Math.PI/180;
+function stateAt(t){
 
-        const vx=v0*Math.cos(rad);
-        const vy0=v0*Math.sin(rad);
-        const tup=vy0/g;
-        const hmax=h0+(vy0*vy0)/(2*g);
-        const total=(vy0+Math.sqrt(vy0*vy0+2*g*h0))/g;
-        const W=vx*total;
+    const p =
+        physics();
 
-        show(
-            "Schräger Wurf",
-            [
-                `vₓ = v₀ cos(α)`,
-                `vₓ = ${fmt(v0)} m/s · cos(${fmt(angle)}°)`,
-                `vₓ = ${fmt(vx)} m/s`,
-                `vᵧ₀ = v₀ sin(α)`,
-                `vᵧ₀ = ${fmt(v0)} m/s · sin(${fmt(angle)}°)`,
-                `vᵧ₀ = ${fmt(vy0)} m/s`,
-                `t↑ = vᵧ₀ / g = ${fmt(tup)} s`,
-                `hₘₐₓ = ${fmt(hmax)} m`,
-                `W = vₓ · t = ${fmt(W)} m`
-            ],
-            [
-                ["v₀",v0,"m/s"],
-                ["α",angle,"°"],
-                ["vₓ",vx,"m/s"],
-                ["vᵧ₀",vy0,"m/s"],
-                ["g",g,"m/s²"],
-                ["t↑",tup,"s"],
-                ["hₘₐₓ",hmax,"m"],
-                ["Flugzeit",total,"s"],
-                ["Wurfweite W",W,"m"]
-            ],
-            0
-        );
+
+    if(state.model==="horizontal"){
+
+        const x =
+            p.v0*t;
+
+        const y =
+            p.s0 -
+            .5*9.81*t*t;
+
+        const vx =
+            p.v0;
+
+        const vy =
+            -9.81*t;
+
+        return {
+            x,
+            y,
+            s:Math.hypot(x,y),
+            v:Math.hypot(vx,vy),
+            a:9.81,
+            vx,
+            vy
+        };
+
     }
 
-    else if(mode==="average"){
 
-        const s1=val("s1");
-        const s2=val("s2");
-        const t1=val("t1");
-        const t2=val("t2");
+    const s =
+        p.s0 +
+        p.v0*t +
+        .5*p.a*t*t;
 
-        if(s1===null || s2===null || t1===null || t2===null){
-            error("Bitte alle vier Größen eingeben.");
-            return;
-        }
 
-        const ds=s2-s1;
-        const dt=t2-t1;
+    const v =
+        p.v0 +
+        p.a*t;
 
-        if(dt<=0){
-            error("Die Endzeit muss größer als die Startzeit sein.");
-            return;
-        }
 
-        const v=ds/dt;
+    return {
 
-        show(
-            "Durchschnittsgeschwindigkeit",
-            [
-                `Δs = s₂ − s₁`,
-                `Δs = ${fmt(s2)} m − ${fmt(s1)} m = ${fmt(ds)} m`,
-                `Δt = t₂ − t₁`,
-                `Δt = ${fmt(t2)} s − ${fmt(t1)} s = ${fmt(dt)} s`,
-                `v̄ = Δs / Δt`,
-                `v̄ = ${fmt(ds)} m / ${fmt(dt)} s`,
-                `v̄ = ${fmt(v)} m/s`
-            ],
-            [
-                ["s₁",s1,"m"],
-                ["s₂",s2,"m"],
-                ["Δs",ds,"m"],
-                ["t₁",t1,"s"],
-                ["t₂",t2,"s"],
-                ["Δt",dt,"s"],
-                ["v̄",v,"m/s"]
-            ],
-            0
-        );
-    }
+        x:s,
 
-    else if(mode==="units"){
+        y:0,
 
-        const value=val("value");
-        const direction=document.getElementById("direction").value;
+        s,
 
-        if(value===null){
-            error("Bitte einen Zahlenwert eingeben.");
-            return;
-        }
+        v:Math.abs(v),
 
-        if(direction==="ms_to_kmh"){
+        signedV:v,
 
-            const result=value*3.6;
+        a:Math.abs(p.a),
 
-            show(
-                "Umrechnung m/s → km/h",
-                [
-                    `v[km/h] = v[m/s] · 3,6`,
-                    `v = ${fmt(value)} m/s · 3,6`,
-                    `v = ${fmt(result)} km/h`
-                ],
-                [
-                    ["Ausgangswert",value,"m/s"],
-                    ["Ergebnis",result,"km/h"]
-                ],
-                3
-            );
+        vx:v,
 
-        }else{
+        vy:0
 
-            const result=value/3.6;
+    };
 
-            show(
-                "Umrechnung km/h → m/s",
-                [
-                    `v[m/s] = v[km/h] / 3,6`,
-                    `v = ${fmt(value)} km/h / 3,6`,
-                    `v = ${fmt(result)} m/s`
-                ],
-                [
-                    ["Ausgangswert",value,"km/h"],
-                    ["Ergebnis",result,"m/s"]
-                ],
-                2
-            );
-        }
-    }
 }
 
-buildInputs();
-buildFormulas();
+
+/* =====================================================
+SIMULATION RESIZE
+===================================================== */
+
+function resizeSimulation(){
+
+    const rect =
+        simCanvas.getBoundingClientRect();
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+    simCanvas.width =
+        rect.width*dpr;
+
+    simCanvas.height =
+        rect.height*dpr;
+
+    simCtx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+    drawSimulation();
+
+}
+
+
+/* =====================================================
+SIMULATION GEOMETRY
+===================================================== */
+
+function simGeometry(){
+
+    const w =
+        simCanvas.clientWidth;
+
+    const h =
+        simCanvas.clientHeight;
+
+
+    const p =
+        physics();
+
+
+    const end =
+        stateAt(p.duration);
+
+
+    let maxRange;
+
+
+    if(state.model==="horizontal"){
+
+        maxRange =
+            Math.max(
+                Math.abs(end.x),
+                Math.abs(p.s0),
+                10
+            );
+
+    }else{
+
+        maxRange =
+            Math.max(
+                Math.abs(p.s0),
+                Math.abs(end.s),
+                Math.abs(
+                    p.s0+p.v0*p.duration
+                ),
+                10
+            );
+
+    }
+
+
+    const scale =
+        Math.min(
+            w/(maxRange*1.15),
+            65
+        ) *
+        state.zoom;
+
+
+    return {
+
+        w,
+
+        h,
+
+        scale,
+
+        ox:w*.12,
+
+        oy:
+            state.model==="horizontal"
+                ? h*.72
+                : h*.58
+
+    };
+
+}
+
+
+/* =====================================================
+DRAW GRID
+===================================================== */
+
+function drawSimulationGrid(g){
+
+    const {
+        w,
+        h,
+        scale,
+        ox,
+        oy
+    }=g;
+
+
+    simCtx.fillStyle="#07111c";
+
+    simCtx.fillRect(
+        0,
+        0,
+        w,
+        h
+    );
+
+
+    /* grid */
+
+    simCtx.strokeStyle=
+        "rgba(90,130,160,.10)";
+
+    simCtx.lineWidth=1;
+
+
+    const step=
+        Math.max(
+            25,
+            Math.min(
+                scale,
+                80
+            )
+        );
+
+
+    for(
+        let x=ox%step;
+        x<w;
+        x+=step
+    ){
+
+        simCtx.beginPath();
+
+        simCtx.moveTo(x,0);
+
+        simCtx.lineTo(x,h);
+
+        simCtx.stroke();
+
+    }
+
+
+    for(
+        let y=oy%step;
+        y<h;
+        y+=step
+    ){
+
+        simCtx.beginPath();
+
+        simCtx.moveTo(0,y);
+
+        simCtx.lineTo(w,y);
+
+        simCtx.stroke();
+
+    }
+
+
+    /* ground */
+
+    if(state.model==="horizontal"){
+
+        simCtx.strokeStyle="#496276";
+
+        simCtx.lineWidth=3;
+
+        simCtx.beginPath();
+
+        simCtx.moveTo(0,oy);
+
+        simCtx.lineTo(w,oy);
+
+        simCtx.stroke();
+
+    }else{
+
+        simCtx.strokeStyle="#496276";
+
+        simCtx.lineWidth=2;
+
+        simCtx.beginPath();
+
+        simCtx.moveTo(0,oy);
+
+        simCtx.lineTo(w,oy);
+
+        simCtx.stroke();
+
+    }
+
+
+    /* axis */
+
+    simCtx.strokeStyle="#69829b";
+
+    simCtx.lineWidth=1.5;
+
+    simCtx.beginPath();
+
+    simCtx.moveTo(ox,30);
+
+    simCtx.lineTo(ox,oy+50);
+
+    simCtx.stroke();
+
+
+    simCtx.fillStyle="#9bb0c3";
+
+    simCtx.font=
+        "12px Inter, sans-serif";
+
+    simCtx.fillText(
+        "0 m",
+        ox+5,
+        oy+18
+    );
+
+
+    simCtx.fillText(
+        "x / s",
+        w-45,
+        oy-10
+    );
+
+}
+
+
+/* =====================================================
+ARROW
+===================================================== */
+
+function drawSimArrow(
+    start,
+    end,
+    color,
+    label
+){
+
+    const dx=
+        end.x-start.x;
+
+    const dy=
+        end.y-start.y;
+
+    const len=
+        Math.hypot(dx,dy);
+
+    if(len<2)
+        return;
+
+
+    const ux=dx/len;
+
+    const uy=dy/len;
+
+    const head=11;
+
+
+    simCtx.strokeStyle=color;
+
+    simCtx.fillStyle=color;
+
+    simCtx.lineWidth=4;
+
+    simCtx.lineCap="round";
+
+
+    simCtx.beginPath();
+
+    simCtx.moveTo(
+        start.x,
+        start.y
+    );
+
+    simCtx.lineTo(
+        end.x,
+        end.y
+    );
+
+    simCtx.stroke();
+
+
+    simCtx.beginPath();
+
+    simCtx.moveTo(
+        end.x,
+        end.y
+    );
+
+    simCtx.lineTo(
+        end.x-ux*head-uy*head*.55,
+        end.y-uy*head+ux*head*.55
+    );
+
+    simCtx.lineTo(
+        end.x-ux*head+uy*head*.55,
+        end.y-uy*head-ux*head*.55
+    );
+
+    simCtx.closePath();
+
+    simCtx.fill();
+
+
+    simCtx.font=
+        "bold 13px Inter";
+
+    simCtx.fillText(
+        label,
+        end.x+7,
+        end.y-7
+    );
+
+}
+
+
+/* =====================================================
+DRAW SIMULATION
+===================================================== */
+
+function drawSimulation(){
+
+    const g=
+        simGeometry();
+
+
+    drawSimulationGrid(g);
+
+
+    const current=
+        stateAt(state.time);
+
+
+    /* trail */
+
+    if(state.trail.length>1){
+
+        simCtx.beginPath();
+
+        state.trail.forEach(
+            (point,index)=>{
+
+                const x =
+                    g.ox +
+                    point.x*g.scale;
+
+                const y =
+                    state.model==="horizontal"
+                        ? g.oy -
+                          point.y*g.scale
+                        : g.oy;
+
+                if(index===0)
+                    simCtx.moveTo(x,y);
+                else
+                    simCtx.lineTo(x,y);
+
+            }
+        );
+
+        simCtx.strokeStyle=
+            "rgba(167,139,250,.75)";
+
+        simCtx.lineWidth=2;
+
+        simCtx.stroke();
+
+    }
+
+
+    let px;
+    let py;
+
+
+    if(state.model==="horizontal"){
+
+        px =
+            g.ox +
+            current.x*g.scale;
+
+        py =
+            g.oy -
+            current.y*g.scale;
+
+    }else{
+
+        px =
+            g.ox +
+            current.s*g.scale;
+
+        py =
+            g.oy;
+
+    }
+
+
+    /* object glow */
+
+    const glow=
+        simCtx.createRadialGradient(
+            px,
+            py,
+            2,
+            px,
+            py,
+            30
+        );
+
+    glow.addColorStop(
+        0,
+        "rgba(34,197,94,.45)"
+    );
+
+    glow.addColorStop(
+        1,
+        "rgba(34,197,94,0)"
+    );
+
+    simCtx.fillStyle=glow;
+
+    simCtx.beginPath();
+
+    simCtx.arc(
+        px,
+        py,
+        30,
+        0,
+        Math.PI*2
+    );
+
+    simCtx.fill();
+
+
+    /* velocity vector */
+
+    if(state.model==="horizontal"){
+
+        const vxLength=
+            current.vx*3;
+
+        const vyLength=
+            -current.vy*3;
+
+
+        drawSimArrow(
+            {x:px,y:py},
+            {
+                x:px+vxLength,
+                y:py
+            },
+            "#38bdf8",
+            "vₓ"
+        );
+
+
+        drawSimArrow(
+            {x:px,y:py},
+            {
+                x:px,
+                y:py+vyLength
+            },
+            "#38bdf8",
+            "vᵧ"
+        );
+
+
+    }else{
+
+        const v=
+            current.signedV ??
+            current.vx;
+
+
+        drawSimArrow(
+            {x:px,y:py},
+            {
+                x:px+v*3,
+                y:py
+            },
+            "#38bdf8",
+            "v"
+        );
+
+
+        if(Math.abs(current.a)>0){
+
+            drawSimArrow(
+                {x:px,y:py},
+                {
+                    x:px,
+                    y:py+Math.sign(-current.a)*35
+                },
+                "#f59e0b",
+                "a"
+            );
+
+        }
+
+    }
+
+
+    /* object */
+
+    simCtx.fillStyle="#22c55e";
+
+    simCtx.beginPath();
+
+    simCtx.arc(
+        px,
+        py,
+        10,
+        0,
+        Math.PI*2
+    );
+
+    simCtx.fill();
+
+
+    simCtx.strokeStyle="#bbf7d0";
+
+    simCtx.lineWidth=2;
+
+    simCtx.stroke();
+
+
+    /* label */
+
+    simCtx.fillStyle="#e8f5ed";
+
+    simCtx.font=
+        "bold 13px Inter";
+
+    simCtx.fillText(
+        "Körper",
+        px+13,
+        py-12
+    );
+
+
+    /* time */
+
+    simCtx.fillStyle="#a6b9cb";
+
+    simCtx.font=
+        "12px Inter";
+
+    simCtx.fillText(
+        `t = ${fmt(state.time)} s`,
+        18,
+        g.h-18
+    );
+
+}
+
+
+/* =====================================================
+GRAPHS
+===================================================== */
+
+function prepareGraph(canvas){
+
+    const rect=
+        canvas.getBoundingClientRect();
+
+    const dpr=
+        window.devicePixelRatio || 1;
+
+    canvas.width=
+        rect.width*dpr;
+
+    canvas.height=
+        rect.height*dpr;
+
+    const c=
+        canvas.getContext("2d");
+
+    c.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+    return c;
+
+}
+
+
+function drawGraph(
+    canvas,
+    mode
+){
+
+    const c=
+        prepareGraph(canvas);
+
+    const w=
+        canvas.clientWidth;
+
+    const h=
+        canvas.clientHeight;
+
+
+    c.fillStyle="#07131f";
+
+    c.fillRect(
+        0,
+        0,
+        w,
+        h
+    );
+
+
+    const p=
+        physics();
+
+
+    const N=100;
+
+    const values=[];
+
+
+    for(
+        let i=0;
+        i<=N;
+        i++
+    ){
+
+        const t=
+            p.duration*i/N;
+
+        const q=
+            stateAt(t);
+
+        let y;
+
+
+        if(mode==="s")
+            y=q.s;
+
+        if(mode==="v")
+            y=q.signedV ?? q.v;
+
+        if(mode==="a")
+            y=
+                state.model==="uniform"
+                    ? 0
+                    : p.a;
+
+
+        values.push({
+            t,
+            y
+        });
+
+    }
+
+
+    let min=
+        Math.min(
+            ...values.map(v=>v.y)
+        );
+
+    let max=
+        Math.max(
+            ...values.map(v=>v.y)
+        );
+
+
+    if(Math.abs(max-min)<.001){
+
+        max+=1;
+
+        min-=1;
+
+    }
+
+
+    const left=42;
+
+    const right=12;
+
+    const top=15;
+
+    const bottom=28;
+
+
+    function X(t){
+
+        return left +
+            (t/p.duration)*
+            (w-left-right);
+
+    }
+
+
+    function Y(y){
+
+        return top +
+            (1-(y-min)/(max-min))*
+            (h-top-bottom);
+
+    }
+
+
+    /* grid */
+
+    c.strokeStyle=
+        "rgba(100,130,155,.13)";
+
+    c.lineWidth=1;
+
+
+    for(let i=0;i<=4;i++){
+
+        const y=
+            top+
+            i*(h-top-bottom)/4;
+
+        c.beginPath();
+
+        c.moveTo(left,y);
+
+        c.lineTo(w-right,y);
+
+        c.stroke();
+
+    }
+
+
+    for(let i=0;i<=5;i++){
+
+        const x=
+            left+
+            i*(w-left-right)/5;
+
+        c.beginPath();
+
+        c.moveTo(x,top);
+
+        c.lineTo(x,h-bottom);
+
+        c.stroke();
+
+    }
+
+
+    /* zero */
+
+    if(min<=0 && max>=0){
+
+        const zy=Y(0);
+
+        c.strokeStyle=
+            "rgba(160,180,200,.4)";
+
+        c.beginPath();
+
+        c.moveTo(left,zy);
+
+        c.lineTo(w-right,zy);
+
+        c.stroke();
+
+    }
+
+
+    /* curve */
+
+    c.beginPath();
+
+
+    values.forEach(
+        (point,index)=>{
+
+            const x=X(point.t);
+
+            const y=Y(point.y);
+
+            if(index===0)
+                c.moveTo(x,y);
+            else
+                c.lineTo(x,y);
+
+        }
+    );
+
+
+    let curveColor="#22c55e";
+
+
+    if(mode==="v")
+        curveColor="#38bdf8";
+
+    if(mode==="a")
+        curveColor="#f59e0b";
+
+
+    c.strokeStyle=curveColor;
+
+    c.lineWidth=2.5;
+
+    c.stroke();
+
+
+    /* current time */
+
+    const currentX=
+        X(
+            Math.min(
+                state.time,
+                p.duration
+            )
+        );
+
+
+    c.strokeStyle=
+        "rgba(255,255,255,.35)";
+
+    c.lineWidth=1.5;
+
+    c.beginPath();
+
+    c.moveTo(
+        currentX,
+        top
+    );
+
+    c.lineTo(
+        currentX,
+        h-bottom
+    );
+
+    c.stroke();
+
+
+    /* labels */
+
+    c.fillStyle="#8298ac";
+
+    c.font="10px Inter";
+
+    c.fillText(
+        `${fmt(max)}`,
+        5,
+        top+5
+    );
+
+    c.fillText(
+        `${fmt(min)}`,
+        5,
+        h-bottom
+    );
+
+    c.fillText(
+        "t [s]",
+        w-32,
+        h-8
+    );
+
+}
+
+
+function drawGraphs(){
+
+    drawGraph(
+        positionGraph,
+        "s"
+    );
+
+    drawGraph(
+        velocityGraph,
+        "v"
+    );
+
+    drawGraph(
+        accelerationGraph,
+        "a"
+    );
+
+}
+
+
+/* =====================================================
+LIVE DATA
+===================================================== */
+
+function updateLive(){
+
+    const q=
+        stateAt(state.time);
+
+
+    document.getElementById(
+        "liveTime"
+    ).textContent =
+        `${fmt(state.time)} s`;
+
+
+    if(state.model==="horizontal"){
+
+        document.getElementById(
+            "livePosition"
+        ).textContent =
+            `${fmt(q.x)} m / ${fmt(q.y)} m`;
+
+        document.getElementById(
+            "liveVelocity"
+        ).textContent =
+            `${fmt(q.v)} m/s`;
+
+    }else{
+
+        document.getElementById(
+            "livePosition"
+        ).textContent =
+            `${fmt(q.s)} m`;
+
+        document.getElementById(
+            "liveVelocity"
+        ).textContent =
+            `${fmt(q.signedV ?? q.v)} m/s`;
+
+    }
+
+
+    document.getElementById(
+        "liveAcceleration"
+    ).textContent =
+        `${fmt(q.a)} m/s²`;
+
+
+    const end=
+        stateAt(
+            physics().duration
+        );
+
+
+    if(state.model==="horizontal"){
+
+        document.getElementById(
+            "resultMain"
+        ).textContent =
+            `x = ${fmt(end.x)} m`;
+
+        document.getElementById(
+            "resultSub"
+        ).textContent =
+            `y = ${fmt(end.y)} m · v = ${fmt(end.v)} m/s`;
+
+    }else{
+
+        document.getElementById(
+            "resultMain"
+        ).textContent =
+            `s = ${fmt(end.s)} m`;
+
+        document.getElementById(
+            "resultSub"
+        ).textContent =
+            `v = ${fmt(end.signedV ?? end.v)} m/s · a = ${fmt(end.a)} m/s²`;
+
+    }
+
+}
+
+
+/* =====================================================
+DATA TABLE
+===================================================== */
+
+function updateTable(){
+
+    const p=
+        physics();
+
+
+    const rows=11;
+
+    let html="";
+
+
+    for(
+        let i=0;
+        i<=rows;
+        i++
+    ){
+
+        const t=
+            p.duration*i/rows;
+
+        const q=
+            stateAt(t);
+
+        const previous=
+            stateAt(
+                Math.max(
+                    0,
+                    t-.01
+                )
+            );
+
+
+        let position =
+            state.model==="horizontal"
+                ? Math.hypot(q.x,q.y)
+                : q.s;
+
+
+        let delta=
+            position -
+            (
+                state.model==="horizontal"
+                    ? Math.hypot(
+                        previous.x,
+                        previous.y
+                    )
+                    : previous.s
+            );
+
+
+        html+=`
+
+        <tr>
+
+            <td>
+                ${fmt(t)}
+            </td>
+
+            <td>
+                ${fmt(position)}
+            </td>
+
+            <td>
+                ${fmt(q.signedV ?? q.v)}
+            </td>
+
+            <td>
+                ${fmt(q.a)}
+            </td>
+
+            <td>
+                ${fmt(delta)}
+            </td>
+
+        </tr>
+
+        `;
+
+    }
+
+
+    document.getElementById(
+        "dataTable"
+    ).innerHTML=html;
+
+}
+
+
+/* =====================================================
+FORMULA
+===================================================== */
+
+function updateFormula(){
+
+    const data=
+        modelData[state.model];
+
+
+    document.getElementById(
+        "modelDescription"
+    ).textContent=
+        data.name;
+
+
+    document.getElementById(
+        "physicsNote"
+    ).textContent=
+        data.note;
+
+
+    document.getElementById(
+        "formulaMain"
+    ).textContent=
+        data.formula;
+
+
+    document.getElementById(
+        "formulaExplanation"
+    ).textContent=
+        data.explanation;
+
+
+    document.getElementById(
+        "modelInfo"
+    ).textContent=
+        data.info;
+
+
+    document.getElementById(
+        "presentationModel"
+    ).textContent=
+        data.name;
+
+}
+
+
+/* =====================================================
+MODEL CHANGE
+===================================================== */
+
+document
+    .querySelectorAll(".model")
+    .forEach(
+        element=>{
+
+            element.addEventListener(
+                "click",
+                ()=>{
+
+                    document
+                        .querySelectorAll(".model")
+                        .forEach(
+                            m=>
+                            m.classList.remove(
+                                "active"
+                            )
+                        );
+
+
+                    element.classList.add(
+                        "active"
+                    );
+
+
+                    state.model=
+                        element.dataset.model;
+
+
+                    updateModelParameters();
+
+                    updateAll();
+
+                }
+            );
+
+        }
+    );
+
+
+function updateModelParameters(){
+
+    if(state.model==="uniform"){
+
+        document.getElementById(
+            "acc"
+        ).value=0;
+
+        document.getElementById(
+            "acc"
+        ).disabled=false;
+
+        document.getElementById(
+            "s0"
+        ).value=0;
+
+        document.getElementById(
+            "v0"
+        ).value=5;
+
+    }
+
+
+    if(state.model==="accelerated"){
+
+        document.getElementById(
+            "s0"
+        ).value=0;
+
+        document.getElementById(
+            "v0"
+        ).value=2;
+
+        document.getElementById(
+            "acc"
+        ).value=2;
+
+        document.getElementById(
+            "acc"
+        ).disabled=false;
+
+    }
+
+
+    if(state.model==="freefall"){
+
+        document.getElementById(
+            "s0"
+        ).value=20;
+
+        document.getElementById(
+            "v0"
+        ).value=0;
+
+        document.getElementById(
+            "acc"
+        ).value=-9.81;
+
+        document.getElementById(
+            "acc"
+        ).disabled=true;
+
+        document.getElementById(
+            "duration"
+        ).value=2.02;
+
+    }
+
+
+    if(state.model==="vertical"){
+
+        document.getElementById(
+            "s0"
+        ).value=0;
+
+        document.getElementById(
+            "v0"
+        ).value=15;
+
+        document.getElementById(
+            "acc"
+        ).value=-9.81;
+
+        document.getElementById(
+            "acc"
+        ).disabled=true;
+
+        document.getElementById(
+            "duration"
+        ).value=3.2;
+
+    }
+
+
+    if(state.model==="horizontal"){
+
+        document.getElementById(
+            "s0"
+        ).value=20;
+
+        document.getElementById(
+            "v0"
+        ).value=10;
+
+        document.getElementById(
+            "acc"
+        ).value=-9.81;
+
+        document.getElementById(
+            "acc"
+        ).disabled=true;
+
+        document.getElementById(
+            "duration"
+        ).value=2.02;
+
+    }
+
+
+    state.time=0;
+
+    state.trail=[];
+
+}
+
+
+/* =====================================================
+SIMULATION CONTROL
+===================================================== */
+
+function resetSimulation(){
+
+    state.time=0;
+
+    state.running=false;
+
+    state.lastFrame=null;
+
+    state.trail=[];
+
+    updateAll();
+
+}
+
+
+function startSimulation(){
+
+    if(state.time>=physics().duration)
+        state.time=0;
+
+    state.running=true;
+
+    state.lastFrame=
+        performance.now();
+
+    requestAnimationFrame(
+        animationLoop
+    );
+
+}
+
+
+function pauseSimulation(){
+
+    state.running=false;
+
+    state.lastFrame=null;
+
+}
+
+
+function stepSimulation(){
+
+    state.running=false;
+
+    const dt=
+        parseFloat(
+            document.getElementById(
+                "dt"
+            ).value
+        );
+
+
+    state.time=
+        Math.min(
+            physics().duration,
+            state.time+dt
+        );
+
+
+    addTrailPoint();
+
+    updateAll();
+
+}
+
+
+function endSimulation(){
+
+    state.running=false;
+
+    state.time=
+        physics().duration;
+
+    addTrailPoint();
+
+    updateAll();
+
+}
+
+
+function addTrailPoint(){
+
+    const q=
+        stateAt(state.time);
+
+
+    state.trail.push({
+
+        x:
+            state.model==="horizontal"
+                ? q.x
+                : q.s,
+
+        y:
+            state.model==="horizontal"
+                ? q.y
+                : 0
+
+    });
+
+
+    if(state.trail.length>800)
+        state.trail.shift();
+
+}
+
+
+/* =====================================================
+ANIMATION
+===================================================== */
+
+function animationLoop(timestamp){
+
+    if(!state.running)
+        return;
+
+
+    if(!state.lastFrame)
+        state.lastFrame=timestamp;
+
+
+    const elapsed=
+        (timestamp-state.lastFrame)/1000;
+
+
+    state.lastFrame=timestamp;
+
+
+    const speed=
+        parseFloat(
+            document.getElementById(
+                "speed"
+            ).value
+        );
+
+
+    state.time +=
+        elapsed*speed;
+
+
+    if(state.time>=physics().duration){
+
+        state.time=
+            physics().duration;
+
+        state.running=false;
+
+    }
+
+
+    addTrailPoint();
+
+    updateAll();
+
+
+    if(state.running){
+
+        requestAnimationFrame(
+            animationLoop
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+BUTTON EVENTS
+===================================================== */
+
+document
+    .getElementById("startBtn")
+    .addEventListener(
+        "click",
+        startSimulation
+    );
+
+
+document
+    .getElementById("pauseBtn")
+    .addEventListener(
+        "click",
+        pauseSimulation
+    );
+
+
+document
+    .getElementById("stepBtn")
+    .addEventListener(
+        "click",
+        stepSimulation
+    );
+
+
+document
+    .getElementById("endBtn")
+    .addEventListener(
+        "click",
+        endSimulation
+    );
+
+
+document
+    .getElementById("clearTrailBtn")
+    .addEventListener(
+        "click",
+        ()=>{
+            state.trail=[];
+            updateAll();
+        }
+    );
+
+
+document
+    .getElementById("resetBtn")
+    .addEventListener(
+        "click",
+        ()=>{
+            updateModelParameters();
+            resetSimulation();
+        }
+    );
+
+
+[
+    "s0",
+    "v0",
+    "acc",
+    "duration",
+    "dt",
+    "direction"
+].forEach(
+    id=>{
+
+        document
+            .getElementById(id)
+            .addEventListener(
+                "input",
+                ()=>{
+                    state.time=
+                        Math.min(
+                            state.time,
+                            physics().duration
+                        );
+
+                    updateAll();
+                }
+            );
+
+    }
+);
+
+
+/* =====================================================
+SIM ZOOM
+===================================================== */
+
+simCanvas.addEventListener(
+    "wheel",
+    e=>{
+
+        e.preventDefault();
+
+        state.zoom *=
+            e.deltaY<0
+                ? 1.1
+                : .9;
+
+
+        state.zoom=
+            Math.max(
+                .5,
+                Math.min(
+                    3,
+                    state.zoom
+                )
+            );
+
+
+        drawSimulation();
+
+    },
+    {passive:false}
+);
+
+
+/* =====================================================
+TASK MODE
+===================================================== */
+
+const tasks=[
+
+    {
+
+        title:
+            "Berechne die Position.",
+
+        text:
+            "Ein Körper startet bei s₀ = 0 m mit v₀ = 5 m/s. Wie weit ist er nach 4 s?",
+
+        answer:20
+
+    },
+
+    {
+
+        title:
+            "Berechne die Geschwindigkeit.",
+
+        text:
+            "Ein Körper startet mit v₀ = 3 m/s und beschleunigt mit a = 2 m/s². Wie groß ist v nach 5 s?",
+
+        answer:13
+
+    },
+
+    {
+
+        title:
+            "Berechne die Beschleunigung.",
+
+        text:
+            "Die Geschwindigkeit steigt von 4 m/s auf 16 m/s in 3 s. Wie groß ist a?",
+
+        answer:4
+
+    },
+
+    {
+
+        title:
+            "Berechne den Weg.",
+
+        text:
+            "Ein Körper startet aus dem Stand und beschleunigt mit 2 m/s². Welchen Weg legt er in 5 s zurück?",
+
+        answer:25
+
+    },
+
+    {
+
+        title:
+            "Freier Fall.",
+
+        text:
+            "Ein Körper fällt 2 s lang frei. Wie groß ist seine Fallgeschwindigkeit ungefähr?",
+
+        answer:19.62
+
+    }
+
+];
+
+
+function newTask(){
+
+    const task=
+        tasks[
+            Math.floor(
+                Math.random()*tasks.length
+            )
+        ];
+
+
+    state.task=task;
+
+
+    document.getElementById(
+        "taskTitle"
+    ).textContent=
+        task.title;
+
+
+    document.getElementById(
+        "taskText"
+    ).textContent=
+        task.text;
+
+
+    document.getElementById(
+        "taskAnswer"
+    ).value="";
+
+
+    document.getElementById(
+        "taskFeedback"
+    ).textContent="";
+
+}
+
+
+document
+    .getElementById("newTask")
+    .addEventListener(
+        "click",
+        newTask
+    );
+
+
+document
+    .getElementById("checkTask")
+    .addEventListener(
+        "click",
+        ()=>{
+
+            const user=
+                parseFloat(
+                    document.getElementById(
+                        "taskAnswer"
+                    ).value
+                );
+
+
+            if(!Number.isFinite(user))
+                return;
+
+
+            const error=
+                Math.abs(
+                    user-state.task.answer
+                );
+
+
+            const feedback=
+                document.getElementById(
+                    "taskFeedback"
+                );
+
+
+            if(error<=.1){
+
+                feedback.textContent=
+                    "✓ Richtig! Sehr gut.";
+
+                feedback.style.color=
+                    "#4ade80";
+
+            }else{
+
+                feedback.textContent=
+                    `Noch nicht. Richtiger Wert:
+                    ${fmt(state.task.answer)}`;
+
+                feedback.style.color=
+                    "#f87171";
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+PRESENTATION MODE
+===================================================== */
+
+function resizePresentation(){
+
+    const dpr=
+        window.devicePixelRatio || 1;
+
+
+    pCanvas.width=
+        window.innerWidth*dpr;
+
+    pCanvas.height=
+        window.innerHeight*dpr;
+
+
+    pCtx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+
+    drawPresentation();
+
+}
+
+
+function drawPresentation(){
+
+    const w=
+        window.innerWidth;
+
+    const h=
+        window.innerHeight;
+
+
+    pCtx.fillStyle="#02070d";
+
+    pCtx.fillRect(
+        0,
+        0,
+        w,
+        h
+    );
+
+
+    const p=
+        physics();
+
+
+    const q=
+        stateAt(state.time);
+
+
+    const max=
+        Math.max(
+            Math.abs(q.s),
+            Math.abs(p.s0),
+            10
+        );
+
+
+    const scale=
+        Math.min(
+            w/(max*1.2),
+            100
+        );
+
+
+    const ox=
+        w*.12;
+
+    const oy=
+        state.model==="horizontal"
+            ? h*.72
+            : h*.58;
+
+
+    /* grid */
+
+    pCtx.strokeStyle=
+        "rgba(100,140,170,.12)";
+
+    pCtx.lineWidth=1;
+
+
+    for(
+        let x=ox%scale;
+        x<w;
+        x+=scale
+    ){
+
+        pCtx.beginPath();
+
+        pCtx.moveTo(x,0);
+
+        pCtx.lineTo(x,h);
+
+        pCtx.stroke();
+
+    }
+
+
+    pCtx.strokeStyle="#657d95";
+
+    pCtx.lineWidth=2;
+
+    pCtx.beginPath();
+
+    pCtx.moveTo(0,oy);
+
+    pCtx.lineTo(w,oy);
+
+    pCtx.stroke();
+
+
+    let px;
+
+    let py;
+
+
+    if(state.model==="horizontal"){
+
+        px=
+            ox+
+            q.x*scale;
+
+        py=
+            oy-
+            q.y*scale;
+
+    }else{
+
+        px=
+            ox+
+            q.s*scale;
+
+        py=oy;
+
+    }
+
+
+    /* trail */
+
+    if(state.trail.length>1){
+
+        pCtx.beginPath();
+
+        state.trail.forEach(
+            (point,index)=>{
+
+                const x=
+                    ox+
+                    point.x*scale;
+
+                const y=
+                    state.model==="horizontal"
+                        ? oy-point.y*scale
+                        : oy;
+
+                if(index===0)
+                    pCtx.moveTo(x,y);
+                else
+                    pCtx.lineTo(x,y);
+
+            }
+        );
+
+
+        pCtx.strokeStyle=
+            "#a78bfa";
+
+        pCtx.lineWidth=4;
+
+        pCtx.stroke();
+
+    }
+
+
+    /* object */
+
+    pCtx.fillStyle="#22c55e";
+
+    pCtx.beginPath();
+
+    pCtx.arc(
+        px,
+        py,
+        17,
+        0,
+        Math.PI*2
+    );
+
+    pCtx.fill();
+
+
+    pCtx.strokeStyle="#bbf7d0";
+
+    pCtx.lineWidth=3;
+
+    pCtx.stroke();
+
+
+    /* velocity */
+
+    const v=
+        q.signedV ??
+        q.v;
+
+
+    pCtx.strokeStyle="#38bdf8";
+
+    pCtx.lineWidth=6;
+
+    pCtx.beginPath();
+
+    pCtx.moveTo(px,py);
+
+    pCtx.lineTo(
+        px+v*4,
+        py
+    );
+
+    pCtx.stroke();
+
+
+    /* information */
+
+    pCtx.fillStyle="#edf5fc";
+
+    pCtx.font=
+        "bold 30px Inter";
+
+
+    pCtx.fillText(
+        `t = ${fmt(state.time)} s`,
+        45,
+        h-115
+    );
+
+
+    pCtx.fillStyle="#22c55e";
+
+    pCtx.fillText(
+        `s = ${fmt(q.s)} m`,
+        45,
+        h-75
+    );
+
+
+    pCtx.fillStyle="#38bdf8";
+
+    pCtx.fillText(
+        `v = ${fmt(q.signedV ?? q.v)} m/s`,
+        45,
+        h-35
+    );
+
+}
+
+
+document
+    .getElementById("presentationBtn")
+    .addEventListener(
+        "click",
+        ()=>{
+
+            document
+                .getElementById(
+                    "presentation"
+                )
+                .classList.add(
+                    "active"
+                );
+
+            resizePresentation();
+
+        }
+    );
+
+
+document
+    .getElementById("closePresentation")
+    .addEventListener(
+        "click",
+        ()=>{
+
+            document
+                .getElementById(
+                    "presentation"
+                )
+                .classList.remove(
+                    "active"
+                );
+
+        }
+    );
+
+
+/* =====================================================
+KEYBOARD
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(e.key===" "){
+
+            e.preventDefault();
+
+            if(state.running)
+                pauseSimulation();
+            else
+                startSimulation();
+
+        }
+
+
+        if(
+            e.key.toLowerCase()==="r"
+        ){
+
+            resetSimulation();
+
+        }
+
+
+        if(e.key==="Escape"){
+
+            document
+                .getElementById(
+                    "presentation"
+                )
+                .classList.remove(
+                    "active"
+                );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+UPDATE ALL
+===================================================== */
+
+function updateAll(){
+
+    updateFormula();
+
+    updateLive();
+
+    updateTable();
+
+    drawSimulation();
+
+    drawGraphs();
+
+
+    if(
+        document
+            .getElementById(
+                "presentation"
+            )
+            .classList.contains(
+                "active"
+            )
+    ){
+
+        drawPresentation();
+
+    }
+
+}
+
+
+/* =====================================================
+WINDOW RESIZE
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        resizeSimulation();
+
+        drawGraphs();
+
+
+        if(
+            document
+                .getElementById(
+                    "presentation"
+                )
+                .classList.contains(
+                    "active"
+                )
+        ){
+
+            resizePresentation();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+INITIALIZE
+===================================================== */
+
+updateModelParameters();
+
+newTask();
+
+resizeSimulation();
+
+updateAll();
 
 </script>
 
