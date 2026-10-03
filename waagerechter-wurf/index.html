@@ -1,0 +1,3074 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>S.Michaelis | Waagerechter Wurf – Interaktives Labor</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #e5eef9;
+
+    background:
+        radial-gradient(circle at 12% 10%, #12355a 0%, transparent 32%),
+        radial-gradient(circle at 88% 85%, #241c50 0%, transparent 35%),
+        linear-gradient(135deg, #050914, #091525 55%, #050912);
+
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.container {
+    width: min(1400px, calc(100% - 32px));
+    margin: auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    padding: 38px 0 28px;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    width: 64px;
+    height: 64px;
+
+    flex: 0 0 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    font-size: 28px;
+    font-weight: bold;
+
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+
+    border: 1px solid #ffffff22;
+
+    box-shadow:
+        0 0 35px #2563eb44,
+        inset 0 0 20px #ffffff18;
+}
+
+.brand {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #93c5fd;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(27px, 4vw, 43px);
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    margin-top: 7px;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.lab-grid {
+    display: grid;
+    grid-template-columns: 330px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.panel {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,31,50,.94),
+            rgba(7,15,27,.96)
+        );
+
+    border: 1px solid #ffffff12;
+    border-radius: 18px;
+
+    box-shadow: 0 20px 55px #0008;
+}
+
+.panel-header {
+    padding: 17px 19px;
+    border-bottom: 1px solid #ffffff0e;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: #94a3b8;
+}
+
+.panel-body {
+    padding: 18px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-bottom: 7px;
+
+    font-size: 12px;
+    color: #cbd5e1;
+}
+
+.input-label span {
+    color: #64748b;
+}
+
+.input-row {
+    display: flex;
+    gap: 8px;
+}
+
+input[type="number"] {
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 9px 11px;
+
+    border-radius: 9px;
+
+    border: 1px solid #ffffff18;
+
+    background: #07111f;
+    color: #f8fafc;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+input[type="number"]:focus {
+    border-color: #60a5fa88;
+    box-shadow: 0 0 0 3px #2563eb18;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: #60a5fa;
+}
+
+.range-value {
+    min-width: 58px;
+    text-align: right;
+    color: #93c5fd;
+    font-weight: bold;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 18px;
+}
+
+button {
+    min-height: 42px;
+
+    padding: 8px 10px;
+
+    border-radius: 9px;
+
+    border: 1px solid #ffffff18;
+
+    background: #0d2034;
+    color: #e5eef9;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background .15s,
+        border-color .15s,
+        transform .15s;
+}
+
+button:hover {
+    background: #143250;
+    border-color: #60a5fa66;
+}
+
+button:active {
+    transform: scale(.98);
+}
+
+button.primary {
+    background: #164e7a;
+    border-color: #60a5fa66;
+}
+
+button.danger {
+    background: #351720;
+    border-color: #ef444444;
+}
+
+button.full {
+    grid-column: 1 / -1;
+}
+
+/* =========================
+   FORMULA BOX
+========================= */
+
+.formula-box {
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background: #07111f;
+
+    border: 1px solid #ffffff0d;
+}
+
+.formula-title {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #64748b;
+    margin-bottom: 9px;
+}
+
+.formula {
+    font-family: "Times New Roman", serif;
+    font-size: 17px;
+    color: #dbeafe;
+    line-height: 1.8;
+}
+
+.formula small {
+    font-family: Arial, sans-serif;
+    color: #64748b;
+    font-size: 11px;
+}
+
+/* =========================
+   MAIN VISUAL
+========================= */
+
+.visual-panel {
+    overflow: hidden;
+}
+
+.simulation {
+    position: relative;
+
+    height: 530px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #071526 0%,
+            #0a1b2e 68%,
+            #0a211d 68%,
+            #0b241e 100%
+        );
+
+    overflow: hidden;
+}
+
+.simulation::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+    background-size: 40px 40px;
+
+    pointer-events: none;
+}
+
+/* clouds */
+
+.cloud {
+    position: absolute;
+    width: 120px;
+    height: 30px;
+
+    background: #ffffff0a;
+    border-radius: 50%;
+
+    filter: blur(1px);
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+
+    background: #ffffff0a;
+    border-radius: 50%;
+}
+
+.cloud::before {
+    width: 55px;
+    height: 55px;
+    left: 22px;
+    top: -25px;
+}
+
+.cloud::after {
+    width: 45px;
+    height: 45px;
+    right: 20px;
+    top: -17px;
+}
+
+/* ground */
+
+.ground {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 32%;
+
+    border-top: 2px solid #334b39;
+
+    background:
+        repeating-linear-gradient(
+            135deg,
+            #0b251d 0px,
+            #0b251d 8px,
+            #0d2b21 8px,
+            #0d2b21 16px
+        );
+}
+
+/* cliff */
+
+.cliff {
+    position: absolute;
+
+    left: 7%;
+    bottom: 0;
+
+    width: 17%;
+    height: 44%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #263748,
+            #172331
+        );
+
+    border-right: 1px solid #52677d;
+}
+
+.cliff::after {
+    content: "";
+
+    position: absolute;
+
+    right: -7px;
+    top: 0;
+
+    width: 7px;
+    height: 100%;
+
+    background: #0b151f;
+}
+
+/* coordinate axes */
+
+.axis-x {
+    position: absolute;
+
+    left: 24%;
+    right: 5%;
+
+    bottom: 32%;
+
+    height: 1px;
+
+    background: #94a3b855;
+}
+
+.axis-y {
+    position: absolute;
+
+    left: 24%;
+    top: 6%;
+    bottom: 32%;
+
+    width: 1px;
+
+    background: #94a3b855;
+}
+
+.axis-label {
+    position: absolute;
+
+    font-size: 11px;
+    color: #64748b;
+}
+
+.axis-x-label {
+    right: 4%;
+    bottom: calc(32% - 22px);
+}
+
+.axis-y-label {
+    left: calc(24% - 14px);
+    top: 3%;
+}
+
+/* projectile */
+
+.projectile {
+    position: absolute;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle at 35% 30%,
+        #fff7ed,
+        #fb923c 35%,
+        #ea580c 75%
+    );
+
+    box-shadow:
+        0 0 14px #fb923caa,
+        0 0 30px #f9731666;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 10;
+}
+
+.projectile::after {
+    content: "";
+
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    left: 3px;
+    top: 3px;
+
+    border-radius: 50%;
+
+    background: #ffffffaa;
+}
+
+/* vectors */
+
+.vector-line {
+    position: absolute;
+
+    height: 3px;
+
+    transform-origin: left center;
+
+    z-index: 8;
+
+    border-radius: 3px;
+}
+
+.velocity-vector {
+    background: #4ade80;
+    box-shadow: 0 0 8px #4ade8066;
+}
+
+.acceleration-vector {
+    background: #f87171;
+    box-shadow: 0 0 8px #f8717166;
+}
+
+.vector-arrow {
+    position: absolute;
+    right: -2px;
+    top: -5px;
+
+    width: 0;
+    height: 0;
+
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid currentColor;
+}
+
+/* trajectory */
+
+.trajectory {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 4;
+
+    pointer-events: none;
+}
+
+.trajectory-path {
+    fill: none;
+
+    stroke: #f59e0b;
+
+    stroke-width: 2;
+
+    stroke-dasharray: 6 5;
+
+    opacity: .8;
+}
+
+/* launch marker */
+
+.launch-marker {
+    position: absolute;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #f59e0b;
+
+    box-shadow: 0 0 10px #f59e0b88;
+
+    z-index: 7;
+}
+
+/* impact */
+
+.impact-marker {
+    position: absolute;
+
+    width: 12px;
+    height: 12px;
+
+    border: 2px solid #f87171;
+
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 7;
+
+    opacity: .8;
+}
+
+/* information overlay */
+
+.sim-info {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 210px;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    background: #030912c9;
+
+    backdrop-filter: blur(8px);
+
+    border: 1px solid #ffffff14;
+
+    z-index: 20;
+}
+
+.sim-info-title {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.live-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.live-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f8fafc;
+}
+
+.live-label {
+    font-size: 9px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* =========================
+   RESULT GRID
+========================= */
+
+.results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+
+    padding: 15px;
+}
+
+.result {
+    padding: 13px;
+
+    border-radius: 11px;
+
+    background: #07111f;
+
+    border: 1px solid #ffffff0c;
+}
+
+.result-label {
+    font-size: 10px;
+    color: #64748b;
+    margin-bottom: 6px;
+}
+
+.result-value {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.result-unit {
+    font-size: 10px;
+    color: #64748b;
+    margin-left: 3px;
+}
+
+/* =========================
+   CHARTS
+========================= */
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+
+    margin-top: 18px;
+}
+
+.chart-wrap {
+    padding: 15px;
+}
+
+.chart-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+canvas {
+    display: block;
+
+    width: 100%;
+    height: 220px;
+
+    border-radius: 10px;
+
+    background: #050c16;
+}
+
+/* =========================
+   DATA TABLE
+========================= */
+
+.table-panel {
+    margin-top: 18px;
+    margin-bottom: 35px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+    font-size: 12px;
+}
+
+th {
+    text-align: left;
+
+    padding: 10px 12px;
+
+    color: #64748b;
+
+    font-size: 10px;
+    letter-spacing: 1px;
+
+    border-bottom: 1px solid #ffffff12;
+
+    white-space: nowrap;
+}
+
+td {
+    padding: 9px 12px;
+
+    border-bottom: 1px solid #ffffff08;
+
+    color: #cbd5e1;
+
+    white-space: nowrap;
+}
+
+tbody tr:hover {
+    background: #ffffff05;
+}
+
+/* =========================
+   PHYSICS INFO
+========================= */
+
+.physics-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+
+    margin-bottom: 35px;
+}
+
+.info-card {
+    padding: 16px;
+
+    border-radius: 13px;
+
+    background: #07111f;
+
+    border: 1px solid #ffffff0d;
+}
+
+.info-card h3 {
+    margin: 0 0 9px;
+
+    font-size: 13px;
+    color: #dbeafe;
+}
+
+.info-card p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.6;
+
+    color: #94a3b8;
+}
+
+.info-card strong {
+    color: #e2e8f0;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 25px 0 40px;
+
+    border-top: 1px solid #ffffff0c;
+
+    text-align: center;
+
+    color: #475569;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1050px) {
+
+    .lab-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .physics-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 750px) {
+
+    .results {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .simulation {
+        height: 460px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .container {
+        width: min(100% - 20px, 1400px);
+    }
+
+    .header-inner {
+        align-items: flex-start;
+    }
+
+    .logo {
+        width: 54px;
+        height: 54px;
+        flex-basis: 54px;
+        font-size: 23px;
+    }
+
+    .simulation {
+        height: 400px;
+    }
+
+    .sim-info {
+        width: 170px;
+        padding: 10px;
+    }
+
+    .live-value {
+        font-size: 13px;
+    }
+
+    .results {
+        grid-template-columns: 1fr 1fr;
+        padding: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+<div class="container">
+
+<div class="header-inner">
+
+<div class="logo">
+↗
+</div>
+
+<div>
+<div class="brand">
+S.MICHAELIS • INTERAKTIVES PHYSIKLABOR
+</div>
+
+<h1>
+Waagerechter Wurf
+</h1>
+
+<div class="subtitle">
+Bewegung in zwei Dimensionen • Simulation • Berechnung • Messung
+</div>
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<div class="lab-grid">
+
+
+<!-- ==================================================
+     PARAMETER
+================================================== -->
+
+<section class="panel">
+
+<div class="panel-header">
+PARAMETER & BERECHNUNG
+</div>
+
+<div class="panel-body">
+
+
+<div class="input-group">
+
+<div class="input-label">
+Höhe h
+<span>m</span>
+</div>
+
+<input
+    id="height"
+    type="number"
+    value="20"
+    min="0.1"
+    max="500"
+    step="0.1"
+>
+
+</div>
+
+
+<div class="input-group">
+
+<div class="input-label">
+Anfangsgeschwindigkeit v₀
+<span>m/s</span>
+</div>
+
+<input
+    id="velocity"
+    type="number"
+    value="10"
+    min="0"
+    max="300"
+    step="0.1"
+>
+
+</div>
+
+
+<div class="input-group">
+
+<div class="input-label">
+Erdbeschleunigung g
+<span>m/s²</span>
+</div>
+
+<input
+    id="gravity"
+    type="number"
+    value="9.81"
+    min="0.1"
+    max="30"
+    step="0.01"
+>
+
+</div>
+
+
+<div class="input-group">
+
+<div class="input-label">
+Simulationsgeschwindigkeit
+<span id="speedValue">1.0×</span>
+</div>
+
+<input
+    id="speed"
+    type="range"
+    value="1"
+    min="0.1"
+    max="4"
+    step="0.1"
+>
+
+</div>
+
+
+<div class="input-group">
+
+<div class="input-label">
+Zeitschritt
+<span>Simulation</span>
+</div>
+
+<input
+    id="dt"
+    type="number"
+    value="0.02"
+    min="0.005"
+    max="0.1"
+    step="0.005"
+>
+
+</div>
+
+
+<div class="buttons">
+
+<button
+    id="calculate"
+    class="primary"
+    type="button"
+>
+Berechnen
+</button>
+
+<button
+    id="reset"
+    type="button"
+>
+Reset
+</button>
+
+<button
+    id="start"
+    type="button"
+>
+▶ Start
+</button>
+
+<button
+    id="pause"
+    type="button"
+>
+Ⅱ Pause
+</button>
+
+<button
+    id="step"
+    type="button"
+>
+→ Schritt
+</button>
+
+<button
+    id="impact"
+    type="button"
+>
+⏭ Aufprall
+</button>
+
+</div>
+
+
+<div
+    id="message"
+    style="
+        margin-top:12px;
+        font-size:11px;
+        color:#fbbf24;
+        min-height:16px;
+    "
+></div>
+
+
+<div class="formula-box">
+
+<div class="formula-title">
+GRUNDGLEICHUNGEN
+</div>
+
+<div class="formula">
+
+x(t) = v₀ · t
+
+<br>
+
+y(t) = h − ½ · g · t²
+
+<br>
+
+vᵧ(t) = −g · t
+
+<br>
+
+v(t) = √(v₀² + vᵧ²)
+
+<br>
+
+t<sub>W</sub> = √(2h / g)
+
+<br>
+
+w = v₀ · t<sub>W</sub>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     SIMULATION
+================================================== -->
+
+<section class="panel visual-panel">
+
+<div class="panel-header">
+LIVE-SIMULATION • WAAGERECHTER WURF
+</div>
+
+
+<div
+    id="simulation"
+    class="simulation"
+>
+
+
+<div class="cloud" style="left:18%;top:17%;"></div>
+<div class="cloud" style="left:54%;top:27%;transform:scale(.7);"></div>
+<div class="cloud" style="left:72%;top:12%;transform:scale(.8);"></div>
+
+
+<div class="ground"></div>
+
+<div class="cliff"></div>
+
+
+<div class="axis-x"></div>
+<div class="axis-y"></div>
+
+<div class="axis-label axis-x-label">
+x [m]
+</div>
+
+<div class="axis-label axis-y-label">
+y [m]
+</div>
+
+
+<svg
+    id="trajectory"
+    class="trajectory"
+    viewBox="0 0 1000 530"
+    preserveAspectRatio="none"
+>
+
+<path
+    id="trajectoryPath"
+    class="trajectory-path"
+    d=""
+/>
+
+</svg>
+
+
+<div
+    id="launchMarker"
+    class="launch-marker"
+></div>
+
+
+<div
+    id="impactMarker"
+    class="impact-marker"
+></div>
+
+
+<div
+    id="projectile"
+    class="projectile"
+></div>
+
+
+<div
+    id="velocityVector"
+    class="vector-line velocity-vector"
+>
+<span class="vector-arrow"></span>
+</div>
+
+
+<div
+    id="accelerationVector"
+    class="vector-line acceleration-vector"
+>
+<span class="vector-arrow"></span>
+</div>
+
+
+<div class="sim-info">
+
+<div class="sim-info-title">
+LIVE-MESSWERTE
+</div>
+
+<div class="live-grid">
+
+<div>
+<div
+    id="liveT"
+    class="live-value"
+>
+0.00
+</div>
+
+<div class="live-label">
+t [s]
+</div>
+</div>
+
+
+<div>
+<div
+    id="liveX"
+    class="live-value"
+>
+0.00
+</div>
+
+<div class="live-label">
+x [m]
+</div>
+</div>
+
+
+<div>
+<div
+    id="liveY"
+    class="live-value"
+>
+20.00
+</div>
+
+<div class="live-label">
+y [m]
+</div>
+</div>
+
+
+<div>
+<div
+    id="liveV"
+    class="live-value"
+>
+10.00
+</div>
+
+<div class="live-label">
+v [m/s]
+</div>
+</div>
+
+
+<div>
+<div
+    id="liveVy"
+    class="live-value"
+>
+0.00
+</div>
+
+<div class="live-label">
+vᵧ [m/s]
+</div>
+</div>
+
+
+<div>
+<div
+    id="liveE"
+    class="live-value"
+>
+0.00
+</div>
+
+<div class="live-label">
+E<sub>kin</sub> [J/kg]
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- RESULTS -->
+
+<div class="results">
+
+
+<div class="result">
+
+<div class="result-label">
+WURFZEIT
+</div>
+
+<div>
+<span
+    id="flightTime"
+    class="result-value"
+>
+2.02
+</span>
+
+<span class="result-unit">
+s
+</span>
+</div>
+
+</div>
+
+
+<div class="result">
+
+<div class="result-label">
+WURFWEITE
+</div>
+
+<div>
+<span
+    id="range"
+    class="result-value"
+>
+20.19
+</span>
+
+<span class="result-unit">
+m
+</span>
+</div>
+
+</div>
+
+
+<div class="result">
+
+<div class="result-label">
+AUFPRALLGESCHWINDIGKEIT
+</div>
+
+<div>
+<span
+    id="impactVelocity"
+    class="result-value"
+>
+22.14
+</span>
+
+<span class="result-unit">
+m/s
+</span>
+</div>
+
+</div>
+
+
+<div class="result">
+
+<div class="result-label">
+AUFPRALLWINKEL
+</div>
+
+<div>
+<span
+    id="impactAngle"
+    class="result-value"
+>
+65.7
+</span>
+
+<span class="result-unit">
+°
+</span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- ==================================================
+     CHARTS
+================================================== -->
+
+<div class="chart-grid">
+
+
+<section class="panel chart-wrap">
+
+<div class="chart-title">
+ORT x(t)
+</div>
+
+<canvas id="chartX"></canvas>
+
+</section>
+
+
+<section class="panel chart-wrap">
+
+<div class="chart-title">
+HÖHE y(t)
+</div>
+
+<canvas id="chartY"></canvas>
+
+</section>
+
+
+<section class="panel chart-wrap">
+
+<div class="chart-title">
+GESCHWINDIGKEIT v(t)
+</div>
+
+<canvas id="chartV"></canvas>
+
+</section>
+
+
+<section class="panel chart-wrap">
+
+<div class="chart-title">
+VERTIKALE GESCHWINDIGKEIT vᵧ(t)
+</div>
+
+<canvas id="chartVy"></canvas>
+
+</section>
+
+</div>
+
+
+<!-- ==================================================
+     DATA TABLE
+================================================== -->
+
+<section class="panel table-panel">
+
+<div class="panel-header">
+MESSWERTE
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>t [s]</th>
+<th>x [m]</th>
+<th>y [m]</th>
+<th>vₓ [m/s]</th>
+<th>vᵧ [m/s]</th>
+<th>v [m/s]</th>
+<th>E<sub>kin</sub> / kg [J/kg]</th>
+<th>E<sub>pot</sub> / kg [J/kg]</th>
+</tr>
+
+</thead>
+
+<tbody id="dataBody">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     PHYSICS EXPLANATION
+================================================== -->
+
+<div class="physics-info">
+
+
+<section class="info-card">
+
+<h3>
+① Horizontale Bewegung
+</h3>
+
+<p>
+
+In horizontaler Richtung wirkt beim idealisierten
+waagerechten Wurf keine Beschleunigung.
+
+<br><br>
+
+<strong>
+vₓ = v₀ = konstant
+</strong>
+
+<br><br>
+
+Deshalb gilt:
+
+<br>
+
+<strong>
+x(t) = v₀ · t
+</strong>
+
+</p>
+
+</section>
+
+
+<section class="info-card">
+
+<h3>
+② Vertikale Bewegung
+</h3>
+
+<p>
+
+Vertikal verhält sich der Körper wie beim freien Fall.
+
+<br><br>
+
+<strong>
+aᵧ = −g
+</strong>
+
+<br><br>
+
+und damit:
+
+<br>
+
+<strong>
+y(t) = h − ½ · g · t²
+</strong>
+
+</p>
+
+</section>
+
+
+<section class="info-card">
+
+<h3>
+③ Unabhängigkeit
+</h3>
+
+<p>
+
+Die Fallzeit hängt beim idealen Modell nur von
+der Höhe und der Erdbeschleunigung ab.
+
+<br><br>
+
+<strong>
+t<sub>W</sub> = √(2h / g)
+</strong>
+
+<br><br>
+
+Die Geschwindigkeit v₀ bestimmt dagegen die
+horizontale Wurfweite.
+
+</p>
+
+</section>
+
+</div>
+
+
+</main>
+
+
+<footer>
+
+S.MICHAELIS • MATHEMATIK • PHYSIK • SIMULATION
+<br><br>
+Waagerechter Wurf • Ideales Modell ohne Luftwiderstand
+
+</footer>
+
+
+<script>
+
+/* ==================================================
+   ELEMENTE
+================================================== */
+
+const heightInput = document.getElementById("height");
+const velocityInput = document.getElementById("velocity");
+const gravityInput = document.getElementById("gravity");
+const speedInput = document.getElementById("speed");
+const dtInput = document.getElementById("dt");
+
+const speedValue = document.getElementById("speedValue");
+
+const message = document.getElementById("message");
+
+const projectile = document.getElementById("projectile");
+const velocityVector = document.getElementById("velocityVector");
+const accelerationVector = document.getElementById("accelerationVector");
+
+const trajectoryPath = document.getElementById("trajectoryPath");
+const launchMarker = document.getElementById("launchMarker");
+const impactMarker = document.getElementById("impactMarker");
+
+const liveT = document.getElementById("liveT");
+const liveX = document.getElementById("liveX");
+const liveY = document.getElementById("liveY");
+const liveV = document.getElementById("liveV");
+const liveVy = document.getElementById("liveVy");
+const liveE = document.getElementById("liveE");
+
+const flightTimeOutput = document.getElementById("flightTime");
+const rangeOutput = document.getElementById("range");
+const impactVelocityOutput = document.getElementById("impactVelocity");
+const impactAngleOutput = document.getElementById("impactAngle");
+
+const dataBody = document.getElementById("dataBody");
+
+const simulation = document.getElementById("simulation");
+
+
+/* ==================================================
+   ZUSTAND
+================================================== */
+
+let physics = {
+    h: 20,
+    v0: 10,
+    g: 9.81,
+    tFlight: 0,
+    range: 0,
+    impactVelocity: 0,
+    impactAngle: 0
+};
+
+let state = {
+    t: 0,
+    running: false,
+    lastFrame: 0,
+    accumulator: 0,
+    data: []
+};
+
+
+/* ==================================================
+   HILFSFUNKTIONEN
+================================================== */
+
+function number(value, fallback) {
+
+    const n = Number(value);
+
+    return Number.isFinite(n) ? n : fallback;
+}
+
+
+function clamp(value, min, max) {
+
+    return Math.min(Math.max(value, min), max);
+}
+
+
+function fmt(value, digits = 2) {
+
+    if (!Number.isFinite(value)) {
+        return "0.00";
+    }
+
+    return value.toFixed(digits);
+}
+
+
+function showMessage(text = "") {
+    message.textContent = text;
+}
+
+
+/* ==================================================
+   PHYSIK
+================================================== */
+
+function readPhysics() {
+
+    let h = number(heightInput.value, 20);
+    let v0 = number(velocityInput.value, 10);
+    let g = number(gravityInput.value, 9.81);
+
+    h = clamp(h, 0.1, 500);
+    v0 = clamp(v0, 0, 300);
+    g = clamp(g, 0.1, 30);
+
+    heightInput.value = h;
+    velocityInput.value = v0;
+    gravityInput.value = g;
+
+    physics.h = h;
+    physics.v0 = v0;
+    physics.g = g;
+
+    physics.tFlight = Math.sqrt(
+        2 * h / g
+    );
+
+    physics.range =
+        v0 * physics.tFlight;
+
+    const vyImpact =
+        -g * physics.tFlight;
+
+    physics.impactVelocity =
+        Math.sqrt(
+            v0 * v0 +
+            vyImpact * vyImpact
+        );
+
+    physics.impactAngle =
+        Math.atan2(
+            Math.abs(vyImpact),
+            v0
+        ) * 180 / Math.PI;
+
+    if (v0 === 0) {
+        physics.impactAngle = 90;
+    }
+}
+
+
+function positionAt(t) {
+
+    const x =
+        physics.v0 * t;
+
+    const y =
+        physics.h -
+        0.5 * physics.g * t * t;
+
+    return {
+        x,
+        y: Math.max(0, y)
+    };
+}
+
+
+function velocityAt(t) {
+
+    const vx =
+        physics.v0;
+
+    const vy =
+        -physics.g * t;
+
+    const v =
+        Math.sqrt(
+            vx * vx +
+            vy * vy
+        );
+
+    return {
+        vx,
+        vy,
+        v
+    };
+}
+
+
+/* ==================================================
+   BERECHNUNG
+================================================== */
+
+function calculate() {
+
+    readPhysics();
+
+    flightTimeOutput.textContent =
+        fmt(physics.tFlight);
+
+    rangeOutput.textContent =
+        fmt(physics.range);
+
+    impactVelocityOutput.textContent =
+        fmt(physics.impactVelocity);
+
+    impactAngleOutput.textContent =
+        fmt(physics.impactAngle, 1);
+
+    createTrajectory();
+
+    createData();
+
+    drawCharts();
+
+    updateSimulation();
+
+    showMessage(
+        "Berechnung aktualisiert."
+    );
+}
+
+
+/* ==================================================
+   TRAJEKTORIE
+================================================== */
+
+function getSceneGeometry() {
+
+    const rect =
+        simulation.getBoundingClientRect();
+
+    const width =
+        Math.max(rect.width, 400);
+
+    const height =
+        rect.height;
+
+    const left =
+        width * 0.24;
+
+    const right =
+        width * 0.94;
+
+    const top =
+        height * 0.08;
+
+    const groundY =
+        height * 0.68;
+
+    const availableX =
+        right - left;
+
+    const availableY =
+        groundY - top;
+
+    const maxX =
+        Math.max(
+            physics.range,
+            1
+        );
+
+    const scaleX =
+        availableX / maxX;
+
+    const scaleY =
+        availableY / Math.max(
+            physics.h,
+            1
+        );
+
+    const scale =
+        Math.min(
+            scaleX,
+            scaleY
+        );
+
+    return {
+        width,
+        height,
+        left,
+        groundY,
+        top,
+        scale,
+        scaleX,
+        scaleY
+    };
+}
+
+
+function scenePosition(x, y) {
+
+    const g =
+        getSceneGeometry();
+
+    return {
+        px:
+            g.left +
+            x * g.scale,
+
+        py:
+            g.groundY -
+            y * g.scale
+    };
+}
+
+
+function createTrajectory() {
+
+    const g =
+        getSceneGeometry();
+
+    const samples = 100;
+
+    let d = "";
+
+    for (let i = 0; i <= samples; i++) {
+
+        const t =
+            physics.tFlight *
+            i /
+            samples;
+
+        const p =
+            positionAt(t);
+
+        const x =
+            clamp(
+                g.left +
+                p.x * g.scale,
+                0,
+                g.width
+            );
+
+        const y =
+            clamp(
+                g.groundY -
+                p.y * g.scale,
+                0,
+                g.height
+            );
+
+        if (i === 0) {
+
+            d +=
+                `M ${x} ${y}`;
+
+        } else {
+
+            d +=
+                ` L ${x} ${y}`;
+        }
+    }
+
+    trajectoryPath.setAttribute(
+        "d",
+        d
+    );
+
+    const launch =
+        scenePosition(
+            0,
+            physics.h
+        );
+
+    launchMarker.style.left =
+        launch.px + "px";
+
+    launchMarker.style.top =
+        launch.py + "px";
+
+
+    const impact =
+        scenePosition(
+            physics.range,
+            0
+        );
+
+    impactMarker.style.left =
+        impact.px + "px";
+
+    impactMarker.style.top =
+        impact.py + "px";
+}
+
+
+/* ==================================================
+   SIMULATION
+================================================== */
+
+function updateSimulation() {
+
+    const t =
+        clamp(
+            state.t,
+            0,
+            physics.tFlight
+        );
+
+    const p =
+        positionAt(t);
+
+    const v =
+        velocityAt(t);
+
+    const scene =
+        scenePosition(
+            p.x,
+            p.y
+        );
+
+    projectile.style.left =
+        scene.px + "px";
+
+    projectile.style.top =
+        scene.py + "px";
+
+
+    /* Geschwindigkeitspfeil */
+
+    const velocityLength =
+        clamp(
+            25 + v.v * 3,
+            25,
+            150
+        );
+
+    const velocityAngle =
+        Math.atan2(
+            -v.vy,
+            v.vx
+        ) * 180 / Math.PI;
+
+    velocityVector.style.left =
+        scene.px + "px";
+
+    velocityVector.style.top =
+        scene.py + "px";
+
+    velocityVector.style.width =
+        velocityLength + "px";
+
+    velocityVector.style.transform =
+        `rotate(${velocityAngle}deg)`;
+
+    velocityVector.style.color =
+        "#4ade80";
+
+
+    /* Beschleunigungspfeil */
+
+    const accelerationLength =
+        clamp(
+            25 + physics.g * 3,
+            25,
+            90
+        );
+
+    accelerationVector.style.left =
+        scene.px + "px";
+
+    accelerationVector.style.top =
+        scene.py + "px";
+
+    accelerationVector.style.width =
+        accelerationLength + "px";
+
+    accelerationVector.style.transform =
+        "rotate(90deg)";
+
+    accelerationVector.style.color =
+        "#f87171";
+
+
+    /* Live-Daten */
+
+    liveT.textContent =
+        fmt(t);
+
+    liveX.textContent =
+        fmt(p.x);
+
+    liveY.textContent =
+        fmt(p.y);
+
+    liveV.textContent =
+        fmt(v.v);
+
+    liveVy.textContent =
+        fmt(v.vy);
+
+    liveE.textContent =
+        fmt(0.5 * v.v * v.v);
+
+
+    updateDataHighlight(t);
+}
+
+
+function startSimulation() {
+
+    if (state.t >= physics.tFlight) {
+        state.t = 0;
+    }
+
+    state.running = true;
+
+    state.lastFrame =
+        performance.now();
+
+    requestAnimationFrame(
+        animationLoop
+    );
+}
+
+
+function pauseSimulation() {
+
+    state.running = false;
+}
+
+
+function animationLoop(timestamp) {
+
+    if (!state.running) {
+        return;
+    }
+
+    const realDelta =
+        Math.min(
+            (timestamp - state.lastFrame) / 1000,
+            0.05
+        );
+
+    state.lastFrame =
+        timestamp;
+
+    const simSpeed =
+        number(
+            speedInput.value,
+            1
+        );
+
+    state.accumulator +=
+        realDelta *
+        simSpeed;
+
+    const dt =
+        clamp(
+            number(
+                dtInput.value,
+                0.02
+            ),
+            0.005,
+            0.1
+        );
+
+    while (
+        state.accumulator >= dt
+    ) {
+
+        state.t += dt;
+
+        state.accumulator -= dt;
+
+        if (
+            state.t >=
+            physics.tFlight
+        ) {
+
+            state.t =
+                physics.tFlight;
+
+            state.running =
+                false;
+
+            addCurrentMeasurement();
+
+            break;
+        }
+    }
+
+    updateSimulation();
+
+    if (state.running) {
+
+        requestAnimationFrame(
+            animationLoop
+        );
+    }
+}
+
+
+/* ==================================================
+   SCHRITT
+================================================== */
+
+function stepSimulation() {
+
+    state.running = false;
+
+    const dt =
+        clamp(
+            number(
+                dtInput.value,
+                0.02
+            ),
+            0.005,
+            0.1
+        );
+
+    state.t += dt;
+
+    if (
+        state.t >
+        physics.tFlight
+    ) {
+
+        state.t =
+            physics.tFlight;
+    }
+
+    addCurrentMeasurement();
+
+    updateSimulation();
+}
+
+
+/* ==================================================
+   AUFPRALL
+================================================== */
+
+function jumpToImpact() {
+
+    state.running = false;
+
+    state.t =
+        physics.tFlight;
+
+    addCurrentMeasurement();
+
+    updateSimulation();
+}
+
+
+/* ==================================================
+   RESET
+================================================== */
+
+function resetSimulation() {
+
+    state.running = false;
+
+    state.t = 0;
+
+    state.accumulator = 0;
+
+    state.data = [];
+
+    createData();
+
+    updateSimulation();
+}
+
+
+/* ==================================================
+   DATEN
+================================================== */
+
+function createData() {
+
+    state.data = [];
+
+    const samples = 11;
+
+    for (
+        let i = 0;
+        i < samples;
+        i++
+    ) {
+
+        const t =
+            physics.tFlight *
+            i /
+            (samples - 1);
+
+        const p =
+            positionAt(t);
+
+        const v =
+            velocityAt(t);
+
+        state.data.push({
+            t,
+            x: p.x,
+            y: p.y,
+            vx: v.vx,
+            vy: v.vy,
+            v: v.v
+        });
+    }
+
+    renderTable();
+}
+
+
+function addCurrentMeasurement() {
+
+    const t =
+        state.t;
+
+    const p =
+        positionAt(t);
+
+    const v =
+        velocityAt(t);
+
+    state.data.push({
+        t,
+        x: p.x,
+        y: p.y,
+        vx: v.vx,
+        vy: v.vy,
+        v: v.v
+    });
+
+    if (state.data.length > 40) {
+
+        state.data.shift();
+    }
+
+    renderTable();
+}
+
+
+function renderTable() {
+
+    dataBody.innerHTML = "";
+
+    const sorted =
+        [...state.data]
+        .sort(
+            (a, b) =>
+                a.t - b.t
+        );
+
+    sorted.forEach(row => {
+
+        const tr =
+            document.createElement("tr");
+
+        const values = [
+            fmt(row.t),
+            fmt(row.x),
+            fmt(row.y),
+            fmt(row.vx),
+            fmt(row.vy),
+            fmt(row.v),
+            fmt(0.5 * row.v * row.v),
+            fmt(physics.g * row.y)
+        ];
+
+        values.forEach(value => {
+
+            const td =
+                document.createElement("td");
+
+            td.textContent =
+                value;
+
+            tr.appendChild(td);
+        });
+
+        dataBody.appendChild(tr);
+    });
+}
+
+
+function updateDataHighlight(t) {
+
+    const rows =
+        dataBody.querySelectorAll("tr");
+
+    if (!rows.length) {
+        return;
+    }
+
+    let closest =
+        null;
+
+    let closestDiff =
+        Infinity;
+
+    state.data.forEach((row, index) => {
+
+        const diff =
+            Math.abs(
+                row.t - t
+            );
+
+        if (diff < closestDiff) {
+
+            closestDiff = diff;
+            closest = index;
+        }
+    });
+
+    rows.forEach(row => {
+
+        row.style.background =
+            "";
+    });
+
+    if (
+        closest !== null &&
+        rows[closest]
+    ) {
+
+        rows[closest].style.background =
+            "#f59e0b12";
+    }
+}
+
+
+/* ==================================================
+   CANVAS
+================================================== */
+
+function prepareCanvas(canvas) {
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+    canvas.width =
+        rect.width * dpr;
+
+    canvas.height =
+        rect.height * dpr;
+
+    const ctx =
+        canvas.getContext("2d");
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+    return {
+        ctx,
+        width: rect.width,
+        height: rect.height
+    };
+}
+
+
+function drawChart(
+    canvas,
+    points,
+    color,
+    yLabel,
+    yMin,
+    yMax
+) {
+
+    const {
+        ctx,
+        width,
+        height
+    } =
+        prepareCanvas(canvas);
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    const padLeft = 48;
+    const padRight = 15;
+    const padTop = 15;
+    const padBottom = 30;
+
+    const plotW =
+        width -
+        padLeft -
+        padRight;
+
+    const plotH =
+        height -
+        padTop -
+        padBottom;
+
+
+    /* background */
+
+    ctx.fillStyle =
+        "#050c16";
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /* grid */
+
+    ctx.strokeStyle =
+        "#ffffff0b";
+
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i <= 5; i++) {
+
+        const y =
+            padTop +
+            plotH *
+            i / 5;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            padLeft,
+            y
+        );
+
+        ctx.lineTo(
+            width - padRight,
+            y
+        );
+
+        ctx.stroke();
+    }
+
+
+    for (let i = 0; i <= 5; i++) {
+
+        const x =
+            padLeft +
+            plotW *
+            i / 5;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x,
+            padTop
+        );
+
+        ctx.lineTo(
+            x,
+            height - padBottom
+        );
+
+        ctx.stroke();
+    }
+
+
+    /* axes */
+
+    ctx.strokeStyle =
+        "#64748b66";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        padLeft,
+        height - padBottom
+    );
+
+    ctx.lineTo(
+        width - padRight,
+        height - padBottom
+    );
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        padLeft,
+        padTop
+    );
+
+    ctx.lineTo(
+        padLeft,
+        height - padBottom
+    );
+
+    ctx.stroke();
+
+
+    /* labels */
+
+    ctx.fillStyle =
+        "#64748b";
+
+    ctx.font =
+        "10px Arial";
+
+    ctx.fillText(
+        "t [s]",
+        width - 35,
+        height - 8
+    );
+
+    ctx.save();
+
+    ctx.translate(
+        12,
+        height / 2
+    );
+
+    ctx.rotate(
+        -Math.PI / 2
+    );
+
+    ctx.fillText(
+        yLabel,
+        0,
+        0
+    );
+
+    ctx.restore();
+
+
+    /* y scale */
+
+    const rangeY =
+        yMax - yMin || 1;
+
+    function pxX(t) {
+
+        return (
+            padLeft +
+            (t / physics.tFlight) *
+            plotW
+        );
+    }
+
+    function pxY(value) {
+
+        return (
+            padTop +
+            (1 -
+                (value - yMin) /
+                rangeY
+            ) *
+            plotH
+        );
+    }
+
+
+    /* zero line */
+
+    if (
+        yMin < 0 &&
+        yMax > 0
+    ) {
+
+        const zeroY =
+            pxY(0);
+
+        ctx.strokeStyle =
+            "#94a3b844";
+
+        ctx.setLineDash([
+            4,
+            4
+        ]);
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            padLeft,
+            zeroY
+        );
+
+        ctx.lineTo(
+            width - padRight,
+            zeroY
+        );
+
+        ctx.stroke();
+
+        ctx.setLineDash([]);
+    }
+
+
+    /* curve */
+
+    ctx.strokeStyle =
+        color;
+
+    ctx.lineWidth = 2.5;
+
+    ctx.beginPath();
+
+    points.forEach(
+        (point, index) => {
+
+            const x =
+                pxX(point.t);
+
+            const y =
+                pxY(point.value);
+
+            if (index === 0) {
+
+                ctx.moveTo(
+                    x,
+                    y
+                );
+
+            } else {
+
+                ctx.lineTo(
+                    x,
+                    y
+                );
+            }
+        }
+    );
+
+    ctx.stroke();
+
+
+    /* x labels */
+
+    ctx.fillStyle =
+        "#64748b";
+
+    ctx.font =
+        "9px Arial";
+
+    for (let i = 0; i <= 5; i++) {
+
+        const t =
+            physics.tFlight *
+            i / 5;
+
+        const x =
+            pxX(t);
+
+        ctx.fillText(
+            fmt(t, 1),
+            x - 8,
+            height - 13
+        );
+    }
+}
+
+
+function drawCharts() {
+
+    const samples = 100;
+
+    const xPoints = [];
+    const yPoints = [];
+    const vPoints = [];
+    const vyPoints = [];
+
+    let maxV = 0;
+
+    for (
+        let i = 0;
+        i <= samples;
+        i++
+    ) {
+
+        const t =
+            physics.tFlight *
+            i /
+            samples;
+
+        const p =
+            positionAt(t);
+
+        const v =
+            velocityAt(t);
+
+        xPoints.push({
+            t,
+            value: p.x
+        });
+
+        yPoints.push({
+            t,
+            value: p.y
+        });
+
+        vPoints.push({
+            t,
+            value: v.v
+        });
+
+        vyPoints.push({
+            t,
+            value: v.vy
+        });
+
+        maxV =
+            Math.max(
+                maxV,
+                v.v
+            );
+    }
+
+
+    drawChart(
+        document.getElementById("chartX"),
+        xPoints,
+        "#60a5fa",
+        "x [m]",
+        0,
+        Math.max(
+            physics.range,
+            1
+        )
+    );
+
+
+    drawChart(
+        document.getElementById("chartY"),
+        yPoints,
+        "#f59e0b",
+        "y [m]",
+        0,
+        Math.max(
+            physics.h,
+            1
+        )
+    );
+
+
+    drawChart(
+        document.getElementById("chartV"),
+        vPoints,
+        "#4ade80",
+        "v [m/s]",
+        0,
+        Math.max(
+            maxV,
+            1
+        )
+    );
+
+
+    drawChart(
+        document.getElementById("chartVy"),
+        vyPoints,
+        "#f87171",
+        "vᵧ [m/s]",
+        Math.min(
+            -1,
+            -physics.g *
+            physics.tFlight
+        ),
+        0
+    );
+}
+
+
+/* ==================================================
+   EVENT LISTENER
+================================================== */
+
+document
+    .getElementById("calculate")
+    .addEventListener(
+        "click",
+        calculate
+    );
+
+
+document
+    .getElementById("reset")
+    .addEventListener(
+        "click",
+        resetSimulation
+    );
+
+
+document
+    .getElementById("start")
+    .addEventListener(
+        "click",
+        startSimulation
+    );
+
+
+document
+    .getElementById("pause")
+    .addEventListener(
+        "click",
+        pauseSimulation
+    );
+
+
+document
+    .getElementById("step")
+    .addEventListener(
+        "click",
+        stepSimulation
+    );
+
+
+document
+    .getElementById("impact")
+    .addEventListener(
+        "click",
+        jumpToImpact
+    );
+
+
+speedInput.addEventListener(
+    "input",
+    () => {
+
+        speedValue.textContent =
+            number(
+                speedInput.value,
+                1
+            ).toFixed(1) + "×";
+    }
+);
+
+
+[
+    heightInput,
+    velocityInput,
+    gravityInput
+].forEach(input => {
+
+    input.addEventListener(
+        "change",
+        calculate
+    );
+});
+
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        createTrajectory();
+
+        updateSimulation();
+
+        drawCharts();
+    }
+);
+
+
+/* ==================================================
+   TASTATUR
+================================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.target.tagName ===
+            "INPUT"
+        ) {
+            return;
+        }
+
+        if (
+            event.code ===
+            "Space"
+        ) {
+
+            event.preventDefault();
+
+            if (state.running) {
+
+                pauseSimulation();
+
+            } else {
+
+                startSimulation();
+            }
+        }
+
+        if (
+            event.key.toLowerCase() ===
+            "r"
+        ) {
+
+            resetSimulation();
+        }
+    }
+);
+
+
+/* ==================================================
+   START
+================================================== */
+
+readPhysics();
+
+calculate();
+
+</script>
+
+</body>
+</html>
