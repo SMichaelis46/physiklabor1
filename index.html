@@ -153,7 +153,7 @@ color:#64748b;
 
 .labs{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(2,1fr);
 gap:18px;
 padding-bottom:45px;
 }
@@ -271,8 +271,6 @@ letter-spacing:2px;
 color:#64748b;
 }
 
-/* BUTTONS */
-
 .open-button{
 display:inline-flex;
 align-items:center;
@@ -307,47 +305,6 @@ border-color:#60a5fa88;
 transform:translateX(2px);
 }
 
-/* FREIER FALL BUTTONS */
-
-.fall-buttons{
-display:flex;
-gap:7px;
-flex-wrap:wrap;
-justify-content:flex-end;
-}
-
-.fall-button{
-display:inline-flex;
-align-items:center;
-gap:5px;
-
-padding:8px 10px;
-
-border-radius:7px;
-
-font-size:11px;
-font-weight:bold;
-
-text-decoration:none;
-
-color:#fed7aa;
-
-background:#351d0d;
-
-border:1px solid #f9731655;
-
-transition:
-background .15s,
-transform .15s,
-border-color .15s;
-}
-
-.fall-button:hover{
-background:#4b2912;
-border-color:#fb923c99;
-transform:translateY(-1px);
-}
-
 /* COLORS */
 
 .vector{
@@ -358,11 +315,6 @@ transform:translateY(-1px);
 .kinematik{
 --glow:#22c55e;
 --icon-bg:#0d3020;
-}
-
-.freier-fall{
---glow:#f97316;
---icon-bg:#3a2110;
 }
 
 .vector .open-button{
@@ -468,10 +420,6 @@ align-items:flex-start;
 flex-direction:column;
 }
 
-.fall-buttons{
-justify-content:flex-start;
-}
-
 }
 </style>
 </head>
@@ -505,7 +453,6 @@ sondern sehen, verändern und verstehen.
 
 </header>
 
-
 <main class="container">
 
 <div class="section-title">
@@ -513,9 +460,7 @@ sondern sehen, verändern und verstehen.
 <div class="section-line"></div>
 </div>
 
-
 <div class="labs">
-
 
 <!-- VEKTOR -->
 
@@ -552,7 +497,6 @@ Labor öffnen →
 
 </article>
 
-
 <!-- KINEMATIK -->
 
 <article class="card kinematik">
@@ -588,21 +532,7 @@ Labor öffnen →
 
 </article>
 
-
-<!-- FREIER FALL -->
-
-<article class="card freier-fall">
-
-<div class="card-icon">
-🟠
 </div>
-
-<h2>
-
-
-
-</div>
-
 
 <div class="info">
 
@@ -625,7 +555,6 @@ physikalischen Größen.
 
 </main>
 
-
 <footer>
 
 S.MICHAELIS • MATHEMATIK • PHYSIK • SIMULATION
@@ -638,14 +567,14 @@ EOF
 
 echo
 echo "=============================================="
-echo " S.MICHAELIS – HAUPTSEITE ERSTELLT"
+echo " S.MICHAELIS – HAUPTSEITE NEU ERSTELLT"
 echo "=============================================="
 echo
-echo "Berechnung:"
-echo "freier-fall/berechnung/"
+echo "Enthalten:"
+echo "  01 / Vektor-Labor"
+echo "  02 / Kinematik-Rechner"
 echo
-echo "Simulation:"
-echo "freier-fall/simulation/"
+echo "Freier Fall: vollständig entfernt"
 echo
 echo "Backup:"
 echo "$DIR/index_backup.html"
