@@ -8,7 +8,6 @@
 <title>S.Michaelis | Interaktives Physiklabor</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -50,11 +49,6 @@ body::before {
     width: min(1150px, calc(100% - 36px));
     margin: auto;
 }
-
-
-/* =========================
-   HEADER
-========================= */
 
 header {
     padding: 55px 0 35px;
@@ -127,11 +121,6 @@ h1 {
     color: #aab8ca;
 }
 
-
-/* =========================
-   SECTION
-========================= */
-
 .section-title {
     display: flex;
     align-items: center;
@@ -158,11 +147,6 @@ h1 {
     color: #64748b;
 }
 
-
-/* =========================
-   LABS
-========================= */
-
 .labs {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -170,11 +154,6 @@ h1 {
 
     padding-bottom: 45px;
 }
-
-
-/* =========================
-   CARD
-========================= */
 
 .card {
     position: relative;
@@ -289,11 +268,6 @@ h1 {
     color: #64748b;
 }
 
-
-/* =========================
-   BUTTON
-========================= */
-
 .open-button {
     display: inline-flex;
     align-items: center;
@@ -328,11 +302,6 @@ h1 {
     transform: translateX(2px);
 }
 
-
-/* =========================
-   LAB COLORS
-========================= */
-
 .vector {
     --glow: #ef4444;
     --icon-bg: #3a1116;
@@ -348,6 +317,11 @@ h1 {
     --icon-bg: #3a2508;
 }
 
+.waagerechter-wurf {
+    --glow: #38bdf8;
+    --icon-bg: #082f49;
+}
+
 .vector .open-button {
     border-color: #ef444455;
 }
@@ -360,10 +334,9 @@ h1 {
     border-color: #f59e0b55;
 }
 
-
-/* =========================
-   INFO
-========================= */
+.waagerechter-wurf .open-button {
+    border-color: #38bdf855;
+}
 
 .info {
     margin-bottom: 45px;
@@ -399,11 +372,6 @@ h1 {
     color: #cbd5e1;
 }
 
-
-/* =========================
-   FOOTER
-========================= */
-
 footer {
     border-top: 1px solid #ffffff0d;
 
@@ -417,11 +385,6 @@ footer {
 
     letter-spacing: 1.5px;
 }
-
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 900px) {
 
@@ -463,25 +426,16 @@ footer {
         flex-direction: column;
     }
 }
-
 </style>
 </head>
 
-
 <body>
-
-
-<!-- =========================
-     HEADER
-========================= -->
 
 <header>
 
 <div class="container">
 
-<div class="logo">
-Σ
-</div>
+<div class="logo">Σ</div>
 
 <div class="brand">
 S.MICHAELIS
@@ -505,30 +459,18 @@ sondern sehen, verändern und verstehen.
 </header>
 
 
-<!-- =========================
-     MAIN
-========================= -->
-
 <main class="container">
 
-
 <div class="section-title">
-
-<span>
-LABORATORIEN
-</span>
-
+<span>LABORATORIEN</span>
 <div class="section-line"></div>
-
 </div>
 
 
 <div class="labs">
 
 
-<!-- =========================
-     01 VEKTOR
-========================= -->
+<!-- 01 VEKTOR -->
 
 <article class="card vector">
 
@@ -564,9 +506,7 @@ Labor öffnen →
 </article>
 
 
-<!-- =========================
-     02 KINEMATIK
-========================= -->
+<!-- 02 KINEMATIK -->
 
 <article class="card kinematik">
 
@@ -602,9 +542,7 @@ Labor öffnen →
 </article>
 
 
-<!-- =========================
-     03 FREIER FALL
-========================= -->
+<!-- 03 FREIER FALL -->
 
 <article class="card freier-fall">
 
@@ -640,12 +578,44 @@ Labor öffnen →
 </article>
 
 
+<!-- 04 WAAGERECHTER WURF -->
+
+<article class="card waagerechter-wurf">
+
+<div class="card-icon">
+↗
 </div>
 
+<h2>
+Waagerechter Wurf
+</h2>
 
-<!-- =========================
-     INFO
-========================= -->
+<p>
+Den waagerechten Wurf interaktiv untersuchen.
+Wurfzeit, Wurfweite, Geschwindigkeit und
+Flugbahn berechnen und simulieren.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+04 / WAAGERECHTER WURF
+</div>
+
+<a
+class="open-button"
+href="waagerechter-wurf/"
+>
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+</div>
+
 
 <div class="info">
 
@@ -668,20 +638,14 @@ physikalischen Größen.
 
 </div>
 
-
 </main>
 
-
-<!-- =========================
-     FOOTER
-========================= -->
 
 <footer>
 
 S.MICHAELIS • MATHEMATIK • PHYSIK • SIMULATION
 
 </footer>
-
 
 </body>
 </html>
