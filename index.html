@@ -124,4 +124,565 @@ h1 {
     line-height: 1.7;
 
     font-size: 15px;
-    color: #aab8ca
+    color: #aab8ca;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin: 25px 0 18px;
+}
+
+.section-line {
+    height: 1px;
+    flex: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #334155
+        );
+}
+
+.section-title span {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #64748b;
+}
+
+
+/* =========================
+   LABS
+========================= */
+
+.labs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+
+    padding-bottom: 45px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    position: relative;
+
+    min-height: 285px;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    border: 1px solid #ffffff14;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,32,51,.86),
+            rgba(8,17,29,.88)
+        );
+
+    box-shadow: 0 20px 55px #0008;
+
+    overflow: hidden;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+
+    border-color: #60a5fa55;
+
+    box-shadow:
+        0 25px 65px #000a,
+        0 0 35px #2563eb15;
+}
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -80px;
+    top: -80px;
+
+    border-radius: 50%;
+
+    background: var(--glow);
+
+    filter: blur(2px);
+
+    opacity: .16;
+}
+
+.card-icon {
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    font-size: 30px;
+
+    background: var(--icon-bg);
+
+    border: 1px solid #ffffff18;
+
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    margin: 0 0 10px;
+    font-size: 21px;
+}
+
+.card p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.65;
+
+    color: #94a3b8;
+
+    min-height: 68px;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: 22px;
+
+    padding-top: 17px;
+
+    border-top: 1px solid #ffffff10;
+}
+
+.card-number {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #64748b;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.open-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 9px 13px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    text-decoration: none;
+
+    color: #e0f2fe;
+
+    background: #0f2a43;
+
+    border: 1px solid #2563eb44;
+
+    transition:
+        background .15s,
+        transform .15s,
+        border-color .15s;
+}
+
+.open-button:hover {
+    background: #173d60;
+    border-color: #60a5fa88;
+    transform: translateX(2px);
+}
+
+
+/* =========================
+   LAB COLORS
+========================= */
+
+.vector {
+    --glow: #ef4444;
+    --icon-bg: #3a1116;
+}
+
+.kinematik {
+    --glow: #22c55e;
+    --icon-bg: #0d3020;
+}
+
+.freier-fall {
+    --glow: #f59e0b;
+    --icon-bg: #3a2508;
+}
+
+.vector .open-button {
+    border-color: #ef444455;
+}
+
+.kinematik .open-button {
+    border-color: #22c55e55;
+}
+
+.freier-fall .open-button {
+    border-color: #f59e0b55;
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info {
+    margin-bottom: 45px;
+
+    padding: 22px 25px;
+
+    border-radius: 16px;
+
+    background: #081321cc;
+
+    border: 1px solid #ffffff10;
+
+    display: grid;
+
+    grid-template-columns: auto 1fr;
+
+    gap: 18px;
+
+    align-items: center;
+}
+
+.info-icon {
+    font-size: 27px;
+}
+
+.info-text {
+    font-size: 13px;
+    line-height: 1.65;
+    color: #94a3b8;
+}
+
+.info-text strong {
+    color: #cbd5e1;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    border-top: 1px solid #ffffff0d;
+
+    padding: 25px 0 35px;
+
+    text-align: center;
+
+    color: #475569;
+
+    font-size: 11px;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .labs {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        min-height: 230px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .container {
+        width: min(100% - 22px, 1150px);
+    }
+
+    header {
+        padding-top: 35px;
+    }
+
+    .logo {
+        width: 68px;
+        height: 68px;
+    }
+
+    .card {
+        padding: 21px;
+    }
+
+    .info {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="container">
+
+<div class="logo">
+Σ
+</div>
+
+<div class="brand">
+S.MICHAELIS
+</div>
+
+<h1>
+🔬 Interaktives Physiklabor
+</h1>
+
+<div class="subtitle">
+MATHEMATIK • PHYSIK • SIMULATION
+</div>
+
+<div class="description">
+Physikalische Zusammenhänge nicht nur berechnen,
+sondern sehen, verändern und verstehen.
+</div>
+
+</div>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+
+<div class="section-title">
+
+<span>
+LABORATORIEN
+</span>
+
+<div class="section-line"></div>
+
+</div>
+
+
+<div class="labs">
+
+
+<!-- =========================
+     01 VEKTOR
+========================= -->
+
+<article class="card vector">
+
+<div class="card-icon">
+🔴
+</div>
+
+<h2>
+Vektor-Labor
+</h2>
+
+<p>
+Vektoren, Richtungen und Kräfte
+interaktiv darstellen und untersuchen.
+Bewegungen werden geometrisch sichtbar.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+01 / VEKTOR
+</div>
+
+<a
+class="open-button"
+href="vektorlabor/"
+>
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- =========================
+     02 KINEMATIK
+========================= -->
+
+<article class="card kinematik">
+
+<div class="card-icon">
+🟢
+</div>
+
+<h2>
+Kinematik-Rechner
+</h2>
+
+<p>
+Bewegungen mit Weg, Zeit und Geschwindigkeit
+analysieren. Diagramme und Messwerte
+helfen beim Verständnis der Bewegung.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+02 / KINEMATIK
+</div>
+
+<a
+class="open-button"
+href="kinematik/"
+>
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- =========================
+     03 FREIER FALL
+========================= -->
+
+<article class="card freier-fall">
+
+<div class="card-icon">
+🟠
+</div>
+
+<h2>
+Freier-Fall-Labor
+</h2>
+
+<p>
+Den freien Fall interaktiv untersuchen.
+Fallzeit, Geschwindigkeit, Beschleunigung
+und Energie berechnen und simulieren.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+03 / FREIER FALL
+</div>
+
+<a
+class="open-button"
+href="freier-fall/"
+>
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+</div>
+
+
+<!-- =========================
+     INFO
+========================= -->
+
+<div class="info">
+
+<div class="info-icon">
+💡
+</div>
+
+<div class="info-text">
+
+<strong>
+Physik zum Experimentieren:
+</strong>
+
+Verändere Werte, beobachte Bewegungen,
+halte an bestimmten Zeitpunkten an und
+untersuche den Zusammenhang zwischen
+physikalischen Größen.
+
+</div>
+
+</div>
+
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+S.MICHAELIS • MATHEMATIK • PHYSIK • SIMULATION
+
+</footer>
+
+
+</body>
+</html>
+```
