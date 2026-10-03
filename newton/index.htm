@@ -1,1 +1,2079 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Newton-Gesetze – S.Michaelis Physiklabor</title>
+
+<style>
+
+:root{
+    --bg:#07111f;
+    --panel:#0e1b2d;
+    --panel2:#13243a;
+    --border:#29425f;
+    --text:#edf5ff;
+    --muted:#9eb1c8;
+    --blue:#4da3ff;
+    --green:#43d39e;
+    --yellow:#ffd166;
+    --red:#ff6b6b;
+    --purple:#c084fc;
+    --orange:#ff9f43;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            #16385c 0%,
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 100%,
+            #28143f 0%,
+            transparent 30%
+        ),
+        var(--bg);
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:20;
+
+    border-bottom:1px solid var(--border);
+
+    background:rgba(7,17,31,.94);
+    backdrop-filter:blur(12px);
+}
+
+.header-inner{
+    max-width:1500px;
+    margin:auto;
+
+    padding:22px 30px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.brand{
+    color:var(--blue);
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+h1{
+    margin:5px 0 0;
+    font-size:clamp(25px,4vw,40px);
+}
+
+.subtitle{
+    color:var(--muted);
+    margin-top:6px;
+}
+
+main{
+    max-width:1500px;
+    margin:auto;
+    padding:30px;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:280px minmax(0,1fr);
+    gap:24px;
+}
+
+.panel{
+    background:rgba(14,27,45,.96);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.24);
+}
+
+.panel h2{
+    margin-top:0;
+}
+
+.sidebar{
+    position:sticky;
+    top:105px;
+    align-self:start;
+}
+
+.law-buttons{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.law-btn{
+    border:1px solid var(--border);
+    background:#0a1728;
+    color:var(--text);
+
+    padding:15px;
+    border-radius:12px;
+
+    text-align:left;
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.law-btn:hover{
+    border-color:var(--blue);
+    transform:translateY(-1px);
+}
+
+.law-btn.active{
+    background:#15395e;
+    border-color:var(--blue);
+}
+
+.law-number{
+    color:var(--blue);
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.law-title{
+    margin-top:5px;
+    font-weight:bold;
+}
+
+.law-short{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.formula{
+    margin:20px 0;
+
+    padding:28px;
+
+    background:#06101c;
+    border:1px solid var(--border);
+    border-radius:15px;
+
+    text-align:center;
+}
+
+.formula-main{
+    font-size:clamp(28px,5vw,48px);
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.explanation{
+    color:var(--muted);
+    line-height:1.65;
+    font-size:16px;
+}
+
+.concept-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:20px;
+}
+
+.concept{
+    padding:15px;
+    border-radius:12px;
+    background:#0a1728;
+    border:1px solid var(--border);
+}
+
+.concept strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.concept span{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.simulation{
+    margin-top:24px;
+}
+
+.sim-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.controls{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+button.action{
+    border:0;
+    border-radius:9px;
+
+    padding:11px 16px;
+
+    background:var(--blue);
+    color:#06101c;
+
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button.action:hover{
+    filter:brightness(1.1);
+}
+
+button.secondary{
+    background:#1b3049;
+    color:white;
+    border:1px solid var(--border);
+}
+
+button.green{
+    background:var(--green);
+}
+
+button.red{
+    background:var(--red);
+}
+
+canvas{
+    width:100%;
+    height:auto;
+
+    display:block;
+
+    margin-top:18px;
+
+    background:#06101c;
+
+    border:1px solid var(--border);
+    border-radius:14px;
+}
+
+.parameters{
+    margin-top:22px;
+}
+
+.input-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(160px,1fr));
+    gap:14px;
+}
+
+label{
+    color:var(--muted);
+    font-size:14px;
+
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+input,
+select{
+    width:100%;
+
+    padding:11px 12px;
+
+    border-radius:9px;
+    border:1px solid var(--border);
+
+    background:#06101c;
+    color:white;
+
+    font-size:16px;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:var(--blue);
+}
+
+.values{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(150px,1fr));
+
+    gap:12px;
+
+    margin-top:18px;
+}
+
+.value-box{
+    background:#0a1728;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:15px;
+}
+
+.value-label{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.value-number{
+    margin-top:5px;
+    font-size:23px;
+    font-weight:bold;
+}
+
+.calculator{
+    margin-top:24px;
+}
+
+.calc-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(180px,1fr));
+    gap:14px;
+}
+
+.result{
+    display:none;
+
+    margin-top:18px;
+    padding:18px;
+
+    background:#0d2b23;
+    border:1px solid #277d62;
+
+    border-radius:12px;
+}
+
+.result.show{
+    display:block;
+}
+
+.result-number{
+    color:var(--green);
+    font-size:30px;
+    font-weight:bold;
+}
+
+.error{
+    display:none;
+
+    margin-top:15px;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    background:#3b171b;
+    border:1px solid #8c3038;
+
+    color:#ffb4b4;
+}
+
+.error.show{
+    display:block;
+}
+
+.graph-section{
+    margin-top:24px;
+}
+
+.table-wrap{
+    overflow:auto;
+    margin-top:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th,
+td{
+    padding:10px;
+    border-bottom:1px solid var(--border);
+    text-align:right;
+}
+
+th{
+    color:var(--blue);
+    background:#091625;
+}
+
+.task{
+    margin-top:24px;
+}
+
+.task-box{
+    padding:18px;
+
+    background:#110d1b;
+    border:1px solid #543878;
+
+    border-radius:12px;
+
+    line-height:1.6;
+}
+
+.solution{
+    display:none;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    background:#102b24;
+    border:1px solid #287c63;
+}
+
+.solution.show{
+    display:block;
+}
+
+footer{
+    padding:30px;
+    text-align:center;
+    color:#71859e;
+    font-size:13px;
+}
+
+@media(max-width:1000px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:static;
+    }
+
+    .concept-grid{
+        grid-template-columns:1fr;
+    }
+
+    main{
+        padding:15px;
+    }
+
+    .header-inner{
+        padding:18px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<div>
+
+<div class="brand">
+S.MICHAELIS · PHYSIKLABOR
+</div>
+
+<h1>Newton-Gesetze</h1>
+
+<div class="subtitle">
+Kräfte · Masse · Beschleunigung · Wechselwirkung
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+
+<main>
+
+<div class="layout">
+
+
+<!-- SIDEBAR -->
+
+<aside class="panel sidebar">
+
+<h2>Newton-Gesetze</h2>
+
+<div class="law-buttons">
+
+<button
+class="law-btn active"
+onclick="selectLaw(1,this)"
+>
+
+<div class="law-number">
+1. NEWTONSCHES GESETZ
+</div>
+
+<div class="law-title">
+Trägheitsgesetz
+</div>
+
+<div class="law-short">
+ΣF = 0 → v = konstant
+</div>
+
+</button>
+
+
+<button
+class="law-btn"
+onclick="selectLaw(2,this)"
+>
+
+<div class="law-number">
+2. NEWTONSCHES GESETZ
+</div>
+
+<div class="law-title">
+Grundgleichung der Mechanik
+</div>
+
+<div class="law-short">
+F = m · a
+</div>
+
+</button>
+
+
+<button
+class="law-btn"
+onclick="selectLaw(3,this)"
+>
+
+<div class="law-number">
+3. NEWTONSCHES GESETZ
+</div>
+
+<div class="law-title">
+Wechselwirkungsprinzip
+</div>
+
+<div class="law-short">
+F₁₂ = −F₂₁
+</div>
+
+</button>
+
+</div>
+
+</aside>
+
+
+<!-- CONTENT -->
+
+<section>
+
+
+<div class="panel">
+
+<div id="lawContent"></div>
+
+</div>
+
+
+<!-- SIMULATION -->
+
+<div class="panel simulation">
+
+<div class="sim-head">
+
+<h2>🎯 Kraft- und Bewegungssimulation</h2>
+
+<div class="controls">
+
+<button
+class="action green"
+onclick="startSimulation()"
+>
+Start
+</button>
+
+<button
+class="action secondary"
+onclick="pauseSimulation()"
+>
+Pause
+</button>
+
+<button
+class="action secondary"
+onclick="stepSimulation()"
+>
+Schritt
+</button>
+
+<button
+class="action red"
+onclick="resetSimulation()"
+>
+Reset
+</button>
+
+</div>
+
+</div>
+
+
+<canvas
+id="simulationCanvas"
+width="1100"
+height="420"
+></canvas>
+
+
+<div class="parameters">
+
+<h3>Parameter</h3>
+
+<div class="input-grid">
+
+<label>
+Masse m [kg]
+<input
+id="mass"
+type="number"
+value="5"
+step="0.1"
+min="0.01"
+>
+</label>
+
+
+<label>
+Kraft F [N]
+<input
+id="force"
+type="number"
+value="10"
+step="0.1"
+>
+</label>
+
+
+<label>
+Anfangsgeschwindigkeit v₀ [m/s]
+<input
+id="velocity0"
+type="number"
+value="0"
+step="0.1"
+>
+</label>
+
+
+<label>
+Startposition x₀ [m]
+<input
+id="position0"
+type="number"
+value="0"
+step="0.1"
+>
+</label>
+
+
+<label>
+Reibung
+<select id="friction">
+
+<option value="0">
+keine
+</option>
+
+<option value="0.1">
+klein
+</option>
+
+<option value="0.3">
+mittel
+</option>
+
+<option value="0.6">
+stark
+</option>
+
+</select>
+</label>
+
+</div>
+
+</div>
+
+
+<div class="values">
+
+<div class="value-box">
+<div class="value-label">
+Zeit
+</div>
+<div
+class="value-number"
+id="timeValue"
+>
+0,00 s
+</div>
+</div>
+
+
+<div class="value-box">
+<div class="value-label">
+Position
+</div>
+<div
+class="value-number"
+id="positionValue"
+>
+0,00 m
+</div>
+</div>
+
+
+<div class="value-box">
+<div class="value-label">
+Geschwindigkeit
+</div>
+<div
+class="value-number"
+id="velocityValue"
+>
+0,00 m/s
+</div>
+</div>
+
+
+<div class="value-box">
+<div class="value-label">
+Beschleunigung
+</div>
+<div
+class="value-number"
+id="accelerationValue"
+>
+0,00 m/s²
+</div>
+</div>
+
+
+<div class="value-box">
+<div class="value-label">
+Kraft
+</div>
+<div
+class="value-number"
+id="forceValue"
+>
+0,00 N
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CALCULATOR -->
+
+<div class="panel calculator">
+
+<h2>🧮 Newton-Rechner</h2>
+
+<p class="explanation">
+Mit dem zweiten Newtonschen Gesetz kannst du
+Kraft, Masse oder Beschleunigung berechnen.
+</p>
+
+
+<div class="calc-grid">
+
+<label>
+Kraft F [N]
+
+<input
+id="calcForce"
+type="number"
+step="any"
+placeholder="z. B. 20"
+>
+
+</label>
+
+
+<label>
+Masse m [kg]
+
+<input
+id="calcMass"
+type="number"
+step="any"
+placeholder="z. B. 5"
+>
+
+</label>
+
+
+<label>
+Beschleunigung a [m/s²]
+
+<input
+id="calcAcceleration"
+type="number"
+step="any"
+placeholder="z. B. 4"
+>
+
+</label>
+
+</div>
+
+
+<div>
+
+<button
+class="action"
+onclick="calculateNewton()"
+>
+Berechnen
+</button>
+
+<button
+class="action secondary"
+onclick="clearCalculator()"
+>
+Löschen
+</button>
+
+</div>
+
+
+<div
+class="error"
+id="calcError"
+></div>
+
+
+<div
+class="result"
+id="calcResult"
+>
+
+<div>
+Ergebnis
+</div>
+
+<div
+class="result-number"
+id="calcResultValue"
+></div>
+
+</div>
+
+</div>
+
+
+<!-- GRAPH -->
+
+<div class="panel graph-section">
+
+<h2>📈 Bewegung im Zeitverlauf</h2>
+
+<canvas
+id="graphCanvas"
+width="1100"
+height="350"
+></canvas>
+
+</div>
+
+
+<!-- TABLE -->
+
+<div class="panel">
+
+<h2>Messwerte</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>t [s]</th>
+<th>x [m]</th>
+<th>v [m/s]</th>
+<th>a [m/s²]</th>
+<th>F [N]</th>
+
+</tr>
+
+</thead>
+
+<tbody id="measurementBody"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- TASK -->
+
+<div class="panel task">
+
+<h2>🎓 Übungsaufgabe</h2>
+
+<div
+class="task-box"
+id="taskText"
+>
+Klicke auf „Neue Aufgabe“.
+</div>
+
+<div>
+
+<button
+class="action"
+onclick="newTask()"
+>
+Neue Aufgabe
+</button>
+
+<button
+class="action secondary"
+onclick="showTaskSolution()"
+>
+Lösung anzeigen
+</button>
+
+</div>
+
+<div
+class="solution"
+id="taskSolution"
+></div>
+
+</div>
+
+
+</section>
+
+</div>
+
+</main>
+
+
+<footer>
+
+S.Michaelis · Interaktives Newton-Gesetze-Labor
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   NEWTON LAW DATA
+========================================================= */
+
+const laws = {
+
+1:{
+title:"1. Newtonsches Gesetz – Trägheitsgesetz",
+
+formula:"ΣF = 0  →  v = konstant",
+
+text:`
+Ein Körper ändert seinen Bewegungszustand nicht,
+wenn die resultierende Kraft auf ihn null ist.
+
+Das bedeutet:
+
+Ein ruhender Körper bleibt in Ruhe.
+
+Ein bewegter Körper bewegt sich mit konstanter
+Geschwindigkeit geradlinig weiter.
+
+Entscheidend ist nicht, ob einzelne Kräfte vorhanden
+sind, sondern ob ihre Vektorsumme null ist.
+`,
+
+concepts:[
+["Resultierende Kraft","ΣF = 0"],
+["Beschleunigung","a = 0"],
+["Bewegung","v = konstant"]
+]
+
+},
+
+2:{
+title:"2. Newtonsches Gesetz – Grundgleichung der Mechanik",
+
+formula:"F = m · a",
+
+text:`
+Die Beschleunigung eines Körpers ist proportional
+zur resultierenden Kraft und umgekehrt proportional
+zu seiner Masse.
+
+Eine größere Kraft erzeugt bei gleicher Masse eine
+größere Beschleunigung.
+
+Eine größere Masse benötigt bei gleicher Kraft eine
+kleinere Beschleunigung.
+`,
+
+concepts:[
+["Kraft","F = m · a"],
+["Masse","m = F / a"],
+["Beschleunigung","a = F / m"]
+]
+
+},
+
+3:{
+title:"3. Newtonsches Gesetz – Wechselwirkungsprinzip",
+
+formula:"F₁₂ = −F₂₁",
+
+text:`
+Kräfte treten immer paarweise auf.
+
+Übt Körper 1 auf Körper 2 eine Kraft aus,
+so übt Körper 2 gleichzeitig eine gleich große,
+aber entgegengesetzt gerichtete Kraft auf Körper 1 aus.
+
+Diese beiden Kräfte wirken auf verschiedene Körper.
+`,
+
+concepts:[
+["Kraft 1","F₁₂"],
+["Kraft 2","F₂₁"],
+["Zusammenhang","F₁₂ = −F₂₁"]
+]
+
+}
+
+};
+
+
+let currentLaw=1;
+
+
+function selectLaw(number,button){
+
+currentLaw=number;
+
+document
+.querySelectorAll(".law-btn")
+.forEach(btn=>btn.classList.remove("active"));
+
+button.classList.add("active");
+
+const law=laws[number];
+
+let html=`
+
+<div class="law-number">
+${number}. NEWTONSCHES GESETZ
+</div>
+
+<h2>${law.title}</h2>
+
+<div class="formula">
+<div class="formula-main">
+${law.formula}
+</div>
+</div>
+
+<div class="explanation">
+${law.text}
+</div>
+
+<div class="concept-grid">
+
+`;
+
+law.concepts.forEach(item=>{
+
+html+=`
+
+<div class="concept">
+
+<strong>${item[0]}</strong>
+
+<span>
+${item[1]}
+</span>
+
+</div>
+
+`;
+
+});
+
+html+=`
+
+</div>
+`;
+
+document.getElementById("lawContent").innerHTML=html;
+
+}
+
+
+/* =========================================================
+   SIMULATION
+========================================================= */
+
+const canvas=
+document.getElementById("simulationCanvas");
+
+const ctx=canvas.getContext("2d");
+
+let sim={
+
+time:0,
+position:0,
+velocity:0,
+acceleration:0,
+force:0,
+
+running:false,
+
+lastTime:null,
+
+history:[]
+
+};
+
+
+function readSimulationParameters(){
+
+const m=
+Number(document.getElementById("mass").value);
+
+const F=
+Number(document.getElementById("force").value);
+
+const v0=
+Number(document.getElementById("velocity0").value);
+
+const x0=
+Number(document.getElementById("position0").value);
+
+const friction=
+Number(document.getElementById("friction").value);
+
+return {m,F,v0,x0,friction};
+
+}
+
+
+function resetSimulation(){
+
+const p=readSimulationParameters();
+
+sim.time=0;
+sim.position=p.x0;
+sim.velocity=p.v0;
+sim.acceleration=p.F/p.m;
+sim.force=p.F;
+sim.running=false;
+sim.lastTime=null;
+
+sim.history=[];
+
+recordMeasurement();
+
+updateDisplay();
+
+drawSimulation();
+
+drawGraph();
+
+}
+
+
+function startSimulation(){
+
+sim.running=true;
+
+sim.lastTime=performance.now();
+
+requestAnimationFrame(animationLoop);
+
+}
+
+
+function pauseSimulation(){
+
+sim.running=false;
+sim.lastTime=null;
+
+}
+
+
+function stepSimulation(){
+
+updatePhysics(0.05);
+
+drawSimulation();
+
+drawGraph();
+
+}
+
+
+function animationLoop(now){
+
+if(!sim.running) return;
+
+if(sim.lastTime===null)
+sim.lastTime=now;
+
+let dt=(now-sim.lastTime)/1000;
+
+sim.lastTime=now;
+
+dt=Math.min(dt,0.05);
+
+updatePhysics(dt);
+
+drawSimulation();
+
+drawGraph();
+
+requestAnimationFrame(animationLoop);
+
+}
+
+
+function updatePhysics(dt){
+
+const p=readSimulationParameters();
+
+let force=p.F;
+
+/*
+Simple Coulomb-like kinetic friction model:
+F_R = μ · m · g
+opposes motion.
+*/
+
+const g=9.81;
+
+let frictionForce=0;
+
+if(Math.abs(sim.velocity)>0.001){
+
+frictionForce=
+p.friction*p.m*g*
+Math.sign(sim.velocity);
+
+}else if(Math.abs(force)<p.friction*p.m*g){
+
+frictionForce=force;
+
+}
+
+const netForce=
+force-frictionForce;
+
+sim.force=netForce;
+
+sim.acceleration=
+netForce/p.m;
+
+sim.position +=
+sim.velocity*dt+
+0.5*sim.acceleration*dt*dt;
+
+sim.velocity +=
+sim.acceleration*dt;
+
+sim.time+=dt;
+
+recordMeasurement();
+
+updateDisplay();
+
+}
+
+
+function recordMeasurement(){
+
+sim.history.push({
+
+time:sim.time,
+position:sim.position,
+velocity:sim.velocity,
+acceleration:sim.acceleration,
+force:sim.force
+
+});
+
+if(sim.history.length>300){
+
+sim.history.shift();
+
+}
+
+}
+
+
+function updateDisplay(){
+
+document.getElementById("timeValue")
+.textContent=
+format(sim.time)+" s";
+
+document.getElementById("positionValue")
+.textContent=
+format(sim.position)+" m";
+
+document.getElementById("velocityValue")
+.textContent=
+format(sim.velocity)+" m/s";
+
+document.getElementById("accelerationValue")
+.textContent=
+format(sim.acceleration)+" m/s²";
+
+document.getElementById("forceValue")
+.textContent=
+format(sim.force)+" N";
+
+updateTable();
+
+}
+
+
+function format(value){
+
+return Number(value)
+.toFixed(2)
+.replace(".",",");
+
+}
+
+
+/* =========================================================
+   DRAW SIMULATION
+========================================================= */
+
+function drawSimulation(){
+
+const w=canvas.width;
+const h=canvas.height;
+
+ctx.clearRect(0,0,w,h);
+
+ctx.fillStyle="#06101c";
+
+ctx.fillRect(0,0,w,h);
+
+
+/* grid */
+
+ctx.strokeStyle="#17283c";
+ctx.lineWidth=1;
+
+for(let x=0;x<w;x+=50){
+
+ctx.beginPath();
+ctx.moveTo(x,0);
+ctx.lineTo(x,h);
+ctx.stroke();
+
+}
+
+for(let y=0;y<h;y+=50){
+
+ctx.beginPath();
+ctx.moveTo(0,y);
+ctx.lineTo(w,y);
+ctx.stroke();
+
+}
+
+
+/* ground */
+
+const ground=h*0.70;
+
+ctx.strokeStyle="#46617d";
+ctx.lineWidth=3;
+
+ctx.beginPath();
+
+ctx.moveTo(40,ground);
+ctx.lineTo(w-40,ground);
+
+ctx.stroke();
+
+
+/* scale */
+
+const scale=45;
+
+let x=120+
+sim.position*scale;
+
+x=Math.max(70,Math.min(w-70,x));
+
+const y=ground-45;
+
+
+/* object */
+
+ctx.beginPath();
+
+ctx.arc(x,y,27,0,Math.PI*2);
+
+ctx.fillStyle="#4da3ff";
+
+ctx.shadowBlur=25;
+ctx.shadowColor="#4da3ff";
+
+ctx.fill();
+
+ctx.shadowBlur=0;
+
+
+/* mass */
+
+ctx.fillStyle="#ffffff";
+
+ctx.font="bold 15px Arial";
+
+ctx.textAlign="center";
+
+ctx.fillText(
+"m = "+format(readSimulationParameters().m)+" kg",
+x,
+y+5
+);
+
+
+/* force vector */
+
+drawArrow(
+x,
+y,
+x+sim.force*5,
+y,
+"#ff6b6b",
+"F"
+);
+
+
+/* velocity vector */
+
+drawArrow(
+x,
+y+45,
+x+sim.velocity*7,
+y+45,
+"#43d39e",
+"v"
+);
+
+
+/* acceleration vector */
+
+drawArrow(
+x,
+y+85,
+x+sim.acceleration*12,
+y+85,
+"#ffd166",
+"a"
+);
+
+
+/* axis */
+
+ctx.fillStyle="#8da3bc";
+ctx.font="13px Arial";
+
+ctx.textAlign="left";
+
+ctx.fillText(
+"x = "+format(sim.position)+" m",
+45,
+ground+30
+);
+
+}
+
+
+function drawArrow(x1,y1,x2,y2,color,label){
+
+const dx=x2-x1;
+const dy=y2-y1;
+
+const length=Math.sqrt(dx*dx+dy*dy);
+
+if(length<2) return;
+
+const angle=Math.atan2(dy,dx);
+
+ctx.strokeStyle=color;
+ctx.fillStyle=color;
+
+ctx.lineWidth=4;
+
+ctx.beginPath();
+
+ctx.moveTo(x1,y1);
+ctx.lineTo(x2,y2);
+
+ctx.stroke();
+
+ctx.beginPath();
+
+ctx.moveTo(x2,y2);
+
+ctx.lineTo(
+x2-12*Math.cos(angle-0.5),
+y2-12*Math.sin(angle-0.5)
+);
+
+ctx.lineTo(
+x2-12*Math.cos(angle+0.5),
+y2-12*Math.sin(angle+0.5)
+);
+
+ctx.closePath();
+
+ctx.fill();
+
+ctx.font="bold 16px Arial";
+
+ctx.fillText(
+label,
+x2+8,
+y2-8
+);
+
+}
+
+
+/* =========================================================
+   GRAPH
+========================================================= */
+
+const graphCanvas=
+document.getElementById("graphCanvas");
+
+const gctx=
+graphCanvas.getContext("2d");
+
+
+function drawGraph(){
+
+const w=graphCanvas.width;
+const h=graphCanvas.height;
+
+gctx.clearRect(0,0,w,h);
+
+gctx.fillStyle="#06101c";
+
+gctx.fillRect(0,0,w,h);
+
+if(sim.history.length<2)
+return;
+
+const data=sim.history;
+
+const maxT=
+Math.max(5,data[data.length-1].time);
+
+let maxV=1;
+
+data.forEach(d=>{
+
+maxV=Math.max(
+maxV,
+Math.abs(d.velocity),
+Math.abs(d.acceleration*2)
+);
+
+});
+
+
+/* grid */
+
+gctx.strokeStyle="#182a3f";
+gctx.lineWidth=1;
+
+for(let i=0;i<10;i++){
+
+const x=60+i*(w-90)/10;
+
+gctx.beginPath();
+
+gctx.moveTo(x,20);
+gctx.lineTo(x,h-45);
+
+gctx.stroke();
+
+}
+
+for(let i=0;i<6;i++){
+
+const y=20+i*(h-65)/5;
+
+gctx.beginPath();
+
+gctx.moveTo(50,y);
+gctx.lineTo(w-20,y);
+
+gctx.stroke();
+
+}
+
+
+/* velocity */
+
+gctx.strokeStyle="#43d39e";
+gctx.lineWidth=3;
+
+gctx.beginPath();
+
+data.forEach((d,i)=>{
+
+const x=
+60+
+(d.time/maxT)*(w-90);
+
+const y=
+(h/2)-
+(d.velocity/maxV)*(h*0.38);
+
+if(i===0)
+gctx.moveTo(x,y);
+else
+gctx.lineTo(x,y);
+
+});
+
+gctx.stroke();
+
+
+/* acceleration */
+
+gctx.strokeStyle="#ffd166";
+
+gctx.lineWidth=2;
+
+gctx.beginPath();
+
+data.forEach((d,i)=>{
+
+const x=
+60+
+(d.time/maxT)*(w-90);
+
+const y=
+(h/2)-
+(d.acceleration/maxV)*(h*0.38);
+
+if(i===0)
+gctx.moveTo(x,y);
+else
+gctx.lineTo(x,y);
+
+});
+
+gctx.stroke();
+
+
+/* zero line */
+
+gctx.strokeStyle="#71859e";
+
+gctx.lineWidth=1;
+
+gctx.beginPath();
+
+gctx.moveTo(50,h/2);
+
+gctx.lineTo(w-20,h/2);
+
+gctx.stroke();
+
+
+gctx.fillStyle="#43d39e";
+
+gctx.font="14px Arial";
+
+gctx.fillText(
+"v(t)",
+70,
+35
+);
+
+gctx.fillStyle="#ffd166";
+
+gctx.fillText(
+"a(t)",
+125,
+35
+);
+
+}
+
+
+function updateTable(){
+
+const body=
+document.getElementById("measurementBody");
+
+body.innerHTML="";
+
+const data=
+sim.history.slice(-15);
+
+data.forEach(d=>{
+
+const row=document.createElement("tr");
+
+row.innerHTML=`
+
+<td>${format(d.time)}</td>
+
+<td>${format(d.position)}</td>
+
+<td>${format(d.velocity)}</td>
+
+<td>${format(d.acceleration)}</td>
+
+<td>${format(d.force)}</td>
+
+`;
+
+body.appendChild(row);
+
+});
+
+}
+
+
+/* =========================================================
+   CALCULATOR
+========================================================= */
+
+function calculateNewton(){
+
+const F=
+Number(document.getElementById("calcForce").value);
+
+const m=
+Number(document.getElementById("calcMass").value);
+
+const a=
+Number(document.getElementById("calcAcceleration").value);
+
+const values=[
+Number.isFinite(F)&&
+document.getElementById("calcForce").value!=="",
+
+Number.isFinite(m)&&
+document.getElementById("calcMass").value!=="",
+
+Number.isFinite(a)&&
+document.getElementById("calcAcceleration").value!==""
+];
+
+const count=
+values.filter(Boolean).length;
+
+const error=
+document.getElementById("calcError");
+
+const result=
+document.getElementById("calcResult");
+
+error.classList.remove("show");
+result.classList.remove("show");
+
+if(count!==2){
+
+error.textContent=
+"Bitte genau zwei Werte eingeben. Die dritte Größe wird berechnet.";
+
+error.classList.add("show");
+
+return;
+
+}
+
+let answer;
+let text;
+
+if(!values[0]){
+
+answer=m*a;
+
+text=
+"F = m · a = "+
+format(m)+" · "+
+format(a)+
+" = "+
+format(answer)+" N";
+
+}
+
+else if(!values[1]){
+
+if(a===0){
+
+error.textContent=
+"Bei a = 0 ist m aus F = m · a nicht eindeutig bestimmbar.";
+
+error.classList.add("show");
+
+return;
+
+}
+
+answer=F/a;
+
+text=
+"m = F / a = "+
+format(F)+" / "+
+format(a)+
+" = "+
+format(answer)+" kg";
+
+}
+
+else{
+
+if(m===0){
+
+error.textContent=
+"Die Masse muss größer als 0 sein.";
+
+error.classList.add("show");
+
+return;
+
+}
+
+answer=F/m;
+
+text=
+"a = F / m = "+
+format(F)+" / "+
+format(m)+
+" = "+
+format(answer)+" m/s²";
+
+}
+
+document.getElementById("calcResultValue")
+.textContent=text;
+
+result.classList.add("show");
+
+}
+
+
+function clearCalculator(){
+
+[
+"calcForce",
+"calcMass",
+"calcAcceleration"
+].forEach(id=>{
+
+document.getElementById(id).value="";
+
+});
+
+document.getElementById("calcResult")
+.classList.remove("show");
+
+document.getElementById("calcError")
+.classList.remove("show");
+
+}
+
+
+/* =========================================================
+   TASK MODE
+========================================================= */
+
+let currentTask=null;
+
+
+function newTask(){
+
+const tasks=[
+
+{
+question:
+"Ein Körper mit einer Masse von 4 kg wird mit einer resultierenden Kraft von 20 N beschleunigt. Wie groß ist die Beschleunigung?",
+
+solution:
+"a = F / m = 20 N / 4 kg = 5 m/s²"
+},
+
+{
+question:
+"Auf einen Körper mit m = 8 kg wirkt eine Kraft von 32 N. Berechne die Beschleunigung.",
+
+solution:
+"a = 32 N / 8 kg = 4 m/s²"
+},
+
+{
+question:
+"Ein Körper wird mit a = 3 m/s² beschleunigt und besitzt eine Masse von 6 kg. Wie groß ist die resultierende Kraft?",
+
+solution:
+"F = m · a = 6 kg · 3 m/s² = 18 N"
+},
+
+{
+question:
+"Ein Körper erfährt eine Kraft von 45 N und beschleunigt mit 5 m/s². Welche Masse besitzt er?",
+
+solution:
+"m = F / a = 45 N / 5 m/s² = 9 kg"
+},
+
+{
+question:
+"Auf einen Körper wirken zwei Kräfte: 30 N nach rechts und 10 N nach links. Wie groß ist die resultierende Kraft?",
+
+solution:
+"F_resultierend = 30 N − 10 N = 20 N nach rechts."
+},
+
+{
+question:
+"Ein Körper bewegt sich geradlinig mit konstanter Geschwindigkeit. Welche resultierende Kraft wirkt auf ihn?",
+
+solution:
+"Bei konstanter Geschwindigkeit gilt a = 0. Daher ist ΣF = 0 N."
+}
+
+];
+
+currentTask=
+tasks[
+Math.floor(Math.random()*tasks.length)
+];
+
+document.getElementById("taskText")
+.textContent=currentTask.question;
+
+document.getElementById("taskSolution")
+.classList.remove("show");
+
+}
+
+
+function showTaskSolution(){
+
+if(!currentTask){
+
+newTask();
+
+}
+
+const box=
+document.getElementById("taskSolution");
+
+box.textContent=
+currentTask.solution;
+
+box.classList.add("show");
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener("keydown",function(e){
+
+if(e.code==="Space"){
+
+e.preventDefault();
+
+if(sim.running)
+pauseSimulation();
+else
+startSimulation();
+
+}
+
+if(e.key.toLowerCase()==="r"){
+
+resetSimulation();
+
+}
+
+});
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+selectLaw(
+1,
+document.querySelector(".law-btn")
+);
+
+resetSimulation();
+
+newTask();
+
+</script>
+
+</body>
+</html>
