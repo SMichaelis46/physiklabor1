@@ -1,425 +1,431 @@
-set -e
-
-DIR="$HOME/Desktop/physiklabor1"
-mkdir -p "$DIR"
-
-[ -f "$DIR/index.html" ] && cp "$DIR/index.html" "$DIR/index_backup.html"
-
-cat > "$DIR/index.html" <<'EOF'
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>S.Michaelis | Interaktives Physiklabor</title>
 
 <style>
-*{
-box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-html,body{
-margin:0;
-padding:0;
-min-height:100%;
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
-body{
-font-family:Arial,Helvetica,sans-serif;
-color:#f8fafc;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #f8fafc;
 
-background:
-radial-gradient(circle at 15% 15%,#183b63 0%,transparent 34%),
-radial-gradient(circle at 85% 80%,#241b55 0%,transparent 36%),
-linear-gradient(135deg,#050914,#091525 55%,#060912);
+    background:
+        radial-gradient(circle at 15% 15%, #183b63 0%, transparent 34%),
+        radial-gradient(circle at 85% 80%, #241b55 0%, transparent 36%),
+        linear-gradient(135deg, #050914, #091525 55%, #060912);
 
-overflow-x:hidden;
+    overflow-x: hidden;
 }
 
-body:before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
 
-background:
-linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
-linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+    background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
 
-background-size:40px 40px;
+    background-size: 40px 40px;
 
-mask-image:linear-gradient(to bottom,black,transparent 90%);
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
 }
 
-.container{
-width:min(1150px,calc(100% - 36px));
-margin:auto;
+.container {
+    width: min(1150px, calc(100% - 36px));
+    margin: auto;
 }
 
 /* HEADER */
 
-header{
-padding:55px 0 35px;
-text-align:center;
+header {
+    padding: 55px 0 35px;
+    text-align: center;
 }
 
-.logo{
-width:76px;
-height:76px;
+.logo {
+    width: 76px;
+    height: 76px;
 
-margin:0 auto 20px;
+    margin: 0 auto 20px;
 
-display:flex;
-align-items:center;
-justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-border-radius:50%;
+    border-radius: 50%;
 
-font-size:31px;
-font-weight:bold;
+    font-size: 31px;
+    font-weight: bold;
 
-background:linear-gradient(135deg,#2563eb,#7c3aed);
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
 
-box-shadow:
-0 0 45px #2563eb55,
-inset 0 0 20px #ffffff22;
+    box-shadow:
+        0 0 45px #2563eb55,
+        inset 0 0 20px #ffffff22;
 
-border:1px solid #ffffff25;
+    border: 1px solid #ffffff25;
 }
 
-.brand{
-font-size:13px;
-letter-spacing:5px;
-font-weight:bold;
-color:#93c5fd;
-margin-bottom:12px;
+.brand {
+    font-size: 13px;
+    letter-spacing: 5px;
+    font-weight: bold;
+    color: #93c5fd;
+    margin-bottom: 12px;
 }
 
-h1{
-font-size:clamp(32px,5vw,52px);
-margin:0;
-letter-spacing:-1.5px;
+h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    margin: 0;
+    letter-spacing: -1.5px;
 
-background:linear-gradient(90deg,#ffffff,#bfdbfe,#ddd6fe);
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #bfdbfe,
+        #ddd6fe
+    );
 
--webkit-background-clip:text;
-background-clip:text;
+    -webkit-background-clip: text;
+    background-clip: text;
 
-color:transparent;
+    color: transparent;
 }
 
-.subtitle{
-margin-top:15px;
-font-size:16px;
-color:#94a3b8;
-letter-spacing:.4px;
+.subtitle {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #94a3b8;
+    letter-spacing: .4px;
 }
 
-.description{
-max-width:680px;
-margin:20px auto 0;
+.description {
+    max-width: 680px;
+    margin: 20px auto 0;
 
-line-height:1.7;
+    line-height: 1.7;
 
-font-size:15px;
-color:#aab8ca;
+    font-size: 15px;
+    color: #aab8ca;
 }
 
 /* SECTION */
 
-.section-title{
-display:flex;
-align-items:center;
-gap:14px;
-margin:25px 0 18px;
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin: 25px 0 18px;
 }
 
-.section-line{
-height:1px;
-flex:1;
+.section-line {
+    height: 1px;
+    flex: 1;
 
-background:
-linear-gradient(90deg,transparent,#334155);
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #334155
+        );
 }
 
-.section-title span{
-font-size:11px;
-letter-spacing:3px;
-color:#64748b;
+.section-title span {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #64748b;
 }
 
-/* CARDS */
+/* LABS */
 
-.labs{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:18px;
-padding-bottom:45px;
+.labs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+
+    padding-bottom: 45px;
 }
 
-.card{
-position:relative;
+/* CARD */
 
-min-height:285px;
+.card {
+    position: relative;
 
-padding:25px;
+    min-height: 285px;
 
-border-radius:20px;
+    padding: 25px;
 
-border:1px solid #ffffff14;
+    border-radius: 20px;
 
-background:
-linear-gradient(
-145deg,
-rgba(18,32,51,.86),
-rgba(8,17,29,.88)
-);
+    border: 1px solid #ffffff14;
 
-box-shadow:0 20px 55px #0008;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,32,51,.86),
+            rgba(8,17,29,.88)
+        );
 
-overflow:hidden;
+    box-shadow: 0 20px 55px #0008;
 
-transition:
-transform .2s ease,
-border-color .2s ease,
-box-shadow .2s ease;
+    overflow: hidden;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
 }
 
-.card:hover{
-transform:translateY(-6px);
+.card:hover {
+    transform: translateY(-6px);
 
-border-color:#60a5fa55;
+    border-color: #60a5fa55;
 
-box-shadow:
-0 25px 65px #000a,
-0 0 35px #2563eb15;
+    box-shadow:
+        0 25px 65px #000a,
+        0 0 35px #2563eb15;
 }
 
-.card:before{
-content:"";
+.card::before {
+    content: "";
 
-position:absolute;
+    position: absolute;
 
-width:180px;
-height:180px;
+    width: 180px;
+    height: 180px;
 
-right:-80px;
-top:-80px;
+    right: -80px;
+    top: -80px;
 
-border-radius:50%;
+    border-radius: 50%;
 
-background:var(--glow);
+    background: var(--glow);
 
-filter:blur(2px);
+    filter: blur(2px);
 
-opacity:.16;
+    opacity: .16;
 }
 
-.card-icon{
-width:62px;
-height:62px;
+.card-icon {
+    width: 62px;
+    height: 62px;
 
-display:flex;
-align-items:center;
-justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-border-radius:16px;
+    border-radius: 16px;
 
-font-size:30px;
+    font-size: 30px;
 
-background:var(--icon-bg);
+    background: var(--icon-bg);
 
-border:1px solid #ffffff18;
+    border: 1px solid #ffffff18;
 
-margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
-.card h2{
-margin:0 0 10px;
-font-size:21px;
+.card h2 {
+    margin: 0 0 10px;
+    font-size: 21px;
 }
 
-.card p{
-margin:0;
+.card p {
+    margin: 0;
 
-font-size:14px;
-line-height:1.65;
+    font-size: 14px;
+    line-height: 1.65;
 
-color:#94a3b8;
+    color: #94a3b8;
 
-min-height:68px;
+    min-height: 68px;
 }
 
-.card-footer{
-display:flex;
-align-items:center;
-justify-content:space-between;
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-gap:10px;
+    gap: 10px;
 
-margin-top:22px;
+    margin-top: 22px;
 
-padding-top:17px;
+    padding-top: 17px;
 
-border-top:1px solid #ffffff10;
+    border-top: 1px solid #ffffff10;
 }
 
-.card-number{
-font-size:11px;
-letter-spacing:2px;
-color:#64748b;
+.card-number {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #64748b;
 }
 
-.open-button{
-display:inline-flex;
-align-items:center;
-justify-content:center;
+/* BUTTON */
 
-gap:7px;
+.open-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-padding:9px 13px;
+    gap: 7px;
 
-border-radius:8px;
+    padding: 9px 13px;
 
-font-size:12px;
-font-weight:bold;
+    border-radius: 8px;
 
-text-decoration:none;
+    font-size: 12px;
+    font-weight: bold;
 
-color:#e0f2fe;
+    text-decoration: none;
 
-background:#0f2a43;
+    color: #e0f2fe;
 
-border:1px solid #2563eb44;
+    background: #0f2a43;
 
-transition:
-background .15s,
-transform .15s,
-border-color .15s;
+    border: 1px solid #2563eb44;
+
+    transition:
+        background .15s,
+        transform .15s,
+        border-color .15s;
 }
 
-.open-button:hover{
-background:#173d60;
-border-color:#60a5fa88;
-transform:translateX(2px);
+.open-button:hover {
+    background: #173d60;
+    border-color: #60a5fa88;
+    transform: translateX(2px);
 }
 
 /* COLORS */
 
-.vector{
---glow:#ef4444;
---icon-bg:#3a1116;
+.vector {
+    --glow: #ef4444;
+    --icon-bg: #3a1116;
 }
 
-.kinematik{
---glow:#22c55e;
---icon-bg:#0d3020;
+.kinematik {
+    --glow: #22c55e;
+    --icon-bg: #0d3020;
 }
 
-.vector .open-button{
-border-color:#ef444455;
+.vector .open-button {
+    border-color: #ef444455;
 }
 
-.kinematik .open-button{
-border-color:#22c55e55;
+.kinematik .open-button {
+    border-color: #22c55e55;
 }
 
 /* INFO */
 
-.info{
-margin-bottom:45px;
+.info {
+    margin-bottom: 45px;
 
-padding:22px 25px;
+    padding: 22px 25px;
 
-border-radius:16px;
+    border-radius: 16px;
 
-background:#081321cc;
+    background: #081321cc;
 
-border:1px solid #ffffff10;
+    border: 1px solid #ffffff10;
 
-display:grid;
+    display: grid;
 
-grid-template-columns:auto 1fr;
+    grid-template-columns: auto 1fr;
 
-gap:18px;
+    gap: 18px;
 
-align-items:center;
+    align-items: center;
 }
 
-.info-icon{
-font-size:27px;
+.info-icon {
+    font-size: 27px;
 }
 
-.info-text{
-font-size:13px;
-line-height:1.65;
-color:#94a3b8;
+.info-text {
+    font-size: 13px;
+    line-height: 1.65;
+    color: #94a3b8;
 }
 
-.info-text strong{
-color:#cbd5e1;
+.info-text strong {
+    color: #cbd5e1;
 }
 
 /* FOOTER */
 
-footer{
-border-top:1px solid #ffffff0d;
+footer {
+    border-top: 1px solid #ffffff0d;
 
-padding:25px 0 35px;
+    padding: 25px 0 35px;
 
-text-align:center;
+    text-align: center;
 
-color:#475569;
+    color: #475569;
 
-font-size:11px;
+    font-size: 11px;
 
-letter-spacing:1.5px;
+    letter-spacing: 1.5px;
 }
 
 /* RESPONSIVE */
 
-@media(max-width:900px){
+@media (max-width: 900px) {
 
-.labs{
-grid-template-columns:1fr;
+    .labs {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        min-height: 230px;
+    }
 }
 
-.card{
-min-height:230px;
-}
+@media (max-width: 500px) {
 
-}
+    .container {
+        width: min(100% - 22px, 1150px);
+    }
 
-@media(max-width:500px){
+    header {
+        padding-top: 35px;
+    }
 
-.container{
-width:min(100% - 22px,1150px);
-}
+    .logo {
+        width: 68px;
+        height: 68px;
+    }
 
-header{
-padding-top:35px;
-}
+    .card {
+        padding: 21px;
+    }
 
-.logo{
-width:68px;
-height:68px;
-}
+    .info {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
 
-.card{
-padding:21px;
-}
-
-.info{
-grid-template-columns:1fr;
-text-align:center;
-}
-
-.card-footer{
-align-items:flex-start;
-flex-direction:column;
-}
-
+    .card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
 }
 </style>
 </head>
@@ -453,14 +459,18 @@ sondern sehen, verändern und verstehen.
 
 </header>
 
+
 <main class="container">
 
 <div class="section-title">
 <span>LABORATORIEN</span>
+
 <div class="section-line"></div>
 </div>
 
+
 <div class="labs">
+
 
 <!-- VEKTOR -->
 
@@ -497,6 +507,7 @@ Labor öffnen →
 
 </article>
 
+
 <!-- KINEMATIK -->
 
 <article class="card kinematik">
@@ -532,7 +543,9 @@ Labor öffnen →
 
 </article>
 
+
 </div>
+
 
 <div class="info">
 
@@ -555,6 +568,7 @@ physikalischen Größen.
 
 </main>
 
+
 <footer>
 
 S.MICHAELIS • MATHEMATIK • PHYSIK • SIMULATION
@@ -563,21 +577,3 @@ S.MICHAELIS • MATHEMATIK • PHYSIK • SIMULATION
 
 </body>
 </html>
-EOF
-
-echo
-echo "=============================================="
-echo " S.MICHAELIS – HAUPTSEITE NEU ERSTELLT"
-echo "=============================================="
-echo
-echo "Enthalten:"
-echo "  01 / Vektor-Labor"
-echo "  02 / Kinematik-Rechner"
-echo
-echo "Freier Fall: vollständig entfernt"
-echo
-echo "Backup:"
-echo "$DIR/index_backup.html"
-echo
-
-xdg-open "file://$DIR/index.html"
