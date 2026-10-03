@@ -1,1 +1,1554 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonometrie – S.Michaelis Physiklabor</title>
+
+<style>
+:root{
+    --bg:#071018;
+    --panel:#0d1923;
+    --panel2:#111f2c;
+    --border:#203444;
+    --text:#edf6ff;
+    --muted:#8fa8ba;
+    --cyan:#38bdf8;
+    --blue:#60a5fa;
+    --pink:#f472b6;
+    --green:#4ade80;
+    --yellow:#facc15;
+    --orange:#fb923c;
+    --danger:#fb7185;
+    --shadow:0 18px 50px rgba(0,0,0,.35);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:
+        radial-gradient(circle at 20% 0%,rgba(56,189,248,.10),transparent 35%),
+        radial-gradient(circle at 90% 20%,rgba(244,114,182,.08),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+}
+
+header{
+    padding:28px 22px 22px;
+    border-bottom:1px solid var(--border);
+    background:rgba(7,16,24,.92);
+    position:sticky;
+    top:0;
+    z-index:20;
+    backdrop-filter:blur(12px);
+}
+
+.header-inner{
+    max-width:1450px;
+    margin:auto;
+}
+
+.brand{
+    color:var(--cyan);
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:3px;
+}
+
+h1{
+    margin:7px 0 5px;
+    font-size:clamp(28px,4vw,46px);
+}
+
+.subtitle{
+    color:var(--muted);
+    max-width:900px;
+    line-height:1.6;
+}
+
+main{
+    max-width:1450px;
+    margin:auto;
+    padding:25px 18px 60px;
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+}
+
+.tab{
+    border:1px solid var(--border);
+    background:var(--panel);
+    color:var(--muted);
+    padding:11px 17px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.tab:hover,
+.tab.active{
+    color:white;
+    border-color:var(--cyan);
+    background:#10283a;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:20px;
+}
+
+.card{
+    background:linear-gradient(145deg,var(--panel),var(--panel2));
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    box-shadow:var(--shadow);
+}
+
+.card h2{
+    margin-top:0;
+}
+
+.card h3{
+    margin-top:0;
+    color:var(--cyan);
+}
+
+.card p{
+    color:#bfd0dc;
+    line-height:1.65;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.formula{
+    margin:13px 0;
+    padding:16px;
+    border-radius:12px;
+    background:#08141e;
+    border:1px solid #1c3445;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:.5px;
+}
+
+.formula .sin{
+    color:var(--pink);
+}
+
+.formula .cos{
+    color:var(--cyan);
+}
+
+.formula .tan{
+    color:var(--yellow);
+}
+
+.info{
+    padding:14px;
+    border-left:4px solid var(--cyan);
+    background:#0a1721;
+    border-radius:8px;
+    color:#c8d7e1;
+    line-height:1.6;
+}
+
+canvas{
+    width:100%;
+    height:auto;
+    display:block;
+    background:#061018;
+    border:1px solid var(--border);
+    border-radius:14px;
+}
+
+.controls{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+    margin-top:18px;
+}
+
+label{
+    display:block;
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:6px;
+}
+
+input,
+select{
+    width:100%;
+    padding:11px 12px;
+    border-radius:9px;
+    border:1px solid #294354;
+    background:#07131c;
+    color:white;
+    font-size:16px;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:var(--cyan);
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:11px 16px;
+    background:#123247;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#174763;
+}
+
+.primary{
+    background:#0879aa;
+}
+
+.primary:hover{
+    background:#0995d1;
+}
+
+.results{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:18px;
+}
+
+.result{
+    background:#091620;
+    border:1px solid var(--border);
+    padding:15px;
+    border-radius:12px;
+}
+
+.result span{
+    display:block;
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.result strong{
+    font-size:21px;
+}
+
+.unit-circle-wrap{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:20px;
+}
+
+.legend{
+    display:grid;
+    gap:10px;
+}
+
+.legend div{
+    padding:12px;
+    border-radius:9px;
+    background:#091620;
+    border:1px solid var(--border);
+}
+
+.color-pink{
+    color:var(--pink);
+}
+
+.color-cyan{
+    color:var(--cyan);
+}
+
+.color-yellow{
+    color:var(--yellow);
+}
+
+.function-controls{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:16px;
+}
+
+.task{
+    padding:20px;
+    background:#091620;
+    border:1px solid var(--border);
+    border-radius:14px;
+}
+
+.task-question{
+    font-size:20px;
+    line-height:1.6;
+    margin-bottom:18px;
+}
+
+.solution{
+    display:none;
+    margin-top:15px;
+    padding:15px;
+    border-radius:10px;
+    background:#0a1d16;
+    border:1px solid #24563c;
+    color:#c9f7d8;
+    line-height:1.7;
+}
+
+.small{
+    color:var(--muted);
+    font-size:13px;
+}
+
+footer{
+    max-width:1450px;
+    margin:auto;
+    padding:0 18px 35px;
+    color:#657b8b;
+    text-align:center;
+}
+
+@media(max-width:900px){
+    .grid,
+    .unit-circle-wrap{
+        grid-template-columns:1fr;
+    }
+
+    .controls,
+    .function-controls{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+    .controls,
+    .function-controls,
+    .results{
+        grid-template-columns:1fr;
+    }
+
+    main{
+        padding:18px 12px 40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="header-inner">
+    <div class="brand">S.MICHAELIS · PHYSIKLABOR</div>
+    <h1>Trigonometrie</h1>
+    <div class="subtitle">
+        Sinus, Cosinus und Tangens interaktiv untersuchen –
+        rechtwinklige Dreiecke, Einheitskreis, Winkel,
+        Seitenlängen und Sinusfunktionen.
+    </div>
+</div>
+</header>
+
+<main>
+
+<div class="tabs">
+    <button class="tab active" onclick="showSection('dreieck',this)">
+        △ Rechtwinkliges Dreieck
+    </button>
+
+    <button class="tab" onclick="showSection('einheitskreis',this)">
+        ◯ Einheitskreis
+    </button>
+
+    <button class="tab" onclick="showSection('sinusfunktion',this)">
+        ∿ Sinusfunktion
+    </button>
+
+    <button class="tab" onclick="showSection('rechner',this)">
+        Σ Rechner
+    </button>
+
+    <button class="tab" onclick="showSection('aufgaben',this)">
+        Aufgaben
+    </button>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- DREIECK -->
+<!-- ========================================================= -->
+
+<section id="dreieck" class="section active">
+
+<div class="grid">
+
+<div class="card">
+<h2>Das rechtwinklige Dreieck</h2>
+
+<p>
+Bei einem rechtwinkligen Dreieck beziehen sich die Begriffe
+Gegenkathete, Ankathete und Hypotenuse immer auf den gewählten
+Winkel α.
+</p>
+
+<div class="formula">
+Hypotenuse = längste Seite
+</div>
+
+<div class="formula">
+<span class="sin">sin(α)</span>
+=
+Gegenkathete / Hypotenuse
+</div>
+
+<div class="formula">
+<span class="cos">cos(α)</span>
+=
+Ankathete / Hypotenuse
+</div>
+
+<div class="formula">
+<span class="tan">tan(α)</span>
+=
+Gegenkathete / Ankathete
+</div>
+
+<div class="info">
+<strong>Merksatz:</strong><br>
+SOH – CAH – TOA<br><br>
+Sinus = Gegenkathete / Hypotenuse<br>
+Cosinus = Ankathete / Hypotenuse<br>
+Tangens = Gegenkathete / Ankathete
+</div>
+</div>
+
+
+<div class="card">
+<h2>Interaktives Dreieck</h2>
+
+<canvas id="triangleCanvas" width="700" height="450"></canvas>
+
+<div class="controls">
+
+<div>
+<label>Winkel α in Grad</label>
+<input id="angleInput" type="number" min="1" max="89" step="1" value="35"
+       oninput="updateTriangle()">
+</div>
+
+<div>
+<label>Hypotenuse c</label>
+<input id="hypInput" type="number" min="1" step="0.1" value="10"
+       oninput="updateTriangle()">
+</div>
+
+<div>
+<label>Darstellung</label>
+<select id="triangleMode" onchange="updateTriangle()">
+<option value="normal">Dreieck</option>
+<option value="values">Mit Werten</option>
+</select>
+</div>
+
+</div>
+
+<div class="results">
+
+<div class="result">
+<span>Gegenkathete a</span>
+<strong id="oppResult">–</strong>
+</div>
+
+<div class="result">
+<span>Ankathete b</span>
+<strong id="adjResult">–</strong>
+</div>
+
+<div class="result">
+<span>Winkel α</span>
+<strong id="angleResult">–</strong>
+</div>
+
+</div>
+</div>
+
+
+<div class="card full">
+<h2>Was bedeuten die drei Funktionen?</h2>
+
+<div class="grid">
+
+<div class="info">
+<strong class="color-pink">Sinus</strong><br><br>
+Der Sinus beschreibt das Verhältnis von Gegenkathete
+zu Hypotenuse.
+</div>
+
+<div class="info">
+<strong class="color-cyan">Cosinus</strong><br><br>
+Der Cosinus beschreibt das Verhältnis von Ankathete
+zu Hypotenuse.
+</div>
+
+<div class="info">
+<strong class="color-yellow">Tangens</strong><br><br>
+Der Tangens beschreibt das Verhältnis von Gegenkathete
+zu Ankathete.
+</div>
+
+</div>
+</div>
+
+</div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- EINHEITSKREIS -->
+<!-- ========================================================= -->
+
+<section id="einheitskreis" class="section">
+
+<div class="grid">
+
+<div class="card">
+<h2>Einheitskreis</h2>
+
+<canvas id="circleCanvas" width="700" height="600"></canvas>
+
+<div class="controls">
+
+<div>
+<label>Winkel α in Grad</label>
+<input id="circleAngle" type="number" min="-360" max="360"
+       step="1" value="40" oninput="updateCircle()">
+</div>
+
+<div>
+<label>Schrittweite</label>
+<select id="circleStep" onchange="updateCircleStep()">
+<option value="1">1°</option>
+<option value="5">5°</option>
+<option value="10">10°</option>
+<option value="15">15°</option>
+<option value="30">30°</option>
+<option value="45">45°</option>
+<option value="90">90°</option>
+</select>
+</div>
+
+</div>
+</div>
+
+
+<div class="card">
+
+<h2>Aktuelle Werte</h2>
+
+<div class="result">
+<span>Winkel α</span>
+<strong id="circleDeg">–</strong>
+</div>
+
+<br>
+
+<div class="result">
+<span>Bogenmaß α</span>
+<strong id="circleRad">–</strong>
+</div>
+
+<br>
+
+<div class="result">
+<span>cos(α)</span>
+<strong id="circleCos">–</strong>
+</div>
+
+<br>
+
+<div class="result">
+<span>sin(α)</span>
+<strong id="circleSin">–</strong>
+</div>
+
+<br>
+
+<div class="result">
+<span>tan(α)</span>
+<strong id="circleTan">–</strong>
+</div>
+
+<br>
+
+<div class="info">
+Im Einheitskreis hat der Radius die Länge 1.
+Der Punkt auf dem Kreis besitzt die Koordinaten
+<br><br>
+
+<strong>
+P = (cos(α) | sin(α))
+</strong>
+
+<br><br>
+
+Damit können Sinus und Cosinus geometrisch verstanden werden.
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- SINUSFUNKTION -->
+<!-- ========================================================= -->
+
+<section id="sinusfunktion" class="section">
+
+<div class="card">
+
+<h2>Sinusfunktion</h2>
+
+<p>
+Die Grundfunktion lautet:
+</p>
+
+<div class="formula">
+y = sin(x)
+</div>
+
+<p>
+Mit Amplitude A und Faktor B erhalten wir:
+</p>
+
+<div class="formula">
+y = A · sin(Bx)
+</div>
+
+<div class="info">
+<strong>Amplitude:</strong> A bestimmt die maximale Auslenkung.<br>
+<strong>Periode:</strong> T = 2π / B<br>
+<strong>Maximalwert:</strong> y = A<br>
+<strong>Minimalwert:</strong> y = −A
+</div>
+
+<br>
+
+<div class="function-controls">
+
+<div>
+<label>Amplitude A</label>
+<input id="ampInput" type="number" min="0.1" max="5"
+       step="0.1" value="1" oninput="drawSine()">
+</div>
+
+<div>
+<label>Faktor B</label>
+<input id="freqInput" type="number" min="0.1" max="8"
+       step="0.1" value="1" oninput="drawSine()">
+</div>
+
+<div>
+<label>Bereich von x</label>
+<select id="rangeInput" onchange="drawSine()">
+<option value="360">0° bis 360°</option>
+<option value="720">0° bis 720°</option>
+<option value="180">0° bis 180°</option>
+</select>
+</div>
+
+<div>
+<label>Animation</label>
+<button class="primary" onclick="toggleAnimation()" id="animButton">
+Animation starten
+</button>
+</div>
+
+</div>
+
+<canvas id="sineCanvas" width="1200" height="550"></canvas>
+
+<div class="results">
+
+<div class="result">
+<span>Amplitude A</span>
+<strong id="ampResult">–</strong>
+</div>
+
+<div class="result">
+<span>Faktor B</span>
+<strong id="freqResult">–</strong>
+</div>
+
+<div class="result">
+<span>Periode T</span>
+<strong id="periodResult">–</strong>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- RECHNER -->
+<!-- ========================================================= -->
+
+<section id="rechner" class="section">
+
+<div class="grid">
+
+<div class="card">
+<h2>Trigonometrischer Rechner</h2>
+
+<div class="controls">
+
+<div>
+<label>Winkel α</label>
+<input id="calcAngle" type="number" value="30" step="0.1">
+</div>
+
+<div>
+<label>Einheit</label>
+<select id="calcUnit">
+<option value="deg">Grad</option>
+<option value="rad">Bogenmaß</option>
+</select>
+</div>
+
+</div>
+
+<br>
+
+<button class="primary" onclick="calculateTrig()">
+Berechnen
+</button>
+
+<div class="results">
+
+<div class="result">
+<span>sin(α)</span>
+<strong id="calcSin">–</strong>
+</div>
+
+<div class="result">
+<span>cos(α)</span>
+<strong id="calcCos">–</strong>
+</div>
+
+<div class="result">
+<span>tan(α)</span>
+<strong id="calcTan">–</strong>
+</div>
+
+</div>
+</div>
+
+
+<div class="card">
+<h2>Grad ↔ Bogenmaß</h2>
+
+<div class="formula">
+180° = π rad
+</div>
+
+<div class="controls">
+
+<div>
+<label>Grad</label>
+<input id="degConvert" type="number" value="180" step="0.1">
+</div>
+
+<div>
+<label>Bogenmaß</label>
+<input id="radConvert" type="number" value="3.14159265" step="0.01">
+</div>
+
+</div>
+
+<br>
+
+<button onclick="degToRad()">Grad → rad</button>
+<button onclick="radToDeg()">rad → Grad</button>
+
+<div class="info" style="margin-top:18px;">
+Beispiel:<br>
+90° = π/2 rad<br>
+180° = π rad<br>
+270° = 3π/2 rad<br>
+360° = 2π rad
+</div>
+
+</div>
+
+
+<div class="card full">
+<h2>Seiten berechnen</h2>
+
+<div class="controls">
+
+<div>
+<label>Hypotenuse c</label>
+<input id="sideC" type="number" value="10" step="0.1">
+</div>
+
+<div>
+<label>Winkel α</label>
+<input id="sideAngle" type="number" value="30" step="0.1">
+</div>
+
+<div>
+<label>Gesuchte Größe</label>
+<select id="sideTarget">
+<option value="both">a und b</option>
+<option value="a">Gegenkathete a</option>
+<option value="b">Ankathete b</option>
+</select>
+</div>
+
+</div>
+
+<br>
+
+<button class="primary" onclick="calculateSides()">
+Seiten berechnen
+</button>
+
+<div class="results">
+
+<div class="result">
+<span>Gegenkathete a</span>
+<strong id="sideAResult">–</strong>
+</div>
+
+<div class="result">
+<span>Ankathete b</span>
+<strong id="sideBResult">–</strong>
+</div>
+
+<div class="result">
+<span>Kontrolle a²+b²</span>
+<strong id="pythResult">–</strong>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- AUFGABEN -->
+<!-- ========================================================= -->
+
+<section id="aufgaben" class="section">
+
+<div class="card">
+<h2>Übungsaufgaben</h2>
+
+<div class="task">
+
+<div class="task-question">
+<strong>Aufgabe 1</strong><br>
+Ein rechtwinkliges Dreieck besitzt eine Hypotenuse von
+10 cm. Der Winkel α beträgt 30°.
+<br><br>
+Berechne die Gegenkathete.
+</div>
+
+<button onclick="toggleSolution('sol1')">
+Lösung anzeigen
+</button>
+
+<div class="solution" id="sol1">
+sin(30°) = Gegenkathete / 10<br><br>
+Gegenkathete = 10 · sin(30°)<br>
+Gegenkathete = 10 · 0,5<br><br>
+<strong>Gegenkathete = 5 cm</strong>
+</div>
+
+</div>
+
+<br>
+
+<div class="task">
+
+<div class="task-question">
+<strong>Aufgabe 2</strong><br>
+Die Gegenkathete ist 6 cm lang und die Hypotenuse
+ist 10 cm lang.
+<br><br>
+Berechne den Winkel α.
+</div>
+
+<button onclick="toggleSolution('sol2')">
+Lösung anzeigen
+</button>
+
+<div class="solution" id="sol2">
+sin(α) = 6 / 10 = 0,6<br><br>
+α = arcsin(0,6)<br><br>
+<strong>α ≈ 36,87°</strong>
+</div>
+
+</div>
+
+<br>
+
+<div class="task">
+
+<div class="task-question">
+<strong>Aufgabe 3</strong><br>
+Ein rechtwinkliges Dreieck besitzt eine Ankathete von
+8 cm und eine Gegenkathete von 6 cm.
+<br><br>
+Berechne den Winkel α.
+</div>
+
+<button onclick="toggleSolution('sol3')">
+Lösung anzeigen
+</button>
+
+<div class="solution" id="sol3">
+tan(α) = 6 / 8 = 0,75<br><br>
+α = arctan(0,75)<br><br>
+<strong>α ≈ 36,87°</strong>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+</main>
+
+<footer>
+S.Michaelis · Physiklabor · Mathematik & Physik
+</footer>
+
+
+<script>
+
+/* =========================================================
+   HILFSFUNKTIONEN
+========================================================= */
+
+function fmt(x, digits=3){
+    if(!Number.isFinite(x)) return "nicht definiert";
+    return Number(x).toFixed(digits);
+}
+
+function degToRadValue(deg){
+    return deg * Math.PI / 180;
+}
+
+function radToDegValue(rad){
+    return rad * 180 / Math.PI;
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+function showSection(id,button){
+
+    document.querySelectorAll(".section").forEach(section=>{
+        section.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    document.querySelectorAll(".tab").forEach(tab=>{
+        tab.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    if(id==="dreieck"){
+        updateTriangle();
+    }
+
+    if(id==="einheitskreis"){
+        updateCircle();
+    }
+
+    if(id==="sinusfunktion"){
+        drawSine();
+    }
+}
+
+
+/* =========================================================
+   DREIECK
+========================================================= */
+
+function updateTriangle(){
+
+    const canvas=document.getElementById("triangleCanvas");
+    const ctx=canvas.getContext("2d");
+
+    const angle=Number(document.getElementById("angleInput").value);
+    const c=Number(document.getElementById("hypInput").value);
+
+    if(angle<=0 || angle>=90 || c<=0) return;
+
+    const rad=degToRadValue(angle);
+
+    const a=c*Math.sin(rad);
+    const b=c*Math.cos(rad);
+
+    document.getElementById("oppResult").textContent=fmt(a,2);
+    document.getElementById("adjResult").textContent=fmt(b,2);
+    document.getElementById("angleResult").textContent=fmt(angle,1)+"°";
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    const A={x:100,y:350};
+    const B={x:570,y:350};
+    const C={x:570,y:350-a/b*470};
+
+    const scale=Math.min(
+        430/b,
+        270/a
+    );
+
+    B.x=A.x+b*scale;
+    C.x=B.x;
+    C.y=B.y-a*scale;
+
+    const maxX=canvas.width-80;
+    const minX=80;
+
+    if(B.x>maxX){
+        const factor=(maxX-A.x)/(B.x-A.x);
+        B.x=A.x+(B.x-A.x)*factor;
+        C.x=B.x;
+        C.y=B.y-(B.y-C.y)*factor;
+    }
+
+    if(C.y<80){
+        const factor=(B.y-80)/(B.y-C.y);
+        C.y=B.y-(B.y-C.y)*factor;
+    }
+
+    ctx.lineWidth=4;
+    ctx.strokeStyle="#38bdf8";
+    ctx.fillStyle="#38bdf8";
+
+    ctx.beginPath();
+    ctx.moveTo(A.x,A.y);
+    ctx.lineTo(B.x,B.y);
+    ctx.lineTo(C.x,C.y);
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.fillStyle="rgba(56,189,248,.08)";
+    ctx.fill();
+
+    /* rechter Winkel */
+
+    ctx.strokeStyle="#4ade80";
+    ctx.lineWidth=3;
+
+    ctx.beginPath();
+    ctx.moveTo(B.x-25,B.y);
+    ctx.lineTo(B.x-25,B.y-25);
+    ctx.lineTo(B.x,B.y-25);
+    ctx.stroke();
+
+    /* Winkelbogen */
+
+    ctx.strokeStyle="#f472b6";
+    ctx.lineWidth=3;
+
+    const radius=48;
+
+    ctx.beginPath();
+    ctx.arc(
+        A.x,
+        A.y,
+        radius,
+        -Math.atan2(A.y-C.y,C.x-A.x),
+        0
+    );
+    ctx.stroke();
+
+    /* Beschriftungen */
+
+    ctx.font="bold 22px Arial";
+
+    ctx.fillStyle="#f472b6";
+    ctx.fillText("α",A.x+radius+5,A.y-12);
+
+    ctx.fillStyle="#facc15";
+    ctx.fillText("a",B.x+15,(B.y+C.y)/2);
+
+    ctx.fillStyle="#38bdf8";
+    ctx.fillText("b",(A.x+B.x)/2,B.y+32);
+
+    ctx.fillStyle="#4ade80";
+    ctx.fillText("c",(A.x+C.x)/2-20,(A.y+C.y)/2-12);
+
+    ctx.fillStyle="#edf6ff";
+    ctx.font="bold 18px Arial";
+
+    ctx.fillText("Gegenkathete",B.x+10,(B.y+C.y)/2+25);
+    ctx.fillText("Ankathete",(A.x+B.x)/2-40,B.y+58);
+    ctx.fillText("Hypotenuse",(A.x+C.x)/2-55,(A.y+C.y)/2-38);
+
+}
+
+
+/* =========================================================
+   EINHEITSKREIS
+========================================================= */
+
+function updateCircleStep(){
+
+    const step=Number(document.getElementById("circleStep").value);
+    let angle=Number(document.getElementById("circleAngle").value);
+
+    angle=Math.round(angle/step)*step;
+
+    document.getElementById("circleAngle").value=angle;
+
+    updateCircle();
+}
+
+
+function updateCircle(){
+
+    const canvas=document.getElementById("circleCanvas");
+    const ctx=canvas.getContext("2d");
+
+    const deg=Number(document.getElementById("circleAngle").value);
+
+    const rad=degToRadValue(deg);
+
+    const sin=Math.sin(rad);
+    const cos=Math.cos(rad);
+
+    let tan=Math.tan(rad);
+
+    if(Math.abs(cos)<1e-10){
+        tan=NaN;
+    }
+
+    document.getElementById("circleDeg").textContent=fmt(deg,1)+"°";
+    document.getElementById("circleRad").textContent=fmt(rad,4)+" rad";
+    document.getElementById("circleCos").textContent=fmt(cos,4);
+    document.getElementById("circleSin").textContent=fmt(sin,4);
+    document.getElementById("circleTan").textContent=
+        Number.isFinite(tan) ? fmt(tan,4) : "nicht definiert";
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    const cx=350;
+    const cy=300;
+    const r=190;
+
+    /* Achsen */
+
+    ctx.strokeStyle="#35505f";
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+    ctx.moveTo(60,cy);
+    ctx.lineTo(640,cy);
+    ctx.moveTo(cx,60);
+    ctx.lineTo(cx,540);
+    ctx.stroke();
+
+    /* Kreis */
+
+    ctx.strokeStyle="#38bdf8";
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+    ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.stroke();
+
+    /* Punkt */
+
+    const px=cx+r*cos;
+    const py=cy-r*sin;
+
+    /* Radius */
+
+    ctx.strokeStyle="#facc15";
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(px,py);
+    ctx.stroke();
+
+    /* Cosinus-Projektion */
+
+    ctx.strokeStyle="#38bdf8";
+    ctx.lineWidth=3;
+
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(px,cy);
+    ctx.stroke();
+
+    /* Sinus-Projektion */
+
+    ctx.strokeStyle="#f472b6";
+
+    ctx.beginPath();
+    ctx.moveTo(px,cy);
+    ctx.lineTo(px,py);
+    ctx.stroke();
+
+    /* Winkel */
+
+    ctx.strokeStyle="#4ade80";
+    ctx.lineWidth=3;
+
+    ctx.beginPath();
+    ctx.arc(cx,cy,55,0,-rad,rad>0);
+    ctx.stroke();
+
+    /* Punkt */
+
+    ctx.fillStyle="#ffffff";
+    ctx.beginPath();
+    ctx.arc(px,py,8,0,Math.PI*2);
+    ctx.fill();
+
+    /* Beschriftungen */
+
+    ctx.font="bold 20px Arial";
+
+    ctx.fillStyle="#facc15";
+    ctx.fillText("r = 1",(cx+px)/2+5,(cy+py)/2-10);
+
+    ctx.fillStyle="#38bdf8";
+    ctx.fillText("cos(α)",(cx+px)/2,cy+28);
+
+    ctx.fillStyle="#f472b6";
+    ctx.fillText("sin(α)",px+12,(cy+py)/2);
+
+    ctx.fillStyle="#4ade80";
+    ctx.fillText("α",cx+62,cy-10);
+
+    ctx.fillStyle="#edf6ff";
+    ctx.fillText("P = ("+fmt(cos,2)+" | "+fmt(sin,2)+")",80,45);
+
+    ctx.fillStyle="#8fa8ba";
+    ctx.font="15px Arial";
+
+    ctx.fillText("x",620,cy-10);
+    ctx.fillText("y",cx+10,75);
+}
+
+
+/* =========================================================
+   SINUSFUNKTION
+========================================================= */
+
+let animationRunning=false;
+let animationPhase=0;
+let animationId=null;
+
+function drawSine(){
+
+    const canvas=document.getElementById("sineCanvas");
+    const ctx=canvas.getContext("2d");
+
+    const A=Number(document.getElementById("ampInput").value);
+    const B=Number(document.getElementById("freqInput").value);
+    const range=Number(document.getElementById("rangeInput").value);
+
+    if(A<=0 || B<=0) return;
+
+    document.getElementById("ampResult").textContent=fmt(A,2);
+    document.getElementById("freqResult").textContent=fmt(B,2);
+
+    const period=360/B;
+
+    document.getElementById("periodResult").textContent=
+        fmt(period,1)+"°";
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    const left=65;
+    const right=canvas.width-30;
+    const centerY=canvas.height/2;
+
+    const scaleY=150/Math.max(A,1);
+
+    /* Achsen */
+
+    ctx.strokeStyle="#314957";
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+    ctx.moveTo(left,centerY);
+    ctx.lineTo(right,centerY);
+
+    ctx.moveTo(left,50);
+    ctx.lineTo(left,canvas.height-35);
+
+    ctx.stroke();
+
+    /* Gitternetz */
+
+    ctx.strokeStyle="#172b38";
+    ctx.lineWidth=1;
+
+    for(let deg=0;deg<=range;deg+=30){
+
+        const x=left+(deg/range)*(right-left);
+
+        ctx.beginPath();
+        ctx.moveTo(x,50);
+        ctx.lineTo(x,canvas.height-35);
+        ctx.stroke();
+
+        ctx.fillStyle="#7890a0";
+        ctx.font="13px Arial";
+        ctx.fillText(deg+"°",x-10,centerY+25);
+    }
+
+    /* Null */
+
+    ctx.fillStyle="#7890a0";
+    ctx.fillText("0",35,centerY+5);
+
+    /* Amplitudenlinien */
+
+    const yTop=centerY-A*scaleY;
+    const yBottom=centerY+A*scaleY;
+
+    ctx.strokeStyle="#294354";
+    ctx.setLineDash([6,6]);
+
+    ctx.beginPath();
+    ctx.moveTo(left,yTop);
+    ctx.lineTo(right,yTop);
+
+    ctx.moveTo(left,yBottom);
+    ctx.lineTo(right,yBottom);
+
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+
+    /* Sinuskurve */
+
+    ctx.strokeStyle="#f472b6";
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+
+    for(let px=0;px<=right-left;px++){
+
+        const deg=(px/(right-left))*range;
+
+        const rad=degToRadValue(deg);
+
+        const y=centerY-A*Math.sin(B*rad)*scaleY;
+        const x=left+px;
+
+        if(px===0){
+            ctx.moveTo(x,y);
+        }else{
+            ctx.lineTo(x,y);
+        }
+    }
+
+    ctx.stroke();
+
+    /* animierter Punkt */
+
+    if(animationRunning){
+
+        const deg=(animationPhase%range);
+        const rad=degToRadValue(deg);
+
+        const x=left+(deg/range)*(right-left);
+        const y=centerY-A*Math.sin(B*rad)*scaleY;
+
+        ctx.fillStyle="#38bdf8";
+
+        ctx.beginPath();
+        ctx.arc(x,y,8,0,Math.PI*2);
+        ctx.fill();
+    }
+
+}
+
+
+function toggleAnimation(){
+
+    animationRunning=!animationRunning;
+
+    document.getElementById("animButton").textContent=
+        animationRunning ? "Animation stoppen" : "Animation starten";
+
+    if(animationRunning){
+        animateSine();
+    }
+}
+
+
+function animateSine(){
+
+    if(!animationRunning) return;
+
+    animationPhase+=1;
+
+    drawSine();
+
+    animationId=requestAnimationFrame(animateSine);
+}
+
+
+/* =========================================================
+   TRIGONOMETRIE RECHNER
+========================================================= */
+
+function calculateTrig(){
+
+    const value=Number(document.getElementById("calcAngle").value);
+    const unit=document.getElementById("calcUnit").value;
+
+    const rad=unit==="deg"
+        ? degToRadValue(value)
+        : value;
+
+    const s=Math.sin(rad);
+    const c=Math.cos(rad);
+
+    let t=Math.tan(rad);
+
+    if(Math.abs(c)<1e-10){
+        t=NaN;
+    }
+
+    document.getElementById("calcSin").textContent=fmt(s,6);
+    document.getElementById("calcCos").textContent=fmt(c,6);
+    document.getElementById("calcTan").textContent=
+        Number.isFinite(t) ? fmt(t,6) : "nicht definiert";
+}
+
+
+/* =========================================================
+   GRAD / RAD
+========================================================= */
+
+function degToRad(){
+
+    const deg=Number(document.getElementById("degConvert").value);
+
+    document.getElementById("radConvert").value=
+        (deg*Math.PI/180).toFixed(8);
+}
+
+
+function radToDeg(){
+
+    const rad=Number(document.getElementById("radConvert").value);
+
+    document.getElementById("degConvert").value=
+        (rad*180/Math.PI).toFixed(6);
+}
+
+
+/* =========================================================
+   SEITEN BERECHNEN
+========================================================= */
+
+function calculateSides(){
+
+    const c=Number(document.getElementById("sideC").value);
+    const angle=Number(document.getElementById("sideAngle").value);
+
+    if(c<=0 || angle<=0 || angle>=90){
+        alert("Bitte gültige Werte eingeben.");
+        return;
+    }
+
+    const rad=degToRadValue(angle);
+
+    const a=c*Math.sin(rad);
+    const b=c*Math.cos(rad);
+
+    document.getElementById("sideAResult").textContent=
+        fmt(a,3)+" cm";
+
+    document.getElementById("sideBResult").textContent=
+        fmt(b,3)+" cm";
+
+    document.getElementById("pythResult").textContent=
+        fmt(a*a+b*b,3)+" cm²";
+}
+
+
+/* =========================================================
+   AUFGABEN
+========================================================= */
+
+function toggleSolution(id){
+
+    const element=document.getElementById(id);
+
+    if(element.style.display==="block"){
+        element.style.display="none";
+    }else{
+        element.style.display="block";
+    }
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+updateTriangle();
+updateCircle();
+calculateTrig();
+calculateSides();
+drawSine();
+
+</script>
+
+</body>
+</html>
