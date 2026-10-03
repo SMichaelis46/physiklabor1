@@ -3,4663 +3,2214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>S.Michaelis – Interaktives Kinematik-Labor 2.0</title>
+<title>S.Michaelis – Kinematik-Labor</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-:root{
-    --bg:#06111c;
-    --panel:#0c1b2b;
-    --panel2:#10243a;
-    --border:#243c56;
-    --text:#edf5fc;
-    --muted:#91a7bc;
-
-    --green:#22c55e;
-    --cyan:#38bdf8;
-    --yellow:#f59e0b;
-    --red:#ef4444;
-    --purple:#a78bfa;
-
-    --shadow:0 18px 55px rgba(0,0,0,.38);
+:root {
+    --bg: #07111f;
+    --panel: #0d1b2e;
+    --panel2: #11243b;
+    --border: #24405e;
+    --text: #e8f1fb;
+    --muted: #91a8c0;
+    --blue: #38bdf8;
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --red: #fb7185;
+    --purple: #a78bfa;
 }
 
-html,body{
-    margin:0;
-    padding:0;
-    min-height:100%;
+body {
+    margin: 0;
     background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(34,197,94,.08),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 90% 15%,
-            rgba(56,189,248,.08),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #040b13,
-            #071522 48%,
-            #06101a
-        );
-
-    color:var(--text);
-
-    font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-}
-
-body{
-    padding:20px;
-}
-
-.app{
-    max-width:1650px;
-    margin:auto;
-}
-
-/* =====================================================
-HEADER
-===================================================== */
-
-header{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:20px;
-
-    padding:21px 25px;
-
-    margin-bottom:20px;
-
-    border:1px solid var(--border);
-
-    border-radius:22px;
-
-    background:rgba(12,27,43,.92);
-
-    box-shadow:var(--shadow);
-
-    backdrop-filter:blur(14px);
-}
-
-.brand{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:16px;
-}
-
-.logo{
-
-    width:62px;
-
-    height:62px;
-
-    display:grid;
-
-    place-items:center;
-
-    border-radius:18px;
-
-    font-size:32px;
-
-    font-weight:900;
-
-    background:
-        linear-gradient(
-            135deg,
-            #047857,
-            #22c55e
-        );
-
-    box-shadow:
-        0 0 30px
-        rgba(34,197,94,.22);
-}
-
-.brand h1{
-
-    margin:0;
-
-    font-size:
-        clamp(
-            22px,
-            3vw,
-            34px
-        );
-
-    letter-spacing:-.035em;
-}
-
-.brand p{
-
-    margin:5px 0 0;
-
-    color:var(--muted);
-
-    font-size:14px;
-}
-
-.header-buttons{
-
-    display:flex;
-
-    gap:9px;
-
-    flex-wrap:wrap;
-}
-
-/* =====================================================
-BUTTONS
-===================================================== */
-
-button{
-
-    border:1px solid var(--border);
-
-    background:#12273d;
-
-    color:var(--text);
-
-    border-radius:11px;
-
-    padding:11px 15px;
-
-    font-weight:750;
-
-    cursor:pointer;
-
-    transition:
-        transform .18s,
-        background .18s,
-        border-color .18s;
-}
-
-button:hover{
-
-    transform:translateY(-1px);
-
-    background:#18324d;
-
-    border-color:#41617e;
-}
-
-button.primary{
-
-    background:
-        linear-gradient(
-            135deg,
-            #15803d,
-            #22c55e
-        );
-
-    border-color:#22c55e;
-}
-
-button.blue{
-
-    background:
-        linear-gradient(
-            135deg,
-            #0369a1,
-            #38bdf8
-        );
-
-    border-color:#38bdf8;
+        radial-gradient(circle at 20% 0%, #123152 0%, transparent 35%),
+        radial-gradient(circle at 90% 10%, #102943 0%, transparent 30%),
+        var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
 }
-
-button.yellow{
-
-    background:
-        linear-gradient(
-            135deg,
-            #a16207,
-            #f59e0b
-        );
-
-    border-color:#f59e0b;
-}
-
-/* =====================================================
-MAIN GRID
-===================================================== */
-
-.main-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        minmax(0,1fr)
-        400px;
-
-    gap:20px;
-}
-
-.left-column{
 
-    display:flex;
-
-    flex-direction:column;
-
-    gap:20px;
+header {
+    padding: 24px 30px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(5, 15, 28, 0.92);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(12px);
 }
-
-.right-column{
-
-    display:flex;
-
-    flex-direction:column;
 
-    gap:20px;
+.header-inner {
+    max-width: 1500px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
 }
-
-/* =====================================================
-PANELS
-===================================================== */
-
-.panel{
-
-    background:
-        rgba(12,27,43,.91);
-
-    border:1px solid var(--border);
-
-    border-radius:20px;
 
-    overflow:hidden;
-
-    box-shadow:var(--shadow);
+.brand {
+    letter-spacing: 3px;
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: bold;
 }
-
-.panel-title{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
 
-    gap:12px;
-
-    padding:16px 19px;
-
-    border-bottom:
-        1px solid var(--border);
-
-    background:
-        rgba(255,255,255,.018);
+h1 {
+    margin: 5px 0 0;
+    font-size: clamp(24px, 3vw, 38px);
 }
 
-.panel-title h2{
-
-    margin:0;
-
-    font-size:16px;
+.subtitle {
+    color: var(--muted);
+    margin-top: 6px;
 }
-
-.panel-title span{
 
-    color:var(--muted);
-
-    font-size:12px;
+main {
+    max-width: 1500px;
+    margin: auto;
+    padding: 25px;
 }
-
-.panel-body{
 
-    padding:19px;
+.grid {
+    display: grid;
+    grid-template-columns: 330px 1fr;
+    gap: 20px;
 }
-
-/* =====================================================
-MODEL SELECTOR
-===================================================== */
-
-.model-grid{
-
-    display:grid;
 
-    grid-template-columns:
-        repeat(5,1fr);
-
-    gap:9px;
+.panel {
+    background: linear-gradient(145deg, rgba(17,36,59,.97), rgba(8,21,36,.97));
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 15px 45px rgba(0,0,0,.25);
 }
-
-.model{
-
-    min-height:74px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
 
-    justify-content:center;
-
-    gap:5px;
-
-    text-align:center;
-
-    border:1px solid var(--border);
-
-    border-radius:13px;
-
-    background:#091827;
-
-    cursor:pointer;
-
-    transition:.2s;
+.controls {
+    padding: 20px;
 }
-
-.model:hover{
 
-    border-color:#43627e;
+.section-title {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    font-weight: bold;
 }
-
-.model.active{
-
-    border-color:#22c55e;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(34,197,94,.16),
-            rgba(56,189,248,.06)
-        );
 
-    box-shadow:
-        inset 0 0 20px
-        rgba(34,197,94,.04);
+.model-buttons {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 24px;
 }
 
-.model-icon{
-
-    font-size:22px;
+.model-btn {
+    border: 1px solid var(--border);
+    background: #09182a;
+    color: var(--text);
+    padding: 14px;
+    border-radius: 12px;
+    text-align: left;
+    cursor: pointer;
+    transition: .2s;
 }
-
-.model-name{
 
-    font-size:11px;
-
-    color:#cbd8e5;
-
-    font-weight:750;
+.model-btn:hover {
+    border-color: var(--blue);
+    transform: translateY(-1px);
 }
-
-/* =====================================================
-PARAMETER GRID
-===================================================== */
 
-.parameter-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:12px;
+.model-btn.active {
+    border-color: var(--blue);
+    background: rgba(56,189,248,.12);
+    box-shadow: inset 3px 0 0 var(--blue);
 }
-
-.field label{
-
-    display:block;
-
-    margin-bottom:6px;
 
-    color:var(--muted);
-
-    font-size:12px;
+.model-name {
+    font-weight: bold;
 }
-
-input,select{
-
-    width:100%;
-
-    border:1px solid #2a425c;
-
-    background:#071522;
 
-    color:#fff;
-
-    border-radius:10px;
-
-    padding:11px 12px;
-
-    outline:none;
-
-    font-size:14px;
+.model-description {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 5px;
 }
-
-input:focus,
-select:focus{
-
-    border-color:#4f789e;
 
-    box-shadow:
-        0 0 0 3px
-        rgba(56,189,248,.08);
+label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 13px;
 }
 
-.unit{
-
-    color:#6f879e;
-
-    font-size:11px;
-
-    margin-top:4px;
+input, select {
+    width: 100%;
+    margin-top: 6px;
+    padding: 11px 12px;
+    background: #071423;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 15px;
+    outline: none;
 }
-
-/* =====================================================
-SIMULATION
-===================================================== */
-
-.simulation-wrap{
 
-    position:relative;
-
-    height:
-        min(
-            58vh,
-            620px
-        );
-
-    min-height:430px;
-
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            rgba(30,65,95,.20),
-            transparent 60%
-        ),
-        #07111c;
+input:focus, select:focus {
+    border-color: var(--blue);
 }
-
-#simulationCanvas{
-
-    width:100%;
-
-    height:100%;
 
-    display:block;
-
-    cursor:crosshair;
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 18px;
 }
-
-.sim-info{
-
-    position:absolute;
-
-    left:15px;
-
-    top:15px;
-
-    padding:10px 13px;
-
-    border-radius:11px;
-
-    background:
-        rgba(3,9,16,.76);
-
-    border:1px solid #29425c;
-
-    color:#b9cadb;
-
-    font-size:12px;
 
-    pointer-events:none;
-
-    backdrop-filter:blur(8px);
+button {
+    border: 1px solid var(--border);
+    background: #10253c;
+    color: var(--text);
+    border-radius: 9px;
+    padding: 11px;
+    cursor: pointer;
+    font-weight: bold;
 }
-
-.sim-legend{
-
-    position:absolute;
-
-    right:15px;
-
-    top:15px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:7px;
-
-    padding:12px;
-
-    border-radius:11px;
 
-    background:
-        rgba(3,9,16,.78);
-
-    border:1px solid #29425c;
-
-    font-size:12px;
-
-    pointer-events:none;
+button:hover {
+    border-color: var(--blue);
 }
-
-.legend-item{
-
-    display:flex;
 
-    align-items:center;
-
-    gap:8px;
+.primary {
+    background: #075985;
+    border-color: #0ea5e9;
 }
-
-.legend-dot{
-
-    width:10px;
 
-    height:10px;
-
-    border-radius:50%;
+.green {
+    background: #064e3b;
+    border-color: #10b981;
 }
 
-.dot-object{
-    background:#22c55e;
+.warning {
+    background: #713f12;
+    border-color: #f59e0b;
 }
 
-.dot-v{
-    background:#38bdf8;
+.full {
+    grid-column: 1 / -1;
 }
 
-.dot-a{
-    background:#f59e0b;
+.speed-row {
+    display: flex;
+    gap: 7px;
+    margin-top: 9px;
 }
 
-.dot-trail{
-    background:#a78bfa;
+.speed-row button {
+    flex: 1;
+    padding: 8px 5px;
+    font-size: 12px;
 }
-
-/* =====================================================
-SIM CONTROLS
-===================================================== */
-
-.sim-controls{
 
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:9px;
-
-    padding:14px;
-
-    border-top:
-        1px solid var(--border);
-
-    background:#091827;
+.speed-row button.active {
+    border-color: var(--green);
+    background: rgba(52,211,153,.13);
 }
-
-.speed{
-
-    margin-left:auto;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    color:var(--muted);
 
-    font-size:12px;
+.workspace {
+    min-width: 0;
 }
 
-.speed select{
-
-    width:95px;
-
-    padding:8px;
+.sim-panel {
+    padding: 18px;
 }
-
-/* =====================================================
-LIVE VALUES
-===================================================== */
-
-.live-grid{
-
-    display:grid;
 
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:10px;
+.sim-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
 }
-
-.live{
-
-    padding:14px;
 
-    border:1px solid var(--border);
-
-    border-radius:13px;
-
-    background:#081623;
+.sim-title {
+    font-size: 18px;
+    font-weight: bold;
 }
-
-.live-label{
 
-    color:var(--muted);
-
-    font-size:11px;
-
-    margin-bottom:5px;
+.status {
+    color: var(--green);
+    font-size: 13px;
 }
-
-.live-value{
-
-    font-size:21px;
-
-    font-weight:850;
 
-    font-variant-numeric:
-        tabular-nums;
+canvas {
+    display: block;
+    width: 100%;
+    border-radius: 13px;
+    background: #06111e;
+    border: 1px solid #1b3855;
 }
 
-.live.time .live-value{
-    color:#c4b5fd;
+#simulationCanvas {
+    height: 390px;
 }
 
-.live.position .live-value{
-    color:#22c55e;
+.live-values {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 12px;
 }
 
-.live.velocity .live-value{
-    color:#38bdf8;
+.value-card {
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(4,15,27,.7);
 }
 
-.live.acceleration .live-value{
-    color:#f59e0b;
+.value-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
-
-/* =====================================================
-FORMULA
-===================================================== */
-
-.formula-box{
-
-    padding:17px;
-
-    border-radius:15px;
-
-    background:#07131f;
-
-    border:1px solid var(--border);
 
-    text-align:center;
+.value {
+    margin-top: 5px;
+    font-size: 21px;
+    font-weight: bold;
 }
 
-.formula-main{
-
-    font-family:
-        "Times New Roman",
-        serif;
-
-    font-size:24px;
-
-    font-weight:600;
-
-    margin-bottom:10px;
+.formula-result {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 18px;
 }
-
-.formula-explanation{
 
-    color:#91a7bb;
-
-    font-size:12px;
-
-    line-height:1.5;
+.formula-box,
+.result-box {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(6,18,32,.75);
 }
-
-/* =====================================================
-RESULT
-===================================================== */
-
-.result{
-
-    padding:17px;
-
-    border-radius:15px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(34,197,94,.08),
-            rgba(56,189,248,.04)
-        );
-
-    border:1px solid #27533f;
+.formula {
+    font-family: "Times New Roman", serif;
+    font-size: 24px;
+    margin: 12px 0;
+    color: #f8fbff;
 }
-
-.result-title{
-
-    color:#86efac;
-
-    text-transform:uppercase;
-
-    letter-spacing:.11em;
 
-    font-size:11px;
-
-    margin-bottom:9px;
+.explanation {
+    color: var(--muted);
+    line-height: 1.55;
+    font-size: 14px;
 }
-
-.result-main{
-
-    font-size:25px;
 
-    font-weight:900;
-
-    margin-bottom:7px;
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
 }
-
-.result-sub{
-
-    color:#a8bbcd;
 
-    font-size:13px;
-
-    line-height:1.55;
+.result-item {
+    background: #091a2d;
+    border: 1px solid #1b3550;
+    border-radius: 9px;
+    padding: 10px;
 }
-
-/* =====================================================
-GRAPHS
-===================================================== */
-
-.graph-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
 
-    gap:12px;
+.result-item span {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
 }
 
-.graph-card{
-
-    border:1px solid var(--border);
-
-    border-radius:14px;
-
-    overflow:hidden;
-
-    background:#07131f;
+.result-item strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 17px;
 }
-
-.graph-title{
-
-    padding:10px 12px;
 
-    font-size:12px;
-
-    font-weight:800;
-
-    color:#b8c9d9;
-
-    border-bottom:
-        1px solid var(--border);
+.graphs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 18px;
 }
-
-.graph-card canvas{
-
-    width:100%;
 
-    height:190px;
-
-    display:block;
+.graph-card {
+    padding: 14px;
 }
-
-/* =====================================================
-DATA TABLE
-===================================================== */
 
-.table-wrap{
-
-    max-height:330px;
-
-    overflow:auto;
+.graph-title {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 9px;
 }
-
-table{
 
-    width:100%;
-
-    border-collapse:collapse;
-
-    font-size:12px;
+.graph-card canvas {
+    height: 230px;
 }
-
-th,td{
-
-    padding:9px 7px;
-
-    border-bottom:
-        1px solid #1c3045;
 
-    text-align:right;
-
-    white-space:nowrap;
+.table-panel {
+    margin-top: 18px;
+    padding: 18px;
 }
-
-th{
-
-    color:#91a6bb;
-
-    position:sticky;
-
-    top:0;
-
-    background:#0c1b2b;
 
-    z-index:1;
+.table-wrapper {
+    overflow-x: auto;
+    max-height: 330px;
+    overflow-y: auto;
 }
 
-th:first-child,
-td:first-child{
-
-    text-align:left;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
 }
-
-/* =====================================================
-TASK MODE
-===================================================== */
-
-.task{
-
-    padding:17px;
-
-    border-radius:15px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(167,139,250,.09),
-            rgba(56,189,248,.03)
-        );
-
-    border:1px solid #41376b;
+th, td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #1b3550;
+    text-align: right;
 }
-
-.task-badge{
-
-    display:inline-block;
-
-    padding:5px 8px;
-
-    border-radius:7px;
-
-    background:#312e81;
 
-    color:#c4b5fd;
-
-    font-size:10px;
-
-    font-weight:850;
-
-    letter-spacing:.08em;
+th {
+    color: var(--blue);
+    position: sticky;
+    top: 0;
+    background: #0d1b2e;
 }
-
-.task h3{
-
-    margin:12px 0 8px;
 
-    font-size:16px;
-
-    line-height:1.45;
+.task-panel {
+    margin-top: 18px;
+    padding: 18px;
 }
-
-.task p{
-
-    color:#bdccda;
 
-    font-size:13px;
-
-    line-height:1.55;
+.task {
+    font-size: 17px;
+    line-height: 1.6;
+    padding: 15px;
+    background: #08192b;
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
-
-.answer{
-
-    display:flex;
 
-    gap:8px;
-
-    margin-top:12px;
+.task-answer {
+    margin-top: 10px;
+    color: var(--green);
+    font-weight: bold;
 }
-
-.feedback{
-
-    min-height:20px;
-
-    margin-top:10px;
-
-    font-size:13px;
 
-    font-weight:750;
+.presentation {
+    position: fixed;
+    inset: 0;
+    background: #020812;
+    z-index: 100;
+    display: none;
+    padding: 30px;
 }
-
-/* =====================================================
-PHYSICS NOTE
-===================================================== */
-
-.note{
-
-    padding:15px;
-
-    border-left:
-        3px solid #38bdf8;
-
-    background:
-        rgba(56,189,248,.05);
-
-    color:#b5c6d7;
 
-    font-size:13px;
-
-    line-height:1.6;
-
-    border-radius:0 10px 10px 0;
+.presentation.show {
+    display: block;
 }
-
-/* =====================================================
-PRESENTATION MODE
-===================================================== */
-
-.presentation{
-
-    position:fixed;
 
-    inset:0;
-
-    z-index:100;
-
-    display:none;
-
-    background:#02070d;
+.presentation-inner {
+    max-width: 1500px;
+    margin: auto;
 }
 
-.presentation.active{
-
-    display:block;
+.presentation h2 {
+    font-size: 35px;
+    margin-top: 0;
 }
-
-.presentation-header{
-
-    position:absolute;
 
-    top:0;
-
-    left:0;
-
-    right:0;
-
-    z-index:4;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:18px 25px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(2,7,13,.92),
-            transparent
-        );
+.presentation-formula {
+    font-family: "Times New Roman", serif;
+    font-size: 38px;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    margin: 20px 0;
+    background: #071525;
 }
 
-.presentation-header h2{
-
-    margin:0;
-
-    font-size:22px;
+.presentation .close {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    font-size: 22px;
 }
-
-#presentationCanvas{
 
-    width:100%;
-
-    height:100%;
-
-    display:block;
+.info-box {
+    margin-top: 18px;
+    padding: 14px;
+    border-left: 3px solid var(--blue);
+    background: rgba(56,189,248,.07);
+    color: var(--muted);
+    line-height: 1.5;
 }
-
-/* =====================================================
-FOOTER
-===================================================== */
-
-footer{
-
-    margin-top:20px;
 
-    padding:17px;
-
-    text-align:center;
-
-    color:#71869b;
-
-    font-size:12px;
+footer {
+    text-align: center;
+    color: #617b96;
+    padding: 30px;
+    font-size: 12px;
 }
-
-/* =====================================================
-RESPONSIVE
-===================================================== */
-
-@media(max-width:1150px){
-
-    .main-grid{
 
-        grid-template-columns:1fr;
+@media(max-width: 1050px) {
+    .grid {
+        grid-template-columns: 1fr;
     }
 
-    .right-column{
-
-        display:grid;
-
-        grid-template-columns:
-            1fr 1fr;
+    .graphs {
+        grid-template-columns: 1fr;
     }
-
 }
 
-@media(max-width:850px){
-
-    .model-grid{
-
-        grid-template-columns:
-            repeat(2,1fr);
+@media(max-width: 700px) {
+    main {
+        padding: 12px;
     }
 
-    .parameter-grid{
-
-        grid-template-columns:
-            1fr 1fr;
+    header {
+        padding: 18px;
     }
 
-    .graph-grid{
-
-        grid-template-columns:1fr;
+    .live-values {
+        grid-template-columns: 1fr 1fr;
     }
 
-    .right-column{
-
-        grid-template-columns:1fr;
+    .formula-result {
+        grid-template-columns: 1fr;
     }
 
+    #simulationCanvas {
+        height: 300px;
+    }
 }
-
-@media(max-width:600px){
-
-    body{
-        padding:9px;
-    }
-
-    header{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-    }
-
-    .parameter-grid{
-
-        grid-template-columns:1fr;
-    }
-
-    .simulation-wrap{
-
-        min-height:360px;
-
-        height:52vh;
-    }
-
-    .speed{
-
-        margin-left:0;
-    }
-
-}
-
 </style>
 </head>
 
-
 <body>
 
-<div class="app">
-
-<!-- =====================================================
-HEADER
-===================================================== -->
-
 <header>
-
-    <div class="brand">
-
-        <div class="logo">
-            Σ
-        </div>
-
+    <div class="header-inner">
         <div>
-
-            <h1>
-                S.MICHAELIS –
-                Interaktives Kinematik-Labor 2.0
-            </h1>
-
-            <p>
-                Bewegung berechnen · simulieren · messen · verstehen
-            </p>
-
+            <div class="brand">S.MICHAELIS · PHYSIKLABOR</div>
+            <h1>Interaktives Kinematik-Labor</h1>
+            <div class="subtitle">
+                Bewegung mathematisch beschreiben, berechnen und visualisieren
+            </div>
         </div>
 
+        <button onclick="openPresentation()">Präsentation</button>
     </div>
-
-
-    <div class="header-buttons">
-
-        <button
-            class="blue"
-            id="presentationBtn"
-        >
-            📺 Präsentationsmodus
-        </button>
-
-        <button
-            id="resetBtn"
-        >
-            ↺ Zurücksetzen
-        </button>
-
-    </div>
-
 </header>
 
+<main>
 
-<!-- =====================================================
-MAIN
-===================================================== -->
+<div class="grid">
 
-<div class="main-grid">
+    <!-- CONTROLS -->
+    <aside class="panel controls">
 
+        <div class="section-title">Bewegungsmodell</div>
 
-<!-- =====================================================
-LEFT COLUMN
-===================================================== -->
+        <div class="model-buttons">
 
-<div class="left-column">
-
-
-<!-- MODEL -->
-
-<section class="panel">
-
-    <div class="panel-title">
-
-        <h2>
-            🧭 Bewegungsmodell
-        </h2>
-
-        <span>
-            Wähle das physikalische Modell
-        </span>
-
-    </div>
-
-
-    <div class="panel-body">
-
-        <div class="model-grid">
-
-
-            <div
-                class="model active"
-                data-model="uniform"
-            >
-
-                <div class="model-icon">
-                    ➡️
+            <button class="model-btn active" id="uniformBtn"
+                    onclick="selectModel('uniform')">
+                <div class="model-name">01 · Gleichförmige Bewegung</div>
+                <div class="model-description">
+                    Konstante Geschwindigkeit · a = 0
                 </div>
+            </button>
 
-                <div class="model-name">
-                    Gleichförmig
+            <button class="model-btn" id="acceleratedBtn"
+                    onclick="selectModel('accelerated')">
+                <div class="model-name">02 · Gleichmäßig beschleunigte Bewegung</div>
+                <div class="model-description">
+                    Konstante Beschleunigung
                 </div>
-
-            </div>
-
-
-            <div
-                class="model"
-                data-model="accelerated"
-            >
-
-                <div class="model-icon">
-                    🏎️
-                </div>
-
-                <div class="model-name">
-                    Beschleunigt
-                </div>
-
-            </div>
-
-
-            <div
-                class="model"
-                data-model="freefall"
-            >
-
-                <div class="model-icon">
-                    🪂
-                </div>
-
-                <div class="model-name">
-                    Freier Fall
-                </div>
-
-            </div>
-
-
-            <div
-                class="model"
-                data-model="vertical"
-            >
-
-                <div class="model-icon">
-                    🚀
-                </div>
-
-                <div class="model-name">
-                    Senkrechter Wurf
-                </div>
-
-            </div>
-
-
-            <div
-                class="model"
-                data-model="horizontal"
-            >
-
-                <div class="model-icon">
-                    ↗️
-                </div>
-
-                <div class="model-name">
-                    Waagerechter Wurf
-                </div>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- PARAMETERS -->
-
-<section class="panel">
-
-    <div class="panel-title">
-
-        <h2>
-            🎛 Parameter
-        </h2>
-
-        <span id="modelDescription">
-            Gleichförmige Bewegung
-        </span>
-
-    </div>
-
-
-    <div class="panel-body">
-
-        <div
-            class="parameter-grid"
-            id="parameterGrid"
-        >
-
-
-            <div class="field">
-
-                <label>
-                    Anfangsposition s₀
-                </label>
-
-                <input
-                    id="s0"
-                    type="number"
-                    value="0"
-                    step="0.1"
-                >
-
-                <div class="unit">
-                    Meter [m]
-                </div>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Anfangsgeschwindigkeit v₀
-                </label>
-
-                <input
-                    id="v0"
-                    type="number"
-                    value="5"
-                    step="0.1"
-                >
-
-                <div class="unit">
-                    Meter pro Sekunde [m/s]
-                </div>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Beschleunigung a
-                </label>
-
-                <input
-                    id="acc"
-                    type="number"
-                    value="0"
-                    step="0.1"
-                >
-
-                <div class="unit">
-                    Meter pro Sekunde² [m/s²]
-                </div>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Simulationsdauer
-                </label>
-
-                <input
-                    id="duration"
-                    type="number"
-                    value="10"
-                    min="0.1"
-                    step="0.1"
-                >
-
-                <div class="unit">
-                    Zeit [s]
-                </div>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Zeitschritt Δt
-                </label>
-
-                <select id="dt">
-
-                    <option value="0.02">
-                        0,02 s
-                    </option>
-
-                    <option value="0.05">
-                        0,05 s
-                    </option>
-
-                    <option value="0.1">
-                        0,10 s
-                    </option>
-
-                </select>
-
-                <div class="unit">
-                    Simulationsauflösung
-                </div>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Bewegungsrichtung
-                </label>
-
-                <select id="direction">
-
-                    <option value="right">
-                        +x Richtung
-                    </option>
-
-                    <option value="left">
-                        −x Richtung
-                    </option>
-
-                </select>
-
-                <div class="unit">
-                    Vorzeichenkonvention
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-        <div
-            class="note"
-            id="physicsNote"
-            style="margin-top:15px;"
-        >
-            Bei der gleichförmigen Bewegung bleibt die
-            Geschwindigkeit konstant. Die Beschleunigung ist
-            a = 0.
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- SIMULATION -->
-
-<section class="panel">
-
-    <div class="panel-title">
-
-        <h2>
-            🎬 Bewegungssimulation
-        </h2>
-
-        <span>
-            Position · Geschwindigkeit · Beschleunigung
-        </span>
-
-    </div>
-
-
-    <div class="simulation-wrap">
-
-        <canvas
-            id="simulationCanvas"
-        ></canvas>
-
-
-        <div class="sim-info">
-            Mausrad = Zoom
-        </div>
-
-
-        <div class="sim-legend">
-
-            <div class="legend-item">
-
-                <span
-                    class="legend-dot dot-object"
-                ></span>
-
-                Körper
-
-            </div>
-
-
-            <div class="legend-item">
-
-                <span
-                    class="legend-dot dot-v"
-                ></span>
-
-                Geschwindigkeitsvektor
-
-            </div>
-
-
-            <div class="legend-item">
-
-                <span
-                    class="legend-dot dot-a"
-                ></span>
-
-                Beschleunigungsvektor
-
-            </div>
-
-
-            <div class="legend-item">
-
-                <span
-                    class="legend-dot dot-trail"
-                ></span>
-
-                Bewegungsbahn
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="sim-controls">
-
-        <button
-            class="primary"
-            id="startBtn"
-        >
-            ▶ Start
-        </button>
-
-        <button id="pauseBtn">
-            ⏸ Pause
-        </button>
-
-        <button id="stepBtn">
-            ⏭ Schritt
-        </button>
-
-        <button
-            class="yellow"
-            id="endBtn"
-        >
-            ⏩ Ende
-        </button>
-
-        <button id="clearTrailBtn">
-            ✕ Spur löschen
-        </button>
-
-
-        <div class="speed">
-
-            Geschwindigkeit
-
-            <select id="speed">
-
-                <option value="0.25">
-                    0,25×
-                </option>
-
-                <option value="0.5">
-                    0,5×
-                </option>
-
-                <option
-                    value="1"
-                    selected
-                >
-                    1×
-                </option>
-
-                <option value="2">
-                    2×
-                </option>
-
-                <option value="4">
-                    4×
-                </option>
-
-            </select>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- GRAPHS -->
-
-<section class="panel">
-
-    <div class="panel-title">
-
-        <h2>
-            📈 Bewegungsdiagramme
-        </h2>
-
-        <span>
-            Zeitabhängige Größen
-        </span>
-
-    </div>
-
-
-    <div class="panel-body">
-
-        <div class="graph-grid">
-
-
-            <div class="graph-card">
-
-                <div class="graph-title">
-                    Weg-Zeit-Diagramm · s(t)
-                </div>
-
-                <canvas
-                    id="positionGraph"
-                ></canvas>
-
-            </div>
-
-
-            <div class="graph-card">
-
-                <div class="graph-title">
-                    Geschwindigkeits-Zeit-Diagramm · v(t)
-                </div>
-
-                <canvas
-                    id="velocityGraph"
-                ></canvas>
-
-            </div>
-
-
-            <div class="graph-card">
-
-                <div class="graph-title">
-                    Beschleunigungs-Zeit-Diagramm · a(t)
-                </div>
-
-                <canvas
-                    id="accelerationGraph"
-                ></canvas>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- DATA TABLE -->
-
-<section class="panel">
-
-    <div class="panel-title">
-
-        <h2>
-            📊 Messwerttabelle
-        </h2>
-
-        <span>
-            Simulierte Messwerte
-        </span>
-
-    </div>
-
-
-    <div class="panel-body">
-
-        <div class="table-wrap">
-
-            <table>
-
-                <thead>
-
-                <tr>
-
-                    <th>
-                        t [s]
-                    </th>
-
-                    <th>
-                        s [m]
-                    </th>
-
-                    <th>
-                        v [m/s]
-                    </th>
-
-                    <th>
-                        a [m/s²]
-                    </th>
-
-                    <th>
-                        Δs [m]
-                    </th>
-
-                </tr>
-
-                </thead>
-
-                <tbody
-                    id="dataTable"
-                ></tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-</div>
-
-
-<!-- =====================================================
-RIGHT COLUMN
-===================================================== -->
-
-<div class="right-column">
-
-
-<!-- LIVE VALUES -->
-
-<section class="panel">
-
-    <div class="panel-title">
-
-        <h2>
-            📡 Live-Messwerte
-        </h2>
-
-        <span>
-            aktuell
-        </span>
-
-    </div>
-
-
-    <div class="panel-body">
-
-        <div class="live-grid">
-
-
-            <div class="live time">
-
-                <div class="live-label">
-                    Zeit t
-                </div>
-
-                <div
-                    class="live-value"
-                    id="liveTime"
-                >
-                    0,00 s
-                </div>
-
-            </div>
-
-
-            <div class="live position">
-
-                <div class="live-label">
-                    Position s
-                </div>
-
-                <div
-                    class="live-value"
-                    id="livePosition"
-                >
-                    0,00 m
-                </div>
-
-            </div>
-
-
-            <div class="live velocity">
-
-                <div class="live-label">
-                    Geschwindigkeit v
-                </div>
-
-                <div
-                    class="live-value"
-                    id="liveVelocity"
-                >
-                    5,00 m/s
-                </div>
-
-            </div>
-
-
-            <div class="live acceleration">
-
-                <div class="live-label">
-                    Beschleunigung a
-                </div>
-
-                <div
-                    class="live-value"
-                    id="liveAcceleration"
-                >
-                    0,00 m/s²
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- FORMULA -->
-
-<section class="panel">
-
-    <div class="panel-title">
-
-        <h2>
-            📐 Modellgleichung
-        </h2>
-
-        <span>
-            aktuelles Modell
-        </span>
-
-    </div>
-
-
-    <div class="panel-body">
-
-        <div class="formula-box">
-
-            <div
-                class="formula-main"
-                id="formulaMain"
-            >
-                s(t) = s₀ + v₀ · t
-            </div>
-
-            <div
-                class="formula-explanation"
-                id="formulaExplanation"
-            >
-                Bei einer gleichförmigen Bewegung
-                bleibt v konstant und a = 0.
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- RESULTS -->
-
-<section class="panel">
-
-    <div class="panel-title">
-
-        <h2>
-            🧮 Berechnung
-        </h2>
-
-        <span>
-            automatisch
-        </span>
-
-    </div>
-
-
-    <div class="panel-body">
-
-        <div class="result">
-
-            <div class="result-title">
-                Endzustand
-            </div>
-
-            <div
-                class="result-main"
-                id="resultMain"
-            >
-                s = 50,00 m
-            </div>
-
-            <div
-                class="result-sub"
-                id="resultSub"
-            >
-                v = 5,00 m/s · a = 0,00 m/s²
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- TASK -->
-
-<section class="panel">
-
-    <div class="panel-title">
-
-        <h2>
-            🎯 Aufgabenmodus
-        </h2>
-
-        <span>
-            Selbstkontrolle
-        </span>
-
-    </div>
-
-
-    <div class="panel-body">
-
-        <div class="task">
-
-            <span class="task-badge">
-                AUFGABE
-            </span>
-
-
-            <h3
-                id="taskTitle"
-            >
-                Berechne die Endposition.
-            </h3>
-
-
-            <p
-                id="taskText"
-            >
-                Welche Position besitzt der Körper
-                nach der angegebenen Zeit?
-            </p>
-
-
-            <div class="answer">
-
-                <input
-                    id="taskAnswer"
-                    type="number"
-                    step="0.01"
-                    placeholder="Ergebnis"
-                >
-
-                <button
-                    class="primary"
-                    id="checkTask"
-                >
-                    Prüfen
-                </button>
-
-            </div>
-
-
-            <div
-                class="feedback"
-                id="taskFeedback"
-            ></div>
-
-
-            <button
-                id="newTask"
-                style="
-                    width:100%;
-                    margin-top:9px;
-                "
-            >
-                Neue Aufgabe
             </button>
 
         </div>
 
-    </div>
+        <div class="section-title">Parameter</div>
 
-</section>
+        <label>
+            Anfangsposition s₀ [m]
+            <input id="s0" type="number" value="0" step="0.1">
+        </label>
 
+        <label>
+            Anfangsgeschwindigkeit v₀ [m/s]
+            <input id="v0" type="number" value="5" step="0.1">
+        </label>
 
-<!-- PHYSICS -->
+        <label id="accLabel">
+            Beschleunigung a [m/s²]
+            <input id="acceleration" type="number" value="2" step="0.1">
+        </label>
 
-<section class="panel">
+        <label>
+            Simulationsdauer [s]
+            <input id="duration" type="number" value="10" min="0.1" step="0.1">
+        </label>
 
-    <div class="panel-title">
+        <label>
+            Zeitschritt Δt [s]
+            <select id="dt">
+                <option value="0.01">0,01 s</option>
+                <option value="0.02" selected>0,02 s</option>
+                <option value="0.05">0,05 s</option>
+                <option value="0.1">0,10 s</option>
+            </select>
+        </label>
 
-        <h2>
-            ⚛ Physikalisches Modell
-        </h2>
+        <div class="buttons">
+            <button class="primary" onclick="calculate()">Berechnen</button>
+            <button onclick="resetSimulation()">Reset</button>
 
-    </div>
+            <button class="green" onclick="startSimulation()">Start</button>
+            <button onclick="pauseSimulation()">Pause</button>
 
+            <button onclick="stepSimulation()">Schritt</button>
+            <button class="warning" onclick="endSimulation()">Ende</button>
 
-    <div class="panel-body">
-
-        <div
-            class="note"
-            id="modelInfo"
-        >
-            Die gleichförmige Bewegung ist dadurch
-            gekennzeichnet, dass die Geschwindigkeit
-            konstant bleibt.
+            <button class="full" onclick="clearTrail()">Spur löschen</button>
         </div>
 
-    </div>
+        <div class="section-title" style="margin-top:24px;">
+            Simulationsgeschwindigkeit
+        </div>
 
-</section>
+        <div class="speed-row">
+            <button onclick="setSpeed(.25)">0,25×</button>
+            <button onclick="setSpeed(.5)">0,5×</button>
+            <button class="active" onclick="setSpeed(1)">1×</button>
+            <button onclick="setSpeed(2)">2×</button>
+            <button onclick="setSpeed(4)">4×</button>
+        </div>
+
+        <div class="info-box">
+            <strong>Hinweis:</strong><br>
+            Die Simulation verwendet ein eindimensionales Koordinatensystem.
+            Positive Werte zeigen nach rechts, negative Werte nach links.
+        </div>
+
+    </aside>
 
 
-</div>
+    <!-- WORKSPACE -->
+    <section class="workspace">
 
-</div>
+        <div class="panel sim-panel">
 
+            <div class="sim-header">
+                <div>
+                    <div class="sim-title" id="modelTitle">
+                        Gleichförmige Bewegung
+                    </div>
+                    <div class="status" id="status">
+                        Bereit
+                    </div>
+                </div>
+            </div>
 
-<footer>
+            <canvas id="simulationCanvas"></canvas>
 
-    S.Michaelis · Interaktives Physiklabor ·
-    Kinematik-Labor 2.0
+            <div class="live-values">
 
-</footer>
+                <div class="value-card">
+                    <div class="value-label">Zeit</div>
+                    <div class="value" id="liveT">0,00 s</div>
+                </div>
 
-</div>
+                <div class="value-card">
+                    <div class="value-label">Position</div>
+                    <div class="value" id="liveS">0,00 m</div>
+                </div>
 
+                <div class="value-card">
+                    <div class="value-label">Geschwindigkeit</div>
+                    <div class="value" id="liveV">0,00 m/s</div>
+                </div>
 
-<!-- =====================================================
-PRESENTATION
-===================================================== -->
+                <div class="value-card">
+                    <div class="value-label">Beschleunigung</div>
+                    <div class="value" id="liveA">0,00 m/s²</div>
+                </div>
 
-<div
-    class="presentation"
-    id="presentation"
->
-
-    <div class="presentation-header">
-
-        <div>
-
-            <h2>
-                Σ S.MICHAELIS – KINEMATIK
-            </h2>
-
-            <div
-                id="presentationModel"
-                style="
-                    color:#91a7bb;
-                    font-size:13px;
-                    margin-top:4px;
-                "
-            >
-                Gleichförmige Bewegung
             </div>
 
         </div>
 
 
-        <button
-            id="closePresentation"
-        >
-            ✕ Schließen
-        </button>
+        <!-- FORMULA + RESULT -->
+
+        <div class="formula-result">
+
+            <div class="panel formula-box">
+
+                <div class="section-title">Physikalisches Modell</div>
+
+                <div class="formula" id="formulaS">
+                    s(t) = s₀ + v₀ · t
+                </div>
+
+                <div class="formula" id="formulaV">
+                    v(t) = v₀
+                </div>
+
+                <div class="formula" id="formulaA">
+                    a(t) = 0
+                </div>
+
+                <div class="explanation" id="explanation">
+                    Bei einer gleichförmigen Bewegung bleibt die
+                    Geschwindigkeit konstant. Deshalb ändert sich die
+                    Position in gleichen Zeiten um gleiche Strecken.
+                </div>
+
+            </div>
+
+
+            <div class="panel result-box">
+
+                <div class="section-title">Berechnung</div>
+
+                <div class="result-grid">
+
+                    <div class="result-item">
+                        <span>Endposition</span>
+                        <strong id="resultS">–</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Endgeschwindigkeit</span>
+                        <strong id="resultV">–</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Beschleunigung</span>
+                        <strong id="resultA">–</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Δs</span>
+                        <strong id="resultDeltaS">–</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Δv</span>
+                        <strong id="resultDeltaV">–</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>Geschwindigkeit</span>
+                        <strong id="resultSpeed">–</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- GRAPHS -->
+
+        <div class="graphs">
+
+            <div class="panel graph-card">
+                <div class="graph-title">Weg-Zeit-Diagramm · s(t)</div>
+                <canvas id="graphS"></canvas>
+            </div>
+
+            <div class="panel graph-card">
+                <div class="graph-title">Geschwindigkeit-Zeit-Diagramm · v(t)</div>
+                <canvas id="graphV"></canvas>
+            </div>
+
+            <div class="panel graph-card">
+                <div class="graph-title">Beschleunigung-Zeit-Diagramm · a(t)</div>
+                <canvas id="graphA"></canvas>
+            </div>
+
+        </div>
+
+
+        <!-- TASK -->
+
+        <div class="panel task-panel">
+
+            <div class="section-title">Aufgabe</div>
+
+            <div class="task" id="taskText">
+                Klicke auf „Neue Aufgabe“, um eine Aufgabe zu erzeugen.
+            </div>
+
+            <div class="buttons">
+                <button onclick="newTask()">Neue Aufgabe</button>
+                <button onclick="showTaskAnswer()">Lösung anzeigen</button>
+            </div>
+
+            <div class="task-answer" id="taskAnswer"></div>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="panel table-panel">
+
+            <div class="section-title">
+                Messwerte
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>t [s]</th>
+                            <th>s [m]</th>
+                            <th>v [m/s]</th>
+                            <th>a [m/s²]</th>
+                            <th>Δs [m]</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="dataTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+</main>
+
+
+<footer>
+    S.Michaelis · Interaktives Physiklabor · Kinematik
+</footer>
+
+
+<!-- PRESENTATION MODE -->
+
+<div class="presentation" id="presentation">
+
+    <button class="close" onclick="closePresentation()">✕</button>
+
+    <div class="presentation-inner">
+
+        <div class="brand">S.MICHAELIS · PHYSIK</div>
+
+        <h2 id="presentationTitle">
+            Gleichförmige Bewegung
+        </h2>
+
+        <div class="presentation-formula" id="presentationFormula">
+            s(t) = s₀ + v₀ · t
+        </div>
+
+        <div class="explanation" id="presentationText"
+             style="font-size:21px;max-width:900px;">
+        </div>
+
+        <canvas id="presentationCanvas"
+                style="margin-top:30px;height:400px;">
+        </canvas>
 
     </div>
-
-
-    <canvas
-        id="presentationCanvas"
-    ></canvas>
 
 </div>
 
 
 <script>
 
-/* =====================================================
-STATE
-===================================================== */
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
 
-const state = {
+let model = "uniform";
 
-    model:"uniform",
+let simTime = 0;
+let running = false;
+let animationId = null;
 
-    time:0,
+let simulationSpeed = 1;
 
-    running:false,
+let trail = [];
 
-    lastFrame:null,
-
-    trail:[],
-
-    zoom:1,
-
-    task:null
-
-};
+let task = null;
 
 
-/* =====================================================
-ELEMENTS
-===================================================== */
+/* =========================================================
+   DOM
+========================================================= */
 
-const simCanvas =
-    document.getElementById(
-        "simulationCanvas"
-    );
+const simulationCanvas =
+    document.getElementById("simulationCanvas");
 
-const simCtx =
-    simCanvas.getContext("2d");
+const ctx =
+    simulationCanvas.getContext("2d");
 
+const graphS =
+    document.getElementById("graphS").getContext("2d");
 
-const pCanvas =
-    document.getElementById(
-        "presentationCanvas"
-    );
+const graphV =
+    document.getElementById("graphV").getContext("2d");
 
-const pCtx =
-    pCanvas.getContext("2d");
+const graphA =
+    document.getElementById("graphA").getContext("2d");
 
+const presentationCanvas =
+    document.getElementById("presentationCanvas");
 
-const positionGraph =
-    document.getElementById(
-        "positionGraph"
-    );
-
-const velocityGraph =
-    document.getElementById(
-        "velocityGraph"
-    );
-
-const accelerationGraph =
-    document.getElementById(
-        "accelerationGraph"
-    );
+const pctx =
+    presentationCanvas.getContext("2d");
 
 
-/* =====================================================
-HELPERS
-===================================================== */
+/* =========================================================
+   UTILITIES
+========================================================= */
 
-function value(id){
+function val(id) {
+    return Number(document.getElementById(id).value);
+}
 
-    return parseFloat(
-        document.getElementById(id).value
-    ) || 0;
+function formatNumber(x, digits = 2) {
+    if (!Number.isFinite(x)) return "–";
 
+    return x.toLocaleString("de-DE", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+    });
+}
+
+function clamp(x, min, max) {
+    return Math.max(min, Math.min(max, x));
 }
 
 
-function fmt(x){
+/* =========================================================
+   MODEL SELECTION
+========================================================= */
 
-    return Number(x).toFixed(2);
+function selectModel(newModel) {
 
+    model = newModel;
+
+    document.getElementById("uniformBtn")
+        .classList.toggle("active", model === "uniform");
+
+    document.getElementById("acceleratedBtn")
+        .classList.toggle("active", model === "accelerated");
+
+    updateModelInformation();
+
+    resetSimulation();
 }
 
 
-function physics(){
+function updateModelInformation() {
 
-    let s0 =
-        value("s0");
+    const accInput =
+        document.getElementById("acceleration");
 
-    let v0 =
-        value("v0");
+    const accLabel =
+        document.getElementById("accLabel");
 
-    let a =
-        value("acc");
+    if (model === "uniform") {
 
-    let duration =
-        Math.max(
-            .1,
-            value("duration")
-        );
+        document.getElementById("modelTitle").textContent =
+            "Gleichförmige Bewegung";
 
+        document.getElementById("formulaS").textContent =
+            "s(t) = s₀ + v₀ · t";
 
-    if(state.model==="uniform"){
+        document.getElementById("formulaV").textContent =
+            "v(t) = v₀";
 
-        a=0;
+        document.getElementById("formulaA").textContent =
+            "a(t) = 0";
 
+        document.getElementById("explanation").textContent =
+            "Bei einer gleichförmigen Bewegung bleibt die Geschwindigkeit konstant. " +
+            "In gleichen Zeitintervallen werden deshalb gleiche Strecken zurückgelegt.";
+
+        accInput.value = 0;
+
+        accInput.disabled = true;
+
+        accLabel.style.opacity = ".55";
+
+    } else {
+
+        document.getElementById("modelTitle").textContent =
+            "Gleichmäßig beschleunigte Bewegung";
+
+        document.getElementById("formulaS").textContent =
+            "s(t) = s₀ + v₀ · t + ½ · a · t²";
+
+        document.getElementById("formulaV").textContent =
+            "v(t) = v₀ + a · t";
+
+        document.getElementById("formulaA").textContent =
+            "a(t) = konstant";
+
+        document.getElementById("explanation").textContent =
+            "Bei einer gleichmäßig beschleunigten Bewegung bleibt die " +
+            "Beschleunigung konstant. Dadurch ändert sich die Geschwindigkeit " +
+            "in gleichen Zeitintervallen um gleiche Beträge.";
+
+        accInput.disabled = false;
+
+        accLabel.style.opacity = "1";
     }
 
-
-    if(state.model==="freefall"){
-
-        s0 =
-            Math.max(
-                0,
-                s0
-            );
-
-        v0=0;
-
-        a=-9.81;
-
-    }
-
-
-    if(state.model==="vertical"){
-
-        a=-9.81;
-
-    }
-
-
-    if(state.model==="horizontal"){
-
-        a=-9.81;
-
-    }
-
-
-    return {
-        s0,
-        v0,
-        a,
-        duration
-    };
-
+    updatePresentationInformation();
 }
 
 
-/* =====================================================
-MODEL INFORMATION
-===================================================== */
+/* =========================================================
+   PHYSICS
+========================================================= */
 
-const modelData = {
+function stateAt(t) {
 
-    uniform:{
+    const s0 = val("s0");
+    const v0 = val("v0");
 
-        name:
-            "Gleichförmige Bewegung",
+    let a = 0;
 
-        note:
-            "Bei der gleichförmigen Bewegung bleibt die Geschwindigkeit konstant. Die Beschleunigung ist a = 0.",
-
-        formula:
-            "s(t) = s₀ + v₀ · t",
-
-        explanation:
-            "Die Position wächst linear mit der Zeit. Im v(t)-Diagramm entsteht eine horizontale Linie.",
-
-        info:
-            "Ein Körper bewegt sich mit konstanter Geschwindigkeit. Gleiche Zeitintervalle entsprechen gleichen Wegstrecken."
-
-    },
-
-
-    accelerated:{
-
-        name:
-            "Gleichmäßig beschleunigte Bewegung",
-
-        note:
-            "Die Beschleunigung bleibt konstant. Dadurch verändert sich die Geschwindigkeit gleichmäßig mit der Zeit.",
-
-        formula:
-            "s(t) = s₀ + v₀ · t + ½ · a · t²",
-
-        explanation:
-            "Die Position folgt einer quadratischen Funktion. Die Geschwindigkeit verändert sich linear.",
-
-        info:
-            "Beispiele sind das Anfahren eines Fahrzeugs oder eine Bewegung auf einer geraden Bahn mit konstanter Beschleunigung."
-
-    },
-
-
-    freefall:{
-
-        name:
-            "Freier Fall",
-
-        note:
-            "Beim idealisierten freien Fall wirkt nur die Erdbeschleunigung. Luftwiderstand wird vernachlässigt.",
-
-        formula:
-            "s(t) = s₀ − ½ · g · t²",
-
-        explanation:
-            "Mit g = 9,81 m/s² nimmt die Geschwindigkeit in jedem Zeitintervall weiter zu.",
-
-        info:
-            "Der freie Fall ist eine gleichmäßig beschleunigte Bewegung mit a = −g, wenn die positive Richtung nach oben zeigt."
-
-    },
-
-
-    vertical:{
-
-        name:
-            "Senkrechter Wurf",
-
-        note:
-            "Ein Körper wird senkrecht nach oben oder unten gestartet. Die Erdbeschleunigung wirkt ständig nach unten.",
-
-        formula:
-            "s(t) = s₀ + v₀ · t − ½ · g · t²",
-
-        explanation:
-            "Die Anfangsgeschwindigkeit und die Erdbeschleunigung bestimmen gemeinsam die Flugbahn.",
-
-        info:
-            "Beim Aufwärtsflug wird der Körper langsamer. Am höchsten Punkt ist v = 0."
-
-    },
-
-
-    horizontal:{
-
-        name:
-            "Waagerechter Wurf",
-
-        note:
-            "Horizontal bleibt die Geschwindigkeit konstant. Vertikal wirkt die Erdbeschleunigung.",
-
-        formula:
-            "x(t) = v₀ · t   ;   y(t) = h − ½ · g · t²",
-
-        explanation:
-            "Die horizontale und vertikale Bewegung werden unabhängig voneinander betrachtet.",
-
-        info:
-            "Der waagerechte Wurf verbindet gleichförmige Bewegung in x-Richtung mit freiem Fall in y-Richtung."
-
+    if (model === "accelerated") {
+        a = val("acceleration");
     }
-
-};
-
-
-/* =====================================================
-POSITION
-===================================================== */
-
-function stateAt(t){
-
-    const p =
-        physics();
-
-
-    if(state.model==="horizontal"){
-
-        const x =
-            p.v0*t;
-
-        const y =
-            p.s0 -
-            .5*9.81*t*t;
-
-        const vx =
-            p.v0;
-
-        const vy =
-            -9.81*t;
-
-        return {
-            x,
-            y,
-            s:Math.hypot(x,y),
-            v:Math.hypot(vx,vy),
-            a:9.81,
-            vx,
-            vy
-        };
-
-    }
-
 
     const s =
-        p.s0 +
-        p.v0*t +
-        .5*p.a*t*t;
-
+        s0 +
+        v0 * t +
+        0.5 * a * t * t;
 
     const v =
-        p.v0 +
-        p.a*t;
-
+        v0 +
+        a * t;
 
     return {
-
-        x:s,
-
-        y:0,
-
+        t,
         s,
-
-        v:Math.abs(v),
-
-        signedV:v,
-
-        a:Math.abs(p.a),
-
-        vx:v,
-
-        vy:0
-
+        v,
+        a
     };
-
 }
 
 
-/* =====================================================
-SIMULATION RESIZE
-===================================================== */
+/* =========================================================
+   CALCULATION
+========================================================= */
 
-function resizeSimulation(){
+function calculate() {
+
+    const duration =
+        Math.max(0, val("duration"));
+
+    const state =
+        stateAt(duration);
+
+    document.getElementById("resultS").textContent =
+        formatNumber(state.s) + " m";
+
+    document.getElementById("resultV").textContent =
+        formatNumber(state.v) + " m/s";
+
+    document.getElementById("resultA").textContent =
+        formatNumber(state.a) + " m/s²";
+
+    document.getElementById("resultDeltaS").textContent =
+        formatNumber(state.s - val("s0")) + " m";
+
+    document.getElementById("resultDeltaV").textContent =
+        formatNumber(state.v - val("v0")) + " m/s";
+
+    document.getElementById("resultSpeed").textContent =
+        formatNumber(Math.abs(state.v)) + " m/s";
+
+    buildTable();
+
+    drawGraphs();
+
+    drawSimulation();
+
+    updateLiveValues();
+}
+
+
+/* =========================================================
+   SIMULATION
+========================================================= */
+
+function startSimulation() {
+
+    if (simTime >= val("duration")) {
+        simTime = 0;
+        trail = [];
+    }
+
+    running = true;
+
+    document.getElementById("status").textContent =
+        "Simulation läuft …";
+
+    lastFrame = performance.now();
+
+    animationId =
+        requestAnimationFrame(animationLoop);
+}
+
+
+let lastFrame = 0;
+
+function animationLoop(now) {
+
+    if (!running) return;
+
+    const realDelta =
+        Math.min(0.05, (now - lastFrame) / 1000);
+
+    lastFrame = now;
+
+    simTime +=
+        realDelta * simulationSpeed;
+
+    const duration =
+        Math.max(.01, val("duration"));
+
+    if (simTime >= duration) {
+
+        simTime = duration;
+
+        running = false;
+
+        document.getElementById("status").textContent =
+            "Simulation beendet";
+    }
+
+    trail.push(stateAt(simTime));
+
+    if (trail.length > 1000) {
+        trail.shift();
+    }
+
+    updateLiveValues();
+
+    drawSimulation();
+
+    if (simTime >= duration) {
+        drawGraphs();
+        buildTable();
+        return;
+    }
+
+    animationId =
+        requestAnimationFrame(animationLoop);
+}
+
+
+function pauseSimulation() {
+
+    running = false;
+
+    if (animationId) {
+        cancelAnimationFrame(animationId);
+    }
+
+    document.getElementById("status").textContent =
+        "Pausiert";
+}
+
+
+function stepSimulation() {
+
+    pauseSimulation();
+
+    const dt =
+        val("dt");
+
+    simTime =
+        Math.min(
+            val("duration"),
+            simTime + dt
+        );
+
+    trail.push(stateAt(simTime));
+
+    updateLiveValues();
+
+    drawSimulation();
+
+    drawGraphs();
+}
+
+
+function endSimulation() {
+
+    pauseSimulation();
+
+    simTime =
+        Math.max(0, val("duration"));
+
+    trail.push(stateAt(simTime));
+
+    updateLiveValues();
+
+    drawSimulation();
+
+    drawGraphs();
+
+    buildTable();
+
+    document.getElementById("status").textContent =
+        "Endpunkt";
+}
+
+
+function resetSimulation() {
+
+    pauseSimulation();
+
+    simTime = 0;
+
+    trail = [];
+
+    document.getElementById("status").textContent =
+        "Bereit";
+
+    updateLiveValues();
+
+    drawSimulation();
+
+    calculate();
+}
+
+
+function clearTrail() {
+
+    trail = [];
+
+    drawSimulation();
+}
+
+
+/* =========================================================
+   SPEED
+========================================================= */
+
+function setSpeed(speed) {
+
+    simulationSpeed = speed;
+
+    document
+        .querySelectorAll(".speed-row button")
+        .forEach(btn => btn.classList.remove("active"));
+
+    event.currentTarget.classList.add("active");
+}
+
+
+/* =========================================================
+   LIVE VALUES
+========================================================= */
+
+function updateLiveValues() {
+
+    const state =
+        stateAt(simTime);
+
+    document.getElementById("liveT").textContent =
+        formatNumber(state.t) + " s";
+
+    document.getElementById("liveS").textContent =
+        formatNumber(state.s) + " m";
+
+    document.getElementById("liveV").textContent =
+        formatNumber(state.v) + " m/s";
+
+    document.getElementById("liveA").textContent =
+        formatNumber(state.a) + " m/s²";
+}
+
+
+/* =========================================================
+   CANVAS RESIZE
+========================================================= */
+
+function resizeCanvas(canvas) {
 
     const rect =
-        simCanvas.getBoundingClientRect();
+        canvas.getBoundingClientRect();
 
     const dpr =
         window.devicePixelRatio || 1;
 
-    simCanvas.width =
-        rect.width*dpr;
+    canvas.width =
+        rect.width * dpr;
 
-    simCanvas.height =
-        rect.height*dpr;
+    canvas.height =
+        rect.height * dpr;
 
-    simCtx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
+    const c =
+        canvas.getContext("2d");
 
-    drawSimulation();
-
-}
-
-
-/* =====================================================
-SIMULATION GEOMETRY
-===================================================== */
-
-function simGeometry(){
-
-    const w =
-        simCanvas.clientWidth;
-
-    const h =
-        simCanvas.clientHeight;
-
-
-    const p =
-        physics();
-
-
-    const end =
-        stateAt(p.duration);
-
-
-    let maxRange;
-
-
-    if(state.model==="horizontal"){
-
-        maxRange =
-            Math.max(
-                Math.abs(end.x),
-                Math.abs(p.s0),
-                10
-            );
-
-    }else{
-
-        maxRange =
-            Math.max(
-                Math.abs(p.s0),
-                Math.abs(end.s),
-                Math.abs(
-                    p.s0+p.v0*p.duration
-                ),
-                10
-            );
-
-    }
-
-
-    const scale =
-        Math.min(
-            w/(maxRange*1.15),
-            65
-        ) *
-        state.zoom;
-
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     return {
-
-        w,
-
-        h,
-
-        scale,
-
-        ox:w*.12,
-
-        oy:
-            state.model==="horizontal"
-                ? h*.72
-                : h*.58
-
+        width: rect.width,
+        height: rect.height
     };
-
 }
 
 
-/* =====================================================
-DRAW GRID
-===================================================== */
+/* =========================================================
+   SIMULATION DRAWING
+========================================================= */
 
-function drawSimulationGrid(g){
+function drawSimulation() {
 
-    const {
-        w,
-        h,
-        scale,
-        ox,
-        oy
-    }=g;
+    const size =
+        resizeCanvas(simulationCanvas);
 
+    const w = size.width;
+    const h = size.height;
 
-    simCtx.fillStyle="#07111c";
+    ctx.clearRect(0, 0, w, h);
 
-    simCtx.fillRect(
-        0,
-        0,
-        w,
-        h
-    );
+    /* background */
 
+    const gradient =
+        ctx.createLinearGradient(0, 0, 0, h);
 
-    /* grid */
+    gradient.addColorStop(0, "#071625");
+    gradient.addColorStop(1, "#030b14");
 
-    simCtx.strokeStyle=
-        "rgba(90,130,160,.10)";
+    ctx.fillStyle = gradient;
 
-    simCtx.lineWidth=1;
+    ctx.fillRect(0, 0, w, h);
 
 
-    const step=
-        Math.max(
-            25,
-            Math.min(
-                scale,
-                80
-            )
+    /* coordinate line */
+
+    const axisY =
+        h * .62;
+
+    ctx.strokeStyle = "#29445e";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(35, axisY);
+    ctx.lineTo(w - 35, axisY);
+
+    ctx.stroke();
+
+
+    /* determine scale */
+
+    const duration =
+        Math.max(.1, val("duration"));
+
+    const samples = [];
+
+    for (let i = 0; i <= 100; i++) {
+        samples.push(
+            stateAt(duration * i / 100)
         );
+    }
 
+    let minS =
+        Math.min(...samples.map(q => q.s));
 
-    for(
-        let x=ox%step;
-        x<w;
-        x+=step
-    ){
+    let maxS =
+        Math.max(...samples.map(q => q.s));
 
-        simCtx.beginPath();
+    const current =
+        stateAt(simTime);
 
-        simCtx.moveTo(x,0);
+    minS = Math.min(minS, current.s);
+    maxS = Math.max(maxS, current.s);
 
-        simCtx.lineTo(x,h);
+    if (Math.abs(maxS - minS) < 1) {
+        minS -= 1;
+        maxS += 1;
+    }
 
-        simCtx.stroke();
+    const padding = 60;
 
+    function xFromS(s) {
+
+        return padding +
+            (s - minS) /
+            (maxS - minS) *
+            (w - 2 * padding);
     }
 
 
-    for(
-        let y=oy%step;
-        y<h;
-        y+=step
-    ){
+    /* scale marks */
 
-        simCtx.beginPath();
+    ctx.font = "12px Arial";
+    ctx.fillStyle = "#7891aa";
+    ctx.textAlign = "center";
 
-        simCtx.moveTo(0,y);
+    for (let i = 0; i <= 8; i++) {
 
-        simCtx.lineTo(w,y);
+        const s =
+            minS +
+            (maxS - minS) * i / 8;
 
-        simCtx.stroke();
+        const x =
+            xFromS(s);
 
+        ctx.strokeStyle = "#142b41";
+        ctx.lineWidth = 1;
+
+        ctx.beginPath();
+
+        ctx.moveTo(x, axisY - 8);
+        ctx.lineTo(x, axisY + 8);
+
+        ctx.stroke();
+
+        ctx.fillText(
+            formatNumber(s, 1) + " m",
+            x,
+            axisY + 28
+        );
     }
-
-
-    /* ground */
-
-    if(state.model==="horizontal"){
-
-        simCtx.strokeStyle="#496276";
-
-        simCtx.lineWidth=3;
-
-        simCtx.beginPath();
-
-        simCtx.moveTo(0,oy);
-
-        simCtx.lineTo(w,oy);
-
-        simCtx.stroke();
-
-    }else{
-
-        simCtx.strokeStyle="#496276";
-
-        simCtx.lineWidth=2;
-
-        simCtx.beginPath();
-
-        simCtx.moveTo(0,oy);
-
-        simCtx.lineTo(w,oy);
-
-        simCtx.stroke();
-
-    }
-
-
-    /* axis */
-
-    simCtx.strokeStyle="#69829b";
-
-    simCtx.lineWidth=1.5;
-
-    simCtx.beginPath();
-
-    simCtx.moveTo(ox,30);
-
-    simCtx.lineTo(ox,oy+50);
-
-    simCtx.stroke();
-
-
-    simCtx.fillStyle="#9bb0c3";
-
-    simCtx.font=
-        "12px Inter, sans-serif";
-
-    simCtx.fillText(
-        "0 m",
-        ox+5,
-        oy+18
-    );
-
-
-    simCtx.fillText(
-        "x / s",
-        w-45,
-        oy-10
-    );
-
-}
-
-
-/* =====================================================
-ARROW
-===================================================== */
-
-function drawSimArrow(
-    start,
-    end,
-    color,
-    label
-){
-
-    const dx=
-        end.x-start.x;
-
-    const dy=
-        end.y-start.y;
-
-    const len=
-        Math.hypot(dx,dy);
-
-    if(len<2)
-        return;
-
-
-    const ux=dx/len;
-
-    const uy=dy/len;
-
-    const head=11;
-
-
-    simCtx.strokeStyle=color;
-
-    simCtx.fillStyle=color;
-
-    simCtx.lineWidth=4;
-
-    simCtx.lineCap="round";
-
-
-    simCtx.beginPath();
-
-    simCtx.moveTo(
-        start.x,
-        start.y
-    );
-
-    simCtx.lineTo(
-        end.x,
-        end.y
-    );
-
-    simCtx.stroke();
-
-
-    simCtx.beginPath();
-
-    simCtx.moveTo(
-        end.x,
-        end.y
-    );
-
-    simCtx.lineTo(
-        end.x-ux*head-uy*head*.55,
-        end.y-uy*head+ux*head*.55
-    );
-
-    simCtx.lineTo(
-        end.x-ux*head+uy*head*.55,
-        end.y-uy*head-ux*head*.55
-    );
-
-    simCtx.closePath();
-
-    simCtx.fill();
-
-
-    simCtx.font=
-        "bold 13px Inter";
-
-    simCtx.fillText(
-        label,
-        end.x+7,
-        end.y-7
-    );
-
-}
-
-
-/* =====================================================
-DRAW SIMULATION
-===================================================== */
-
-function drawSimulation(){
-
-    const g=
-        simGeometry();
-
-
-    drawSimulationGrid(g);
-
-
-    const current=
-        stateAt(state.time);
 
 
     /* trail */
 
-    if(state.trail.length>1){
+    if (trail.length > 1) {
 
-        simCtx.beginPath();
+        ctx.strokeStyle = "#38bdf8";
+        ctx.globalAlpha = .45;
+        ctx.lineWidth = 3;
 
-        state.trail.forEach(
-            (point,index)=>{
+        ctx.beginPath();
 
-                const x =
-                    g.ox +
-                    point.x*g.scale;
+        trail.forEach((point, index) => {
 
-                const y =
-                    state.model==="horizontal"
-                        ? g.oy -
-                          point.y*g.scale
-                        : g.oy;
+            const x =
+                xFromS(point.s);
 
-                if(index===0)
-                    simCtx.moveTo(x,y);
-                else
-                    simCtx.lineTo(x,y);
+            const y =
+                axisY - 35;
 
+            if (index === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
             }
-        );
 
-        simCtx.strokeStyle=
-            "rgba(167,139,250,.75)";
+        });
 
-        simCtx.lineWidth=2;
+        ctx.stroke();
 
-        simCtx.stroke();
-
-    }
-
-
-    let px;
-    let py;
-
-
-    if(state.model==="horizontal"){
-
-        px =
-            g.ox +
-            current.x*g.scale;
-
-        py =
-            g.oy -
-            current.y*g.scale;
-
-    }else{
-
-        px =
-            g.ox +
-            current.s*g.scale;
-
-        py =
-            g.oy;
-
-    }
-
-
-    /* object glow */
-
-    const glow=
-        simCtx.createRadialGradient(
-            px,
-            py,
-            2,
-            px,
-            py,
-            30
-        );
-
-    glow.addColorStop(
-        0,
-        "rgba(34,197,94,.45)"
-    );
-
-    glow.addColorStop(
-        1,
-        "rgba(34,197,94,0)"
-    );
-
-    simCtx.fillStyle=glow;
-
-    simCtx.beginPath();
-
-    simCtx.arc(
-        px,
-        py,
-        30,
-        0,
-        Math.PI*2
-    );
-
-    simCtx.fill();
-
-
-    /* velocity vector */
-
-    if(state.model==="horizontal"){
-
-        const vxLength=
-            current.vx*3;
-
-        const vyLength=
-            -current.vy*3;
-
-
-        drawSimArrow(
-            {x:px,y:py},
-            {
-                x:px+vxLength,
-                y:py
-            },
-            "#38bdf8",
-            "vₓ"
-        );
-
-
-        drawSimArrow(
-            {x:px,y:py},
-            {
-                x:px,
-                y:py+vyLength
-            },
-            "#38bdf8",
-            "vᵧ"
-        );
-
-
-    }else{
-
-        const v=
-            current.signedV ??
-            current.vx;
-
-
-        drawSimArrow(
-            {x:px,y:py},
-            {
-                x:px+v*3,
-                y:py
-            },
-            "#38bdf8",
-            "v"
-        );
-
-
-        if(Math.abs(current.a)>0){
-
-            drawSimArrow(
-                {x:px,y:py},
-                {
-                    x:px,
-                    y:py+Math.sign(-current.a)*35
-                },
-                "#f59e0b",
-                "a"
-            );
-
-        }
-
+        ctx.globalAlpha = 1;
     }
 
 
     /* object */
 
-    simCtx.fillStyle="#22c55e";
+    const objectX =
+        xFromS(current.s);
 
-    simCtx.beginPath();
+    const objectY =
+        axisY - 35;
 
-    simCtx.arc(
-        px,
-        py,
-        10,
-        0,
-        Math.PI*2
+
+    /* velocity vector */
+
+    const velocityScale = 7;
+
+    let vectorLength =
+        current.v * velocityScale;
+
+    vectorLength =
+        clamp(vectorLength, -130, 130);
+
+    drawArrow(
+        ctx,
+        objectX,
+        objectY,
+        objectX + vectorLength,
+        objectY,
+        "#34d399",
+        3
     );
 
-    simCtx.fill();
+    ctx.fillStyle = "#34d399";
+    ctx.font = "bold 13px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        "v",
+        objectX + vectorLength / 2,
+        objectY - 13
+    );
 
 
-    simCtx.strokeStyle="#bbf7d0";
+    /* acceleration vector */
 
-    simCtx.lineWidth=2;
+    if (Math.abs(current.a) > 0.001) {
 
-    simCtx.stroke();
+        let accelerationLength =
+            current.a * 16;
+
+        accelerationLength =
+            clamp(accelerationLength, -100, 100);
+
+        drawArrow(
+            ctx,
+            objectX,
+            objectY + 18,
+            objectX + accelerationLength,
+            objectY + 18,
+            "#fbbf24",
+            3
+        );
+
+        ctx.fillStyle = "#fbbf24";
+        ctx.font = "bold 13px Arial";
+
+        ctx.fillText(
+            "a",
+            objectX + accelerationLength / 2,
+            objectY + 38
+        );
+    }
+
+
+    /* object glow */
+
+    const glow =
+        ctx.createRadialGradient(
+            objectX,
+            objectY,
+            2,
+            objectX,
+            objectY,
+            28
+        );
+
+    glow.addColorStop(0, "rgba(56,189,248,.7)");
+    glow.addColorStop(1, "rgba(56,189,248,0)");
+
+    ctx.fillStyle = glow;
+
+    ctx.beginPath();
+    ctx.arc(objectX, objectY, 28, 0, Math.PI * 2);
+    ctx.fill();
+
+
+    /* object */
+
+    ctx.fillStyle = "#38bdf8";
+
+    ctx.beginPath();
+    ctx.arc(objectX, objectY, 11, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = "#dff7ff";
+    ctx.lineWidth = 2;
+
+    ctx.stroke();
 
 
     /* label */
 
-    simCtx.fillStyle="#e8f5ed";
+    ctx.fillStyle = "#e8f1fb";
+    ctx.font = "bold 13px Arial";
 
-    simCtx.font=
-        "bold 13px Inter";
-
-    simCtx.fillText(
-        "Körper",
-        px+13,
-        py-12
+    ctx.fillText(
+        "t = " + formatNumber(simTime) + " s",
+        objectX,
+        objectY - 52
     );
-
-
-    /* time */
-
-    simCtx.fillStyle="#a6b9cb";
-
-    simCtx.font=
-        "12px Inter";
-
-    simCtx.fillText(
-        `t = ${fmt(state.time)} s`,
-        18,
-        g.h-18
-    );
-
 }
 
 
-/* =====================================================
-GRAPHS
-===================================================== */
+/* =========================================================
+   ARROW
+========================================================= */
 
-function prepareGraph(canvas){
+function drawArrow(c, x1, y1, x2, y2, color, width) {
 
-    const rect=
-        canvas.getBoundingClientRect();
+    const angle =
+        Math.atan2(y2 - y1, x2 - x1);
 
-    const dpr=
-        window.devicePixelRatio || 1;
+    const head = 10;
 
-    canvas.width=
-        rect.width*dpr;
+    c.strokeStyle = color;
+    c.fillStyle = color;
+    c.lineWidth = width;
 
-    canvas.height=
-        rect.height*dpr;
+    c.beginPath();
+    c.moveTo(x1, y1);
+    c.lineTo(x2, y2);
+    c.stroke();
 
-    const c=
-        canvas.getContext("2d");
+    c.beginPath();
 
-    c.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
+    c.moveTo(x2, y2);
+
+    c.lineTo(
+        x2 - head * Math.cos(angle - Math.PI / 6),
+        y2 - head * Math.sin(angle - Math.PI / 6)
     );
 
-    return c;
+    c.lineTo(
+        x2 - head * Math.cos(angle + Math.PI / 6),
+        y2 - head * Math.sin(angle + Math.PI / 6)
+    );
 
+    c.closePath();
+
+    c.fill();
 }
 
 
-function drawGraph(
-    canvas,
-    mode
-){
+/* =========================================================
+   GRAPH GENERATION
+========================================================= */
 
-    const c=
-        prepareGraph(canvas);
+function getSamples() {
 
-    const w=
-        canvas.clientWidth;
+    const duration =
+        Math.max(.01, val("duration"));
 
-    const h=
-        canvas.clientHeight;
+    const dt =
+        val("dt");
 
+    const samples = [];
 
-    c.fillStyle="#07131f";
-
-    c.fillRect(
-        0,
-        0,
-        w,
-        h
-    );
-
-
-    const p=
-        physics();
-
-
-    const N=100;
-
-    const values=[];
-
-
-    for(
-        let i=0;
-        i<=N;
-        i++
-    ){
-
-        const t=
-            p.duration*i/N;
-
-        const q=
-            stateAt(t);
-
-        let y;
-
-
-        if(mode==="s")
-            y=q.s;
-
-        if(mode==="v")
-            y=q.signedV ?? q.v;
-
-        if(mode==="a")
-            y=
-                state.model==="uniform"
-                    ? 0
-                    : p.a;
-
-
-        values.push({
-            t,
-            y
-        });
-
-    }
-
-
-    let min=
+    const count =
         Math.min(
-            ...values.map(v=>v.y)
+            1000,
+            Math.ceil(duration / dt) + 1
         );
 
-    let max=
-        Math.max(
-            ...values.map(v=>v.y)
+    for (let i = 0; i < count; i++) {
+
+        const t =
+            Math.min(
+                duration,
+                i * duration / (count - 1)
+            );
+
+        samples.push(
+            stateAt(t)
         );
+    }
+
+    return samples;
+}
 
 
-    if(Math.abs(max-min)<.001){
+/* =========================================================
+   GRAPH DRAWING
+========================================================= */
 
-        max+=1;
+function drawGraph(c, samples, key, unit, label) {
 
-        min-=1;
+    const canvas =
+        c.canvas;
 
+    const size =
+        resizeCanvas(canvas);
+
+    const w = size.width;
+    const h = size.height;
+
+    c.clearRect(0, 0, w, h);
+
+    c.fillStyle = "#06111e";
+    c.fillRect(0, 0, w, h);
+
+    const left = 45;
+    const right = 15;
+    const top = 18;
+    const bottom = 35;
+
+    const plotW =
+        w - left - right;
+
+    const plotH =
+        h - top - bottom;
+
+    const values =
+        samples.map(s => s[key]);
+
+    let min =
+        Math.min(...values);
+
+    let max =
+        Math.max(...values);
+
+    if (Math.abs(max - min) < .001) {
+
+        min -= 1;
+        max += 1;
+
+    } else {
+
+        const margin =
+            (max - min) * .12;
+
+        min -= margin;
+        max += margin;
     }
 
 
-    const left=42;
+    /* zero line */
 
-    const right=12;
+    if (min < 0 && max > 0) {
 
-    const top=15;
+        const zeroY =
+            top +
+            (max / (max - min)) *
+            plotH;
 
-    const bottom=28;
-
-
-    function X(t){
-
-        return left +
-            (t/p.duration)*
-            (w-left-right);
-
-    }
-
-
-    function Y(y){
-
-        return top +
-            (1-(y-min)/(max-min))*
-            (h-top-bottom);
-
-    }
-
-
-    /* grid */
-
-    c.strokeStyle=
-        "rgba(100,130,155,.13)";
-
-    c.lineWidth=1;
-
-
-    for(let i=0;i<=4;i++){
-
-        const y=
-            top+
-            i*(h-top-bottom)/4;
+        c.strokeStyle = "#28435c";
+        c.lineWidth = 1;
 
         c.beginPath();
-
-        c.moveTo(left,y);
-
-        c.lineTo(w-right,y);
-
+        c.moveTo(left, zeroY);
+        c.lineTo(left + plotW, zeroY);
         c.stroke();
-
     }
 
 
-    for(let i=0;i<=5;i++){
+    /* axes */
 
-        const x=
-            left+
-            i*(w-left-right)/5;
+    c.strokeStyle = "#35516c";
+    c.lineWidth = 1;
+
+    c.beginPath();
+
+    c.moveTo(left, top);
+    c.lineTo(left, top + plotH);
+    c.lineTo(left + plotW, top + plotH);
+
+    c.stroke();
+
+
+    /* horizontal grid */
+
+    c.font = "10px Arial";
+    c.fillStyle = "#7891aa";
+    c.textAlign = "right";
+
+    for (let i = 0; i <= 4; i++) {
+
+        const y =
+            top + plotH * i / 4;
+
+        const value =
+            max -
+            (max - min) * i / 4;
+
+        c.strokeStyle = "#13283c";
 
         c.beginPath();
-
-        c.moveTo(x,top);
-
-        c.lineTo(x,h-bottom);
-
+        c.moveTo(left, y);
+        c.lineTo(left + plotW, y);
         c.stroke();
 
-    }
-
-
-    /* zero */
-
-    if(min<=0 && max>=0){
-
-        const zy=Y(0);
-
-        c.strokeStyle=
-            "rgba(160,180,200,.4)";
-
-        c.beginPath();
-
-        c.moveTo(left,zy);
-
-        c.lineTo(w-right,zy);
-
-        c.stroke();
-
+        c.fillText(
+            formatNumber(value, 1),
+            left - 5,
+            y + 3
+        );
     }
 
 
     /* curve */
 
+    c.strokeStyle = "#38bdf8";
+    c.lineWidth = 2.5;
+
     c.beginPath();
 
+    samples.forEach((sample, i) => {
 
-    values.forEach(
-        (point,index)=>{
+        const x =
+            left +
+            (sample.t / samples[samples.length - 1].t) *
+            plotW;
 
-            const x=X(point.t);
+        const y =
+            top +
+            (max - sample[key]) /
+            (max - min) *
+            plotH;
 
-            const y=Y(point.y);
-
-            if(index===0)
-                c.moveTo(x,y);
-            else
-                c.lineTo(x,y);
-
+        if (i === 0) {
+            c.moveTo(x, y);
+        } else {
+            c.lineTo(x, y);
         }
-    );
-
-
-    let curveColor="#22c55e";
-
-
-    if(mode==="v")
-        curveColor="#38bdf8";
-
-    if(mode==="a")
-        curveColor="#f59e0b";
-
-
-    c.strokeStyle=curveColor;
-
-    c.lineWidth=2.5;
+    });
 
     c.stroke();
 
 
     /* current time */
 
-    const currentX=
-        X(
-            Math.min(
-                state.time,
-                p.duration
-            )
+    const current =
+        clamp(
+            simTime /
+            samples[samples.length - 1].t,
+            0,
+            1
         );
 
+    const currentX =
+        left + current * plotW;
 
-    c.strokeStyle=
-        "rgba(255,255,255,.35)";
-
-    c.lineWidth=1.5;
+    c.strokeStyle = "#fbbf24";
+    c.setLineDash([5, 5]);
 
     c.beginPath();
-
-    c.moveTo(
-        currentX,
-        top
-    );
-
-    c.lineTo(
-        currentX,
-        h-bottom
-    );
-
+    c.moveTo(currentX, top);
+    c.lineTo(currentX, top + plotH);
     c.stroke();
 
+    c.setLineDash([]);
 
-    /* labels */
 
-    c.fillStyle="#8298ac";
+    /* x labels */
 
-    c.font="10px Inter";
+    c.textAlign = "center";
+    c.fillStyle = "#7891aa";
 
     c.fillText(
-        `${fmt(max)}`,
-        5,
-        top+5
+        "0",
+        left,
+        h - 10
     );
 
     c.fillText(
-        `${fmt(min)}`,
-        5,
-        h-bottom
+        formatNumber(samples[samples.length - 1].t, 1) + " s",
+        left + plotW,
+        h - 10
     );
+
+    c.textAlign = "left";
+
+    c.fillStyle = "#9bb1c7";
 
     c.fillText(
-        "t [s]",
-        w-32,
-        h-8
+        label + " [" + unit + "]",
+        left,
+        11
     );
-
 }
 
 
-function drawGraphs(){
+/* =========================================================
+   GRAPHS
+========================================================= */
+
+function drawGraphs() {
+
+    const samples =
+        getSamples();
 
     drawGraph(
-        positionGraph,
+        graphS,
+        samples,
+        "s",
+        "m",
         "s"
     );
 
     drawGraph(
-        velocityGraph,
+        graphV,
+        samples,
+        "v",
+        "m/s",
         "v"
     );
 
     drawGraph(
-        accelerationGraph,
+        graphA,
+        samples,
+        "a",
+        "m/s²",
         "a"
     );
-
 }
 
 
-/* =====================================================
-LIVE DATA
-===================================================== */
+/* =========================================================
+   TABLE
+========================================================= */
 
-function updateLive(){
+function buildTable() {
 
-    const q=
-        stateAt(state.time);
+    const tbody =
+        document.getElementById("dataTable");
 
+    tbody.innerHTML = "";
 
-    document.getElementById(
-        "liveTime"
-    ).textContent =
-        `${fmt(state.time)} s`;
+    const samples =
+        getSamples();
 
+    const maxRows = 80;
 
-    if(state.model==="horizontal"){
-
-        document.getElementById(
-            "livePosition"
-        ).textContent =
-            `${fmt(q.x)} m / ${fmt(q.y)} m`;
-
-        document.getElementById(
-            "liveVelocity"
-        ).textContent =
-            `${fmt(q.v)} m/s`;
-
-    }else{
-
-        document.getElementById(
-            "livePosition"
-        ).textContent =
-            `${fmt(q.s)} m`;
-
-        document.getElementById(
-            "liveVelocity"
-        ).textContent =
-            `${fmt(q.signedV ?? q.v)} m/s`;
-
-    }
-
-
-    document.getElementById(
-        "liveAcceleration"
-    ).textContent =
-        `${fmt(q.a)} m/s²`;
-
-
-    const end=
-        stateAt(
-            physics().duration
+    const step =
+        Math.max(
+            1,
+            Math.ceil(samples.length / maxRows)
         );
 
+    let previous = null;
 
-    if(state.model==="horizontal"){
+    for (
+        let i = 0;
+        i < samples.length;
+        i += step
+    ) {
 
-        document.getElementById(
-            "resultMain"
-        ).textContent =
-            `x = ${fmt(end.x)} m`;
+        const s =
+            samples[i];
 
-        document.getElementById(
-            "resultSub"
-        ).textContent =
-            `y = ${fmt(end.y)} m · v = ${fmt(end.v)} m/s`;
+        let deltaS = 0;
 
-    }else{
+        if (previous) {
+            deltaS =
+                s.s - previous.s;
+        }
 
-        document.getElementById(
-            "resultMain"
-        ).textContent =
-            `s = ${fmt(end.s)} m`;
+        const tr =
+            document.createElement("tr");
 
-        document.getElementById(
-            "resultSub"
-        ).textContent =
-            `v = ${fmt(end.signedV ?? end.v)} m/s · a = ${fmt(end.a)} m/s²`;
-
-    }
-
-}
-
-
-/* =====================================================
-DATA TABLE
-===================================================== */
-
-function updateTable(){
-
-    const p=
-        physics();
-
-
-    const rows=11;
-
-    let html="";
-
-
-    for(
-        let i=0;
-        i<=rows;
-        i++
-    ){
-
-        const t=
-            p.duration*i/rows;
-
-        const q=
-            stateAt(t);
-
-        const previous=
-            stateAt(
-                Math.max(
-                    0,
-                    t-.01
-                )
-            );
-
-
-        let position =
-            state.model==="horizontal"
-                ? Math.hypot(q.x,q.y)
-                : q.s;
-
-
-        let delta=
-            position -
-            (
-                state.model==="horizontal"
-                    ? Math.hypot(
-                        previous.x,
-                        previous.y
-                    )
-                    : previous.s
-            );
-
-
-        html+=`
-
-        <tr>
-
-            <td>
-                ${fmt(t)}
-            </td>
-
-            <td>
-                ${fmt(position)}
-            </td>
-
-            <td>
-                ${fmt(q.signedV ?? q.v)}
-            </td>
-
-            <td>
-                ${fmt(q.a)}
-            </td>
-
-            <td>
-                ${fmt(delta)}
-            </td>
-
-        </tr>
-
+        tr.innerHTML = `
+            <td>${formatNumber(s.t)}</td>
+            <td>${formatNumber(s.s)}</td>
+            <td>${formatNumber(s.v)}</td>
+            <td>${formatNumber(s.a)}</td>
+            <td>${formatNumber(deltaS)}</td>
         `;
 
+        tbody.appendChild(tr);
+
+        previous = s;
+    }
+}
+
+
+/* =========================================================
+   TASK MODE
+========================================================= */
+
+function newTask() {
+
+    const s0 =
+        Math.round((Math.random() * 10) * 10) / 10;
+
+    const v0 =
+        Math.round(
+            (-5 + Math.random() * 15) * 10
+        ) / 10;
+
+    const duration =
+        Math.round(
+            (2 + Math.random() * 8) * 10
+        ) / 10;
+
+    if (model === "uniform") {
+
+        const answer =
+            s0 + v0 * duration;
+
+        task = {
+            question:
+                `Ein Körper startet bei s₀ = ${formatNumber(s0)} m ` +
+                `mit v₀ = ${formatNumber(v0)} m/s. ` +
+                `Wie weit ist er nach ${formatNumber(duration)} s?`,
+
+            answer:
+                `s = s₀ + v₀ · t = ` +
+                `${formatNumber(answer)} m`
+        };
+
+    } else {
+
+        const a =
+            Math.round(
+                (-4 + Math.random() * 8) * 10
+            ) / 10;
+
+        const answer =
+            s0 +
+            v0 * duration +
+            .5 * a * duration * duration;
+
+        task = {
+            question:
+                `Ein Körper startet bei s₀ = ${formatNumber(s0)} m ` +
+                `mit v₀ = ${formatNumber(v0)} m/s und ` +
+                `a = ${formatNumber(a)} m/s². ` +
+                `Welche Position besitzt er nach ${formatNumber(duration)} s?`,
+
+            answer:
+                `s = s₀ + v₀ · t + ½ · a · t² = ` +
+                `${formatNumber(answer)} m`
+        };
     }
 
+    document.getElementById("taskText").textContent =
+        task.question;
 
-    document.getElementById(
-        "dataTable"
-    ).innerHTML=html;
-
+    document.getElementById("taskAnswer").textContent =
+        "";
 }
 
 
-/* =====================================================
-FORMULA
-===================================================== */
+function showTaskAnswer() {
 
-function updateFormula(){
+    if (!task) return;
 
-    const data=
-        modelData[state.model];
-
-
-    document.getElementById(
-        "modelDescription"
-    ).textContent=
-        data.name;
-
-
-    document.getElementById(
-        "physicsNote"
-    ).textContent=
-        data.note;
-
-
-    document.getElementById(
-        "formulaMain"
-    ).textContent=
-        data.formula;
-
-
-    document.getElementById(
-        "formulaExplanation"
-    ).textContent=
-        data.explanation;
-
-
-    document.getElementById(
-        "modelInfo"
-    ).textContent=
-        data.info;
-
-
-    document.getElementById(
-        "presentationModel"
-    ).textContent=
-        data.name;
-
+    document.getElementById("taskAnswer").textContent =
+        "Lösung: " + task.answer;
 }
 
 
-/* =====================================================
-MODEL CHANGE
-===================================================== */
+/* =========================================================
+   PRESENTATION
+========================================================= */
 
-document
-    .querySelectorAll(".model")
-    .forEach(
-        element=>{
+function updatePresentationInformation() {
 
-            element.addEventListener(
-                "click",
-                ()=>{
+    if (model === "uniform") {
 
-                    document
-                        .querySelectorAll(".model")
-                        .forEach(
-                            m=>
-                            m.classList.remove(
-                                "active"
-                            )
-                        );
+        document.getElementById("presentationTitle")
+            .textContent =
+            "Gleichförmige Bewegung";
+
+        document.getElementById("presentationFormula")
+            .textContent =
+            "s(t) = s₀ + v₀ · t";
+
+        document.getElementById("presentationText")
+            .textContent =
+            "Die Geschwindigkeit bleibt konstant. " +
+            "Deshalb wird in gleichen Zeitintervallen " +
+            "immer die gleiche Strecke zurückgelegt.";
+
+    } else {
+
+        document.getElementById("presentationTitle")
+            .textContent =
+            "Gleichmäßig beschleunigte Bewegung";
+
+        document.getElementById("presentationFormula")
+            .textContent =
+            "s(t) = s₀ + v₀ · t + ½ · a · t²";
+
+        document.getElementById("presentationText")
+            .textContent =
+            "Die Beschleunigung bleibt konstant. " +
+            "Dadurch verändert sich die Geschwindigkeit " +
+            "in gleichen Zeitintervallen um den gleichen Betrag.";
+    }
+}
 
 
-                    element.classList.add(
-                        "active"
-                    );
+function openPresentation() {
+
+    updatePresentationInformation();
+
+    document.getElementById("presentation")
+        .classList.add("show");
+
+    drawPresentation();
+}
 
 
-                    state.model=
-                        element.dataset.model;
+function closePresentation() {
+
+    document.getElementById("presentation")
+        .classList.remove("show");
+}
 
 
-                    updateModelParameters();
+function drawPresentation() {
 
-                    updateAll();
+    const size =
+        resizeCanvas(presentationCanvas);
 
-                }
-            );
+    const w = size.width;
+    const h = size.height;
 
+    pctx.clearRect(0, 0, w, h);
+
+    pctx.fillStyle = "#06111e";
+    pctx.fillRect(0, 0, w, h);
+
+    const axisY =
+        h * .6;
+
+    pctx.strokeStyle = "#31516d";
+    pctx.lineWidth = 2;
+
+    pctx.beginPath();
+    pctx.moveTo(60, axisY);
+    pctx.lineTo(w - 60, axisY);
+    pctx.stroke();
+
+
+    const current =
+        stateAt(simTime);
+
+    const duration =
+        Math.max(.1, val("duration"));
+
+    const samples = [];
+
+    for (let i = 0; i <= 100; i++) {
+        samples.push(
+            stateAt(duration * i / 100)
+        );
+    }
+
+    let min =
+        Math.min(...samples.map(s => s.s));
+
+    let max =
+        Math.max(...samples.map(s => s.s));
+
+    if (max - min < 1) {
+        min -= 1;
+        max += 1;
+    }
+
+    function x(s) {
+        return 70 +
+            (s - min) /
+            (max - min) *
+            (w - 140);
+    }
+
+    pctx.strokeStyle = "#38bdf8";
+    pctx.lineWidth = 4;
+
+    pctx.beginPath();
+
+    samples.forEach((s, i) => {
+
+        const px = x(s.s);
+
+        const py = axisY - 45;
+
+        if (i === 0) {
+            pctx.moveTo(px, py);
+        } else {
+            pctx.lineTo(px, py);
         }
-    );
-
-
-function updateModelParameters(){
-
-    if(state.model==="uniform"){
-
-        document.getElementById(
-            "acc"
-        ).value=0;
-
-        document.getElementById(
-            "acc"
-        ).disabled=false;
-
-        document.getElementById(
-            "s0"
-        ).value=0;
-
-        document.getElementById(
-            "v0"
-        ).value=5;
-
-    }
-
-
-    if(state.model==="accelerated"){
-
-        document.getElementById(
-            "s0"
-        ).value=0;
-
-        document.getElementById(
-            "v0"
-        ).value=2;
-
-        document.getElementById(
-            "acc"
-        ).value=2;
-
-        document.getElementById(
-            "acc"
-        ).disabled=false;
-
-    }
-
-
-    if(state.model==="freefall"){
-
-        document.getElementById(
-            "s0"
-        ).value=20;
-
-        document.getElementById(
-            "v0"
-        ).value=0;
-
-        document.getElementById(
-            "acc"
-        ).value=-9.81;
-
-        document.getElementById(
-            "acc"
-        ).disabled=true;
-
-        document.getElementById(
-            "duration"
-        ).value=2.02;
-
-    }
-
-
-    if(state.model==="vertical"){
-
-        document.getElementById(
-            "s0"
-        ).value=0;
-
-        document.getElementById(
-            "v0"
-        ).value=15;
-
-        document.getElementById(
-            "acc"
-        ).value=-9.81;
-
-        document.getElementById(
-            "acc"
-        ).disabled=true;
-
-        document.getElementById(
-            "duration"
-        ).value=3.2;
-
-    }
-
-
-    if(state.model==="horizontal"){
-
-        document.getElementById(
-            "s0"
-        ).value=20;
-
-        document.getElementById(
-            "v0"
-        ).value=10;
-
-        document.getElementById(
-            "acc"
-        ).value=-9.81;
-
-        document.getElementById(
-            "acc"
-        ).disabled=true;
-
-        document.getElementById(
-            "duration"
-        ).value=2.02;
-
-    }
-
-
-    state.time=0;
-
-    state.trail=[];
-
-}
-
-
-/* =====================================================
-SIMULATION CONTROL
-===================================================== */
-
-function resetSimulation(){
-
-    state.time=0;
-
-    state.running=false;
-
-    state.lastFrame=null;
-
-    state.trail=[];
-
-    updateAll();
-
-}
-
-
-function startSimulation(){
-
-    if(state.time>=physics().duration)
-        state.time=0;
-
-    state.running=true;
-
-    state.lastFrame=
-        performance.now();
-
-    requestAnimationFrame(
-        animationLoop
-    );
-
-}
-
-
-function pauseSimulation(){
-
-    state.running=false;
-
-    state.lastFrame=null;
-
-}
-
-
-function stepSimulation(){
-
-    state.running=false;
-
-    const dt=
-        parseFloat(
-            document.getElementById(
-                "dt"
-            ).value
-        );
-
-
-    state.time=
-        Math.min(
-            physics().duration,
-            state.time+dt
-        );
-
-
-    addTrailPoint();
-
-    updateAll();
-
-}
-
-
-function endSimulation(){
-
-    state.running=false;
-
-    state.time=
-        physics().duration;
-
-    addTrailPoint();
-
-    updateAll();
-
-}
-
-
-function addTrailPoint(){
-
-    const q=
-        stateAt(state.time);
-
-
-    state.trail.push({
-
-        x:
-            state.model==="horizontal"
-                ? q.x
-                : q.s,
-
-        y:
-            state.model==="horizontal"
-                ? q.y
-                : 0
 
     });
 
+    pctx.stroke();
 
-    if(state.trail.length>800)
-        state.trail.shift();
 
+    const px =
+        x(current.s);
+
+    const py =
+        axisY - 45;
+
+    pctx.fillStyle = "#38bdf8";
+
+    pctx.beginPath();
+    pctx.arc(px, py, 16, 0, Math.PI * 2);
+    pctx.fill();
+
+    pctx.fillStyle = "#fff";
+    pctx.font = "bold 16px Arial";
+    pctx.textAlign = "center";
+
+    pctx.fillText(
+        "t = " + formatNumber(simTime) + " s",
+        px,
+        py - 30
+    );
 }
 
 
-/* =====================================================
-ANIMATION
-===================================================== */
+/* =========================================================
+   KEYBOARD
+========================================================= */
 
-function animationLoop(timestamp){
+document.addEventListener("keydown", function(e) {
 
-    if(!state.running)
-        return;
-
-
-    if(!state.lastFrame)
-        state.lastFrame=timestamp;
-
-
-    const elapsed=
-        (timestamp-state.lastFrame)/1000;
-
-
-    state.lastFrame=timestamp;
-
-
-    const speed=
-        parseFloat(
-            document.getElementById(
-                "speed"
-            ).value
-        );
-
-
-    state.time +=
-        elapsed*speed;
-
-
-    if(state.time>=physics().duration){
-
-        state.time=
-            physics().duration;
-
-        state.running=false;
-
-    }
-
-
-    addTrailPoint();
-
-    updateAll();
-
-
-    if(state.running){
-
-        requestAnimationFrame(
-            animationLoop
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-BUTTON EVENTS
-===================================================== */
-
-document
-    .getElementById("startBtn")
-    .addEventListener(
-        "click",
-        startSimulation
-    );
-
-
-document
-    .getElementById("pauseBtn")
-    .addEventListener(
-        "click",
-        pauseSimulation
-    );
-
-
-document
-    .getElementById("stepBtn")
-    .addEventListener(
-        "click",
-        stepSimulation
-    );
-
-
-document
-    .getElementById("endBtn")
-    .addEventListener(
-        "click",
-        endSimulation
-    );
-
-
-document
-    .getElementById("clearTrailBtn")
-    .addEventListener(
-        "click",
-        ()=>{
-            state.trail=[];
-            updateAll();
-        }
-    );
-
-
-document
-    .getElementById("resetBtn")
-    .addEventListener(
-        "click",
-        ()=>{
-            updateModelParameters();
-            resetSimulation();
-        }
-    );
-
-
-[
-    "s0",
-    "v0",
-    "acc",
-    "duration",
-    "dt",
-    "direction"
-].forEach(
-    id=>{
-
-        document
-            .getElementById(id)
-            .addEventListener(
-                "input",
-                ()=>{
-                    state.time=
-                        Math.min(
-                            state.time,
-                            physics().duration
-                        );
-
-                    updateAll();
-                }
-            );
-
-    }
-);
-
-
-/* =====================================================
-SIM ZOOM
-===================================================== */
-
-simCanvas.addEventListener(
-    "wheel",
-    e=>{
+    if (e.code === "Space") {
 
         e.preventDefault();
 
-        state.zoom *=
-            e.deltaY<0
-                ? 1.1
-                : .9;
-
-
-        state.zoom=
-            Math.max(
-                .5,
-                Math.min(
-                    3,
-                    state.zoom
-                )
-            );
-
-
-        drawSimulation();
-
-    },
-    {passive:false}
-);
-
-
-/* =====================================================
-TASK MODE
-===================================================== */
-
-const tasks=[
-
-    {
-
-        title:
-            "Berechne die Position.",
-
-        text:
-            "Ein Körper startet bei s₀ = 0 m mit v₀ = 5 m/s. Wie weit ist er nach 4 s?",
-
-        answer:20
-
-    },
-
-    {
-
-        title:
-            "Berechne die Geschwindigkeit.",
-
-        text:
-            "Ein Körper startet mit v₀ = 3 m/s und beschleunigt mit a = 2 m/s². Wie groß ist v nach 5 s?",
-
-        answer:13
-
-    },
-
-    {
-
-        title:
-            "Berechne die Beschleunigung.",
-
-        text:
-            "Die Geschwindigkeit steigt von 4 m/s auf 16 m/s in 3 s. Wie groß ist a?",
-
-        answer:4
-
-    },
-
-    {
-
-        title:
-            "Berechne den Weg.",
-
-        text:
-            "Ein Körper startet aus dem Stand und beschleunigt mit 2 m/s². Welchen Weg legt er in 5 s zurück?",
-
-        answer:25
-
-    },
-
-    {
-
-        title:
-            "Freier Fall.",
-
-        text:
-            "Ein Körper fällt 2 s lang frei. Wie groß ist seine Fallgeschwindigkeit ungefähr?",
-
-        answer:19.62
-
+        if (running) {
+            pauseSimulation();
+        } else {
+            startSimulation();
+        }
     }
 
-];
-
-
-function newTask(){
-
-    const task=
-        tasks[
-            Math.floor(
-                Math.random()*tasks.length
-            )
-        ];
-
-
-    state.task=task;
-
-
-    document.getElementById(
-        "taskTitle"
-    ).textContent=
-        task.title;
-
-
-    document.getElementById(
-        "taskText"
-    ).textContent=
-        task.text;
-
-
-    document.getElementById(
-        "taskAnswer"
-    ).value="";
-
-
-    document.getElementById(
-        "taskFeedback"
-    ).textContent="";
-
-}
-
-
-document
-    .getElementById("newTask")
-    .addEventListener(
-        "click",
-        newTask
-    );
-
-
-document
-    .getElementById("checkTask")
-    .addEventListener(
-        "click",
-        ()=>{
-
-            const user=
-                parseFloat(
-                    document.getElementById(
-                        "taskAnswer"
-                    ).value
-                );
-
-
-            if(!Number.isFinite(user))
-                return;
-
-
-            const error=
-                Math.abs(
-                    user-state.task.answer
-                );
-
-
-            const feedback=
-                document.getElementById(
-                    "taskFeedback"
-                );
-
-
-            if(error<=.1){
-
-                feedback.textContent=
-                    "✓ Richtig! Sehr gut.";
-
-                feedback.style.color=
-                    "#4ade80";
-
-            }else{
-
-                feedback.textContent=
-                    `Noch nicht. Richtiger Wert:
-                    ${fmt(state.task.answer)}`;
-
-                feedback.style.color=
-                    "#f87171";
-
-            }
-
-        }
-    );
-
-
-/* =====================================================
-PRESENTATION MODE
-===================================================== */
-
-function resizePresentation(){
-
-    const dpr=
-        window.devicePixelRatio || 1;
-
-
-    pCanvas.width=
-        window.innerWidth*dpr;
-
-    pCanvas.height=
-        window.innerHeight*dpr;
-
-
-    pCtx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
-
-
-    drawPresentation();
-
-}
-
-
-function drawPresentation(){
-
-    const w=
-        window.innerWidth;
-
-    const h=
-        window.innerHeight;
-
-
-    pCtx.fillStyle="#02070d";
-
-    pCtx.fillRect(
-        0,
-        0,
-        w,
-        h
-    );
-
-
-    const p=
-        physics();
-
-
-    const q=
-        stateAt(state.time);
-
-
-    const max=
-        Math.max(
-            Math.abs(q.s),
-            Math.abs(p.s0),
-            10
-        );
-
-
-    const scale=
-        Math.min(
-            w/(max*1.2),
-            100
-        );
-
-
-    const ox=
-        w*.12;
-
-    const oy=
-        state.model==="horizontal"
-            ? h*.72
-            : h*.58;
-
-
-    /* grid */
-
-    pCtx.strokeStyle=
-        "rgba(100,140,170,.12)";
-
-    pCtx.lineWidth=1;
-
-
-    for(
-        let x=ox%scale;
-        x<w;
-        x+=scale
-    ){
-
-        pCtx.beginPath();
-
-        pCtx.moveTo(x,0);
-
-        pCtx.lineTo(x,h);
-
-        pCtx.stroke();
-
+    if (e.key.toLowerCase() === "r") {
+        resetSimulation();
     }
 
-
-    pCtx.strokeStyle="#657d95";
-
-    pCtx.lineWidth=2;
-
-    pCtx.beginPath();
-
-    pCtx.moveTo(0,oy);
-
-    pCtx.lineTo(w,oy);
-
-    pCtx.stroke();
-
-
-    let px;
-
-    let py;
-
-
-    if(state.model==="horizontal"){
-
-        px=
-            ox+
-            q.x*scale;
-
-        py=
-            oy-
-            q.y*scale;
-
-    }else{
-
-        px=
-            ox+
-            q.s*scale;
-
-        py=oy;
-
+    if (e.key === "Escape") {
+        closePresentation();
     }
+});
 
 
-    /* trail */
+/* =========================================================
+   WINDOW
+========================================================= */
 
-    if(state.trail.length>1){
-
-        pCtx.beginPath();
-
-        state.trail.forEach(
-            (point,index)=>{
-
-                const x=
-                    ox+
-                    point.x*scale;
-
-                const y=
-                    state.model==="horizontal"
-                        ? oy-point.y*scale
-                        : oy;
-
-                if(index===0)
-                    pCtx.moveTo(x,y);
-                else
-                    pCtx.lineTo(x,y);
-
-            }
-        );
-
-
-        pCtx.strokeStyle=
-            "#a78bfa";
-
-        pCtx.lineWidth=4;
-
-        pCtx.stroke();
-
-    }
-
-
-    /* object */
-
-    pCtx.fillStyle="#22c55e";
-
-    pCtx.beginPath();
-
-    pCtx.arc(
-        px,
-        py,
-        17,
-        0,
-        Math.PI*2
-    );
-
-    pCtx.fill();
-
-
-    pCtx.strokeStyle="#bbf7d0";
-
-    pCtx.lineWidth=3;
-
-    pCtx.stroke();
-
-
-    /* velocity */
-
-    const v=
-        q.signedV ??
-        q.v;
-
-
-    pCtx.strokeStyle="#38bdf8";
-
-    pCtx.lineWidth=6;
-
-    pCtx.beginPath();
-
-    pCtx.moveTo(px,py);
-
-    pCtx.lineTo(
-        px+v*4,
-        py
-    );
-
-    pCtx.stroke();
-
-
-    /* information */
-
-    pCtx.fillStyle="#edf5fc";
-
-    pCtx.font=
-        "bold 30px Inter";
-
-
-    pCtx.fillText(
-        `t = ${fmt(state.time)} s`,
-        45,
-        h-115
-    );
-
-
-    pCtx.fillStyle="#22c55e";
-
-    pCtx.fillText(
-        `s = ${fmt(q.s)} m`,
-        45,
-        h-75
-    );
-
-
-    pCtx.fillStyle="#38bdf8";
-
-    pCtx.fillText(
-        `v = ${fmt(q.signedV ?? q.v)} m/s`,
-        45,
-        h-35
-    );
-
-}
-
-
-document
-    .getElementById("presentationBtn")
-    .addEventListener(
-        "click",
-        ()=>{
-
-            document
-                .getElementById(
-                    "presentation"
-                )
-                .classList.add(
-                    "active"
-                );
-
-            resizePresentation();
-
-        }
-    );
-
-
-document
-    .getElementById("closePresentation")
-    .addEventListener(
-        "click",
-        ()=>{
-
-            document
-                .getElementById(
-                    "presentation"
-                )
-                .classList.remove(
-                    "active"
-                );
-
-        }
-    );
-
-
-/* =====================================================
-KEYBOARD
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    e=>{
-
-        if(e.key===" "){
-
-            e.preventDefault();
-
-            if(state.running)
-                pauseSimulation();
-            else
-                startSimulation();
-
-        }
-
-
-        if(
-            e.key.toLowerCase()==="r"
-        ){
-
-            resetSimulation();
-
-        }
-
-
-        if(e.key==="Escape"){
-
-            document
-                .getElementById(
-                    "presentation"
-                )
-                .classList.remove(
-                    "active"
-                );
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-UPDATE ALL
-===================================================== */
-
-function updateAll(){
-
-    updateFormula();
-
-    updateLive();
-
-    updateTable();
+window.addEventListener("resize", function() {
 
     drawSimulation();
-
     drawGraphs();
 
-
-    if(
-        document
-            .getElementById(
-                "presentation"
-            )
-            .classList.contains(
-                "active"
-            )
-    ){
-
-        drawPresentation();
-
-    }
-
-}
+});
 
 
-/* =====================================================
-WINDOW RESIZE
-===================================================== */
+/* =========================================================
+   INITIALIZATION
+========================================================= */
 
-window.addEventListener(
-    "resize",
-    ()=>{
+updateModelInformation();
 
-        resizeSimulation();
-
-        drawGraphs();
-
-
-        if(
-            document
-                .getElementById(
-                    "presentation"
-                )
-                .classList.contains(
-                    "active"
-                )
-        ){
-
-            resizePresentation();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-INITIALIZE
-===================================================== */
-
-updateModelParameters();
-
-newTask();
-
-resizeSimulation();
-
-updateAll();
+calculate();
 
 </script>
 
