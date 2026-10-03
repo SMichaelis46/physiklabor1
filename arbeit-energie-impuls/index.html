@@ -1,1 +1,1879 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbeit · Energie · Impuls | S.Michaelis Physiklabor</title>
+
+<style>
+:root{
+    --bg:#07111f;
+    --bg2:#0b1728;
+    --panel:#101f33;
+    --panel2:#14263d;
+    --border:#263d58;
+    --text:#edf5ff;
+    --muted:#91a6bd;
+    --cyan:#38bdf8;
+    --blue:#60a5fa;
+    --green:#34d399;
+    --yellow:#fbbf24;
+    --orange:#fb923c;
+    --red:#fb7185;
+    --purple:#a78bfa;
+    --shadow:0 20px 50px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 20% 0%,rgba(56,189,248,.10),transparent 35%),
+        radial-gradient(circle at 90% 10%,rgba(167,139,250,.09),transparent 30%),
+        linear-gradient(135deg,#050c16,#091522 55%,#06101d);
+    min-height:100vh;
+}
+
+button,input,select{font:inherit}
+
+header{
+    padding:28px 5vw 20px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    position:sticky;
+    top:0;
+    z-index:20;
+    backdrop-filter:blur(18px);
+    background:rgba(5,12,22,.84);
+}
+
+.header-inner{
+    max-width:1500px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border:1px solid #3c668d;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    color:var(--cyan);
+    font-weight:800;
+    font-size:19px;
+    background:#0c1d30;
+    box-shadow:0 0 25px rgba(56,189,248,.12);
+}
+
+.brand h1{
+    margin:0;
+    font-size:20px;
+    letter-spacing:.08em;
+}
+
+.brand p{
+    margin:4px 0 0;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.header-badge{
+    padding:9px 14px;
+    border:1px solid #31506e;
+    border-radius:999px;
+    color:#b9d9ef;
+    font-size:12px;
+    background:#0b1b2d;
+}
+
+main{
+    max-width:1500px;
+    margin:auto;
+    padding:30px 5vw 70px;
+}
+
+.hero{
+    padding:35px 0 28px;
+}
+
+.hero h2{
+    margin:0;
+    font-size:clamp(30px,5vw,58px);
+    line-height:1;
+    letter-spacing:-.04em;
+}
+
+.hero h2 span{color:var(--cyan)}
+
+.hero p{
+    max-width:760px;
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.7;
+    margin-top:18px;
+}
+
+.tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin:10px 0 24px;
+}
+
+.tab{
+    border:1px solid var(--border);
+    background:#0c1a2b;
+    color:#a9bed2;
+    padding:11px 15px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.tab:hover{
+    border-color:#47799f;
+    color:white;
+}
+
+.tab.active{
+    background:#12304b;
+    border-color:var(--cyan);
+    color:white;
+    box-shadow:0 0 20px rgba(56,189,248,.12);
+}
+
+.section{display:none}
+.section.active{display:block}
+
+.grid{
+    display:grid;
+    grid-template-columns:340px minmax(0,1fr);
+    gap:20px;
+}
+
+.panel{
+    background:linear-gradient(145deg,rgba(16,31,51,.97),rgba(10,23,38,.97));
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+}
+
+.panel-head{
+    padding:18px 20px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.panel-head h3{
+    margin:0;
+    font-size:17px;
+}
+
+.panel-head p{
+    margin:5px 0 0;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.panel-body{padding:20px}
+
+label{
+    display:block;
+    color:#a9bdd1;
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+.field{margin-bottom:16px}
+
+input[type=number],
+select{
+    width:100%;
+    padding:11px 12px;
+    background:#081524;
+    border:1px solid #29425c;
+    color:white;
+    border-radius:9px;
+    outline:none;
+}
+
+input[type=number]:focus,
+select:focus{
+    border-color:var(--cyan);
+}
+
+.range-row{
+    display:grid;
+    grid-template-columns:1fr 75px;
+    gap:10px;
+    align-items:center;
+}
+
+input[type=range]{
+    width:100%;
+    accent-color:var(--cyan);
+}
+
+.value{
+    background:#081524;
+    border:1px solid #29425c;
+    border-radius:8px;
+    padding:9px;
+    text-align:center;
+    color:#dceeff;
+    font-size:13px;
+}
+
+.btn-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:12px;
+}
+
+button{
+    border:1px solid #31506e;
+    background:#10253a;
+    color:#e9f5ff;
+    border-radius:9px;
+    padding:10px 13px;
+    cursor:pointer;
+    transition:.18s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+    border-color:#5794bd;
+}
+
+button.primary{
+    background:#075985;
+    border-color:#38bdf8;
+}
+
+button.green{
+    background:#07553f;
+    border-color:#34d399;
+}
+
+button.danger{
+    background:#581827;
+    border-color:#fb7185;
+}
+
+.canvas-wrap{
+    position:relative;
+    background:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+        #07111d;
+    background-size:32px 32px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+canvas{
+    display:block;
+    width:100%;
+    height:auto;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    padding:15px;
+}
+
+.stat{
+    background:#091727;
+    border:1px solid #20364d;
+    border-radius:11px;
+    padding:13px;
+}
+
+.stat .name{
+    color:#7890a7;
+    font-size:11px;
+}
+
+.stat .num{
+    font-size:20px;
+    margin-top:5px;
+    font-weight:700;
+}
+
+.formula{
+    background:#071524;
+    border-left:3px solid var(--cyan);
+    padding:15px 17px;
+    margin-bottom:10px;
+    border-radius:8px;
+    font-size:18px;
+    letter-spacing:.02em;
+}
+
+.formula small{
+    display:block;
+    color:#7891a9;
+    font-size:11px;
+    margin-top:6px;
+    letter-spacing:0;
+}
+
+.info{
+    padding:14px 16px;
+    border-radius:10px;
+    background:#0b1b2b;
+    border:1px solid #223b54;
+    color:#a9bfd3;
+    line-height:1.6;
+    font-size:13px;
+}
+
+.energy-bars{
+    padding:20px;
+}
+
+.energy-item{
+    margin-bottom:18px;
+}
+
+.energy-label{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:7px;
+    font-size:12px;
+}
+
+.bar{
+    height:18px;
+    background:#071321;
+    border:1px solid #22384e;
+    border-radius:99px;
+    overflow:hidden;
+}
+
+.fill{
+    height:100%;
+    width:0%;
+    transition:.15s;
+}
+
+.fill.pot{background:linear-gradient(90deg,#a78bfa,#c4b5fd)}
+.fill.kin{background:linear-gradient(90deg,#38bdf8,#60a5fa)}
+.fill.spring{background:linear-gradient(90deg,#34d399,#6ee7b7)}
+.fill.heat{background:linear-gradient(90deg,#fb923c,#fbbf24)}
+
+.diagram{
+    min-height:250px;
+    display:grid;
+    place-items:center;
+    background:#07111d;
+    border-radius:13px;
+    border:1px solid #20364d;
+}
+
+.big-number{
+    font-size:42px;
+    font-weight:800;
+    color:var(--cyan);
+}
+
+.two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.three-col{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+}
+
+th,td{
+    padding:10px 12px;
+    border-bottom:1px solid #20364d;
+    text-align:right;
+}
+
+th{
+    color:#8da5bc;
+    font-weight:500;
+}
+
+td:first-child,th:first-child{text-align:left}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:99px;
+    font-size:10px;
+    border:1px solid #31506e;
+}
+
+.good{color:#6ee7b7;border-color:#17694f}
+.warn{color:#fcd34d;border-color:#765d12}
+
+.task{
+    border:1px solid #243e57;
+    border-radius:13px;
+    padding:18px;
+    margin-bottom:12px;
+    background:#0a1828;
+}
+
+.task h4{
+    margin:0 0 10px;
+}
+
+.task p{
+    color:#a9bdd1;
+    line-height:1.65;
+}
+
+.solution{
+    display:none;
+    margin-top:12px;
+    padding:12px;
+    background:#071523;
+    border-left:3px solid var(--green);
+    border-radius:7px;
+    line-height:1.7;
+}
+
+.solution.show{display:block}
+
+footer{
+    text-align:center;
+    color:#637b92;
+    font-size:11px;
+    padding:30px;
+}
+
+@media(max-width:1000px){
+    .grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:700px){
+    .two-col,.three-col{grid-template-columns:1fr}
+    .header-badge{display:none}
+    .hero h2{font-size:35px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="header-inner">
+    <div class="brand">
+        <div class="logo">SM</div>
+        <div>
+            <h1>S.MICHAELIS PHYSIKLABOR</h1>
+            <p>Interaktive Mechanik · Modellieren · Messen · Verstehen</p>
+        </div>
+    </div>
+    <div class="header-badge">ARBEIT · ENERGIE · IMPULS</div>
+</div>
+</header>
+
+<main>
+
+<section class="hero">
+    <h2>Arbeit · <span>Energie</span> · Impuls</h2>
+    <p>
+        Ein interaktives Labor zur Untersuchung von Arbeit, Energie,
+        Leistung, Impuls, Kraftstoß und Stoßvorgängen.
+        Verändere die Größen und beobachte unmittelbar,
+        wie sich die physikalischen Zusammenhänge verändern.
+    </p>
+</section>
+
+<div class="tabs">
+    <button class="tab active" onclick="showTab('arbeit',this)">① Arbeit</button>
+    <button class="tab" onclick="showTab('energie',this)">② Energie</button>
+    <button class="tab" onclick="showTab('leistung',this)">③ Leistung</button>
+    <button class="tab" onclick="showTab('impuls',this)">④ Impuls</button>
+    <button class="tab" onclick="showTab('kraftstoss',this)">⑤ Kraftstoß</button>
+    <button class="tab" onclick="showTab('stoss',this)">⑥ Stöße</button>
+    <button class="tab" onclick="showTab('rechner',this)">⑦ Rechner</button>
+    <button class="tab" onclick="showTab('aufgaben',this)">⑧ Aufgaben</button>
+</div>
+
+<!-- ================= ARBEIT ================= -->
+
+<section id="arbeit" class="section active">
+
+<div class="grid">
+
+<div class="panel">
+<div class="panel-head">
+<h3>Parameter</h3>
+<p>Kraft, Weg und Winkel</p>
+</div>
+
+<div class="panel-body">
+
+<div class="field">
+<label>Kraft F [N]</label>
+<div class="range-row">
+<input id="workF" type="range" min="0" max="200" step="1" value="50"
+oninput="updateWork()">
+<div class="value" id="workFv">50</div>
+</div>
+</div>
+
+<div class="field">
+<label>Weg s [m]</label>
+<div class="range-row">
+<input id="workS" type="range" min="0" max="20" step=".1" value="8"
+oninput="updateWork()">
+<div class="value" id="workSv">8.0</div>
+</div>
+</div>
+
+<div class="field">
+<label>Winkel α [°]</label>
+<div class="range-row">
+<input id="workA" type="range" min="0" max="180" step="1" value="0"
+oninput="updateWork()">
+<div class="value" id="workAv">0</div>
+</div>
+</div>
+
+<div class="formula">
+W = F · s · cos(α)
+<small>Arbeit einer konstanten Kraft</small>
+</div>
+
+<div class="info">
+Die Arbeit hängt nicht nur von der Kraft und dem Weg,
+sondern auch von der Richtung der Kraft ab.
+</div>
+
+</div>
+</div>
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Kraft-Weg-Modell</h3>
+<p>Die Fläche unter der F-s-Kurve entspricht der Arbeit.</p>
+</div>
+
+<div class="canvas-wrap">
+<canvas id="workCanvas" width="900" height="430"></canvas>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="name">Kraft</div>
+<div class="num" id="workOutF">50 N</div>
+</div>
+
+<div class="stat">
+<div class="name">Weg</div>
+<div class="num" id="workOutS">8.0 m</div>
+</div>
+
+<div class="stat">
+<div class="name">Winkel</div>
+<div class="num" id="workOutA">0°</div>
+</div>
+
+<div class="stat">
+<div class="name">Arbeit</div>
+<div class="num" id="workOutW">400 J</div>
+</div>
+
+</div>
+
+<div class="panel-body">
+
+<div class="formula">
+W = ΔE
+<small>Arbeit ist eine Form der Energieübertragung.</small>
+</div>
+
+<div class="info" id="workMeaning">
+Die Kraft wirkt vollständig in Bewegungsrichtung.
+Die Arbeit ist maximal positiv.
+</div>
+
+</div>
+
+</div>
+</div>
+
+</section>
+
+<!-- ================= ENERGIE ================= -->
+
+<section id="energie" class="section">
+
+<div class="grid">
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Energieparameter</h3>
+<p>Potentielle, kinetische und Spannenergie</p>
+</div>
+
+<div class="panel-body">
+
+<div class="field">
+<label>Masse m [kg]</label>
+<input id="energyM" type="number" value="5" min=".1" step=".1"
+oninput="updateEnergy()">
+</div>
+
+<div class="field">
+<label>Höhe h [m]</label>
+<input id="energyH" type="number" value="10" min="0" step=".1"
+oninput="updateEnergy()">
+</div>
+
+<div class="field">
+<label>Geschwindigkeit v [m/s]</label>
+<input id="energyV" type="number" value="12" min="0" step=".1"
+oninput="updateEnergy()">
+</div>
+
+<div class="field">
+<label>Federkonstante D [N/m]</label>
+<input id="energyD" type="number" value="200" min="0" step="1"
+oninput="updateEnergy()">
+</div>
+
+<div class="field">
+<label>Federweg x [m]</label>
+<input id="energyX" type="number" value="0.5" min="0" step=".01"
+oninput="updateEnergy()">
+</div>
+
+<div class="formula">
+Eₚₒₜ = m · g · h
+</div>
+
+<div class="formula">
+Eₖᵢₙ = ½ · m · v²
+</div>
+
+<div class="formula">
+Eₛₚₐₙₙ = ½ · D · x²
+</div>
+
+</div>
+</div>
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Energieverteilung</h3>
+<p>Vergleich der verschiedenen Energieformen</p>
+</div>
+
+<div class="energy-bars">
+
+<div class="energy-item">
+<div class="energy-label">
+<span>Potentielle Energie</span>
+<strong id="potText">490.5 J</strong>
+</div>
+<div class="bar"><div id="potBar" class="fill pot"></div></div>
+</div>
+
+<div class="energy-item">
+<div class="energy-label">
+<span>Kinetische Energie</span>
+<strong id="kinText">360 J</strong>
+</div>
+<div class="bar"><div id="kinBar" class="fill kin"></div></div>
+</div>
+
+<div class="energy-item">
+<div class="energy-label">
+<span>Spannenergie</span>
+<strong id="springText">25 J</strong>
+</div>
+<div class="bar"><div id="springBar" class="fill spring"></div></div>
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="name">Eₚₒₜ</div>
+<div class="num" id="potStat">0 J</div>
+</div>
+
+<div class="stat">
+<div class="name">Eₖᵢₙ</div>
+<div class="num" id="kinStat">0 J</div>
+</div>
+
+<div class="stat">
+<div class="name">Eₛₚₐₙₙ</div>
+<div class="num" id="springStat">0 J</div>
+</div>
+
+<div class="stat">
+<div class="name">Gesamt</div>
+<div class="num" id="totalStat">0 J</div>
+</div>
+
+</div>
+
+<div class="panel-body">
+<div class="info">
+Energie kann übertragen und umgewandelt werden.
+In einem ideal abgeschlossenen System bleibt die Gesamtenergie erhalten.
+</div>
+</div>
+
+</div>
+</div>
+
+</section>
+
+<!-- ================= LEISTUNG ================= -->
+
+<section id="leistung" class="section">
+
+<div class="grid">
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Leistungsmodell</h3>
+<p>Gleiche Arbeit – unterschiedliche Zeit</p>
+</div>
+
+<div class="panel-body">
+
+<div class="field">
+<label>Arbeit W [J]</label>
+<input id="powerW" type="number" value="1000" min="0" step="10"
+oninput="updatePower()">
+</div>
+
+<div class="field">
+<label>Zeit Δt [s]</label>
+<input id="powerT" type="number" value="5" min=".1" step=".1"
+oninput="updatePower()">
+</div>
+
+<div class="formula">
+P = W / Δt
+<small>Leistung = Arbeit pro Zeit</small>
+</div>
+
+<div class="info">
+Je kürzer die Zeit für dieselbe Arbeit ist,
+desto größer ist die Leistung.
+</div>
+
+</div>
+</div>
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Ergebnis</h3>
+</div>
+
+<div class="panel-body">
+
+<div class="diagram">
+<div>
+<div style="text-align:center;color:#7891a8;font-size:13px">
+Leistung
+</div>
+<div class="big-number" id="powerResult">200 W</div>
+</div>
+</div>
+
+<div class="stats" style="padding-left:0;padding-right:0">
+
+<div class="stat">
+<div class="name">Arbeit</div>
+<div class="num" id="powerOutW">1000 J</div>
+</div>
+
+<div class="stat">
+<div class="name">Zeit</div>
+<div class="num" id="powerOutT">5 s</div>
+</div>
+
+<div class="stat">
+<div class="name">Leistung</div>
+<div class="num" id="powerOutP">200 W</div>
+</div>
+
+<div class="stat">
+<div class="name">Energie</div>
+<div class="num">J/s</div>
+</div>
+
+</div>
+
+<div class="formula">
+P = F · v
+<small>bei konstanter Kraft in Bewegungsrichtung</small>
+</div>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= IMPULS ================= -->
+
+<section id="impuls" class="section">
+
+<div class="grid">
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Impuls eines Körpers</h3>
+<p>Masse und Geschwindigkeit</p>
+</div>
+
+<div class="panel-body">
+
+<div class="field">
+<label>Masse m [kg]</label>
+<input id="impM" type="number" value="4" min=".1" step=".1"
+oninput="updateImpulse()">
+</div>
+
+<div class="field">
+<label>Geschwindigkeit v [m/s]</label>
+<input id="impV" type="number" value="8" min="-30" max="30" step=".1"
+oninput="updateImpulse()">
+</div>
+
+<div class="formula">
+p = m · v
+<small>Der Impuls ist eine Vektorgröße.</small>
+</div>
+
+<div class="formula">
+Eₖᵢₙ = p² / (2 · m)
+</div>
+
+</div>
+</div>
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Impulsvektor</h3>
+<p>Die Richtung entspricht der Bewegungsrichtung.</p>
+</div>
+
+<div class="canvas-wrap">
+<canvas id="impulseCanvas" width="900" height="330"></canvas>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="name">Masse</div>
+<div class="num" id="impOutM">4 kg</div>
+</div>
+
+<div class="stat">
+<div class="name">Geschwindigkeit</div>
+<div class="num" id="impOutV">8 m/s</div>
+</div>
+
+<div class="stat">
+<div class="name">Impuls</div>
+<div class="num" id="impOutP">32 kg·m/s</div>
+</div>
+
+<div class="stat">
+<div class="name">Energie</div>
+<div class="num" id="impOutE">128 J</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</section>
+
+<!-- ================= KRAFTSTOSS ================= -->
+
+<section id="kraftstoss" class="section">
+
+<div class="grid">
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Kraftstoß</h3>
+<p>Kraft und Einwirkzeit</p>
+</div>
+
+<div class="panel-body">
+
+<div class="field">
+<label>Kraft F [N]</label>
+<div class="range-row">
+<input id="kickF" type="range" min="-500" max="500" value="100"
+oninput="updateKick()">
+<div class="value" id="kickFv">100</div>
+</div>
+</div>
+
+<div class="field">
+<label>Einwirkzeit Δt [s]</label>
+<div class="range-row">
+<input id="kickT" type="range" min=".01" max="2" step=".01" value=".5"
+oninput="updateKick()">
+<div class="value" id="kickTv">0.50</div>
+</div>
+</div>
+
+<div class="formula">
+J = F · Δt
+</div>
+
+<div class="formula">
+J = Δp
+</div>
+
+</div>
+</div>
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Kraft-Zeit-Diagramm</h3>
+<p>Die Fläche unter F(t) entspricht dem Kraftstoß.</p>
+</div>
+
+<div class="canvas-wrap">
+<canvas id="kickCanvas" width="900" height="420"></canvas>
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="name">Kraft</div>
+<div class="num" id="kickOutF">100 N</div>
+</div>
+
+<div class="stat">
+<div class="name">Zeit</div>
+<div class="num" id="kickOutT">0.50 s</div>
+</div>
+
+<div class="stat">
+<div class="name">Kraftstoß</div>
+<div class="num" id="kickOutJ">50 N·s</div>
+</div>
+
+<div class="stat">
+<div class="name">Impulsänderung</div>
+<div class="num" id="kickOutP">50 kg·m/s</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</section>
+
+<!-- ================= STÖSSE ================= -->
+
+<section id="stoss" class="section">
+
+<div class="grid">
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Stoßparameter</h3>
+<p>Zwei Wagen auf einer geraden Bahn</p>
+</div>
+
+<div class="panel-body">
+
+<div class="field">
+<label>Masse Wagen 1 [kg]</label>
+<input id="m1" type="number" value="2" min=".1" step=".1"
+oninput="updateCollision()">
+</div>
+
+<div class="field">
+<label>Geschwindigkeit Wagen 1 [m/s]</label>
+<input id="v1" type="number" value="6" step=".1"
+oninput="updateCollision()">
+</div>
+
+<div class="field">
+<label>Masse Wagen 2 [kg]</label>
+<input id="m2" type="number" value="3" min=".1" step=".1"
+oninput="updateCollision()">
+</div>
+
+<div class="field">
+<label>Geschwindigkeit Wagen 2 [m/s]</label>
+<input id="v2" type="number" value="-2" step=".1"
+oninput="updateCollision()">
+</div>
+
+<div class="field">
+<label>Stoßart</label>
+<select id="collisionType" onchange="updateCollision()">
+<option value="inelastic">Vollständig unelastisch</option>
+<option value="elastic">Elastisch</option>
+</select>
+</div>
+
+<div class="btn-row">
+<button class="primary" onclick="startCollision()">▶ Stoß starten</button>
+<button onclick="resetCollision()">↺ Zurücksetzen</button>
+</div>
+
+</div>
+</div>
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Stoßsimulation</h3>
+<p>Impuls- und Energievergleich</p>
+</div>
+
+<div class="canvas-wrap">
+<canvas id="collisionCanvas" width="900" height="430"></canvas>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Größe</th>
+<th>Vorher</th>
+<th>Nachher</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v₁</td>
+<td id="tblV1Before">6.00 m/s</td>
+<td id="tblV1After">–</td>
+</tr>
+<tr>
+<td>v₂</td>
+<td id="tblV2Before">−2.00 m/s</td>
+<td id="tblV2After">–</td>
+</tr>
+<tr>
+<td>Gesamtimpuls</td>
+<td id="tblPBefore">6.00 kg·m/s</td>
+<td id="tblPAfter">–</td>
+</tr>
+<tr>
+<td>Gesamtenergie</td>
+<td id="tblEBefore">48.00 J</td>
+<td id="tblEAfter">–</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="panel-body">
+<div class="info" id="collisionInfo">
+Der Gesamtimpuls bleibt beim Stoß erhalten.
+Bei einem unelastischen Stoß wird kinetische Energie in andere Energieformen umgewandelt.
+</div>
+</div>
+
+</div>
+</div>
+
+</section>
+
+<!-- ================= RECHNER ================= -->
+
+<section id="rechner" class="section">
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Physik-Rechner</h3>
+<p>Formel auswählen und Schritt für Schritt berechnen.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="three-col">
+
+<div class="panel">
+<div class="panel-head">
+<h3>Arbeit</h3>
+</div>
+<div class="panel-body">
+<div class="field">
+<label>F [N]</label>
+<input id="calcF" type="number" value="50">
+</div>
+<div class="field">
+<label>s [m]</label>
+<input id="calcS" type="number" value="8">
+</div>
+<div class="field">
+<label>α [°]</label>
+<input id="calcA" type="number" value="0">
+</div>
+<button class="primary" onclick="calcWork()">Berechnen</button>
+<div class="formula" id="calcWorkResult">W = 400 J</div>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-head">
+<h3>Kinetische Energie</h3>
+</div>
+<div class="panel-body">
+<div class="field">
+<label>m [kg]</label>
+<input id="calcM" type="number" value="5">
+</div>
+<div class="field">
+<label>v [m/s]</label>
+<input id="calcV" type="number" value="10">
+</div>
+<button class="primary" onclick="calcKin()">Berechnen</button>
+<div class="formula" id="calcKinResult">Eₖᵢₙ = 250 J</div>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-head">
+<h3>Impuls</h3>
+</div>
+<div class="panel-body">
+<div class="field">
+<label>m [kg]</label>
+<input id="calcPM" type="number" value="4">
+</div>
+<div class="field">
+<label>v [m/s]</label>
+<input id="calcPV" type="number" value="8">
+</div>
+<button class="primary" onclick="calcP()">Berechnen</button>
+<div class="formula" id="calcPResult">p = 32 kg·m/s</div>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</section>
+
+<!-- ================= AUFGABEN ================= -->
+
+<section id="aufgaben" class="section">
+
+<div class="panel">
+
+<div class="panel-head">
+<h3>Aufgabenlabor</h3>
+<p>Grundlagen · Anwendung · Transfer</p>
+</div>
+
+<div class="panel-body">
+
+<div class="task">
+<h4>🟢 Aufgabe 1 · Arbeit</h4>
+<p>
+Eine konstante Kraft von 80 N wirkt in Bewegungsrichtung.
+Ein Körper legt dabei 12 m zurück.
+Berechne die verrichtete Arbeit.
+</p>
+<button onclick="toggleSolution('s1')">Lösung anzeigen</button>
+<div id="s1" class="solution">
+W = F · s<br>
+W = 80 N · 12 m<br>
+<strong>W = 960 J</strong>
+</div>
+</div>
+
+<div class="task">
+<h4>🟢 Aufgabe 2 · Kinetische Energie</h4>
+<p>
+Ein Körper mit einer Masse von 4 kg bewegt sich mit 10 m/s.
+Berechne seine kinetische Energie.
+</p>
+<button onclick="toggleSolution('s2')">Lösung anzeigen</button>
+<div id="s2" class="solution">
+Eₖᵢₙ = ½ · m · v²<br>
+Eₖᵢₙ = ½ · 4 · 10²<br>
+<strong>Eₖᵢₙ = 200 J</strong>
+</div>
+</div>
+
+<div class="task">
+<h4>🟡 Aufgabe 3 · Impuls</h4>
+<p>
+Ein Fahrzeug mit 1200 kg fährt mit 15 m/s.
+Berechne seinen Impuls.
+</p>
+<button onclick="toggleSolution('s3')">Lösung anzeigen</button>
+<div id="s3" class="solution">
+p = m · v<br>
+p = 1200 kg · 15 m/s<br>
+<strong>p = 18 000 kg·m/s</strong>
+</div>
+</div>
+
+<div class="task">
+<h4>🟡 Aufgabe 4 · Leistung</h4>
+<p>
+Eine Maschine verrichtet 12 000 J Arbeit in 6 s.
+Welche Leistung hat die Maschine?
+</p>
+<button onclick="toggleSolution('s4')">Lösung anzeigen</button>
+<div id="s4" class="solution">
+P = W / Δt<br>
+P = 12 000 J / 6 s<br>
+<strong>P = 2000 W = 2,0 kW</strong>
+</div>
+</div>
+
+<div class="task">
+<h4>🔴 Aufgabe 5 · Transfer</h4>
+<p>
+Die Geschwindigkeit eines Körpers wird verdoppelt.
+Wie verändern sich sein Impuls und seine kinetische Energie?
+</p>
+<button onclick="toggleSolution('s5')">Lösung anzeigen</button>
+<div id="s5" class="solution">
+p = m · v<br>
+→ Bei doppelter Geschwindigkeit wird der Impuls doppelt so groß.
+
+Eₖᵢₙ = ½ · m · v²<br>
+→ Die Geschwindigkeit steht im Quadrat.<br>
+→ Bei doppelter Geschwindigkeit wird die kinetische Energie <strong>viermal so groß</strong>.
+</div>
+</div>
+
+</div>
+</div>
+
+</section>
+
+<footer>
+S.Michaelis Physiklabor · Arbeit · Energie · Leistung · Impuls · Kraftstoß · Stöße
+</footer>
+
+</main>
+
+<script>
+
+const G = 9.81;
+
+/* ================= TABS ================= */
+
+function showTab(id,btn){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+
+    if(id==="arbeit") updateWork();
+    if(id==="energie") updateEnergy();
+    if(id==="impuls") updateImpulse();
+    if(id==="kraftstoss") updateKick();
+    if(id==="stoss"){
+        updateCollision();
+        drawCollision();
+    }
+}
+
+/* ================= ARBEIT ================= */
+
+function updateWork(){
+
+    const F=+document.getElementById("workF").value;
+    const s=+document.getElementById("workS").value;
+    const a=+document.getElementById("workA").value;
+
+    const W=F*s*Math.cos(a*Math.PI/180);
+
+    document.getElementById("workFv").textContent=F.toFixed(0);
+    document.getElementById("workSv").textContent=s.toFixed(1);
+    document.getElementById("workAv").textContent=a.toFixed(0);
+
+    document.getElementById("workOutF").textContent=F.toFixed(1)+" N";
+    document.getElementById("workOutS").textContent=s.toFixed(1)+" m";
+    document.getElementById("workOutA").textContent=a.toFixed(0)+"°";
+    document.getElementById("workOutW").textContent=W.toFixed(1)+" J";
+
+    let meaning="";
+
+    if(Math.abs(a)<1){
+        meaning="Die Kraft wirkt vollständig in Bewegungsrichtung. Die Arbeit ist maximal positiv.";
+    }else if(a<89){
+        meaning="Ein Teil der Kraft wirkt in Bewegungsrichtung. Die Arbeit ist positiv.";
+    }else if(Math.abs(a-90)<1){
+        meaning="Die Kraft steht senkrecht zur Bewegungsrichtung. Die verrichtete Arbeit ist 0 J.";
+    }else if(a<180){
+        meaning="Die Kraft hat eine Komponente entgegen der Bewegungsrichtung. Die Arbeit ist negativ.";
+    }else{
+        meaning="Die Kraft wirkt vollständig entgegen der Bewegungsrichtung.";
+    }
+
+    document.getElementById("workMeaning").textContent=meaning;
+
+    drawWork(F,s,a,W);
+}
+
+function drawWork(F,s,a,W){
+
+    const c=document.getElementById("workCanvas");
+    const ctx=c.getContext("2d");
+    const w=c.width,h=c.height;
+
+    ctx.clearRect(0,0,w,h);
+
+    const left=80;
+    const right=w-45;
+    const bottom=h-65;
+    const top=45;
+
+    ctx.strokeStyle="#334b63";
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+    ctx.moveTo(left,top);
+    ctx.lineTo(left,bottom);
+    ctx.lineTo(right,bottom);
+    ctx.stroke();
+
+    ctx.fillStyle="#7f96ad";
+    ctx.font="14px Arial";
+
+    ctx.fillText("F [N]",35,top+10);
+    ctx.fillText("s [m]",right-20,bottom+40);
+
+    const maxF=Math.max(200,F*1.15,20);
+    const maxS=Math.max(20,s*1.15,2);
+
+    const fx=F/maxF;
+    const sx=s/maxS;
+
+    const yF=bottom-fx*(bottom-top);
+    const xS=left+sx*(right-left);
+
+    ctx.fillStyle="rgba(56,189,248,.18)";
+    ctx.fillRect(left,yF,xS-left,bottom-yF);
+
+    ctx.strokeStyle="#38bdf8";
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+    ctx.moveTo(left,bottom);
+    ctx.lineTo(xS,bottom);
+    ctx.lineTo(xS,yF);
+    ctx.lineTo(left,yF);
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.fillStyle="#38bdf8";
+    ctx.font="bold 18px Arial";
+    ctx.fillText("W = "+W.toFixed(1)+" J",left+20,top+35);
+
+    ctx.fillStyle="#d9ecff";
+    ctx.font="14px Arial";
+    ctx.fillText("F = "+F.toFixed(1)+" N",xS-75,yF-12);
+    ctx.fillText("s = "+s.toFixed(1)+" m",xS-35,bottom+27);
+}
+
+/* ================= ENERGIE ================= */
+
+function updateEnergy(){
+
+    const m=Math.max(0,+document.getElementById("energyM").value);
+    const h=Math.max(0,+document.getElementById("energyH").value);
+    const v=Math.max(0,+document.getElementById("energyV").value);
+    const D=Math.max(0,+document.getElementById("energyD").value);
+    const x=Math.max(0,+document.getElementById("energyX").value);
+
+    const pot=m*G*h;
+    const kin=.5*m*v*v;
+    const spring=.5*D*x*x;
+    const total=pot+kin+spring;
+    const max=Math.max(pot,kin,spring,1);
+
+    document.getElementById("potText").textContent=pot.toFixed(1)+" J";
+    document.getElementById("kinText").textContent=kin.toFixed(1)+" J";
+    document.getElementById("springText").textContent=spring.toFixed(1)+" J";
+
+    document.getElementById("potStat").textContent=pot.toFixed(1)+" J";
+    document.getElementById("kinStat").textContent=kin.toFixed(1)+" J";
+    document.getElementById("springStat").textContent=spring.toFixed(1)+" J";
+    document.getElementById("totalStat").textContent=total.toFixed(1)+" J";
+
+    document.getElementById("potBar").style.width=(pot/max*100)+"%";
+    document.getElementById("kinBar").style.width=(kin/max*100)+"%";
+    document.getElementById("springBar").style.width=(spring/max*100)+"%";
+}
+
+/* ================= LEISTUNG ================= */
+
+function updatePower(){
+
+    const W=Math.max(0,+document.getElementById("powerW").value);
+    const t=Math.max(.0001,+document.getElementById("powerT").value);
+    const P=W/t;
+
+    document.getElementById("powerResult").textContent=P.toFixed(1)+" W";
+    document.getElementById("powerOutW").textContent=W.toFixed(1)+" J";
+    document.getElementById("powerOutT").textContent=t.toFixed(2)+" s";
+    document.getElementById("powerOutP").textContent=P.toFixed(1)+" W";
+}
+
+/* ================= IMPULS ================= */
+
+function updateImpulse(){
+
+    const m=+document.getElementById("impM").value;
+    const v=+document.getElementById("impV").value;
+
+    const p=m*v;
+    const E=.5*m*v*v;
+
+    document.getElementById("impOutM").textContent=m.toFixed(1)+" kg";
+    document.getElementById("impOutV").textContent=v.toFixed(1)+" m/s";
+    document.getElementById("impOutP").textContent=p.toFixed(1)+" kg·m/s";
+    document.getElementById("impOutE").textContent=E.toFixed(1)+" J";
+
+    drawImpulse(m,v,p);
+}
+
+function drawArrow(ctx,x1,y1,x2,y2,color){
+
+    ctx.strokeStyle=color;
+    ctx.fillStyle=color;
+    ctx.lineWidth=7;
+
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+
+    const ang=Math.atan2(y2-y1,x2-x1);
+
+    ctx.beginPath();
+    ctx.moveTo(x2,y2);
+    ctx.lineTo(
+        x2-18*Math.cos(ang-.45),
+        y2-18*Math.sin(ang-.45)
+    );
+    ctx.lineTo(
+        x2-18*Math.cos(ang+.45),
+        y2-18*Math.sin(ang+.45)
+    );
+    ctx.closePath();
+    ctx.fill();
+}
+
+function drawImpulse(m,v,p){
+
+    const c=document.getElementById("impulseCanvas");
+    const ctx=c.getContext("2d");
+
+    ctx.clearRect(0,0,c.width,c.height);
+
+    const cy=170;
+    const center=450;
+    const max=40;
+    const length=Math.min(320,Math.abs(p)/max*320);
+
+    ctx.strokeStyle="#344c63";
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+    ctx.moveTo(70,cy);
+    ctx.lineTo(830,cy);
+    ctx.stroke();
+
+    ctx.fillStyle="#dff1ff";
+    ctx.font="bold 22px Arial";
+    ctx.fillText("Impulsvektor p = "+p.toFixed(1)+" kg·m/s",300,70);
+
+    if(v>=0){
+        drawArrow(ctx,center,cy,center+length,cy,"#38bdf8");
+    }else{
+        drawArrow(ctx,center,cy,center-length,cy,"#fb7185");
+    }
+
+    ctx.fillStyle="#91a6bd";
+    ctx.font="14px Arial";
+    ctx.fillText("← negative Richtung",80,cy+45);
+    ctx.fillText("positive Richtung →",680,cy+45);
+
+    ctx.fillStyle="#10283e";
+    ctx.strokeStyle="#4b7191";
+    ctx.lineWidth=2;
+    ctx.fillRect(center-45,cy-35,90,70);
+    ctx.strokeRect(center-45,cy-35,90,70);
+
+    ctx.fillStyle="#e8f5ff";
+    ctx.font="bold 16px Arial";
+    ctx.fillText(m.toFixed(1)+" kg",center-30,cy+5);
+}
+
+/* ================= KRAFTSTOSS ================= */
+
+function updateKick(){
+
+    const F=+document.getElementById("kickF").value;
+    const t=+document.getElementById("kickT").value;
+    const J=F*t;
+
+    document.getElementById("kickFv").textContent=F.toFixed(0);
+    document.getElementById("kickTv").textContent=t.toFixed(2);
+
+    document.getElementById("kickOutF").textContent=F.toFixed(1)+" N";
+    document.getElementById("kickOutT").textContent=t.toFixed(2)+" s";
+    document.getElementById("kickOutJ").textContent=J.toFixed(2)+" N·s";
+    document.getElementById("kickOutP").textContent=J.toFixed(2)+" kg·m/s";
+
+    drawKick(F,t,J);
+}
+
+function drawKick(F,t,J){
+
+    const c=document.getElementById("kickCanvas");
+    const ctx=c.getContext("2d");
+
+    ctx.clearRect(0,0,c.width,c.height);
+
+    const left=70,right=850,base=330,top=50;
+    const maxT=Math.max(2,t*1.25);
+    const maxF=Math.max(500,Math.abs(F)*1.25);
+
+    ctx.strokeStyle="#334b63";
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+    ctx.moveTo(left,top);
+    ctx.lineTo(left,base);
+    ctx.lineTo(right,base);
+    ctx.stroke();
+
+    const y0=base;
+    const yF=base-(F/maxF)*(base-top);
+    const xT=left+(t/maxT)*(right-left);
+
+    ctx.fillStyle="rgba(56,189,248,.18)";
+    ctx.fillRect(left,Math.min(y0,yF),xT-left,Math.abs(y0-yF));
+
+    ctx.strokeStyle="#38bdf8";
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+    ctx.moveTo(left,y0);
+    ctx.lineTo(left,yF);
+    ctx.lineTo(xT,yF);
+    ctx.lineTo(xT,y0);
+    ctx.stroke();
+
+    ctx.fillStyle="#dcefff";
+    ctx.font="bold 18px Arial";
+    ctx.fillText("J = "+J.toFixed(2)+" N·s",left+20,top+25);
+
+    ctx.fillStyle="#91a6bd";
+    ctx.font="13px Arial";
+    ctx.fillText("F [N]",25,top+10);
+    ctx.fillText("t [s]",right-10,base+30);
+}
+
+/* ================= STÖSSE ================= */
+
+let collisionRunning=false;
+let collisionStart=0;
+let collisionProgress=0;
+let collisionData={};
+
+function updateCollision(){
+
+    const m1=Math.max(.1,+document.getElementById("m1").value);
+    const v1=+document.getElementById("v1").value;
+    const m2=Math.max(.1,+document.getElementById("m2").value);
+    const v2=+document.getElementById("v2").value;
+    const type=document.getElementById("collisionType").value;
+
+    const pBefore=m1*v1+m2*v2;
+    const eBefore=.5*m1*v1*v1+.5*m2*v2*v2;
+
+    let v1a,v2a;
+
+    if(type==="inelastic"){
+        const v=(m1*v1+m2*v2)/(m1+m2);
+        v1a=v;
+        v2a=v;
+    }else{
+
+        v1a=((m1-m2)/(m1+m2))*v1+
+            (2*m2/(m1+m2))*v2;
+
+        v2a=(2*m1/(m1+m2))*v1+
+            ((m2-m1)/(m1+m2))*v2;
+    }
+
+    const pAfter=m1*v1a+m2*v2a;
+    const eAfter=.5*m1*v1a*v1a+.5*m2*v2a*v2a;
+
+    collisionData={m1,v1,m2,v2,v1a,v2a,pBefore,pAfter,eBefore,eAfter};
+
+    document.getElementById("tblV1Before").textContent=v1.toFixed(2)+" m/s";
+    document.getElementById("tblV2Before").textContent=v2.toFixed(2)+" m/s";
+    document.getElementById("tblV1After").textContent=v1a.toFixed(2)+" m/s";
+    document.getElementById("tblV2After").textContent=v2a.toFixed(2)+" m/s";
+
+    document.getElementById("tblPBefore").textContent=pBefore.toFixed(2)+" kg·m/s";
+    document.getElementById("tblPAfter").textContent=pAfter.toFixed(2)+" kg·m/s";
+
+    document.getElementById("tblEBefore").textContent=eBefore.toFixed(2)+" J";
+    document.getElementById("tblEAfter").textContent=eAfter.toFixed(2)+" J";
+
+    drawCollision();
+}
+
+function startCollision(){
+
+    updateCollision();
+
+    collisionRunning=true;
+    collisionStart=performance.now();
+    collisionProgress=0;
+
+    requestAnimationFrame(animateCollision);
+}
+
+function resetCollision(){
+
+    collisionRunning=false;
+    collisionProgress=0;
+    updateCollision();
+}
+
+function animateCollision(now){
+
+    if(!collisionRunning)return;
+
+    collisionProgress=Math.min(1,(now-collisionStart)/2200);
+
+    drawCollision();
+
+    if(collisionProgress<1){
+        requestAnimationFrame(animateCollision);
+    }else{
+        collisionRunning=false;
+    }
+}
+
+function drawCollision(){
+
+    const c=document.getElementById("collisionCanvas");
+    const ctx=c.getContext("2d");
+
+    ctx.clearRect(0,0,c.width,c.height);
+
+    const d=collisionData;
+    if(!d.m1)return;
+
+    const y=220;
+    const scale=35;
+
+    let x1=180;
+    let x2=720;
+
+    const p=collisionProgress;
+
+    if(p<.5){
+
+        const q=p/.5;
+
+        x1=180+d.v1*scale*q*0.8;
+        x2=720+d.v2*scale*q*0.8;
+
+    }else{
+
+        const q=(p-.5)/.5;
+
+        const meeting=450;
+
+        x1=meeting+d.v1a*scale*q*0.8;
+        x2=meeting+d.v2a*scale*q*0.8;
+    }
+
+    ctx.strokeStyle="#2d475f";
+    ctx.lineWidth=3;
+
+    ctx.beginPath();
+    ctx.moveTo(70,y+50);
+    ctx.lineTo(830,y+50);
+    ctx.stroke();
+
+    drawCart(ctx,x1,y,d.m1,"#38bdf8");
+    drawCart(ctx,x2,y,d.m2,"#fb923c");
+
+    ctx.fillStyle="#dcefff";
+    ctx.font="bold 17px Arial";
+    ctx.fillText(
+        p<.5 ? "VOR DEM STOß" : "NACH DEM STOß",
+        365,55
+    );
+
+    ctx.fillStyle="#91a6bd";
+    ctx.font="13px Arial";
+    ctx.fillText("Gesamtimpuls vorher: "+d.pBefore.toFixed(2)+" kg·m/s",70,370);
+    ctx.fillText("Gesamtimpuls nachher: "+d.pAfter.toFixed(2)+" kg·m/s",500,370);
+
+    const diff=Math.abs(d.pBefore-d.pAfter);
+
+    if(diff<.01){
+        document.getElementById("collisionInfo").innerHTML=
+        "<span class='badge good'>IMPULS ERHALTEN</span><br><br>"+
+        "Der Gesamtimpuls vor und nach dem Stoß ist gleich.";
+    }
+
+    if(document.getElementById("collisionType").value==="inelastic"){
+        document.getElementById("collisionInfo").innerHTML+=
+        "<br><br>Beim vollständig unelastischen Stoß bewegen sich beide Körper nach dem Stoß gemeinsam weiter.";
+    }else{
+        document.getElementById("collisionInfo").innerHTML+=
+        "<br><br>Beim ideal elastischen Stoß bleibt zusätzlich die kinetische Energie erhalten.";
+    }
+}
+
+function drawCart(ctx,x,y,m,color){
+
+    const width=65+Math.min(30,m*8);
+
+    ctx.fillStyle=color;
+    ctx.strokeStyle="#dff5ff";
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+    ctx.roundRect(x-width/2,y-35,width,55,8);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle="#0b1725";
+    ctx.beginPath();
+    ctx.arc(x-width*.28,y+25,10,0,Math.PI*2);
+    ctx.arc(x+width*.28,y+25,10,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.fillStyle="#07111d";
+    ctx.font="bold 14px Arial";
+    ctx.fillText(m.toFixed(1)+" kg",x-22,y-5);
+}
+
+/* ================= RECHNER ================= */
+
+function calcWork(){
+
+    const F=+document.getElementById("calcF").value;
+    const s=+document.getElementById("calcS").value;
+    const a=+document.getElementById("calcA").value;
+
+    const W=F*s*Math.cos(a*Math.PI/180);
+
+    document.getElementById("calcWorkResult").innerHTML=
+        "W = F · s · cos(α)<br>"+
+        "W = "+F+" · "+s+" · cos("+a+"°)<br>"+
+        "<strong>W = "+W.toFixed(2)+" J</strong>";
+}
+
+function calcKin(){
+
+    const m=+document.getElementById("calcM").value;
+    const v=+document.getElementById("calcV").value;
+    const E=.5*m*v*v;
+
+    document.getElementById("calcKinResult").innerHTML=
+        "Eₖᵢₙ = ½ · m · v²<br>"+
+        "Eₖᵢₙ = ½ · "+m+" · "+v+"²<br>"+
+        "<strong>Eₖᵢₙ = "+E.toFixed(2)+" J</strong>";
+}
+
+function calcP(){
+
+    const m=+document.getElementById("calcPM").value;
+    const v=+document.getElementById("calcPV").value;
+    const p=m*v;
+
+    document.getElementById("calcPResult").innerHTML=
+        "p = m · v<br>"+
+        "p = "+m+" · "+v+"<br>"+
+        "<strong>p = "+p.toFixed(2)+" kg·m/s</strong>";
+}
+
+/* ================= AUFGABEN ================= */
+
+function toggleSolution(id){
+    document.getElementById(id).classList.toggle("show");
+}
+
+/* ================= START ================= */
+
+updateWork();
+updateEnergy();
+updatePower();
+updateImpulse();
+updateKick();
+updateCollision();
+
+</script>
+
+</body>
+</html>
