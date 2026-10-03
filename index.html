@@ -10,1532 +10,681 @@ cat > index.html <<'EOF'
 <title>S.Michaelis – Interaktives Physiklabor</title>
 
 <style>
-
-:root{
-  --bg:#02060d;
-  --panel:rgba(6,15,27,.88);
-  --panel2:rgba(8,20,34,.94);
-  --border:rgba(77,145,188,.28);
-
-  --text:#eef8ff;
-  --muted:#8ba9bd;
-
-  --cyan:#38cfff;
-  --blue:#258cff;
-  --green:#36e0a1;
-  --yellow:#ffd166;
-  --purple:#a98cff;
-  --red:#ff6685;
-}
-
 *{
-  box-sizing:border-box;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html,body{
-  margin:0;
-  min-height:100%;
+    min-height:100%;
 }
 
 body{
-
-  background:
-    radial-gradient(circle at 15% 20%,rgba(0,145,255,.13),transparent 25%),
-    radial-gradient(circle at 85% 70%,rgba(80,0,255,.10),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(0,255,190,.05),transparent 25%),
-    #02060d;
-
-  color:var(--text);
-
-  font-family:
-    Inter,
-    "Segoe UI",
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  overflow-x:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#eef6ff;
+    background:
+        radial-gradient(circle at 15% 20%,rgba(40,120,255,.16),transparent 25%),
+        radial-gradient(circle at 85% 70%,rgba(130,50,255,.15),transparent 30%),
+        linear-gradient(135deg,#020611 0%,#06101f 48%,#02040b 100%);
+    overflow-x:hidden;
 }
 
-/* =========================================================
-   STAR FIELD
-========================================================= */
+/* =========================
+   STERNE
+========================= */
 
 body::before{
-
-  content:"";
-
-  position:fixed;
-  inset:0;
-
-  pointer-events:none;
-
-  opacity:.55;
-
-  background-image:
-
-    radial-gradient(circle at 10% 20%,#fff 0 1px,transparent 1.5px),
-    radial-gradient(circle at 22% 75%,#9bdcff 0 1px,transparent 1.5px),
-    radial-gradient(circle at 35% 35%,#fff 0 1px,transparent 1.5px),
-    radial-gradient(circle at 48% 82%,#fff 0 1px,transparent 1.5px),
-    radial-gradient(circle at 61% 15%,#bce9ff 0 1px,transparent 1.5px),
-    radial-gradient(circle at 72% 55%,#fff 0 1px,transparent 1.5px),
-    radial-gradient(circle at 83% 22%,#fff 0 1px,transparent 1.5px),
-    radial-gradient(circle at 93% 82%,#9bdcff 0 1px,transparent 1.5px);
-
-  background-size:260px 260px;
-
-  z-index:0;
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.8;
+    background-image:
+        radial-gradient(circle,#fff 1px,transparent 1.5px),
+        radial-gradient(circle,#7ec8ff 1px,transparent 1.5px),
+        radial-gradient(circle,#fff 1px,transparent 1.5px);
+    background-size:
+        83px 97px,
+        137px 151px,
+        211px 181px;
+    background-position:
+        10px 20px,
+        50px 80px,
+        120px 40px;
+    z-index:0;
 }
 
-/* =========================================================
-   ASTRONAUT
-========================================================= */
+/* =========================
+   PLANETEN
+========================= */
 
-.astronaut{
-
-  position:fixed;
-
-  right:-80px;
-  bottom:-30px;
-
-  width:520px;
-  height:650px;
-
-  opacity:.15;
-
-  pointer-events:none;
-
-  z-index:0;
-
-  filter:
-    drop-shadow(0 0 35px rgba(56,207,255,.35));
-
-  transform:rotate(-5deg);
+.space{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:1;
 }
 
-.astronaut svg{
-  width:100%;
-  height:100%;
+.planet{
+    position:absolute;
+    border-radius:50%;
+    box-shadow:
+        inset -25px -25px 50px rgba(0,0,0,.65),
+        0 0 45px rgba(100,180,255,.18);
 }
 
-/* =========================================================
-   FORMULAS
-========================================================= */
-
-.formulas{
-
-  position:fixed;
-
-  inset:0;
-
-  pointer-events:none;
-
-  overflow:hidden;
-
-  z-index:0;
-
-  color:#79cfff;
-
-  opacity:.10;
-
-  font-family:
-    "Times New Roman",
-    Georgia,
-    serif;
+.planet-earth{
+    width:360px;
+    height:360px;
+    right:-110px;
+    top:70px;
+    background:
+        radial-gradient(circle at 32% 30%,#65d5ff 0 5%,transparent 6%),
+        radial-gradient(circle at 62% 42%,#2d9c62 0 9%,transparent 10%),
+        radial-gradient(circle at 42% 65%,#2e8c59 0 13%,transparent 14%),
+        radial-gradient(circle at 70% 72%,#4aab68 0 7%,transparent 8%),
+        radial-gradient(circle at 35% 35%,#63d7ff,#1262a5 42%,#061a38 75%);
+    opacity:.48;
 }
+
+.planet-mars{
+    width:170px;
+    height:170px;
+    left:-55px;
+    top:170px;
+    background:
+        radial-gradient(circle at 35% 30%,#f08a5d,#b7422c 45%,#4d1714 100%);
+    box-shadow:
+        inset -20px -20px 35px rgba(0,0,0,.65),
+        0 0 35px rgba(255,90,50,.22);
+    opacity:.48;
+}
+
+.planet-jupiter{
+    width:260px;
+    height:260px;
+    right:8%;
+    bottom:-115px;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            #b88962 0px,
+            #d7b28b 18px,
+            #8b6249 35px,
+            #e0c29c 52px,
+            #93664d 70px
+        );
+    opacity:.34;
+    box-shadow:
+        inset -35px -35px 65px rgba(0,0,0,.7),
+        0 0 55px rgba(220,170,110,.15);
+}
+
+.planet-saturn{
+    width:145px;
+    height:145px;
+    left:7%;
+    bottom:4%;
+    background:
+        radial-gradient(circle at 35% 30%,#f2d29c,#bd9360 60%,#60452e);
+    opacity:.40;
+}
+
+.planet-saturn::after{
+    content:"";
+    position:absolute;
+    width:245px;
+    height:58px;
+    left:-50px;
+    top:45px;
+    border:12px solid rgba(205,175,125,.35);
+    border-radius:50%;
+    transform:rotate(-17deg);
+}
+
+.planet-neptune{
+    width:90px;
+    height:90px;
+    right:30%;
+    top:17%;
+    background:
+        radial-gradient(circle at 35% 30%,#73caff,#2352bc 65%,#07123d);
+    opacity:.35;
+}
+
+.planet-moon{
+    width:58px;
+    height:58px;
+    right:32%;
+    top:40%;
+    background:
+        radial-gradient(circle at 30% 30%,#eee,#aaa 55%,#555);
+    opacity:.3;
+}
+
+/* =========================
+   FORMELN
+========================= */
 
 .formula{
-  position:absolute;
-  white-space:nowrap;
+    position:absolute;
+    color:rgba(110,190,255,.13);
+    font-family:Georgia,serif;
+    font-weight:bold;
+    white-space:nowrap;
+    user-select:none;
 }
 
-.f1{
-  left:3%;
-  top:17%;
-  font-size:34px;
-  transform:rotate(-8deg);
+.f1{top:8%;left:8%;font-size:32px;transform:rotate(-8deg);}
+.f2{top:26%;left:25%;font-size:24px;transform:rotate(5deg);}
+.f3{bottom:20%;left:3%;font-size:27px;transform:rotate(-6deg);}
+.f4{bottom:8%;left:35%;font-size:25px;transform:rotate(4deg);}
+.f5{top:52%;right:5%;font-size:28px;transform:rotate(-5deg);}
+.f6{top:78%;right:35%;font-size:23px;transform:rotate(7deg);}
+.f7{top:12%;right:30%;font-size:22px;transform:rotate(-4deg);}
+.f8{bottom:34%;right:9%;font-size:24px;transform:rotate(6deg);}
+
+/* =========================
+   HAUPTBEREICH
+========================= */
+
+.wrapper{
+    position:relative;
+    z-index:5;
+    width:min(1400px,94%);
+    margin:auto;
+    padding:30px 0 40px;
 }
 
-.f2{
-  left:40%;
-  top:11%;
-  font-size:27px;
-  transform:rotate(4deg);
-}
-
-.f3{
-  left:6%;
-  bottom:13%;
-  font-size:29px;
-  transform:rotate(6deg);
-}
-
-.f4{
-  right:28%;
-  top:30%;
-  font-size:25px;
-  transform:rotate(-5deg);
-}
-
-.f5{
-  right:5%;
-  top:15%;
-  font-size:31px;
-  transform:rotate(7deg);
-}
-
-.f6{
-  right:8%;
-  bottom:12%;
-  font-size:32px;
-  transform:rotate(-8deg);
-}
-
-.f7{
-  left:43%;
-  bottom:8%;
-  font-size:25px;
-}
-
-.f8{
-  left:18%;
-  top:42%;
-  font-size:23px;
-  transform:rotate(-4deg);
-}
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-.page{
-
-  position:relative;
-
-  z-index:2;
-
-  width:100%;
-
-  max-width:1600px;
-
-  margin:auto;
-
-  min-height:100vh;
-
-  padding:18px 28px 16px;
-
-}
-
-/* =========================================================
+/* =========================
    HEADER
-========================================================= */
+========================= */
 
-.topbar{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:20px;
-
-  margin-bottom:13px;
+header{
+    text-align:center;
+    margin-bottom:22px;
 }
 
-.brand{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:12px;
+.kicker{
+    display:inline-block;
+    padding:5px 14px;
+    border:1px solid rgba(90,180,255,.35);
+    border-radius:20px;
+    background:rgba(10,30,55,.45);
+    color:#7cc9ff;
+    font-size:11px;
+    letter-spacing:3px;
+    margin-bottom:10px;
 }
 
-.logo{
-
-  width:43px;
-  height:43px;
-
-  display:grid;
-
-  place-items:center;
-
-  border-radius:13px;
-
-  background:
-    linear-gradient(135deg,
-      rgba(56,207,255,.22),
-      rgba(37,140,255,.08));
-
-  border:1px solid rgba(56,207,255,.35);
-
-  box-shadow:
-    0 0 25px rgba(56,207,255,.12);
-
-  font-size:23px;
+h1{
+    font-size:clamp(30px,4vw,52px);
+    letter-spacing:-1px;
+    background:linear-gradient(90deg,#ffffff,#79cfff,#b7a7ff);
+    -webkit-background-clip:text;
+    color:transparent;
+    margin-bottom:7px;
 }
 
-.brand-text{
-
-  font-size:12px;
-
-  letter-spacing:3px;
-
-  font-weight:800;
-
-  color:var(--cyan);
+.subtitle{
+    max-width:760px;
+    margin:auto;
+    color:#a9bdd2;
+    font-size:14px;
+    line-height:1.5;
 }
 
-.status{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:8px;
-
-  font-size:11px;
-
-  letter-spacing:1.2px;
-
-  color:#7696aa;
-
-  text-transform:uppercase;
-}
-
-.status-dot{
-
-  width:7px;
-  height:7px;
-
-  border-radius:50%;
-
-  background:var(--green);
-
-  box-shadow:
-    0 0 12px var(--green);
-}
-
-/* =========================================================
-   HERO
-========================================================= */
-
-.hero{
-
-  position:relative;
-
-  overflow:hidden;
-
-  min-height:142px;
-
-  padding:21px 27px;
-
-  border-radius:22px;
-
-  border:1px solid rgba(69,145,190,.30);
-
-  background:
-
-    linear-gradient(
-      100deg,
-      rgba(6,22,38,.97),
-      rgba(5,15,27,.88)
-    );
-
-  box-shadow:
-
-    0 20px 60px rgba(0,0,0,.25),
-    inset 0 1px 0 rgba(255,255,255,.025);
-
-  margin-bottom:15px;
-}
-
-.hero::after{
-
-  content:"";
-
-  position:absolute;
-
-  width:330px;
-  height:330px;
-
-  right:-100px;
-  top:-130px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(56,207,255,.14),
-      transparent 67%
-    );
-
-  pointer-events:none;
-}
-
-.hero-content{
-
-  position:relative;
-
-  z-index:2;
-
-  max-width:850px;
-}
-
-.hero-kicker{
-
-  color:var(--cyan);
-
-  font-size:11px;
-
-  font-weight:800;
-
-  letter-spacing:3px;
-
-  text-transform:uppercase;
-
-  margin-bottom:5px;
-}
-
-.hero h1{
-
-  margin:0;
-
-  font-size:clamp(27px,3vw,42px);
-
-  line-height:1.05;
-
-  letter-spacing:-1px;
-
-  font-weight:800;
-}
-
-.hero h1 span{
-
-  color:var(--cyan);
-
-  text-shadow:
-    0 0 25px rgba(56,207,255,.30);
-}
-
-.hero p{
-
-  margin:9px 0 0;
-
-  max-width:790px;
-
-  color:#91aabd;
-
-  font-size:13px;
-
-  line-height:1.55;
-}
-
-.hero-stats{
-
-  position:absolute;
-
-  right:30px;
-  bottom:23px;
-
-  display:flex;
-
-  gap:10px;
-
-  z-index:2;
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:20px 0;
+    flex-wrap:wrap;
 }
 
 .stat{
-
-  min-width:78px;
-
-  text-align:center;
-
-  padding:8px 12px;
-
-  border:1px solid rgba(66,136,177,.22);
-
-  border-radius:10px;
-
-  background:rgba(2,9,17,.55);
+    min-width:110px;
+    padding:9px 16px;
+    text-align:center;
+    border-radius:12px;
+    border:1px solid rgba(100,190,255,.18);
+    background:rgba(5,18,34,.65);
+    backdrop-filter:blur(8px);
 }
 
 .stat strong{
-
-  display:block;
-
-  color:#eaf8ff;
-
-  font-size:18px;
+    display:block;
+    color:#7ed2ff;
+    font-size:20px;
 }
 
 .stat span{
-
-  color:#6f8da1;
-
-  font-size:9px;
-
-  letter-spacing:1px;
-
-  text-transform:uppercase;
+    color:#8298ae;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
 }
 
-/* =========================================================
-   SECTION HEADER
-========================================================= */
-
-.section-head{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:end;
-
-  margin:0 2px 9px;
-}
-
-.section-title{
-
-  font-size:12px;
-
-  letter-spacing:2px;
-
-  text-transform:uppercase;
-
-  font-weight:800;
-
-  color:#91b7cc;
-}
-
-.section-sub{
-
-  font-size:11px;
-
-  color:#587487;
-}
-
-/* =========================================================
+/* =========================
    LAB GRID
-========================================================= */
+========================= */
 
 .lab-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(4,minmax(0,1fr));
-
-  gap:10px;
-
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
 }
 
-/* =========================================================
-   LAB CARD
-========================================================= */
+/* =========================
+   CARD
+========================= */
 
 .lab-card{
-
-  position:relative;
-
-  min-height:137px;
-
-  padding:13px 14px 12px;
-
-  border-radius:15px;
-
-  border:1px solid var(--border);
-
-  background:
-
-    linear-gradient(
-      145deg,
-      rgba(8,22,37,.94),
-      rgba(4,12,21,.94)
-    );
-
-  text-decoration:none;
-
-  color:var(--text);
-
-  overflow:hidden;
-
-  transition:
-
-    transform .20s ease,
-    border-color .20s ease,
-    box-shadow .20s ease,
-    background .20s ease;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.025);
+    position:relative;
+    min-height:175px;
+    padding:17px;
+    border-radius:17px;
+    border:1px solid rgba(105,190,255,.18);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13,31,54,.92),
+            rgba(4,12,24,.90)
+        );
+    backdrop-filter:blur(12px);
+    overflow:hidden;
+    transition:.25s ease;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
 .lab-card::before{
-
-  content:"";
-
-  position:absolute;
-
-  width:90px;
-  height:90px;
-
-  right:-38px;
-  top:-40px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      var(--accent),
-      transparent 68%
-    );
-
-  opacity:.12;
-
-  transition:.25s;
+    content:"";
+    position:absolute;
+    width:110px;
+    height:110px;
+    right:-45px;
+    top:-45px;
+    border-radius:50%;
+    background:rgba(60,170,255,.08);
 }
 
 .lab-card:hover{
-
-  transform:
-    translateY(-4px)
-    scale(1.015);
-
-  border-color:
-    color-mix(
-      in srgb,
-      var(--accent) 60%,
-      #fff 10%
-    );
-
-  background:
-
-    linear-gradient(
-      145deg,
-      rgba(10,30,49,.98),
-      rgba(4,13,23,.98)
-    );
-
-  box-shadow:
-
-    0 12px 30px rgba(0,0,0,.28),
-    0 0 25px color-mix(
-      in srgb,
-      var(--accent) 12%,
-      transparent
-    );
-}
-
-.lab-card:hover::before{
-  opacity:.25;
-}
-
-.card-top{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  margin-bottom:8px;
-}
-
-.icon{
-
-  width:31px;
-  height:31px;
-
-  display:grid;
-
-  place-items:center;
-
-  border-radius:9px;
-
-  color:var(--accent);
-
-  background:
-    color-mix(
-      in srgb,
-      var(--accent) 10%,
-      transparent
-    );
-
-  border:
-    1px solid
-    color-mix(
-      in srgb,
-      var(--accent) 25%,
-      transparent
-    );
-
-  font-size:16px;
-
-  font-weight:800;
+    transform:translateY(-5px);
+    border-color:rgba(90,200,255,.55);
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.4),
+        0 0 25px rgba(50,160,255,.13);
 }
 
 .number{
+    position:absolute;
+    right:13px;
+    top:10px;
+    color:rgba(150,210,255,.18);
+    font-size:30px;
+    font-weight:bold;
+}
 
-  font-size:9px;
-
-  color:#5e7a8e;
-
-  letter-spacing:1.2px;
-
-  font-weight:800;
+.icon{
+    width:39px;
+    height:39px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:11px;
+    margin-bottom:10px;
+    background:rgba(55,155,255,.10);
+    border:1px solid rgba(90,190,255,.25);
+    color:#7fd5ff;
+    font-size:21px;
 }
 
 .lab-card h2{
-
-  margin:0;
-
-  font-size:16px;
-
-  line-height:1.15;
-
-  letter-spacing:-.2px;
-
-  font-weight:750;
+    font-size:17px;
+    margin-bottom:6px;
+    color:#f0f7ff;
 }
 
 .lab-card p{
-
-  margin:6px 0 0;
-
-  color:#7692a5;
-
-  font-size:10.5px;
-
-  line-height:1.45;
-
-  max-width:310px;
+    min-height:42px;
+    color:#91a8bd;
+    font-size:11.5px;
+    line-height:1.45;
+    margin-bottom:12px;
 }
 
 .open{
-
-  position:absolute;
-
-  right:13px;
-
-  bottom:12px;
-
-  font-size:10px;
-
-  color:var(--accent);
-
-  opacity:.75;
-
-  transition:.2s;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    text-decoration:none;
+    color:#80d5ff;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:.5px;
 }
 
-.lab-card:hover .open{
-
-  opacity:1;
-
-  transform:translateX(3px);
+.open:hover{
+    color:white;
 }
 
-/* =========================================================
-   COLORS
-========================================================= */
+/* =========================
+   FOOTER
+========================= */
 
-.c1{--accent:#38cfff}
-.c2{--accent:#35a9ff}
-.c3{--accent:#ffd166}
-.c4{--accent:#fb7185}
-.c5{--accent:#a78bfa}
-.c6{--accent:#34d399}
-.c7{--accent:#ff9f43}
-.c8{--accent:#60d5ff}
-.c9{--accent:#f472b6}
-.c10{--accent:#4ade80}
-.c11{--accent:#38bdf8}
-.c12{--accent:#c084fc}
-
-/* =========================================================
-   BOTTOM STRIP
-========================================================= */
-
-.bottom{
-
-  margin-top:12px;
-
-  display:grid;
-
-  grid-template-columns:1fr auto;
-
-  align-items:center;
-
-  gap:15px;
-
-  padding:10px 14px;
-
-  border:1px solid rgba(64,124,159,.20);
-
-  border-radius:13px;
-
-  background:rgba(4,12,21,.72);
+footer{
+    text-align:center;
+    margin-top:22px;
+    color:#526b82;
+    font-size:10px;
+    letter-spacing:1px;
 }
 
-.bottom-message{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:9px;
-
-  color:#718da0;
-
-  font-size:10px;
-}
-
-.bottom-message strong{
-  color:#a9c6d8;
-}
-
-.bottom-formula{
-
-  color:#527389;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size:14px;
-
-  letter-spacing:.5px;
-}
-
-.footer{
-
-  text-align:center;
-
-  color:#40596b;
-
-  font-size:9px;
-
-  margin-top:8px;
-
-  letter-spacing:1px;
-}
-
-/* =========================================================
+/* =========================
    RESPONSIVE
-========================================================= */
+========================= */
 
-@media(max-width:1200px){
+@media(max-width:1100px){
+    .lab-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
 
-  .lab-grid{
-    grid-template-columns:
-      repeat(3,minmax(0,1fr));
-  }
-
-  .hero-stats{
-    display:none;
-  }
-
-  .astronaut{
-    opacity:.10;
-  }
+    .planet-earth{
+        width:280px;
+        height:280px;
+    }
 }
 
-@media(max-width:800px){
+@media(max-width:780px){
+    .lab-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-  .page{
-    padding:14px;
-  }
+    .planet-earth{
+        right:-100px;
+        top:120px;
+    }
 
-  .lab-grid{
-    grid-template-columns:
-      repeat(2,minmax(0,1fr));
-  }
+    .planet-jupiter{
+        right:-80px;
+    }
 
-  .hero{
-    min-height:auto;
-  }
-
-  .bottom{
-    grid-template-columns:1fr;
-  }
-
-  .bottom-formula{
-    display:none;
-  }
-
-  .astronaut{
-    width:350px;
-    height:500px;
-    right:-100px;
-  }
+    .formula{
+        opacity:.6;
+    }
 }
 
 @media(max-width:520px){
+    .wrapper{
+        width:92%;
+        padding-top:20px;
+    }
 
-  .lab-grid{
-    grid-template-columns:1fr;
-  }
+    .lab-grid{
+        grid-template-columns:1fr;
+    }
 
-  .topbar{
-    margin-bottom:9px;
-  }
+    .lab-card{
+        min-height:150px;
+    }
 
-  .status{
-    display:none;
-  }
+    .planet-earth{
+        width:220px;
+        height:220px;
+        right:-100px;
+    }
 
-  .hero{
-    padding:18px;
-  }
+    .planet-jupiter,
+    .planet-saturn{
+        opacity:.18;
+    }
 
-  .hero h1{
-    font-size:27px;
-  }
-
-  .hero p{
-    font-size:12px;
-  }
-
-  .lab-card{
-    min-height:125px;
-  }
+    .formula{
+        font-size:18px !important;
+    }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     FORMEL-HINTERGRUND
-===================================================== -->
+<!-- =========================
+     KOSMISCHER HINTERGRUND
+========================= -->
 
-<div class="formulas">
+<div class="space">
 
-  <div class="formula f1">
-    F = m · a
-  </div>
+    <div class="planet planet-earth"></div>
+    <div class="planet planet-mars"></div>
+    <div class="planet planet-jupiter"></div>
+    <div class="planet planet-saturn"></div>
+    <div class="planet planet-neptune"></div>
+    <div class="planet planet-moon"></div>
 
-  <div class="formula f2">
-    E = mc²
-  </div>
-
-  <div class="formula f3">
-    s(t) = v₀t + ½at²
-  </div>
-
-  <div class="formula f4">
-    p = m · v
-  </div>
-
-  <div class="formula f5">
-    v = ωr
-  </div>
-
-  <div class="formula f6">
-    Eₖ = ½mv²
-  </div>
-
-  <div class="formula f7">
-    sin(α) = Gegenkathete / Hypotenuse
-  </div>
-
-  <div class="formula f8">
-    g ≈ 9,81 m/s²
-  </div>
+    <div class="formula f1">F = m · a</div>
+    <div class="formula f2">E = m · c²</div>
+    <div class="formula f3">s(t) = v₀t + ½at²</div>
+    <div class="formula f4">p = m · v</div>
+    <div class="formula f5">v = ωr</div>
+    <div class="formula f6">Eₖ = ½mv²</div>
+    <div class="formula f7">sin(α) = Gegenkathete / Hypotenuse</div>
+    <div class="formula f8">g ≈ 9,81 m/s²</div>
 
 </div>
 
+<div class="wrapper">
 
-<!-- =====================================================
-     ASTRONAUT
-===================================================== -->
+<header>
 
-<div class="astronaut">
-
-<svg viewBox="0 0 500 650"
-     xmlns="http://www.w3.org/2000/svg">
-
-  <!-- glow -->
-  <circle
-    cx="270"
-    cy="180"
-    r="130"
-    fill="none"
-    stroke="#38cfff"
-    stroke-width="2"
-    opacity=".35"/>
-
-  <circle
-    cx="270"
-    cy="180"
-    r="150"
-    fill="none"
-    stroke="#38cfff"
-    stroke-width="1"
-    stroke-dasharray="7 13"
-    opacity=".3"/>
-
-  <!-- backpack -->
-  <rect
-    x="205"
-    y="235"
-    width="115"
-    height="220"
-    rx="30"
-    fill="#9bc4d6"
-    stroke="#e8f8ff"
-    stroke-width="5"/>
-
-  <!-- helmet -->
-  <circle
-    cx="265"
-    cy="150"
-    r="78"
-    fill="#a9cad8"
-    stroke="#eefaff"
-    stroke-width="6"/>
-
-  <!-- visor -->
-  <ellipse
-    cx="270"
-    cy="148"
-    rx="55"
-    ry="44"
-    fill="#102d40"
-    stroke="#64d7ff"
-    stroke-width="4"/>
-
-  <ellipse
-    cx="250"
-    cy="133"
-    rx="20"
-    ry="10"
-    fill="#d7f5ff"
-    opacity=".35"/>
-
-  <!-- body -->
-  <rect
-    x="190"
-    y="245"
-    width="150"
-    height="185"
-    rx="42"
-    fill="#b9d2dc"
-    stroke="#f1fbff"
-    stroke-width="6"/>
-
-  <!-- chest panel -->
-  <rect
-    x="218"
-    y="280"
-    width="95"
-    height="58"
-    rx="8"
-    fill="#16354a"
-    stroke="#69d9ff"
-    stroke-width="3"/>
-
-  <circle cx="240" cy="300" r="7" fill="#36e0a1"/>
-  <circle cx="260" cy="300" r="7" fill="#ffd166"/>
-  <circle cx="280" cy="300" r="7" fill="#ff6685"/>
-
-  <line
-    x1="235" y1="320"
-    x2="296" y2="320"
-    stroke="#77cbe9"
-    stroke-width="3"/>
-
-  <!-- left arm -->
-  <path
-    d="M200 270
-       C145 275 115 330 100 385
-       C95 404 107 418 124 412
-       C151 401 173 355 222 323"
-    fill="#b9d2dc"
-    stroke="#f1fbff"
-    stroke-width="6"/>
-
-  <!-- right arm -->
-  <path
-    d="M330 270
-       C380 280 410 325 425 375
-       C431 395 418 410 401 403
-       C374 392 352 348 315 320"
-    fill="#b9d2dc"
-    stroke="#f1fbff"
-    stroke-width="6"/>
-
-  <!-- left leg -->
-  <path
-    d="M220 405
-       L185 525
-       C181 548 193 563 213 558
-       L250 548
-       L270 425"
-    fill="#b9d2dc"
-    stroke="#f1fbff"
-    stroke-width="6"/>
-
-  <!-- right leg -->
-  <path
-    d="M300 425
-       L320 548
-       L360 558
-       C380 563 392 548 387 525
-       L350 405"
-    fill="#b9d2dc"
-    stroke="#f1fbff"
-    stroke-width="6"/>
-
-  <!-- boots -->
-  <path
-    d="M185 520 L145 570 Q140 590 165 596 L230 576 L250 548"
-    fill="#91b4c5"
-    stroke="#f1fbff"
-    stroke-width="5"/>
-
-  <path
-    d="M320 548 L340 576 L405 596 Q430 590 425 570 L387 520"
-    fill="#91b4c5"
-    stroke="#f1fbff"
-    stroke-width="5"/>
-
-  <!-- tether -->
-  <path
-    d="M190 420
-       C110 450 70 520 105 590
-       C125 625 170 630 190 605"
-    fill="none"
-    stroke="#38cfff"
-    stroke-width="4"
-    stroke-dasharray="9 8"/>
-
-</svg>
-
-</div>
-
-
-<div class="page">
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="topbar">
-
-  <div class="brand">
-
-    <div class="logo">Σ</div>
-
-    <div class="brand-text">
-      S.MICHAELIS · PHYSIKLABOR
+    <div class="kicker">
+        DIGITAL SCIENCE LABORATORY
     </div>
 
-  </div>
+    <h1>S.Michaelis – Interaktives Physiklabor</h1>
 
-  <div class="status">
-    <span class="status-dot"></span>
-    Interaktive Lernumgebung
-  </div>
+    <p class="subtitle">
+        Physik entdecken, experimentieren, messen und verstehen.
+        Interaktive Simulationen für den modernen Physikunterricht.
+    </p>
 
 </header>
 
+<!-- =========================
+     STATISTIK
+========================= -->
 
-<!-- =====================================================
-     HERO
-===================================================== -->
-
-<section class="hero">
-
-  <div class="hero-content">
-
-    <div class="hero-kicker">
-      DIGITAL SCIENCE LABORATORY
-    </div>
-
-    <h1>
-      Interaktives
-      <span>Physiklabor</span>
-    </h1>
-
-    <p>
-      Physikalische Zusammenhänge nicht nur ausrechnen,
-      sondern <strong>beobachten, simulieren, messen und verstehen.</strong>
-      Wähle ein Labor und starte dein eigenes Experiment.
-    </p>
-
-  </div>
-
-
-  <div class="hero-stats">
+<div class="stats">
 
     <div class="stat">
-      <strong>12</strong>
-      <span>Labore</span>
+        <strong>12</strong>
+        <span>Labore</span>
     </div>
 
     <div class="stat">
-      <strong>∞</strong>
-      <span>Experimente</span>
+        <strong>∞</strong>
+        <span>Experimente</span>
     </div>
 
     <div class="stat">
-      <strong>01</strong>
-      <span>Labor</span>
+        <strong>01</strong>
+        <span>Experiment-Labor</span>
     </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     LABORÜBERSICHT
-===================================================== -->
-
-<div class="section-head">
-
-  <div class="section-title">
-    🔬 Laborübersicht
-  </div>
-
-  <div class="section-sub">
-    Wähle ein Experiment
-  </div>
 
 </div>
 
+<!-- =========================
+     LABORE
+========================= -->
 
-<div class="lab-grid">
-
+<main class="lab-grid">
 
 <!-- 01 -->
-
-<a class="lab-card c1" href="vektorlabor/">
-
-  <div class="card-top">
-
-    <div class="icon">↗</div>
-
-    <div class="number">01 / VEKTOR</div>
-
-  </div>
-
-  <h2>Vektor-Labor</h2>
-
-  <p>
-    Vektoren zeichnen, zerlegen, addieren
-    und Richtungen untersuchen.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+<article class="lab-card">
+    <div class="number">01</div>
+    <div class="icon">→</div>
+    <h2>Vektor-Labor</h2>
+    <p>
+        Vektoren zeichnen, zerlegen und mathematisch untersuchen.
+    </p>
+    <a class="open" href="vektorlabor/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 02 -->
-
-<a class="lab-card c2" href="kinematik/">
-
-  <div class="card-top">
-
-    <div class="icon">🚗</div>
-
-    <div class="number">02 / KINEMATIK</div>
-
-  </div>
-
-  <h2>Kinematik-Labor</h2>
-
-  <p>
-    Bewegung simulieren, Strecke,
-    Geschwindigkeit und Beschleunigung untersuchen.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+<article class="lab-card">
+    <div class="number">02</div>
+    <div class="icon">∿</div>
+    <h2>Kinematik-Labor</h2>
+    <p>
+        Bewegung, Geschwindigkeit und Beschleunigung interaktiv untersuchen.
+    </p>
+    <a class="open" href="kinematik/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 03 -->
-
-<a class="lab-card c3" href="freier-fall/">
-
-  <div class="card-top">
-
+<article class="lab-card">
+    <div class="number">03</div>
     <div class="icon">↓</div>
-
-    <div class="number">03 / FREIER FALL</div>
-
-  </div>
-
-  <h2>Freier Fall</h2>
-
-  <p>
-    Fallbewegung, Geschwindigkeit,
-    Beschleunigung und Energie untersuchen.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+    <h2>Freier Fall</h2>
+    <p>
+        Fallbewegung, Fallzeit, Geschwindigkeit und Erdbeschleunigung.
+    </p>
+    <a class="open" href="freier-fall/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 04 -->
-
-<a class="lab-card c4" href="waagerechter-wurf/">
-
-  <div class="card-top">
-
+<article class="lab-card">
+    <div class="number">04</div>
     <div class="icon">→</div>
-
-    <div class="number">04 / WAAGERECHTER WURF</div>
-
-  </div>
-
-  <h2>Waagerechter Wurf</h2>
-
-  <p>
-    Flugzeit, Wurfweite, Geschwindigkeit
-    und Flugbahn simulieren.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+    <h2>Waagerechter Wurf</h2>
+    <p>
+        Wurfbewegung in zwei Dimensionen und Wurfparabel untersuchen.
+    </p>
+    <a class="open" href="waagerechter-wurf/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 05 -->
-
-<a class="lab-card c5" href="senkrechter-wurf/">
-
-  <div class="card-top">
-
+<article class="lab-card">
+    <div class="number">05</div>
     <div class="icon">↑</div>
-
-    <div class="number">05 / SENKRECHTER WURF</div>
-
-  </div>
-
-  <h2>Senkrechter Wurf</h2>
-
-  <p>
-    Maximale Höhe, Flugzeit und
-    Geschwindigkeit erforschen.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+    <h2>Senkrechter Wurf</h2>
+    <p>
+        Aufwärtsbewegung, Flugzeit, Höhe und Geschwindigkeit untersuchen.
+    </p>
+    <a class="open" href="senkrechter-wurf/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 06 -->
-
-<a class="lab-card c6" href="formelumsteller/">
-
-  <div class="card-top">
-
-    <div class="icon">Σ</div>
-
-    <div class="number">06 / FORMELN</div>
-
-  </div>
-
-  <h2>Formel-Umsteller</h2>
-
-  <p>
-    Physikalische Formeln Schritt für Schritt
-    umstellen und berechnen.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+<article class="lab-card">
+    <div class="number">06</div>
+    <div class="icon">x</div>
+    <h2>Formel-Umsteller</h2>
+    <p>
+        Physikalische Formeln Schritt für Schritt nach einer Größe umstellen.
+    </p>
+    <a class="open" href="formelumsteller/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 07 -->
-
-<a class="lab-card c7" href="newton/">
-
-  <div class="card-top">
-
+<article class="lab-card">
+    <div class="number">07</div>
     <div class="icon">F</div>
-
-    <div class="number">07 / NEWTON</div>
-
-  </div>
-
-  <h2>Newton-Gesetze</h2>
-
-  <p>
-    Trägheit, Kraft, Beschleunigung
-    und Wechselwirkung interaktiv verstehen.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+    <h2>Newton-Gesetze</h2>
+    <p>
+        Kräfte, Masse und Beschleunigung experimentell untersuchen.
+    </p>
+    <a class="open" href="newton/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 08 -->
-
-<a class="lab-card c8" href="kreisbewegung/">
-
-  <div class="card-top">
-
+<article class="lab-card">
+    <div class="number">08</div>
     <div class="icon">↻</div>
-
-    <div class="number">08 / KREISBEWEGUNG</div>
-
-  </div>
-
-  <h2>Kreisbewegung</h2>
-
-  <p>
-    Winkelgeschwindigkeit, Bahngeschwindigkeit
-    und Zentripetalkraft untersuchen.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+    <h2>Kreisbewegung</h2>
+    <p>
+        Winkelgeschwindigkeit, Bahngeschwindigkeit und Zentripetalkraft.
+    </p>
+    <a class="open" href="kreisbewegung/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 09 -->
-
-<a class="lab-card c9" href="trigonometrie/">
-
-  <div class="card-top">
-
-    <div class="icon">sin</div>
-
-    <div class="number">09 / TRIGONOMETRIE</div>
-
-  </div>
-
-  <h2>Trigonometrie</h2>
-
-  <p>
-    Sinus, Cosinus, Tangens, Winkel
-    und Dreiecke visualisieren.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+<article class="lab-card">
+    <div class="number">09</div>
+    <div class="icon">△</div>
+    <h2>Trigonometrie</h2>
+    <p>
+        Sinus, Kosinus, Tangens und Dreiecke interaktiv untersuchen.
+    </p>
+    <a class="open" href="trigonometrie/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 10 -->
-
-<a class="lab-card c10" href="arbeit-energie-impuls/">
-
-  <div class="card-top">
-
-    <div class="icon">W</div>
-
-    <div class="number">10 / ENERGIE</div>
-
-  </div>
-
-  <h2>Arbeit · Energie · Impuls</h2>
-
-  <p>
-    Energieumwandlungen, Arbeit,
-    Leistung und Impuls simulieren.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+<article class="lab-card">
+    <div class="number">10</div>
+    <div class="icon">⚡</div>
+    <h2>Arbeit · Energie · Impuls</h2>
+    <p>
+        Energieformen, Arbeit, Leistung und Impuls verstehen.
+    </p>
+    <a class="open" href="arbeit-energie-impuls/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 11 -->
-
-<a class="lab-card c11" href="schiefer-wurf/">
-
-  <div class="card-top">
-
+<article class="lab-card">
+    <div class="number">11</div>
     <div class="icon">↗</div>
-
-    <div class="number">11 / SCHIEFER WURF</div>
-
-  </div>
-
-  <h2>Schiefer Wurf</h2>
-
-  <p>
-    Wurfparabel, Komponenten, maximale Höhe
-    und Wurfweite analysieren.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
+    <h2>Schiefer Wurf</h2>
+    <p>
+        Wurfparabel, Geschwindigkeit, Winkel und Flugweite untersuchen.
+    </p>
+    <a class="open" href="schiefer-wurf/">
+        Labor öffnen →
+    </a>
+</article>
 
 <!-- 12 -->
+<article class="lab-card">
+    <div class="number">12</div>
+    <div class="icon">⚗</div>
+    <h2>Experiment-Labor</h2>
+    <p>
+        Forschungsfrage, Hypothese, Messung, Diagramm und Auswertung.
+    </p>
+    <a class="open" href="experiment/">
+        Labor öffnen →
+    </a>
+</article>
 
-<a class="lab-card c12" href="experiment/">
+</main>
 
-  <div class="card-top">
-
-    <div class="icon">🧪</div>
-
-    <div class="number">12 / EXPERIMENT</div>
-
-  </div>
-
-  <h2>Experiment-Labor</h2>
-
-  <p>
-    Forschungsfrage, Hypothese, Messung,
-    Diagramm und wissenschaftliche Auswertung.
-  </p>
-
-  <div class="open">Labor öffnen →</div>
-
-</a>
-
-
-</div>
-
-
-<!-- =====================================================
-     BOTTOM
-===================================================== -->
-
-<div class="bottom">
-
-  <div class="bottom-message">
-
-    <span>⚡</span>
-
-    <span>
-      <strong>Physik beginnt mit einer Frage.</strong>
-      Beobachte → Experimentiere → Miss → Erkläre.
-    </span>
-
-  </div>
-
-  <div class="bottom-formula">
-    F = ma · E = mc² · p = mv · v = ωr
-  </div>
-
-</div>
-
-
-<div class="footer">
-
-  S.Michaelis · Interaktives Physiklabor · Physik entdecken statt nur Formeln lernen
-
-</div>
+<footer>
+    S.Michaelis · Physik · Mathematik · Interaktive Wissenschaft
+</footer>
 
 </div>
 
@@ -1543,22 +692,6 @@ body::before{
 </html>
 EOF
 
-
 git add index.html
-
-git commit -m "Redesign Physiklabor homepage with astronaut science theme"
-
+git commit -m "Replace astronaut with planetary science background"
 git push
-
-echo
-echo "=============================================="
-echo " NEUE PHYSIKLABOR-STARTSEITE IST ONLINE"
-echo "=============================================="
-echo
-echo "12 Labore · Astronaut · Formeln · Science Design"
-echo
-echo "https://smichaelis46.github.io/physiklabor1/"
-echo
-echo "Falls die alte Version erscheint:"
-echo "STRG + F5 drücken."
-echo
