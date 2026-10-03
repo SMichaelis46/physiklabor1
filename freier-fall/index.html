@@ -1,247 +1,447 @@
+mkdir -p ~/Desktop/physiklabor1/freier-fall && \
+[ -f ~/Desktop/physiklabor1/freier-fall/index.html ] && cp ~/Desktop/physiklabor1/freier-fall/index.html ~/Desktop/physiklabor1/freier-fall/index_backup.html || true && \
+cat > ~/Desktop/physiklabor1/freier-fall/index.html <<'EOF'
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>S.MICHAELIS – Freier Fall</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freier Fall – S.Michaelis</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-margin:0;
-background:#0a0f1d;
-color:#eef2ff;
-font-family:Arial,Helvetica,sans-serif;
-overflow:hidden
+* {
+    box-sizing: border-box;
 }
 
-header{
-height:68px;
-background:#11182b;
-border-bottom:1px solid #293552;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 24px
+:root {
+    --bg: #07101a;
+    --panel: rgba(15, 27, 40, 0.92);
+    --panel2: rgba(20, 35, 51, 0.95);
+    --border: rgba(120, 180, 220, 0.22);
+    --text: #eaf4ff;
+    --muted: #91a9bd;
+    --blue: #39a9ff;
+    --cyan: #63e6ff;
+    --orange: #ff9f43;
+    --green: #45e09b;
+    --red: #ff6262;
 }
 
-.logo{
-font-size:28px;
-font-weight:800;
-letter-spacing:3px
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 20% 10%, rgba(40,130,190,.16), transparent 32%),
+        radial-gradient(circle at 80% 80%, rgba(255,140,40,.08), transparent 30%),
+        linear-gradient(145deg, #050b12, #0b1724 55%, #061019);
 }
 
-.title{
-font-size:18px;
-color:#aab5cc
+header {
+    padding: 28px 24px 18px;
+    text-align: center;
 }
 
-main{
-height:calc(100vh - 68px);
-padding:16px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px
+header h1 {
+    margin: 0;
+    font-size: clamp(28px, 5vw, 48px);
+    letter-spacing: .04em;
 }
 
-.panel{
-background:#11182b;
-border:1px solid #293552;
-border-radius:15px;
-padding:15px;
-overflow:hidden;
-min-width:0
+header p {
+    margin: 9px 0 0;
+    color: var(--muted);
+    font-size: 15px;
 }
 
-.panelTitle{
-font-size:19px;
-font-weight:bold;
-margin-bottom:12px
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 16px 22px;
 }
 
-.controls{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-margin-bottom:10px
+.tab {
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.045);
+    color: var(--muted);
+    border-radius: 12px;
+    padding: 13px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
 }
 
-.control{
-background:#171f35;
-border-radius:10px;
-padding:10px
+.tab:hover {
+    border-color: rgba(99,230,255,.5);
+    color: white;
 }
 
-.control label{
-display:flex;
-justify-content:space-between;
-font-size:13px;
-color:#c3cce0;
-margin-bottom:7px
+.tab.active {
+    background: linear-gradient(135deg, #1679bd, #20a4df);
+    border-color: #4bc7ff;
+    color: white;
 }
 
-.val{
-color:#ffd84d;
-font-weight:bold
+.section {
+    display: none;
+    width: min(1200px, calc(100% - 28px));
+    margin: 0 auto 35px;
 }
 
-input[type=range]{
-width:100%;
-accent-color:#ffd84d
+.section.active {
+    display: block;
 }
 
-.buttons{
-display:flex;
-gap:9px;
-margin-bottom:10px
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 20px 70px rgba(0,0,0,.3);
 }
 
-button{
-border:0;
-border-radius:9px;
-padding:10px 17px;
-font-weight:bold;
-font-size:14px;
-cursor:pointer
+.card h2 {
+    margin-top: 0;
+    font-size: 24px;
 }
 
-.start{
-background:#ffd84d;
-color:#111
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
 }
 
-.pause{
-background:#59657f;
-color:white
+.field {
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 17px;
 }
 
-.reset{
-background:#d9deea;
-color:#111
+.field label {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-size: 14px;
 }
 
-button:hover{
-filter:brightness(1.1)
+input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #365269;
+    background: #091521;
+    color: white;
+    font-size: 17px;
+    outline: none;
 }
 
-.values{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:8px;
-margin-bottom:10px
+input:focus {
+    border-color: var(--cyan);
 }
 
-.valueCard{
-background:#171f35;
-border-radius:9px;
-padding:8px;
-text-align:center
+.results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
 }
 
-.valueCard small{
-display:block;
-font-size:11px;
-color:#8e9ab5
+.result {
+    padding: 17px;
+    border-radius: 14px;
+    background: var(--panel2);
+    border: 1px solid var(--border);
 }
 
-.valueCard strong{
-font-size:18px
+.result .label {
+    color: var(--muted);
+    font-size: 13px;
 }
 
-#scene{
-display:block;
-width:100%;
-height:calc(100% - 190px);
-min-height:430px;
-background:#080d18;
-border-radius:11px
+.result .value {
+    margin-top: 7px;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--cyan);
 }
 
-.graphs{
-height:calc(100% - 35px);
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px
+.formula {
+    margin-top: 22px;
+    padding: 20px;
+    border-left: 4px solid var(--blue);
+    background: rgba(40,130,190,.08);
+    border-radius: 10px;
+    line-height: 1.9;
 }
 
-.graph{
-position:relative;
-background:#080d18;
-border-radius:10px;
-padding:7px;
-min-height:0
+.formula code {
+    color: #d8f5ff;
+    font-size: 16px;
 }
 
-.graphTitle{
-font-size:13px;
-font-weight:bold;
-color:#cbd3e4;
-padding:2px 5px 5px
+.note {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 15px;
 }
 
-canvas.chart{
-width:100%;
-height:calc(100% - 25px);
-display:block
+/* SIMULATION */
+
+.sim-layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) 330px;
+    gap: 20px;
 }
 
-.tooltip{
-position:absolute;
-display:none;
-background:#f4f6fb;
-color:#111;
-padding:7px 9px;
-border-radius:7px;
-font-size:12px;
-line-height:1.4;
-pointer-events:none;
-z-index:10;
-box-shadow:0 4px 15px rgba(0,0,0,.45);
-white-space:nowrap
+.simulation {
+    position: relative;
+    min-height: 680px;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background:
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(180deg, #08131f, #0c1c2b);
+    background-size: 40px 40px;
 }
 
-@media(max-width:1050px){
-
-body{
-overflow:auto
+.sim-title {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    z-index: 4;
+    padding: 9px 13px;
+    border-radius: 9px;
+    background: rgba(0,0,0,.42);
+    border: 1px solid var(--border);
+    font-size: 14px;
 }
 
-main{
-height:auto;
-grid-template-columns:1fr
+.axis {
+    position: absolute;
+    top: 70px;
+    bottom: 45px;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(transparent, #55758d 5%, #55758d 95%, transparent);
+    transform: translateX(-50%);
 }
 
-.panel{
-height:700px
+.scale {
+    position: absolute;
+    top: 70px;
+    bottom: 45px;
+    left: calc(50% + 18px);
+    width: 80px;
 }
 
-#scene{
-height:520px
+.tick {
+    position: absolute;
+    left: 0;
+    width: 60px;
+    border-top: 1px solid rgba(150,190,215,.35);
 }
 
-.graphs{
-height:640px
-}
-}
-
-@media(max-width:650px){
-
-.controls{
-grid-template-columns:1fr
+.tick span {
+    position: absolute;
+    left: 68px;
+    top: -9px;
+    color: #7894a8;
+    font-size: 11px;
+    white-space: nowrap;
 }
 
-.values{
-grid-template-columns:1fr 1fr
+.ground {
+    position: absolute;
+    left: 13%;
+    right: 13%;
+    bottom: 35px;
+    height: 13px;
+    border-radius: 10px;
+    background: linear-gradient(#536c7d, #1e303e);
+    box-shadow: 0 5px 20px rgba(0,0,0,.6);
 }
 
-.graphs{
-grid-template-columns:1fr
+.stone {
+    position: absolute;
+    left: 50%;
+    width: 48px;
+    height: 48px;
+    transform: translateX(-50%);
+    border-radius: 42% 55% 48% 50%;
+    background:
+        radial-gradient(circle at 30% 25%, #aebbc4, #65747e 34%, #313e47 70%, #18222a);
+    border: 2px solid #a9bac5;
+    box-shadow:
+        inset -7px -9px 12px rgba(0,0,0,.45),
+        0 8px 20px rgba(0,0,0,.5);
+    z-index: 5;
+    top: 90px;
 }
 
-.panel{
-height:auto
+.measure-line {
+    position: absolute;
+    left: calc(50% + 33px);
+    width: 3px;
+    background: var(--blue);
+    box-shadow: 0 0 10px rgba(57,169,255,.45);
+    z-index: 3;
 }
+
+.measure-label {
+    position: absolute;
+    left: calc(50% + 50px);
+    padding: 6px 9px;
+    border-radius: 7px;
+    background: rgba(20,100,160,.8);
+    border: 1px solid rgba(100,210,255,.5);
+    font-size: 13px;
+    white-space: nowrap;
+    z-index: 6;
+}
+
+.fall-line {
+    position: absolute;
+    left: calc(50% - 43px);
+    width: 3px;
+    background: var(--orange);
+    z-index: 3;
+    box-shadow: 0 0 10px rgba(255,159,67,.35);
+}
+
+.fall-label {
+    position: absolute;
+    right: calc(50% + 55px);
+    padding: 6px 9px;
+    border-radius: 7px;
+    background: rgba(160,88,25,.82);
+    border: 1px solid rgba(255,180,90,.5);
+    font-size: 13px;
+    white-space: nowrap;
+    z-index: 6;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.dashboard-card {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.dashboard-card h3 {
+    margin: 0 0 14px;
+    font-size: 17px;
+}
+
+.metric {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.metric:last-child {
+    border-bottom: 0;
+}
+
+.metric span:first-child {
+    color: var(--muted);
+}
+
+.metric strong {
+    color: var(--cyan);
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 14px;
+}
+
+button.control {
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    background: #176f9e;
+}
+
+button.control:hover {
+    filter: brightness(1.15);
+}
+
+button.control.pause {
+    background: #8b5a18;
+}
+
+button.control.reset {
+    background: #63383d;
+}
+
+.status {
+    text-align: center;
+    padding: 9px;
+    border-radius: 9px;
+    background: rgba(69,224,155,.08);
+    border: 1px solid rgba(69,224,155,.25);
+    color: var(--green);
+    font-weight: bold;
+}
+
+.footer {
+    text-align: center;
+    color: #60798c;
+    font-size: 12px;
+    padding: 8px 20px 30px;
+}
+
+@media (max-width: 850px) {
+    .grid,
+    .sim-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .results {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .simulation {
+        min-height: 600px;
+    }
+}
+
+@media (max-width: 500px) {
+    .results {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .tabs {
+        gap: 6px;
+    }
+
+    .tab {
+        padding: 11px 13px;
+        font-size: 14px;
+    }
 }
 </style>
 </head>
@@ -249,1014 +449,565 @@ height:auto
 <body>
 
 <header>
-<div class="logo">S.MICHAELIS</div>
-<div class="title">Physik · Freier Fall</div>
+    <h1>⚙️ Freier Fall</h1>
+    <p>Physiklabor · Berechnung und Simulation · S.Michaelis</p>
 </header>
 
-<main>
+<nav class="tabs">
+    <button class="tab active" data-tab="berechnung">🧮 Berechnung</button>
+    <button class="tab" data-tab="simulation">🎬 Simulation</button>
+</nav>
 
-<!-- ================= LINKER BEREICH ================= -->
+<!-- ================= BERECHNUNG ================= -->
 
-<section class="panel">
+<section id="berechnung" class="section active">
 
-<div class="panelTitle">
-Freier Fall – Simulation
-</div>
+    <div class="card">
 
-<div class="controls">
+        <h2>🧮 Freier Fall – Berechnung</h2>
 
-<div class="control">
-<label>
-<span>Anfangshöhe h₀</span>
-<span class="val" id="h0Val">20,0 m</span>
-</label>
-<input id="h0" type="range" min="5" max="50" step="0.5" value="20">
-</div>
+        <div class="grid">
 
-<div class="control">
-<label>
-<span>Erdbeschleunigung g</span>
-<span class="val" id="gVal">9,81 m/s²</span>
-</label>
-<input id="g" type="range" min="1" max="20" step="0.01" value="9.81">
-</div>
+            <div class="field">
+                <label for="heightInput">
+                    Anfangshöhe h₀ [m]
+                </label>
+                <input id="heightInput" type="number" value="20" min="0.01" step="0.1">
+            </div>
 
-</div>
+            <div class="field">
+                <label for="gravityInput">
+                    Erdbeschleunigung g [m/s²]
+                </label>
+                <input id="gravityInput" type="number" value="9.81" min="0.01" step="0.01">
+            </div>
 
-<div class="buttons">
-<button class="start" id="start">▶ START</button>
-<button class="pause" id="pause">Ⅱ PAUSE</button>
-<button class="reset" id="reset">↻ RESET</button>
-</div>
+        </div>
 
-<div class="values">
+        <div class="results">
 
-<div class="valueCard">
-<small>t</small>
-<strong id="tValue">0,00 s</strong>
-</div>
+            <div class="result">
+                <div class="label">Fallzeit t</div>
+                <div class="value" id="calcTime">–</div>
+            </div>
 
-<div class="valueCard">
-<small>h</small>
-<strong id="hValue">20,00 m</strong>
-</div>
+            <div class="result">
+                <div class="label">Endgeschwindigkeit v</div>
+                <div class="value" id="calcVelocity">–</div>
+            </div>
 
-<div class="valueCard">
-<small>v</small>
-<strong id="vValue">0,00 m/s</strong>
-</div>
+            <div class="result">
+                <div class="label">Fallstrecke s</div>
+                <div class="value" id="calcDistance">–</div>
+            </div>
 
-<div class="valueCard">
-<small>a</small>
-<strong id="aValue">9,81 m/s²</strong>
-</div>
+            <div class="result">
+                <div class="label">Beschleunigung a</div>
+                <div class="value" id="calcAcceleration">–</div>
+            </div>
 
-</div>
+        </div>
 
-<canvas id="scene"></canvas>
+        <div class="formula">
 
-</section>
+            <strong>Grundgleichungen des freien Falls</strong>
 
+            <p>
+                <code>h(t) = h₀ − ½ · g · t²</code>
+            </p>
 
-<!-- ================= RECHTER BEREICH ================= -->
+            <p>
+                <code>s(t) = ½ · g · t²</code>
+            </p>
 
-<section class="panel">
+            <p>
+                <code>v(t) = g · t</code>
+            </p>
 
-<div class="panelTitle">
-Diagramme – entstehen während des Falls
-</div>
+            <p>
+                Für den Aufprall gilt:
+                <code>t = √(2 · h₀ / g)</code>
+            </p>
 
-<div class="graphs">
+            <p>
+                und:
+                <code>v = √(2 · g · h₀)</code>
+            </p>
 
-<div class="graph">
-<div class="graphTitle">h-t-Diagramm</div>
-<canvas class="chart" id="chartH"></canvas>
-<div class="tooltip" id="tipH"></div>
-</div>
+        </div>
 
-<div class="graph">
-<div class="graphTitle">v-t-Diagramm</div>
-<canvas class="chart" id="chartV"></canvas>
-<div class="tooltip" id="tipV"></div>
-</div>
+        <div class="note">
+            Modell: Luftwiderstand wird vernachlässigt. Der Körper startet aus der Ruhe.
+        </div>
 
-<div class="graph">
-<div class="graphTitle">a-t-Diagramm</div>
-<canvas class="chart" id="chartA"></canvas>
-<div class="tooltip" id="tipA"></div>
-</div>
-
-<div class="graph">
-<div class="graphTitle">Bewegungsdaten</div>
-<canvas class="chart" id="chartInfo"></canvas>
-</div>
-
-</div>
+    </div>
 
 </section>
 
-</main>
+<!-- ================= SIMULATION ================= -->
+
+<section id="simulation" class="section">
+
+    <div class="sim-layout">
+
+        <div class="simulation" id="simulationArea">
+
+            <div class="sim-title">
+                🎬 Momentaufnahme · Freier Fall
+            </div>
+
+            <div class="axis"></div>
+
+            <div class="scale" id="scale"></div>
+
+            <div class="measure-line" id="measureLine"></div>
+
+            <div class="measure-label" id="measureLabel">
+                h = 20.00 m
+            </div>
+
+            <div class="fall-line" id="fallLine"></div>
+
+            <div class="fall-label" id="fallLabel">
+                s = 0.00 m
+            </div>
+
+            <div class="stone" id="stone"></div>
+
+            <div class="ground"></div>
+
+        </div>
+
+        <div class="dashboard">
+
+            <div class="dashboard-card">
+
+                <h3>⚙️ Einstellungen</h3>
+
+                <label for="simHeight"
+                       style="display:block;color:#91a9bd;font-size:13px;margin-bottom:7px;">
+                    Anfangshöhe h₀ [m]
+                </label>
+
+                <input id="simHeight"
+                       type="number"
+                       value="20"
+                       min="1"
+                       max="100"
+                       step="0.5">
+
+                <div class="buttons">
+                    <button class="control" id="startBtn">
+                        ▶ Start
+                    </button>
+
+                    <button class="control pause" id="pauseBtn">
+                        ⏸ Pause
+                    </button>
+
+                    <button class="control reset" id="resetBtn">
+                        ↺ Reset
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <h3>📊 Messwerte</h3>
+
+                <div class="metric">
+                    <span>Zeit t</span>
+                    <strong id="timeValue">0.00 s</strong>
+                </div>
+
+                <div class="metric">
+                    <span>Höhe h</span>
+                    <strong id="heightValue">20.00 m</strong>
+                </div>
+
+                <div class="metric">
+                    <span>Fallstrecke s</span>
+                    <strong id="distanceValue">0.00 m</strong>
+                </div>
+
+                <div class="metric">
+                    <span>Geschwindigkeit v</span>
+                    <strong id="velocityValue">0.00 m/s</strong>
+                </div>
+
+                <div class="metric">
+                    <span>Beschleunigung a</span>
+                    <strong id="accelerationValue">9.81 m/s²</strong>
+                </div>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <h3>📐 Physikalisches Modell</h3>
+
+                <div class="metric">
+                    <span>g</span>
+                    <strong>9.81 m/s²</strong>
+                </div>
+
+                <div class="metric">
+                    <span>Startgeschwindigkeit</span>
+                    <strong>0.00 m/s</strong>
+                </div>
+
+                <div class="metric">
+                    <span>Luftwiderstand</span>
+                    <strong>ignoriert</strong>
+                </div>
+
+            </div>
+
+            <div class="status" id="status">
+                BEREIT
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="footer">
+    S.Michaelis · Physiklabor · Freier Fall
+</div>
 
 <script>
+const tabs = document.querySelectorAll(".tab");
+const sections = document.querySelectorAll(".section");
 
-const $=id=>document.getElementById(id);
+tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
 
-const h0Slider=$("h0");
-const gSlider=$("g");
+        const target = tab.dataset.tab;
 
-const h0Val=$("h0Val");
-const gVal=$("gVal");
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
 
-const tValue=$("tValue");
-const hValue=$("hValue");
-const vValue=$("vValue");
-const aValue=$("aValue");
+        sections.forEach(section => {
+            section.classList.toggle(
+                "active",
+                section.id === target
+            );
+        });
 
-const scene=$("scene");
-const ctx=scene.getContext("2d");
-
-let h0=20;
-let g=9.81;
-let t=0;
-
-let running=false;
-let lastTime=null;
-let history=[];
-
-
-/* ================= FORMAT ================= */
-
-function fmt(n,d=2){
-return Number(n).toFixed(d).replace(".",",")
-}
-
-
-/* ================= PARAMETER ================= */
-
-function parameters(){
-
-h0=parseFloat(h0Slider.value);
-g=parseFloat(gSlider.value);
-
-h0Val.textContent=fmt(h0,1)+" m";
-gVal.textContent=fmt(g,2)+" m/s²";
-}
-
-
-/* ================= PHYSIK ================= */
-
-function fallTime(){
-
-return Math.sqrt(2*h0/g);
-
-}
-
-function getData(time){
-
-const h=Math.max(0,h0-0.5*g*time*time);
-
-const v=Math.sqrt(Math.max(0,2*g*(h0-h)));
-
-return{
-h:h,
-v:v,
-a:g
-};
-
-}
-
-
-/* ================= WERTE ================= */
-
-function updateValues(){
-
-const d=getData(t);
-
-tValue.textContent=fmt(t)+" s";
-hValue.textContent=fmt(d.h)+" m";
-vValue.textContent=fmt(d.v)+" m/s";
-aValue.textContent=fmt(d.a)+" m/s²";
-
-}
-
-
-/* ================= HISTORY ================= */
-
-function createHistory(){
-
-history=[];
-
-if(t<=0)return;
-
-const steps=220;
-
-for(let i=0;i<=steps;i++){
-
-const tt=t*i/steps;
-const d=getData(tt);
-
-history.push({
-t:tt,
-h:d.h,
-v:d.v,
-a:d.a
+        if (target === "simulation") {
+            updateSimulationGeometry();
+        }
+    });
 });
 
+/* ================= BERECHNUNG ================= */
+
+const heightInput = document.getElementById("heightInput");
+const gravityInput = document.getElementById("gravityInput");
+
+function calculate() {
+
+    let h = parseFloat(heightInput.value);
+    let g = parseFloat(gravityInput.value);
+
+    if (!Number.isFinite(h) || h <= 0) h = 20;
+    if (!Number.isFinite(g) || g <= 0) g = 9.81;
+
+    const t = Math.sqrt(2 * h / g);
+    const v = Math.sqrt(2 * g * h);
+    const s = h;
+
+    document.getElementById("calcTime").textContent =
+        t.toFixed(2) + " s";
+
+    document.getElementById("calcVelocity").textContent =
+        v.toFixed(2) + " m/s";
+
+    document.getElementById("calcDistance").textContent =
+        s.toFixed(2) + " m";
+
+    document.getElementById("calcAcceleration").textContent =
+        g.toFixed(2) + " m/s²";
 }
 
+heightInput.addEventListener("input", calculate);
+gravityInput.addEventListener("input", calculate);
+
+calculate();
+
+/* ================= SIMULATION ================= */
+
+const stone = document.getElementById("stone");
+const scale = document.getElementById("scale");
+const measureLine = document.getElementById("measureLine");
+const measureLabel = document.getElementById("measureLabel");
+const fallLine = document.getElementById("fallLine");
+const fallLabel = document.getElementById("fallLabel");
+
+const simHeight = document.getElementById("simHeight");
+
+const timeValue = document.getElementById("timeValue");
+const heightValue = document.getElementById("heightValue");
+const distanceValue = document.getElementById("distanceValue");
+const velocityValue = document.getElementById("velocityValue");
+const accelerationValue = document.getElementById("accelerationValue");
+const status = document.getElementById("status");
+
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+const g = 9.81;
+
+let running = false;
+let paused = false;
+let finished = false;
+let t = 0;
+let lastTime = null;
+let animationFrame = null;
+
+function getHeight() {
+
+    let h = parseFloat(simHeight.value);
+
+    if (!Number.isFinite(h)) h = 20;
+
+    h = Math.max(1, Math.min(100, h));
+
+    simHeight.value = h;
+
+    return h;
 }
 
+function updateScale() {
 
-/* ================= RESIZE ================= */
+    scale.innerHTML = "";
 
-function resizeCanvas(canvas,context){
+    const h = getHeight();
 
-const r=canvas.getBoundingClientRect();
-const dpr=window.devicePixelRatio||1;
+    let step;
 
-canvas.width=r.width*dpr;
-canvas.height=r.height*dpr;
+    if (h <= 20) step = 2;
+    else if (h <= 50) step = 5;
+    else step = 10;
 
-context.setTransform(dpr,0,0,dpr,0,0);
+    for (let value = h; value >= 0; value -= step) {
 
+        const percentage = 100 - (value / h) * 100;
+
+        const tick = document.createElement("div");
+
+        tick.className = "tick";
+        tick.style.top = percentage + "%";
+
+        const label = document.createElement("span");
+
+        label.textContent = value.toFixed(0) + " m";
+
+        tick.appendChild(label);
+        scale.appendChild(tick);
+    }
 }
 
-function resizeAll(){
+function updateSimulationGeometry() {
 
-resizeCanvas(scene,ctx);
+    const h0 = getHeight();
 
-charts.forEach(c=>{
-resizeCanvas(c.canvas,c.canvas.getContext("2d"));
+    updateScale();
+
+    const area = document.getElementById("simulationArea");
+
+    const top = 90;
+    const bottom = area.clientHeight - 50;
+
+    const available = bottom - top;
+
+    const currentHeight =
+        Math.max(0, h0 - 0.5 * g * t * t);
+
+    const distance =
+        Math.min(h0, 0.5 * g * t * t);
+
+    const positionRatio =
+        1 - currentHeight / h0;
+
+    const stoneTop =
+        top + available * positionRatio;
+
+    stone.style.top =
+        Math.min(stoneTop, bottom - 20) + "px";
+
+    const lineTop = top;
+    const lineHeight = Math.max(2, stoneTop - top + 22);
+
+    measureLine.style.top = lineTop + "px";
+    measureLine.style.height = lineHeight + "px";
+
+    measureLabel.style.top =
+        Math.max(top, stoneTop - 10) + "px";
+
+    measureLabel.textContent =
+        "h = " + currentHeight.toFixed(2) + " m";
+
+    fallLine.style.top = top + "px";
+    fallLine.style.height =
+        Math.max(2, stoneTop - top + 24) + "px";
+
+    fallLabel.style.top =
+        Math.max(top, (top + stoneTop) / 2) + "px";
+
+    fallLabel.textContent =
+        "s = " + distance.toFixed(2) + " m";
+
+    const velocity = g * t;
+
+    timeValue.textContent =
+        t.toFixed(2) + " s";
+
+    heightValue.textContent =
+        currentHeight.toFixed(2) + " m";
+
+    distanceValue.textContent =
+        distance.toFixed(2) + " m";
+
+    velocityValue.textContent =
+        velocity.toFixed(2) + " m/s";
+
+    accelerationValue.textContent =
+        g.toFixed(2) + " m/s²";
+}
+
+function resetSimulation() {
+
+    running = false;
+    paused = false;
+    finished = false;
+    t = 0;
+    lastTime = null;
+
+    if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+    }
+
+    status.textContent = "BEREIT";
+
+    updateSimulationGeometry();
+}
+
+function animate(timestamp) {
+
+    if (!running || paused) return;
+
+    if (lastTime === null) {
+        lastTime = timestamp;
+    }
+
+    const dt = Math.min(
+        0.04,
+        (timestamp - lastTime) / 1000
+    );
+
+    lastTime = timestamp;
+
+    t += dt;
+
+    const h0 = getHeight();
+
+    const fallTime = Math.sqrt(2 * h0 / g);
+
+    if (t >= fallTime) {
+
+        t = fallTime;
+
+        running = false;
+        finished = true;
+
+        status.textContent = "BODEN";
+
+        updateSimulationGeometry();
+
+        animationFrame = null;
+
+        return;
+    }
+
+    status.textContent = "FÄLLT";
+
+    updateSimulationGeometry();
+
+    animationFrame =
+        requestAnimationFrame(animate);
+}
+
+startBtn.addEventListener("click", () => {
+
+    if (finished) {
+        resetSimulation();
+    }
+
+    running = true;
+    paused = false;
+    lastTime = null;
+
+    status.textContent = "FÄLLT";
+
+    if (!animationFrame) {
+        animationFrame =
+            requestAnimationFrame(animate);
+    }
 });
 
-drawScene();
-drawCharts();
+pauseBtn.addEventListener("click", () => {
 
-}
+    if (!running && !paused) return;
 
-window.addEventListener("resize",resizeAll);
+    if (paused) {
 
+        paused = false;
+        running = true;
+        lastTime = null;
 
-/* ================= SZENE ================= */
+        status.textContent = "FÄLLT";
 
-function drawScene(){
+        animationFrame =
+            requestAnimationFrame(animate);
 
-const w=scene.clientWidth;
-const h=scene.clientHeight;
+    } else {
 
-ctx.clearRect(0,0,w,h);
+        paused = true;
+        running = false;
 
-ctx.fillStyle="#080d18";
-ctx.fillRect(0,0,w,h);
+        status.textContent = "PAUSE";
 
-const ground=h-45;
-const top=45;
-
-const shaftX=w/2;
-
-const scale=(ground-top-20)/h0;
-
-const d=getData(t);
-
-const ballY=ground-d.h*scale;
-
-
-/* Gitter */
-
-ctx.strokeStyle="#17233b";
-ctx.lineWidth=1;
-
-for(let y=top;y<=ground;y+=40){
-
-ctx.beginPath();
-ctx.moveTo(30,y);
-ctx.lineTo(w-30,y);
-ctx.stroke();
-
-}
-
-
-/* Höhen-Skala */
-
-ctx.fillStyle="#77849e";
-ctx.font="11px Arial";
-
-const intervals=5;
-
-for(let i=0;i<=intervals;i++){
-
-const hv=h0-i*h0/intervals;
-const yy=top+(ground-top)*i/intervals;
-
-ctx.fillText(
-fmt(hv,1)+" m",
-10,
-yy+4
-);
-
-}
-
-
-/* Fallstrecke */
-
-ctx.strokeStyle="#66728b";
-ctx.lineWidth=3;
-
-ctx.beginPath();
-ctx.moveTo(shaftX,top);
-ctx.lineTo(shaftX,ground);
-ctx.stroke();
-
-
-/* Boden */
-
-ctx.fillStyle="#3a4660";
-ctx.fillRect(0,ground,w,12);
-
-
-/* Höhenlinie */
-
-ctx.strokeStyle="#ffd84d";
-ctx.lineWidth=2;
-ctx.setLineDash([6,5]);
-
-ctx.beginPath();
-ctx.moveTo(shaftX-80,ballY);
-ctx.lineTo(shaftX+80,ballY);
-ctx.stroke();
-
-ctx.setLineDash([]);
-
-
-/* Höhenpfeil */
-
-ctx.strokeStyle="#65d6ff";
-ctx.lineWidth=3;
-
-ctx.beginPath();
-ctx.moveTo(shaftX-105,ground);
-ctx.lineTo(shaftX-105,ballY);
-ctx.stroke();
-
-
-ctx.fillStyle="#65d6ff";
-
-ctx.beginPath();
-ctx.moveTo(shaftX-105,ballY);
-ctx.lineTo(shaftX-111,ballY+11);
-ctx.lineTo(shaftX-99,ballY+11);
-ctx.closePath();
-ctx.fill();
-
-
-ctx.beginPath();
-ctx.moveTo(shaftX-105,ground);
-ctx.lineTo(shaftX-111,ground-11);
-ctx.lineTo(shaftX-99,ground-11);
-ctx.closePath();
-ctx.fill();
-
-
-ctx.save();
-ctx.translate(shaftX-118,(ballY+ground)/2);
-ctx.rotate(-Math.PI/2);
-
-ctx.font="bold 14px Arial";
-ctx.fillStyle="#65d6ff";
-ctx.textAlign="center";
-ctx.fillText("Fallhöhe h",0,0);
-
-ctx.restore();
-
-
-/* Stein */
-
-ctx.fillStyle="#ffd84d";
-ctx.strokeStyle="#fff";
-ctx.lineWidth=2;
-
-ctx.beginPath();
-ctx.arc(shaftX,ballY,15,0,Math.PI*2);
-ctx.fill();
-ctx.stroke();
-
-
-/* Geschwindigkeitsvektor */
-
-const vectorLength=Math.min(130,d.v*5);
-
-ctx.strokeStyle="#ff6262";
-ctx.lineWidth=4;
-
-ctx.beginPath();
-ctx.moveTo(shaftX,ballY+17);
-ctx.lineTo(shaftX,ballY+17+vectorLength);
-ctx.stroke();
-
-
-ctx.fillStyle="#ff6262";
-
-ctx.beginPath();
-ctx.moveTo(
-shaftX,
-ballY+17+vectorLength
-);
-
-ctx.lineTo(
-shaftX-8,
-ballY+vectorLength+4
-);
-
-ctx.lineTo(
-shaftX+8,
-ballY+vectorLength+4
-);
-
-ctx.closePath();
-ctx.fill();
-
-
-/* Info */
-
-ctx.font="bold 15px Arial";
-ctx.fillStyle="#ffd84d";
-
-ctx.fillText(
-"h₀ = "+fmt(h0,1)+" m",
-20,
-24
-);
-
-ctx.fillStyle="#aab5cc";
-
-ctx.fillText(
-"g = "+fmt(g,2)+" m/s²",
-140,
-24
-);
-
-ctx.fillStyle="#65d6ff";
-
-ctx.fillText(
-"h = "+fmt(d.h)+" m",
-260,
-24
-);
-
-ctx.fillStyle="#ff6262";
-
-ctx.fillText(
-"v = "+fmt(d.v)+" m/s",
-360,
-24
-);
-
-
-/* Aufprall */
-
-if(t>=fallTime()-0.0001){
-
-ctx.fillStyle="#ffd84d";
-ctx.font="bold 18px Arial";
-ctx.textAlign="center";
-
-ctx.fillText(
-"Aufprall auf dem Boden",
-shaftX,
-ground-20
-);
-
-ctx.textAlign="left";
-
-}
-
-}
-
-
-/* ================= GRAPH OBJEKTE ================= */
-
-const charts=[
-
-{
-canvas:$("chartH"),
-tip:$("tipH"),
-type:"h",
-label:"h / m"
-},
-
-{
-canvas:$("chartV"),
-tip:$("tipV"),
-type:"v",
-label:"v / m/s"
-},
-
-{
-canvas:$("chartA"),
-tip:$("tipA"),
-type:"a",
-label:"a / m/s²"
-}
-
-];
-
-
-/* ================= GRAPHEN ================= */
-
-function getGraphInfo(type){
-
-const T=fallTime();
-
-let min=0;
-let max=1;
-
-if(type==="h"){
-
-min=0;
-max=h0;
-
-}
-
-if(type==="v"){
-
-min=0;
-max=Math.sqrt(2*g*h0);
-
-}
-
-if(type==="a"){
-
-min=0;
-max=g*1.15;
-
-}
-
-return{min,max,T};
-
-}
-
-
-function drawChart(c){
-
-const canvas=c.canvas;
-const context=canvas.getContext("2d");
-
-const w=canvas.clientWidth;
-const h=canvas.clientHeight;
-
-context.clearRect(0,0,w,h);
-
-context.fillStyle="#080d18";
-context.fillRect(0,0,w,h);
-
-const left=48;
-const right=12;
-const top=14;
-const bottom=34;
-
-const pw=w-left-right;
-const ph=h-top-bottom;
-
-const info=getGraphInfo(c.type);
-
-const min=info.min;
-const max=info.max;
-
-
-/* Gitter */
-
-context.strokeStyle="#1a2740";
-context.lineWidth=1;
-
-for(let i=0;i<=5;i++){
-
-const x=left+pw*i/5;
-
-context.beginPath();
-context.moveTo(x,top);
-context.lineTo(x,h-bottom);
-context.stroke();
-
-}
-
-for(let i=0;i<=4;i++){
-
-const y=top+ph*i/4;
-
-context.beginPath();
-context.moveTo(left,y);
-context.lineTo(w-right,y);
-context.stroke();
-
-}
-
-
-/* Achsen */
-
-context.strokeStyle="#8793aa";
-context.lineWidth=1.5;
-
-context.beginPath();
-context.moveTo(left,top);
-context.lineTo(left,h-bottom);
-context.lineTo(w-right,h-bottom);
-context.stroke();
-
-
-/* Beschriftung X */
-
-context.fillStyle="#9da9bf";
-context.font="10px Arial";
-context.textAlign="center";
-
-for(let i=0;i<=5;i++){
-
-const x=left+pw*i/5;
-const tv=info.T*i/5;
-
-context.fillText(
-fmt(tv,1),
-x,
-h-bottom+17
-);
-
-}
-
-
-/* Beschriftung Y */
-
-context.textAlign="right";
-
-for(let i=0;i<=4;i++){
-
-const value=max-(max-min)*i/4;
-const y=top+ph*i/4;
-
-context.fillText(
-fmt(value,1),
-left-6,
-y+3
-);
-
-}
-
-
-/* Einheit */
-
-context.textAlign="center";
-
-context.fillText(
-"t / s",
-left+pw/2,
-h-5
-);
-
-
-/* Kurve */
-
-if(history.length>=2){
-
-context.beginPath();
-
-history.forEach((p,i)=>{
-
-const x=left+(p.t/info.T)*pw;
-
-const value=p[c.type];
-
-const y=
-top+(max-value)/(max-min)*ph;
-
-if(i===0){
-context.moveTo(x,y);
-}else{
-context.lineTo(x,y);
-}
-
+        if (animationFrame) {
+            cancelAnimationFrame(animationFrame);
+            animationFrame = null;
+        }
+    }
 });
 
-if(c.type==="h"){
-context.strokeStyle="#ffd84d";
-}
+resetBtn.addEventListener("click", resetSimulation);
 
-if(c.type==="v"){
-context.strokeStyle="#65d6ff";
-}
+simHeight.addEventListener("input", () => {
 
-if(c.type==="a"){
-context.strokeStyle="#ff6262";
-}
-
-context.lineWidth=3.5;
-context.stroke();
-
-}
-
-
-/* Zeit-Cursor */
-
-const cursorX=
-left+(t/info.T)*pw;
-
-context.strokeStyle="#ffffff";
-context.lineWidth=1.5;
-context.setLineDash([5,4]);
-
-context.beginPath();
-context.moveTo(cursorX,top);
-context.lineTo(cursorX,h-bottom);
-context.stroke();
-
-context.setLineDash([]);
-
-
-/* Punkt */
-
-const current=getData(t);
-
-const currentValue=current[c.type];
-
-const currentY=
-top+(max-currentValue)/(max-min)*ph;
-
-context.fillStyle="#fff";
-
-context.beginPath();
-context.arc(cursorX,currentY,4.5,0,Math.PI*2);
-context.fill();
-
-}
-
-
-/* ================= INFO-CANVAS ================= */
-
-function drawInfo(){
-
-const canvas=$("chartInfo");
-const context=canvas.getContext("2d");
-
-const w=canvas.clientWidth;
-const h=canvas.clientHeight;
-
-context.clearRect(0,0,w,h);
-
-context.fillStyle="#080d18";
-context.fillRect(0,0,w,h);
-
-const d=getData(t);
-const T=fallTime();
-
-context.fillStyle="#ffd84d";
-context.font="bold 15px Arial";
-
-context.fillText(
-"Freier Fall",
-20,
-35
-);
-
-context.font="14px Arial";
-context.fillStyle="#c5cee0";
-
-const lines=[
-
-["Anfangshöhe h₀",fmt(h0)+" m"],
-["Zeit t",fmt(t)+" s"],
-["Höhe h",fmt(d.h)+" m"],
-["Geschwindigkeit v",fmt(d.v)+" m/s"],
-["Beschleunigung a",fmt(d.a)+" m/s²"],
-["Fallzeit",fmt(T)+" s"]
-
-];
-
-lines.forEach((line,i)=>{
-
-const y=70+i*38;
-
-context.fillStyle="#8793aa";
-context.fillText(line[0],20,y);
-
-context.fillStyle="#eef2ff";
-context.font="bold 14px Arial";
-context.fillText(line[1],150,y);
-
-context.font="14px Arial";
-
+    if (!running) {
+        t = 0;
+        finished = false;
+        status.textContent = "BEREIT";
+        updateSimulationGeometry();
+    }
 });
 
-}
+window.addEventListener("resize", updateSimulationGeometry);
 
-
-function drawCharts(){
-
-charts.forEach(drawChart);
-drawInfo();
-
-}
-
-
-/* ================= MOUSEOVER ================= */
-
-charts.forEach(c=>{
-
-c.canvas.addEventListener("mousemove",event=>{
-
-if(history.length<1){
-c.tip.style.display="none";
-return;
-}
-
-const rect=c.canvas.getBoundingClientRect();
-
-const x=event.clientX-rect.left;
-
-const left=48;
-const right=12;
-
-const pw=c.canvas.clientWidth-left-right;
-
-let mouseT=
-((x-left)/pw)*fallTime();
-
-mouseT=Math.max(
-0,
-Math.min(fallTime(),mouseT)
-);
-
-let nearest=history[0];
-
-history.forEach(p=>{
-
-if(
-Math.abs(p.t-mouseT)<
-Math.abs(nearest.t-mouseT)
-){
-nearest=p;
-}
-
-});
-
-let text=
-"t = "+fmt(nearest.t)+" s<br>";
-
-if(c.type==="h"){
-text+="h = "+fmt(nearest.h)+" m";
-}
-
-if(c.type==="v"){
-text+="v = "+fmt(nearest.v)+" m/s";
-}
-
-if(c.type==="a"){
-text+="a = "+fmt(nearest.a)+" m/s²";
-}
-
-c.tip.innerHTML=text;
-c.tip.style.display="block";
-
-const card=c.canvas.parentElement;
-
-let tx=
-event.clientX-
-card.getBoundingClientRect().left+
-10;
-
-let ty=
-event.clientY-
-card.getBoundingClientRect().top+
-10;
-
-if(tx+120>card.clientWidth){
-tx-=130;
-}
-
-c.tip.style.left=tx+"px";
-c.tip.style.top=ty+"px";
-
-});
-
-
-c.canvas.addEventListener("mouseleave",()=>{
-
-c.tip.style.display="none";
-
-});
-
-});
-
-
-/* ================= ANIMATION ================= */
-
-function animate(now){
-
-if(!running){
-
-lastTime=null;
-return;
-
-}
-
-if(lastTime===null){
-lastTime=now;
-}
-
-const dt=(now-lastTime)/1000;
-
-lastTime=now;
-
-t+=dt;
-
-const T=fallTime();
-
-if(t>=T){
-
-t=T;
-running=false;
-
-}
-
-updateValues();
-createHistory();
-drawScene();
-drawCharts();
-
-if(running){
-requestAnimationFrame(animate);
-}
-
-}
-
-
-/* ================= BUTTONS ================= */
-
-$("start").addEventListener("click",()=>{
-
-if(t>=fallTime()){
-t=0;
-}
-
-running=true;
-lastTime=null;
-
-requestAnimationFrame(animate);
-
-});
-
-
-$("pause").addEventListener("click",()=>{
-
-running=false;
-lastTime=null;
-
-});
-
-
-$("reset").addEventListener("click",()=>{
-
-running=false;
-lastTime=null;
-t=0;
-history=[];
-
-parameters();
-updateValues();
-drawScene();
-drawCharts();
-
-});
-
-
-/* ================= SLIDER ================= */
-
-[h0Slider,gSlider].forEach(slider=>{
-
-slider.addEventListener("input",()=>{
-
-if(!running){
-
-parameters();
-
-t=0;
-history=[];
-
-updateValues();
-drawScene();
-drawCharts();
-
-}
-
-});
-
-});
-
-
-/* ================= START ================= */
-
-parameters();
-updateValues();
-resizeAll();
-
+updateSimulationGeometry();
 </script>
 
 </body>
 </html>
+EOF
+xdg-open ~/Desktop/physiklabor1/freier-fall/index.html
