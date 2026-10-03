@@ -1,1 +1,1015 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>S.Michaelis – Interaktives Physiklabor</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #02050b;
+    --border: #1c334b;
+    --text: #edf6ff;
+    --muted: #8ea6bd;
+
+    --blue: #38bdf8;
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --purple: #a78bfa;
+    --red: #fb7185;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            ellipse at 20% 20%,
+            rgba(30,80,130,.38),
+            transparent 35%
+        ),
+        radial-gradient(
+            ellipse at 80% 10%,
+            rgba(100,50,150,.30),
+            transparent 32%
+        ),
+        radial-gradient(
+            ellipse at 50% 90%,
+            rgba(10,100,150,.20),
+            transparent 38%
+        ),
+        linear-gradient(
+            180deg,
+            #02050b 0%,
+            #030916 50%,
+            #02040a 100%
+        );
+
+    overflow-x: hidden;
+}
+
+/* =====================================================
+   STERNE
+===================================================== */
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    z-index: -2;
+
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.9) 1px,
+            transparent 1.5px
+        ),
+        radial-gradient(
+            circle,
+            rgba(120,200,255,.75) 1px,
+            transparent 1.5px
+        ),
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.55) 1px,
+            transparent 1.5px
+        );
+
+    background-size:
+        150px 150px,
+        230px 230px,
+        310px 310px;
+
+    background-position:
+        20px 30px,
+        80px 100px,
+        140px 60px;
+
+    opacity: .48;
+
+    animation:
+        starsMove 80s linear infinite;
+}
+
+@keyframes starsMove {
+    from {
+        transform: translate3d(0,0,0);
+    }
+
+    to {
+        transform: translate3d(-120px,80px,0);
+    }
+}
+
+/* =====================================================
+   NEBEL
+===================================================== */
+
+body::after {
+    content: "";
+
+    position: fixed;
+    inset: -20%;
+
+    z-index: -1;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 25% 35%,
+            rgba(25,125,210,.20),
+            transparent 25%
+        ),
+        radial-gradient(
+            ellipse at 75% 25%,
+            rgba(125,65,210,.18),
+            transparent 27%
+        ),
+        radial-gradient(
+            ellipse at 55% 70%,
+            rgba(20,170,180,.12),
+            transparent 28%
+        );
+
+    filter: blur(35px);
+
+    animation:
+        nebulaMove 18s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaMove {
+    from {
+        transform:
+            scale(1)
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            scale(1.08)
+            rotate(2deg);
+    }
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+    padding:
+        55px 25px 35px;
+
+    border-bottom:
+        1px solid rgba(56,189,248,.18);
+
+    background:
+        rgba(2,7,15,.62);
+
+    backdrop-filter:
+        blur(14px);
+}
+
+.header-inner {
+    max-width: 1250px;
+    margin: auto;
+}
+
+.logo {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 54px;
+    height: 54px;
+
+    margin-bottom: 18px;
+
+    color: var(--blue);
+
+    background:
+        rgba(56,189,248,.08);
+
+    border:
+        1px solid rgba(56,189,248,.45);
+
+    border-radius: 14px;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    box-shadow:
+        0 0 30px rgba(56,189,248,.14);
+}
+
+.brand {
+    color: var(--blue);
+
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: 4px;
+}
+
+h1 {
+    margin:
+        8px 0 10px;
+
+    font-size:
+        clamp(34px, 6vw, 62px);
+
+    line-height: 1.05;
+
+    text-shadow:
+        0 0 35px rgba(56,189,248,.18);
+}
+
+.subtitle {
+    max-width: 760px;
+
+    color: var(--muted);
+
+    font-size: 17px;
+
+    line-height: 1.6;
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+    max-width: 1250px;
+
+    margin: auto;
+
+    padding:
+        45px 25px 60px;
+}
+
+.section-heading {
+    margin-bottom: 25px;
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    font-size: 25px;
+}
+
+.section-heading p {
+    margin-top: 7px;
+
+    color: var(--muted);
+}
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.labor-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card {
+    position: relative;
+
+    min-height: 290px;
+
+    padding: 25px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10,25,43,.92),
+            rgba(4,10,20,.95)
+        );
+
+    border:
+        1px solid rgba(80,120,150,.30);
+
+    border-radius: 20px;
+
+    backdrop-filter:
+        blur(10px);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.22);
+
+    transition:
+        transform .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+}
+
+.card:hover {
+    transform:
+        translateY(-6px);
+
+    border-color:
+        var(--glow);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
+}
+
+.card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 200px;
+    height: 200px;
+
+    right: -80px;
+    top: -80px;
+
+    background:
+        radial-gradient(
+            circle,
+            var(--glow),
+            transparent 68%
+        );
+
+    opacity: .11;
+
+    pointer-events: none;
+}
+
+.card-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 22px;
+
+    color: var(--glow);
+
+    background:
+        var(--icon-bg);
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--glow) 45%,
+            transparent
+        );
+
+    border-radius: 15px;
+
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.card h2 {
+    margin:
+        0 0 10px;
+
+    font-size: 23px;
+}
+
+.card p {
+    max-width: 560px;
+
+    min-height: 68px;
+
+    margin: 0;
+
+    color: var(--muted);
+
+    line-height: 1.6;
+
+    font-size: 14px;
+}
+
+.card-footer {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 24px;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.card-number {
+    color: #607991;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+}
+
+.open-button {
+    display: inline-block;
+
+    padding:
+        10px 15px;
+
+    color: var(--text);
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    transition: .2s;
+}
+
+.open-button:hover {
+    background:
+        rgba(255,255,255,.08);
+
+    border-color:
+        var(--glow);
+}
+
+/* =====================================================
+   FARBEN
+===================================================== */
+
+.vektor {
+    --glow: #a78bfa;
+    --icon-bg: #21184b;
+}
+
+.kinematik {
+    --glow: #38bdf8;
+    --icon-bg: #082f49;
+}
+
+.freier-fall {
+    --glow: #34d399;
+    --icon-bg: #063b30;
+}
+
+.waagerechter-wurf {
+    --glow: #fbbf24;
+    --icon-bg: #422b05;
+}
+
+.senkrechter-wurf {
+    --glow: #fb7185;
+    --icon-bg: #4c1020;
+}
+
+.formelumsteller {
+    --glow: #c084fc;
+    --icon-bg: #321052;
+}
+
+.newton {
+    --glow: #ff9f43;
+    --icon-bg: #4a2912;
+}
+
+.kreisbewegung {
+    --glow: #22d3ee;
+    --icon-bg: #083344;
+}
+
+.trigonometrie {
+    --glow: #f472b6;
+    --icon-bg: #4a1634;
+}
+
+.arbeit-energie-impuls {
+    --glow: #4ade80;
+    --icon-bg: #0b3b29;
+}
+
+.schiefer-wurf {
+    --glow: #60a5fa;
+    --icon-bg: #102b4d;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    padding:
+        30px 20px 45px;
+
+    color: #7890a8;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    background:
+        rgba(2,7,15,.55);
+
+    border-top:
+        1px solid rgba(56,189,248,.10);
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:850px) {
+
+    .labor-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:600px) {
+
+    header {
+        padding:
+            35px 20px 28px;
+    }
+
+    main {
+        padding:
+            30px 15px 45px;
+    }
+
+    .card {
+        min-height: 0;
+    }
+
+    .card-footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .card-number {
+        order: 2;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<div class="logo">
+Σ
+</div>
+
+<div class="brand">
+S.MICHAELIS · PHYSIKLABOR
+</div>
+
+<h1>
+Interaktives Physiklabor
+</h1>
+
+<div class="subtitle">
+Physikalische Zusammenhänge selbst untersuchen,
+berechnen und visualisieren – mit interaktiven
+Simulationen für den Unterricht.
+</div>
+
+</div>
+
+</header>
+
+<main>
+
+<div class="section-heading">
+
+<h2>
+Laborübersicht
+</h2>
+
+<p>
+Wähle ein Labor aus, um direkt mit der Simulation zu beginnen.
+</p>
+
+</div>
+
+<div class="labor-grid">
+
+<!-- 01 -->
+
+<article class="card vektor">
+
+<div class="card-icon">
+↗
+</div>
+
+<h2>
+Vektor-Labor
+</h2>
+
+<p>
+Vektoren zeichnen, zerlegen, addieren und
+ihre Beträge sowie Richtungen untersuchen.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+01 / VEKTOR
+</div>
+
+<a class="open-button" href="vektorlabor/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 02 -->
+
+<article class="card kinematik">
+
+<div class="card-icon">
+→
+</div>
+
+<h2>
+Kinematik-Labor
+</h2>
+
+<p>
+Gleichförmige und gleichmäßig beschleunigte
+Bewegungen berechnen, simulieren und grafisch
+untersuchen.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+02 / KINEMATIK
+</div>
+
+<a class="open-button" href="kinematik/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 03 -->
+
+<article class="card freier-fall">
+
+<div class="card-icon">
+↓
+</div>
+
+<h2>
+Freier Fall
+</h2>
+
+<p>
+Den freien Fall mit verschiedenen Parametern
+simulieren und Position, Geschwindigkeit,
+Beschleunigung und Energie untersuchen.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+03 / FREIER FALL
+</div>
+
+<a class="open-button" href="freier-fall/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 04 -->
+
+<article class="card waagerechter-wurf">
+
+<div class="card-icon">
+↗
+</div>
+
+<h2>
+Waagerechter Wurf
+</h2>
+
+<p>
+Den waagerechten Wurf interaktiv untersuchen.
+Wurfzeit, Wurfweite, Geschwindigkeit und
+Flugbahn berechnen und simulieren.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+04 / WAAGERECHTER WURF
+</div>
+
+<a class="open-button" href="waagerechter-wurf/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 05 -->
+
+<article class="card senkrechter-wurf">
+
+<div class="card-icon">
+↑
+</div>
+
+<h2>
+Senkrechter Wurf
+</h2>
+
+<p>
+Den senkrechten Wurf untersuchen:
+Maximale Höhe, Aufstiegszeit, Flugzeit,
+Geschwindigkeit und Beschleunigung simulieren.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+05 / SENKRECHTER WURF
+</div>
+
+<a class="open-button" href="senkrechter-wurf/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 06 -->
+
+<article class="card formelumsteller">
+
+<div class="card-icon">
+∑
+</div>
+
+<h2>
+Formel-Umsteller
+</h2>
+
+<p>
+Physikalische Formeln Schritt für Schritt
+umstellen, Variablen isolieren und anschließend
+die Ergebnisse berechnen.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+06 / FORMEL-UMSTELLER
+</div>
+
+<a class="open-button" href="formelumsteller/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 07 -->
+
+<article class="card newton">
+
+<div class="card-icon">
+F
+</div>
+
+<h2>
+Newton-Gesetze
+</h2>
+
+<p>
+Newtons drei Gesetze interaktiv verstehen:
+Trägheit, Kraft und Beschleunigung sowie
+Wechselwirkung.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+07 / NEWTON-GESETZE
+</div>
+
+<a class="open-button" href="newton/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 08 -->
+
+<article class="card kreisbewegung">
+
+<div class="card-icon">
+↻
+</div>
+
+<h2>
+Kreisbewegung
+</h2>
+
+<p>
+Die gleichförmige Kreisbewegung interaktiv untersuchen:
+Winkelgeschwindigkeit, Bahngeschwindigkeit,
+Zentripetalbeschleunigung und Zentripetalkraft.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+08 / KREISBEWEGUNG
+</div>
+
+<a class="open-button" href="kreisbewegung/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 09 -->
+
+<article class="card trigonometrie">
+
+<div class="card-icon">
+sin
+</div>
+
+<h2>
+Trigonometrie
+</h2>
+
+<p>
+Sinus, Cosinus und Tangens interaktiv untersuchen.
+Rechtwinklige Dreiecke, Winkel, Seitenlängen und
+den Einheitskreis berechnen und visualisieren.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+09 / TRIGONOMETRIE
+</div>
+
+<a class="open-button" href="trigonometrie/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 10 -->
+
+<article class="card arbeit-energie-impuls">
+
+<div class="card-icon">
+W
+</div>
+
+<h2>
+Arbeit · Energie · Impuls
+</h2>
+
+<p>
+Arbeit, Energie, Leistung, Impuls und Kraftstoß
+interaktiv untersuchen. Energieumwandlungen und
+Stoßvorgänge simulieren und berechnen.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+10 / ARBEIT · ENERGIE · IMPULS
+</div>
+
+<a class="open-button" href="arbeit-energie-impuls/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+
+<!-- 11 -->
+
+<article class="card schiefer-wurf">
+
+<div class="card-icon">
+↗
+</div>
+
+<h2>
+Schiefer Wurf
+</h2>
+
+<p>
+Den schrägen Wurf in zwei Dimensionen untersuchen.
+Wurfparabel, Geschwindigkeitskomponenten, maximale
+Höhe, Wurfweite und Auftreffgeschwindigkeit analysieren.
+</p>
+
+<div class="card-footer">
+
+<div class="card-number">
+11 / SCHIEFER WURF
+</div>
+
+<a class="open-button" href="schiefer-wurf/">
+Labor öffnen →
+</a>
+
+</div>
+
+</article>
+
+</div>
+
+</main>
+
+<footer>
+
+S.Michaelis · Interaktives Physiklabor
+
+</footer>
+
+</body>
+</html>
