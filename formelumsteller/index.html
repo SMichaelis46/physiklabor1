@@ -1,1 +1,1797 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Formel-Umsteller-Labor – S.Michaelis</title>
+
+<style>
+:root{
+    --bg:#07111f;
+    --panel:#0d1b2d;
+    --panel2:#10243b;
+    --border:#203b58;
+    --text:#eef6ff;
+    --muted:#9db1c8;
+    --accent:#38bdf8;
+    --accent2:#818cf8;
+    --green:#34d399;
+    --yellow:#fbbf24;
+    --red:#fb7185;
+    --shadow:0 20px 50px rgba(0,0,0,.30);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at 15% 10%,rgba(56,189,248,.10),transparent 28%),
+        radial-gradient(circle at 85% 15%,rgba(129,140,248,.10),transparent 28%),
+        linear-gradient(135deg,#06101c,#091827 55%,#07111f);
+    color:var(--text);
+    min-height:100vh;
+}
+
+header{
+    border-bottom:1px solid var(--border);
+    background:rgba(5,14,25,.88);
+    backdrop-filter:blur(12px);
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.header-inner{
+    max-width:1400px;
+    margin:auto;
+    padding:18px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#0ea5e9,#6366f1);
+    font-size:25px;
+    font-weight:bold;
+    box-shadow:0 8px 25px rgba(56,189,248,.22);
+}
+
+.brand h1{
+    margin:0;
+    font-size:21px;
+    letter-spacing:.3px;
+}
+
+.brand p{
+    margin:4px 0 0;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.badge{
+    padding:8px 13px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    color:#b9dfff;
+    background:rgba(56,189,248,.07);
+    font-size:12px;
+    white-space:nowrap;
+}
+
+main{
+    max-width:1400px;
+    margin:auto;
+    padding:30px 24px 60px;
+}
+
+.hero{
+    margin-bottom:24px;
+}
+
+.hero h2{
+    font-size:32px;
+    margin:0 0 8px;
+}
+
+.hero p{
+    max-width:850px;
+    color:var(--muted);
+    line-height:1.65;
+    margin:0;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:330px 1fr;
+    gap:20px;
+}
+
+.panel{
+    background:linear-gradient(145deg,rgba(13,27,45,.96),rgba(8,19,32,.96));
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+}
+
+.sidebar{
+    padding:18px;
+    align-self:start;
+    position:sticky;
+    top:95px;
+}
+
+.section-title{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color:#82a7c9;
+    margin:5px 0 12px;
+}
+
+.formula-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.formula-btn{
+    width:100%;
+    text-align:left;
+    border:1px solid var(--border);
+    background:#0b192a;
+    color:var(--text);
+    border-radius:12px;
+    padding:13px 14px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.formula-btn:hover{
+    border-color:#34709c;
+    transform:translateX(2px);
+}
+
+.formula-btn.active{
+    border-color:var(--accent);
+    background:linear-gradient(135deg,rgba(14,165,233,.16),rgba(99,102,241,.10));
+    box-shadow:0 0 0 1px rgba(56,189,248,.12);
+}
+
+.formula-name{
+    font-weight:bold;
+    font-size:14px;
+}
+
+.formula-small{
+    color:var(--muted);
+    margin-top:5px;
+    font-size:13px;
+}
+
+.content{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.card{
+    padding:22px;
+}
+
+.card h3{
+    margin:0 0 8px;
+    font-size:20px;
+}
+
+.card-subtitle{
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+.formula-display{
+    background:#06111e;
+    border:1px solid #24435f;
+    border-radius:15px;
+    padding:25px;
+    text-align:center;
+    overflow:auto;
+}
+
+.formula-main{
+    font-family:"Times New Roman",serif;
+    font-size:32px;
+    letter-spacing:.5px;
+    white-space:nowrap;
+}
+
+.target-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+    justify-content:center;
+}
+
+.target-btn{
+    border:1px solid var(--border);
+    background:#0c1b2c;
+    color:#dceeff;
+    border-radius:9px;
+    padding:9px 14px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.target-btn:hover{
+    border-color:var(--accent);
+}
+
+.target-btn.active{
+    background:rgba(56,189,248,.15);
+    border-color:var(--accent);
+    color:#fff;
+}
+
+.steps{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.step{
+    display:grid;
+    grid-template-columns:48px 1fr;
+    align-items:center;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:#091827;
+    overflow:hidden;
+}
+
+.step-number{
+    height:100%;
+    min-height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(56,189,248,.08);
+    color:var(--accent);
+    font-weight:bold;
+    font-size:17px;
+}
+
+.step-content{
+    padding:14px 18px;
+}
+
+.step-operation{
+    color:var(--yellow);
+    font-size:12px;
+    margin-bottom:7px;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+}
+
+.step-formula{
+    font-family:"Times New Roman",serif;
+    font-size:24px;
+    overflow:auto;
+    white-space:nowrap;
+}
+
+.result{
+    border-color:rgba(52,211,153,.35);
+    background:linear-gradient(145deg,rgba(16,185,129,.08),rgba(8,19,32,.95));
+}
+
+.result .step-number{
+    background:rgba(52,211,153,.10);
+    color:var(--green);
+}
+
+.result .step-formula{
+    color:#d9fff1;
+    font-size:28px;
+}
+
+.explanation{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.explain-box{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:15px;
+    background:#091827;
+}
+
+.explain-box strong{
+    display:block;
+    margin-bottom:7px;
+    color:#cce9ff;
+}
+
+.explain-box span{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+}
+
+.calculator{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.inputs{
+    display:grid;
+    gap:11px;
+}
+
+.input-row{
+    display:grid;
+    grid-template-columns:1fr 150px;
+    gap:10px;
+    align-items:center;
+}
+
+.input-row label{
+    color:#c7d8e9;
+    font-size:14px;
+}
+
+input,select{
+    width:100%;
+    border:1px solid var(--border);
+    background:#071523;
+    color:#fff;
+    border-radius:9px;
+    padding:11px 12px;
+    outline:none;
+}
+
+input:focus,select:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(56,189,248,.08);
+}
+
+.result-box{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    min-height:200px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:#071523;
+    text-align:center;
+}
+
+.result-label{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.result-value{
+    font-family:"Times New Roman",serif;
+    font-size:38px;
+    margin:12px 0 5px;
+    color:#8ee7ff;
+}
+
+.result-unit{
+    color:#b9cde0;
+}
+
+button.primary{
+    border:0;
+    background:linear-gradient(135deg,#0284c7,#4f46e5);
+    color:white;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+button.primary:hover{
+    filter:brightness(1.1);
+}
+
+.task{
+    background:
+        radial-gradient(circle at 90% 20%,rgba(251,191,36,.10),transparent 35%),
+        #0b1929;
+}
+
+.task-question{
+    font-size:18px;
+    line-height:1.6;
+    margin-bottom:15px;
+}
+
+.task-answer{
+    display:none;
+    border-left:3px solid var(--green);
+    padding:12px 16px;
+    background:rgba(52,211,153,.06);
+    border-radius:0 10px 10px 0;
+}
+
+.task-answer.show{
+    display:block;
+}
+
+.task-controls{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+.secondary{
+    border:1px solid var(--border);
+    background:#0a192a;
+    color:#d8eaff;
+    border-radius:9px;
+    padding:10px 15px;
+    cursor:pointer;
+}
+
+.secondary:hover{
+    border-color:#47708f;
+}
+
+.info{
+    border-left:3px solid var(--accent);
+    padding:12px 16px;
+    background:rgba(56,189,248,.05);
+    color:#bfd5e8;
+    line-height:1.6;
+    border-radius:0 10px 10px 0;
+}
+
+footer{
+    max-width:1400px;
+    margin:auto;
+    padding:0 24px 30px;
+    color:#71869b;
+    font-size:12px;
+    text-align:center;
+}
+
+@media(max-width:950px){
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:static;
+    }
+
+    .calculator{
+        grid-template-columns:1fr;
+    }
+
+    .explanation{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+    .header-inner{
+        padding:14px 15px;
+    }
+
+    .badge{
+        display:none;
+    }
+
+    main{
+        padding:22px 14px 45px;
+    }
+
+    .hero h2{
+        font-size:26px;
+    }
+
+    .card{
+        padding:16px;
+    }
+
+    .formula-main{
+        font-size:25px;
+    }
+
+    .step-formula{
+        font-size:20px;
+    }
+
+    .input-row{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="brand">
+            <div class="logo">Σ</div>
+            <div>
+                <h1>S.MICHAELIS · Physiklabor</h1>
+                <p>Formel-Umsteller-Labor</p>
+            </div>
+        </div>
+
+        <div class="badge">KINEMATIK · FORMELN · UMSTELLEN</div>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <h2>Formel-Umsteller-Labor</h2>
+        <p>
+            Wähle eine physikalische Formel und bestimme, nach welcher Größe
+            die Formel umgestellt werden soll. Das Labor zeigt nicht nur das
+            Ergebnis, sondern jeden Umformungsschritt.
+        </p>
+    </section>
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+        <aside class="panel sidebar">
+
+            <div class="section-title">Kinematik</div>
+
+            <div class="formula-list">
+
+                <button class="formula-btn active" onclick="selectFormula('gleichfoermig')">
+                    <div class="formula-name">Gleichförmige Bewegung</div>
+                    <div class="formula-small">s = s₀ + v · t</div>
+                </button>
+
+                <button class="formula-btn" onclick="selectFormula('geschwindigkeit')">
+                    <div class="formula-name">Geschwindigkeit</div>
+                    <div class="formula-small">v = v₀ + a · t</div>
+                </button>
+
+                <button class="formula-btn" onclick="selectFormula('weg')">
+                    <div class="formula-name">Weg-Zeit-Gesetz</div>
+                    <div class="formula-small">s = s₀ + v₀t + ½at²</div>
+                </button>
+
+                <button class="formula-btn" onclick="selectFormula('geschwindigkeit2')">
+                    <div class="formula-name">Geschwindigkeit ohne Zeit</div>
+                    <div class="formula-small">v² = v₀² + 2a(s-s₀)</div>
+                </button>
+
+                <button class="formula-btn" onclick="selectFormula('beschleunigung')">
+                    <div class="formula-name">Beschleunigung</div>
+                    <div class="formula-small">a = Δv / Δt</div>
+                </button>
+
+                <button class="formula-btn" onclick="selectFormula('durchschnitt')">
+                    <div class="formula-name">Durchschnittsgeschwindigkeit</div>
+                    <div class="formula-small">v = Δs / Δt</div>
+                </button>
+
+            </div>
+
+            <div class="section-title" style="margin-top:25px;">
+                Lernidee
+            </div>
+
+            <div class="info">
+                <strong>Grundprinzip:</strong><br>
+                Eine Formel wird nicht „magisch“ umgestellt.
+                Auf beiden Seiten der Gleichung wird dieselbe
+                mathematische Operation durchgeführt.
+            </div>
+
+        </aside>
+
+        <!-- CONTENT -->
+        <section class="content">
+
+            <!-- FORMULA -->
+            <div class="panel card">
+
+                <h3 id="formulaTitle">Gleichförmige Bewegung</h3>
+
+                <div class="card-subtitle" id="formulaDescription">
+                    Die Position bei konstanter Geschwindigkeit.
+                </div>
+
+                <div class="formula-display">
+                    <div class="formula-main" id="mainFormula">
+                        s = s₀ + v · t
+                    </div>
+
+                    <div class="target-row" id="targetButtons"></div>
+                </div>
+
+            </div>
+
+            <!-- STEPS -->
+            <div class="panel card">
+
+                <h3>Umformung Schritt für Schritt</h3>
+
+                <div class="card-subtitle">
+                    Wähle oben die gesuchte Größe.
+                </div>
+
+                <div class="steps" id="steps"></div>
+
+            </div>
+
+            <!-- EXPLANATION -->
+            <div class="panel card">
+
+                <h3>Was passiert mathematisch?</h3>
+
+                <div class="explanation">
+
+                    <div class="explain-box">
+                        <strong>1 · Ziel festlegen</strong>
+                        <span>
+                            Die gesuchte Größe soll alleine auf einer
+                            Seite der Gleichung stehen.
+                        </span>
+                    </div>
+
+                    <div class="explain-box">
+                        <strong>2 · Gegenoperation</strong>
+                        <span>
+                            Addition wird durch Subtraktion,
+                            Multiplikation durch Division aufgehoben.
+                        </span>
+                    </div>
+
+                    <div class="explain-box">
+                        <strong>3 · Kontrolle</strong>
+                        <span>
+                            Setze die erhaltene Formel wieder in die
+                            ursprüngliche Gleichung ein.
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CALCULATOR -->
+            <div class="panel card">
+
+                <h3>Einsetzen und berechnen</h3>
+
+                <div class="card-subtitle">
+                    Nach der Umformung kannst du Werte einsetzen.
+                </div>
+
+                <div class="calculator">
+
+                    <div>
+                        <div class="inputs" id="inputs"></div>
+                        <button class="primary" onclick="calculateValue()">
+                            Ergebnis berechnen
+                        </button>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="result-label">Gesuchte Größe</div>
+                        <div class="result-value" id="calcResult">—</div>
+                        <div class="result-unit" id="calcUnit"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TASK -->
+            <div class="panel card task">
+
+                <h3>🎯 Übungsaufgabe</h3>
+
+                <div class="card-subtitle">
+                    Trainiere das Umstellen ohne sofort auf das Ergebnis zu schauen.
+                </div>
+
+                <div class="task-question" id="taskQuestion">
+                    Klicke auf „Neue Aufgabe“.
+                </div>
+
+                <div class="task-controls">
+                    <button class="secondary" onclick="newTask()">
+                        Neue Aufgabe
+                    </button>
+
+                    <button class="secondary" onclick="showTaskAnswer()">
+                        Lösung anzeigen
+                    </button>
+                </div>
+
+                <div class="task-answer" id="taskAnswer"></div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+<footer>
+    S.Michaelis · Interaktives Physiklabor · Kinematik · Formel-Umsteller
+</footer>
+
+
+<script>
+
+/* ============================================================
+   FORMELN
+============================================================ */
+
+const formulas = {
+
+    gleichfoermig: {
+        title: "Gleichförmige Bewegung",
+        description: "Die Position bei konstanter Geschwindigkeit.",
+        formula: "s = s₀ + v · t",
+        targets: ["s","s₀","v","t"],
+        units: {
+            s:"m",
+            s₀:"m",
+            v:"m/s",
+            t:"s"
+        }
+    },
+
+    geschwindigkeit: {
+        title: "Gleichmäßig beschleunigte Bewegung",
+        description: "Zusammenhang zwischen Anfangsgeschwindigkeit, Beschleunigung und Zeit.",
+        formula: "v = v₀ + a · t",
+        targets: ["v","v₀","a","t"],
+        units: {
+            v:"m/s",
+            v₀:"m/s",
+            a:"m/s²",
+            t:"s"
+        }
+    },
+
+    weg: {
+        title: "Weg-Zeit-Gesetz",
+        description: "Der zurückgelegte Weg bei konstanter Beschleunigung.",
+        formula: "s = s₀ + v₀ · t + ½ · a · t²",
+        targets: ["s","s₀","v₀","a","t"],
+        units: {
+            s:"m",
+            s₀:"m",
+            v₀:"m/s",
+            a:"m/s²",
+            t:"s"
+        }
+    },
+
+    geschwindigkeit2: {
+        title: "Geschwindigkeit ohne Zeit",
+        description: "Zusammenhang zwischen Geschwindigkeit, Beschleunigung und Weg.",
+        formula: "v² = v₀² + 2 · a · (s − s₀)",
+        targets: ["v","v₀","a","s","s₀"],
+        units: {
+            v:"m/s",
+            v₀:"m/s",
+            a:"m/s²",
+            s:"m",
+            s₀:"m"
+        }
+    },
+
+    beschleunigung: {
+        title: "Beschleunigung",
+        description: "Die mittlere Beschleunigung als Änderung der Geschwindigkeit pro Zeit.",
+        formula: "a = Δv / Δt",
+        targets: ["a","Δv","Δt"],
+        units: {
+            a:"m/s²",
+            "Δv":"m/s",
+            "Δt":"s"
+        }
+    },
+
+    durchschnitt: {
+        title: "Durchschnittsgeschwindigkeit",
+        description: "Zurückgelegter Weg geteilt durch die dafür benötigte Zeit.",
+        formula: "v = Δs / Δt",
+        targets: ["v","Δs","Δt"],
+        units: {
+            v:"m/s",
+            "Δs":"m",
+            "Δt":"s"
+        }
+    }
+
+};
+
+let currentFormula = "gleichfoermig";
+let currentTarget = "s";
+
+let currentTask = null;
+
+
+/* ============================================================
+   FORMEL AUSWÄHLEN
+============================================================ */
+
+function selectFormula(key){
+
+    currentFormula = key;
+
+    const data = formulas[key];
+
+    document.querySelectorAll(".formula-btn")
+        .forEach(btn => btn.classList.remove("active"));
+
+    event.currentTarget.classList.add("active");
+
+    document.getElementById("formulaTitle").textContent = data.title;
+    document.getElementById("formulaDescription").textContent = data.description;
+    document.getElementById("mainFormula").textContent = data.formula;
+
+    createTargetButtons();
+
+    currentTarget = data.targets[0];
+
+    renderSteps();
+    renderInputs();
+
+    document.getElementById("calcResult").textContent = "—";
+    document.getElementById("calcUnit").textContent = "";
+
+}
+
+
+/* ============================================================
+   ZIEL-BUTTONS
+============================================================ */
+
+function createTargetButtons(){
+
+    const container = document.getElementById("targetButtons");
+    container.innerHTML = "";
+
+    formulas[currentFormula].targets.forEach(target => {
+
+        const button = document.createElement("button");
+
+        button.className = "target-btn";
+
+        if(target === currentTarget){
+            button.classList.add("active");
+        }
+
+        button.textContent = "Nach " + target + " umstellen";
+
+        button.onclick = () => {
+
+            currentTarget = target;
+
+            document.querySelectorAll(".target-btn")
+                .forEach(b => b.classList.remove("active"));
+
+            button.classList.add("active");
+
+            renderSteps();
+            renderInputs();
+
+            document.getElementById("calcResult").textContent = "—";
+            document.getElementById("calcUnit").textContent = "";
+        };
+
+        container.appendChild(button);
+
+    });
+}
+
+
+/* ============================================================
+   SCHRITTE
+============================================================ */
+
+function renderSteps(){
+
+    const container = document.getElementById("steps");
+
+    container.innerHTML = "";
+
+    const steps = getSteps(currentFormula,currentTarget);
+
+    steps.forEach((item,index)=>{
+
+        const div = document.createElement("div");
+
+        div.className = "step";
+
+        if(item.result){
+            div.classList.add("result");
+        }
+
+        div.innerHTML = `
+            <div class="step-number">${index+1}</div>
+            <div class="step-content">
+                <div class="step-operation">${item.operation}</div>
+                <div class="step-formula">${item.formula}</div>
+            </div>
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* ============================================================
+   UMFORMUNGEN
+============================================================ */
+
+function getSteps(type,target){
+
+    if(type === "gleichfoermig"){
+
+        if(target === "s"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"s = s₀ + v · t"
+                },
+                {
+                    operation:"Keine Umformung nötig",
+                    formula:"s = s₀ + v · t",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "s₀"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"s = s₀ + v · t"
+                },
+                {
+                    operation:"v · t subtrahieren",
+                    formula:"s − v · t = s₀"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"s₀ = s − v · t",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "v"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"s = s₀ + v · t"
+                },
+                {
+                    operation:"s₀ subtrahieren",
+                    formula:"s − s₀ = v · t"
+                },
+                {
+                    operation:"durch t teilen",
+                    formula:"(s − s₀) / t = v"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"v = (s − s₀) / t",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "t"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"s = s₀ + v · t"
+                },
+                {
+                    operation:"s₀ subtrahieren",
+                    formula:"s − s₀ = v · t"
+                },
+                {
+                    operation:"durch v teilen",
+                    formula:"(s − s₀) / v = t"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"t = (s − s₀) / v",
+                    result:true
+                }
+            ];
+        }
+    }
+
+
+    if(type === "geschwindigkeit"){
+
+        if(target === "v"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v = v₀ + a · t"
+                },
+                {
+                    operation:"Keine Umformung nötig",
+                    formula:"v = v₀ + a · t",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "v₀"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v = v₀ + a · t"
+                },
+                {
+                    operation:"a · t subtrahieren",
+                    formula:"v − a · t = v₀"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"v₀ = v − a · t",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "a"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v = v₀ + a · t"
+                },
+                {
+                    operation:"v₀ subtrahieren",
+                    formula:"v − v₀ = a · t"
+                },
+                {
+                    operation:"durch t teilen",
+                    formula:"(v − v₀) / t = a"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"a = (v − v₀) / t",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "t"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v = v₀ + a · t"
+                },
+                {
+                    operation:"v₀ subtrahieren",
+                    formula:"v − v₀ = a · t"
+                },
+                {
+                    operation:"durch a teilen",
+                    formula:"(v − v₀) / a = t"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"t = (v − v₀) / a",
+                    result:true
+                }
+            ];
+        }
+    }
+
+
+    if(type === "weg"){
+
+        if(target === "s"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"s = s₀ + v₀ · t + ½ · a · t²"
+                },
+                {
+                    operation:"Keine Umformung nötig",
+                    formula:"s = s₀ + v₀ · t + ½ · a · t²",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "s₀"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"s = s₀ + v₀ · t + ½ · a · t²"
+                },
+                {
+                    operation:"v₀ · t subtrahieren",
+                    formula:"s − v₀ · t = s₀ + ½ · a · t²"
+                },
+                {
+                    operation:"½ · a · t² subtrahieren",
+                    formula:"s − v₀ · t − ½ · a · t² = s₀"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"s₀ = s − v₀ · t − ½ · a · t²",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "v₀"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"s = s₀ + v₀ · t + ½ · a · t²"
+                },
+                {
+                    operation:"s₀ subtrahieren",
+                    formula:"s − s₀ = v₀ · t + ½ · a · t²"
+                },
+                {
+                    operation:"½ · a · t² subtrahieren",
+                    formula:"s − s₀ − ½ · a · t² = v₀ · t"
+                },
+                {
+                    operation:"durch t teilen",
+                    formula:"(s − s₀ − ½ · a · t²) / t = v₀"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"v₀ = (s − s₀ − ½ · a · t²) / t",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "a"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"s = s₀ + v₀ · t + ½ · a · t²"
+                },
+                {
+                    operation:"s₀ subtrahieren",
+                    formula:"s − s₀ = v₀ · t + ½ · a · t²"
+                },
+                {
+                    operation:"v₀ · t subtrahieren",
+                    formula:"s − s₀ − v₀ · t = ½ · a · t²"
+                },
+                {
+                    operation:"mit 2 multiplizieren",
+                    formula:"2(s − s₀ − v₀ · t) = a · t²"
+                },
+                {
+                    operation:"durch t² teilen",
+                    formula:"2(s − s₀ − v₀ · t) / t² = a"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"a = 2(s − s₀ − v₀ · t) / t²",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "t"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"s = s₀ + v₀ · t + ½ · a · t²"
+                },
+                {
+                    operation:"Umstellen nach t",
+                    formula:"½ · a · t² + v₀ · t + (s₀ − s) = 0"
+                },
+                {
+                    operation:"Quadratische Gleichung",
+                    formula:"A = ½a,  B = v₀,  C = s₀ − s"
+                },
+                {
+                    operation:"Mitternachtsformel",
+                    formula:"t = [−v₀ ± √(v₀² − 4AC)] / (2A)"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"t = [−v₀ ± √(v₀² + 2a(s−s₀))] / a",
+                    result:true
+                }
+            ];
+        }
+    }
+
+
+    if(type === "geschwindigkeit2"){
+
+        if(target === "v"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v² = v₀² + 2a(s − s₀)"
+                },
+                {
+                    operation:"Wurzel ziehen",
+                    formula:"v = ±√[v₀² + 2a(s − s₀)]"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"v = ±√[v₀² + 2a(s − s₀)]",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "v₀"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v² = v₀² + 2a(s − s₀)"
+                },
+                {
+                    operation:"2a(s − s₀) subtrahieren",
+                    formula:"v² − 2a(s − s₀) = v₀²"
+                },
+                {
+                    operation:"Wurzel ziehen",
+                    formula:"v₀ = ±√[v² − 2a(s − s₀)]"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"v₀ = ±√[v² − 2a(s − s₀)]",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "a"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v² = v₀² + 2a(s − s₀)"
+                },
+                {
+                    operation:"v₀² subtrahieren",
+                    formula:"v² − v₀² = 2a(s − s₀)"
+                },
+                {
+                    operation:"durch 2(s − s₀) teilen",
+                    formula:"a = (v² − v₀²) / [2(s − s₀)]"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"a = (v² − v₀²) / [2(s − s₀)]",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "s"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v² = v₀² + 2a(s − s₀)"
+                },
+                {
+                    operation:"v₀² subtrahieren",
+                    formula:"v² − v₀² = 2a(s − s₀)"
+                },
+                {
+                    operation:"durch 2a teilen",
+                    formula:"(v² − v₀²)/(2a) = s − s₀"
+                },
+                {
+                    operation:"s₀ addieren",
+                    formula:"s = s₀ + (v² − v₀²)/(2a)"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"s = s₀ + (v² − v₀²)/(2a)",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "s₀"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v² = v₀² + 2a(s − s₀)"
+                },
+                {
+                    operation:"v₀² subtrahieren",
+                    formula:"v² − v₀² = 2a(s − s₀)"
+                },
+                {
+                    operation:"durch 2a teilen",
+                    formula:"(v² − v₀²)/(2a) = s − s₀"
+                },
+                {
+                    operation:"s subtrahieren",
+                    formula:"s₀ = s − (v² − v₀²)/(2a)"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"s₀ = s − (v² − v₀²)/(2a)",
+                    result:true
+                }
+            ];
+        }
+    }
+
+
+    if(type === "beschleunigung"){
+
+        if(target === "a"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"a = Δv / Δt"
+                },
+                {
+                    operation:"Keine Umformung nötig",
+                    formula:"a = Δv / Δt",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "Δv"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"a = Δv / Δt"
+                },
+                {
+                    operation:"mit Δt multiplizieren",
+                    formula:"a · Δt = Δv"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"Δv = a · Δt",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "Δt"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"a = Δv / Δt"
+                },
+                {
+                    operation:"mit Δt multiplizieren",
+                    formula:"a · Δt = Δv"
+                },
+                {
+                    operation:"durch a teilen",
+                    formula:"Δt = Δv / a"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"Δt = Δv / a",
+                    result:true
+                }
+            ];
+        }
+    }
+
+
+    if(type === "durchschnitt"){
+
+        if(target === "v"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v = Δs / Δt"
+                },
+                {
+                    operation:"Keine Umformung nötig",
+                    formula:"v = Δs / Δt",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "Δs"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v = Δs / Δt"
+                },
+                {
+                    operation:"mit Δt multiplizieren",
+                    formula:"v · Δt = Δs"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"Δs = v · Δt",
+                    result:true
+                }
+            ];
+        }
+
+        if(target === "Δt"){
+            return [
+                {
+                    operation:"Ausgangsgleichung",
+                    formula:"v = Δs / Δt"
+                },
+                {
+                    operation:"mit Δt multiplizieren",
+                    formula:"v · Δt = Δs"
+                },
+                {
+                    operation:"durch v teilen",
+                    formula:"Δt = Δs / v"
+                },
+                {
+                    operation:"Ergebnis",
+                    formula:"Δt = Δs / v",
+                    result:true
+                }
+            ];
+        }
+    }
+
+    return [];
+}
+
+
+/* ============================================================
+   EINGABEN
+============================================================ */
+
+function getVariables(){
+
+    const data = formulas[currentFormula];
+
+    return data.targets.filter(x => x !== currentTarget);
+
+}
+
+
+function renderInputs(){
+
+    const container = document.getElementById("inputs");
+
+    container.innerHTML = "";
+
+    getVariables().forEach(variable => {
+
+        const row = document.createElement("div");
+
+        row.className = "input-row";
+
+        row.innerHTML = `
+            <label>${variable}</label>
+            <input
+                type="number"
+                step="any"
+                id="input_${variable.replace("Δ","delta")}"
+                placeholder="${variable}"
+            >
+        `;
+
+        container.appendChild(row);
+
+    });
+
+}
+
+
+/* ============================================================
+   BERECHNUNG
+============================================================ */
+
+function valueOf(variable){
+
+    const id = "input_" + variable.replace("Δ","delta");
+
+    return Number(document.getElementById(id).value);
+
+}
+
+
+function calculateValue(){
+
+    const type = currentFormula;
+    const target = currentTarget;
+
+    let result = NaN;
+
+    try{
+
+        if(type === "gleichfoermig"){
+
+            const s = target === "s" ? null : valueOf("s");
+            const s0 = target === "s₀" ? null : valueOf("s₀");
+            const v = target === "v" ? null : valueOf("v");
+            const t = target === "t" ? null : valueOf("t");
+
+            if(target==="s") result = s0 + v*t;
+            if(target==="s₀") result = s - v*t;
+            if(target==="v") result = (s-s0)/t;
+            if(target==="t") result = (s-s0)/v;
+        }
+
+
+        if(type === "geschwindigkeit"){
+
+            const v = target === "v" ? null : valueOf("v");
+            const v0 = target === "v₀" ? null : valueOf("v₀");
+            const a = target === "a" ? null : valueOf("a");
+            const t = target === "t" ? null : valueOf("t");
+
+            if(target==="v") result = v0+a*t;
+            if(target==="v₀") result = v-a*t;
+            if(target==="a") result = (v-v0)/t;
+            if(target==="t") result = (v-v0)/a;
+        }
+
+
+        if(type === "weg"){
+
+            const s = target === "s" ? null : valueOf("s");
+            const s0 = target === "s₀" ? null : valueOf("s₀");
+            const v0 = target === "v₀" ? null : valueOf("v₀");
+            const a = target === "a" ? null : valueOf("a");
+            const t = target === "t" ? null : valueOf("t");
+
+            if(target==="s"){
+                result = s0 + v0*t + 0.5*a*t*t;
+            }
+
+            if(target==="s₀"){
+                result = s - v0*t - 0.5*a*t*t;
+            }
+
+            if(target==="v₀"){
+                result = (s-s0-0.5*a*t*t)/t;
+            }
+
+            if(target==="a"){
+                result = 2*(s-s0-v0*t)/(t*t);
+            }
+
+            if(target==="t"){
+
+                const A = 0.5*a;
+                const B = v0;
+                const C = s0-s;
+
+                const discriminant = B*B - 4*A*C;
+
+                if(discriminant < 0){
+                    result = NaN;
+                }else{
+
+                    const t1 = (-B + Math.sqrt(discriminant))/(2*A);
+                    const t2 = (-B - Math.sqrt(discriminant))/(2*A);
+
+                    const valid = [t1,t2].filter(x => x >= 0);
+
+                    result = valid.length ? Math.min(...valid) : NaN;
+                }
+            }
+        }
+
+
+        if(type === "geschwindigkeit2"){
+
+            const v = target === "v" ? null : valueOf("v");
+            const v0 = target === "v₀" ? null : valueOf("v₀");
+            const a = target === "a" ? null : valueOf("a");
+            const s = target === "s" ? null : valueOf("s");
+            const s0 = target === "s₀" ? null : valueOf("s₀");
+
+            if(target==="v"){
+                const rad = v0*v0 + 2*a*(s-s0);
+                result = rad >= 0 ? Math.sqrt(rad) : NaN;
+            }
+
+            if(target==="v₀"){
+                const rad = v*v - 2*a*(s-s0);
+                result = rad >= 0 ? Math.sqrt(rad) : NaN;
+            }
+
+            if(target==="a"){
+                result = (v*v-v0*v0)/(2*(s-s0));
+            }
+
+            if(target==="s"){
+                result = s0 + (v*v-v0*v0)/(2*a);
+            }
+
+            if(target==="s₀"){
+                result = s - (v*v-v0*v0)/(2*a);
+            }
+        }
+
+
+        if(type === "beschleunigung"){
+
+            const a = target === "a" ? null : valueOf("a");
+            const dv = target === "Δv" ? null : valueOf("Δv");
+            const dt = target === "Δt" ? null : valueOf("Δt");
+
+            if(target==="a") result = dv/dt;
+            if(target==="Δv") result = a*dt;
+            if(target==="Δt") result = dv/a;
+        }
+
+
+        if(type === "durchschnitt"){
+
+            const v = target === "v" ? null : valueOf("v");
+            const ds = target === "Δs" ? null : valueOf("Δs");
+            const dt = target === "Δt" ? null : valueOf("Δt");
+
+            if(target==="v") result = ds/dt;
+            if(target==="Δs") result = v*dt;
+            if(target==="Δt") result = ds/v;
+        }
+
+
+        if(!Number.isFinite(result)){
+            throw new Error();
+        }
+
+        document.getElementById("calcResult").textContent =
+            formatNumber(result);
+
+        document.getElementById("calcUnit").textContent =
+            formulas[currentFormula].units[currentTarget];
+
+    }catch{
+
+        document.getElementById("calcResult").textContent = "Fehler";
+        document.getElementById("calcUnit").textContent =
+            "Eingaben prüfen";
+    }
+
+}
+
+
+function formatNumber(value){
+
+    if(Math.abs(value) >= 1000){
+        return value.toLocaleString("de-DE",{
+            maximumFractionDigits:2
+        });
+    }
+
+    return value.toLocaleString("de-DE",{
+        maximumFractionDigits:4
+    });
+
+}
+
+
+/* ============================================================
+   ÜBUNGSAUFGABEN
+============================================================ */
+
+const tasks = [
+
+    {
+        question:"Ein Körper legt in 4 s eine Strecke von 28 m zurück. Die Anfangsposition beträgt 0 m. Bestimme die Geschwindigkeit.",
+        answer:"v = (s − s₀) / t = (28 m − 0 m) / 4 s = 7 m/s."
+    },
+
+    {
+        question:"Ein Fahrzeug beschleunigt von 5 m/s auf 17 m/s in 6 s. Bestimme die Beschleunigung.",
+        answer:"a = (v − v₀) / t = (17 − 5) / 6 = 2 m/s²."
+    },
+
+    {
+        question:"Ein Körper hat v₀ = 3 m/s, a = 2 m/s² und bewegt sich 5 s. Bestimme den zurückgelegten Weg bei s₀ = 0 m.",
+        answer:"s = s₀ + v₀t + ½at² = 0 + 3·5 + ½·2·25 = 40 m."
+    },
+
+    {
+        question:"Ein Körper verändert seine Geschwindigkeit von 12 m/s auf 30 m/s. Die Beschleunigung beträgt 3 m/s². Bestimme die benötigte Zeit.",
+        answer:"t = (v − v₀) / a = (30 − 12) / 3 = 6 s."
+    },
+
+    {
+        question:"Ein Körper bewegt sich mit v = 15 m/s. In 8 s legt er eine Strecke Δs zurück. Bestimme Δs.",
+        answer:"Δs = v · Δt = 15 · 8 = 120 m."
+    }
+
+];
+
+
+function newTask(){
+
+    const index = Math.floor(Math.random()*tasks.length);
+
+    currentTask = tasks[index];
+
+    document.getElementById("taskQuestion").textContent =
+        currentTask.question;
+
+    const answer = document.getElementById("taskAnswer");
+
+    answer.textContent = currentTask.answer;
+    answer.classList.remove("show");
+
+}
+
+
+function showTaskAnswer(){
+
+    if(!currentTask){
+        newTask();
+    }
+
+    document.getElementById("taskAnswer")
+        .classList.add("show");
+
+}
+
+
+/* ============================================================
+   START
+============================================================ */
+
+createTargetButtons();
+renderSteps();
+renderInputs();
+newTask();
+
+</script>
+
+</body>
+</html>
