@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Experiment-Labor · S.Michaelis</title>
+<title>S.Michaelis – Experiment-Labor</title>
 
 <style>
 
@@ -17,17 +17,15 @@
     --bg:#02050b;
     --panel:#07111d;
     --panel2:#0a1725;
-    --border:#1d3b52;
-    --text:#edf7ff;
-    --muted:#8ea7bb;
+    --border:#1c334b;
+    --text:#edf6ff;
+    --muted:#8ea6bd;
 
     --blue:#38bdf8;
     --green:#34d399;
     --yellow:#fbbf24;
     --purple:#a78bfa;
     --red:#fb7185;
-    --cyan:#22d3ee;
-    --orange:#fb923c;
 }
 
 html{
@@ -47,34 +45,29 @@ body{
 
     background:
         radial-gradient(
-            ellipse at 20% 10%,
-            rgba(20,100,170,.30),
+            ellipse at 15% 10%,
+            rgba(30,100,170,.30),
+            transparent 35%
+        ),
+        radial-gradient(
+            ellipse at 85% 20%,
+            rgba(100,50,170,.22),
             transparent 32%
         ),
         radial-gradient(
-            ellipse at 80% 20%,
-            rgba(110,50,180,.22),
-            transparent 30%
-        ),
-        radial-gradient(
             ellipse at 50% 90%,
-            rgba(20,150,150,.15),
+            rgba(20,150,150,.16),
             transparent 35%
         ),
         linear-gradient(
             180deg,
             #02050b,
-            #030916 55%,
+            #030916 50%,
             #02040a
         );
 
     overflow-x:hidden;
 }
-
-
-/* =====================================================
-   STERNE
-===================================================== */
 
 body::before{
 
@@ -90,40 +83,24 @@ body::before{
     background-image:
         radial-gradient(
             circle,
-            rgba(255,255,255,.9) 1px,
+            rgba(255,255,255,.85) 1px,
             transparent 1.5px
         ),
         radial-gradient(
             circle,
-            rgba(100,200,255,.7) 1px,
-            transparent 1.5px
-        ),
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.5) 1px,
+            rgba(100,190,255,.7) 1px,
             transparent 1.5px
         );
 
     background-size:
-        150px 150px,
-        230px 230px,
-        310px 310px;
+        170px 170px,
+        260px 260px;
 
-    opacity:.45;
+    background-position:
+        20px 30px,
+        100px 80px;
 
-    animation:
-        stars 80s linear infinite;
-}
-
-@keyframes stars{
-
-    from{
-        transform:translate(0,0);
-    }
-
-    to{
-        transform:translate(-120px,80px);
-    }
+    opacity:.35;
 }
 
 
@@ -133,114 +110,123 @@ body::before{
 
 header{
 
-    padding:
-        35px 25px 25px;
-
     border-bottom:
-        1px solid
-        rgba(56,189,248,.18);
+        1px solid rgba(56,189,248,.18);
 
     background:
         rgba(2,7,15,.72);
 
     backdrop-filter:
-        blur(15px);
+        blur(14px);
 
     position:sticky;
     top:0;
-
     z-index:20;
 }
 
 .header-inner{
 
-    max-width:1400px;
+    max-width:1350px;
+
     margin:auto;
 
+    padding:
+        18px 25px;
+
     display:flex;
+
     align-items:center;
+
+    justify-content:space-between;
+
     gap:20px;
-}
-
-.back{
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    width:46px;
-    height:46px;
-
-    border:
-        1px solid
-        rgba(56,189,248,.35);
-
-    border-radius:12px;
-
-    color:var(--blue);
-
-    text-decoration:none;
-
-    font-size:22px;
-
-    background:
-        rgba(56,189,248,.06);
-}
-
-.back:hover{
-    background:
-        rgba(56,189,248,.14);
-}
-
-.logo{
-
-    width:52px;
-    height:52px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:
-        1px solid
-        rgba(52,211,153,.45);
-
-    border-radius:14px;
-
-    color:var(--green);
-
-    font-size:25px;
-
-    background:
-        rgba(52,211,153,.08);
 }
 
 .brand{
 
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+}
+
+.logo{
+
+    width:45px;
+    height:45px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
     color:var(--green);
 
-    font-size:11px;
+    background:
+        rgba(52,211,153,.08);
+
+    border:
+        1px solid rgba(52,211,153,.4);
+
+    font-size:23px;
+
+    box-shadow:
+        0 0 25px rgba(52,211,153,.1);
+}
+
+.brand-text strong{
+
+    display:block;
+
+    font-size:13px;
 
     letter-spacing:3px;
+
+    color:var(--blue);
+}
+
+.brand-text span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.back-button{
+
+    color:var(--text);
+
+    text-decoration:none;
+
+    padding:
+        9px 14px;
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius:9px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    font-size:13px;
 
     font-weight:bold;
 }
 
-h1{
+.back-button:hover{
 
-    margin:3px 0 0;
+    border-color:var(--blue);
 
-    font-size:
-        clamp(24px,4vw,38px);
-}
-
-.header-sub{
-
-    color:var(--muted);
-
-    font-size:13px;
-
-    margin-top:4px;
+    background:
+        rgba(56,189,248,.08);
 }
 
 
@@ -250,43 +236,20 @@ h1{
 
 main{
 
-    max-width:1400px;
+    max-width:1350px;
 
     margin:auto;
 
     padding:
-        35px 25px 70px;
+        45px 25px 70px;
 }
-
-
-/* =====================================================
-   HERO
-===================================================== */
 
 .hero{
 
-    padding:30px;
-
-    border:
-        1px solid
-        rgba(52,211,153,.30);
-
-    border-radius:22px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(7,30,29,.92),
-            rgba(5,14,24,.95)
-        );
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.30);
-
-    margin-bottom:25px;
+    margin-bottom:35px;
 }
 
-.hero-label{
+.label{
 
     color:var(--green);
 
@@ -295,15 +258,22 @@ main{
     font-weight:bold;
 
     letter-spacing:3px;
+
+    margin-bottom:8px;
 }
 
-.hero h2{
+h1{
 
     margin:
-        8px 0 10px;
+        0 0 12px;
 
     font-size:
-        clamp(28px,5vw,48px);
+        clamp(32px,5vw,55px);
+
+    line-height:1.05;
+
+    text-shadow:
+        0 0 35px rgba(56,189,248,.15);
 }
 
 .hero p{
@@ -312,12 +282,19 @@ main{
 
     color:var(--muted);
 
+    font-size:16px;
+
     line-height:1.7;
 
     margin:0;
 }
 
-.scientific-chain{
+
+/* =====================================================
+   PROCESS
+===================================================== */
+
+.process{
 
     display:flex;
 
@@ -327,33 +304,34 @@ main{
 
     gap:8px;
 
-    margin-top:22px;
+    margin-top:25px;
 }
 
-.chain-item{
+.process span{
 
     padding:
-        8px 12px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.10);
+        7px 11px;
 
     border-radius:8px;
 
     background:
         rgba(255,255,255,.035);
 
-    font-size:12px;
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    color:#dcecf5;
+
+    font-size:11px;
 
     font-weight:bold;
 }
 
-.chain-arrow{
+.process b{
 
     color:var(--green);
 
-    font-weight:bold;
+    font-size:13px;
 }
 
 
@@ -366,7 +344,7 @@ main{
     display:grid;
 
     grid-template-columns:
-        310px 1fr;
+        255px 1fr;
 
     gap:22px;
 
@@ -382,351 +360,249 @@ main{
 
     position:sticky;
 
-    top:125px;
+    top:90px;
 
     padding:18px;
 
     border:
-        1px solid
-        rgba(80,120,150,.28);
+        1px solid var(--border);
 
     border-radius:18px;
 
     background:
-        rgba(5,15,25,.90);
+        linear-gradient(
+            145deg,
+            rgba(8,20,34,.94),
+            rgba(4,10,18,.96)
+        );
 
-    backdrop-filter:
-        blur(12px);
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.25);
 }
 
 .sidebar-title{
 
-    color:#dcecf7;
+    color:#6f8ca5;
 
-    font-size:13px;
+    font-size:10px;
 
     font-weight:bold;
 
-    margin-bottom:13px;
+    letter-spacing:2px;
 
-    letter-spacing:1px;
+    margin:
+        2px 8px 12px;
 }
 
 .topic{
 
     width:100%;
 
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    padding:13px;
-
-    margin-bottom:8px;
-
-    color:#b8cad7;
-
-    background:
-        rgba(255,255,255,.025);
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    border-radius:11px;
-
-    cursor:pointer;
+    display:block;
 
     text-align:left;
 
-    transition:.2s;
+    border:0;
+
+    margin-bottom:6px;
+
+    padding:
+        11px 12px;
+
+    border-radius:9px;
+
+    color:#b9cad7;
+
+    background:transparent;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    font-weight:bold;
 }
 
 .topic:hover{
 
-    border-color:
-        rgba(56,189,248,.45);
-
     background:
-        rgba(56,189,248,.05);
+        rgba(255,255,255,.045);
+
+    color:#fff;
 }
 
 .topic.active{
 
-    color:#fff;
-
-    border-color:
-        var(--topic-color);
+    color:#04100d;
 
     background:
-        color-mix(
-            in srgb,
-            var(--topic-color) 9%,
-            transparent
-        );
+        var(--green);
 
     box-shadow:
-        0 0 20px
-        color-mix(
-            in srgb,
-            var(--topic-color) 10%,
-            transparent
-        );
+        0 0 20px rgba(52,211,153,.12);
 }
 
-.topic-icon{
+.sidebar-info{
 
-    width:36px;
-    height:36px;
+    margin-top:18px;
 
-    display:flex;
+    padding-top:17px;
 
-    align-items:center;
-    justify-content:center;
+    border-top:
+        1px solid rgba(255,255,255,.07);
 
-    border-radius:9px;
+    color:#71899e;
 
-    color:var(--topic-color);
+    font-size:11px;
 
-    background:
-        color-mix(
-            in srgb,
-            var(--topic-color) 10%,
-            transparent
-        );
-
-    font-weight:bold;
-
-    font-size:15px;
-}
-
-.topic-text strong{
-
-    display:block;
-
-    font-size:13px;
-
-    margin-bottom:3px;
-}
-
-.topic-text small{
-
-    color:#71899d;
-
-    font-size:10px;
+    line-height:1.6;
 }
 
 
 /* =====================================================
-   EXPERIMENT CARD
+   EXPERIMENT PANEL
 ===================================================== */
 
-.experiment{
-
-    display:none;
+.panel{
 
     border:
-        1px solid
-        rgba(80,120,150,.30);
+        1px solid var(--border);
 
     border-radius:20px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(7,20,32,.97),
-            rgba(3,9,17,.98)
+            rgba(8,22,37,.95),
+            rgba(3,9,17,.97)
         );
 
-    overflow:hidden;
-
     box-shadow:
-        0 20px 60px rgba(0,0,0,.25);
+        0 20px 60px rgba(0,0,0,.30);
+
+    overflow:hidden;
 }
 
-.experiment.active{
-    display:block;
-}
+.panel-header{
 
-.experiment-header{
-
-    padding:24px;
+    padding:
+        25px 27px;
 
     border-bottom:
-        1px solid
-        rgba(255,255,255,.07);
+        1px solid rgba(255,255,255,.07);
+
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(52,211,153,.10),
+            transparent 30%
+        );
 }
 
-.experiment-header h2{
+.panel-header h2{
 
-    margin:0 0 7px;
+    margin:0 0 6px;
 
-    font-size:25px;
+    font-size:26px;
 }
 
-.experiment-header p{
+.panel-header p{
 
     margin:0;
 
     color:var(--muted);
 
+    font-size:13px;
+
     line-height:1.6;
+}
 
-    font-size:14px;
+.panel-body{
+
+    padding:25px;
 }
 
 
 /* =====================================================
-   EXPERIMENT NAVIGATION
-===================================================== */
-
-.experiment-tabs{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:8px;
-
-    padding:16px 24px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.06);
-}
-
-.tab{
-
-    padding:
-        8px 12px;
-
-    color:#8ea6b9;
-
-    background:
-        rgba(255,255,255,.025);
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    font-size:11px;
-
-    font-weight:bold;
-}
-
-.tab.active{
-
-    color:#fff;
-
-    border-color:
-        var(--blue);
-
-    background:
-        rgba(56,189,248,.10);
-}
-
-
-/* =====================================================
-   CONTENT
-===================================================== */
-
-.experiment-body{
-
-    padding:24px;
-}
-
-.step{
-
-    display:none;
-}
-
-.step.active{
-    display:block;
-}
-
-
-/* =====================================================
-   FRAGE
+   RESEARCH QUESTION
 ===================================================== */
 
 .question-box{
 
-    padding:22px;
+    padding:20px;
 
-    border-left:
-        4px solid
-        var(--yellow);
+    border-radius:15px;
 
-    border-radius:12px;
+    border:
+        1px solid rgba(56,189,248,.18);
 
     background:
-        rgba(251,191,36,.06);
+        rgba(56,189,248,.045);
+
+    margin-bottom:20px;
 }
 
-.question-box h3{
+.question-label{
 
-    margin:
-        0 0 10px;
+    color:var(--blue);
 
-    color:var(--yellow);
+    font-size:10px;
+
+    font-weight:bold;
+
+    letter-spacing:2px;
+
+    margin-bottom:8px;
 }
 
-.question-box p{
+.question{
 
-    margin:0;
+    font-size:18px;
 
-    line-height:1.7;
+    line-height:1.5;
 
-    font-size:16px;
+    font-weight:bold;
 }
 
 
 /* =====================================================
-   HYPOTHESE
+   HYPOTHESIS
 ===================================================== */
 
 .hypothesis{
 
-    margin-top:18px;
+    margin-bottom:20px;
 }
 
 .hypothesis label{
 
     display:block;
 
-    color:#b9ccda;
+    color:#a8bbca;
 
-    font-size:13px;
+    font-size:12px;
 
     font-weight:bold;
 
     margin-bottom:8px;
 }
 
-.hypothesis textarea{
+textarea{
 
     width:100%;
 
-    min-height:110px;
+    min-height:80px;
 
     resize:vertical;
 
-    padding:14px;
+    padding:12px;
 
-    color:#edf7ff;
+    color:var(--text);
 
     background:
-        #040c15;
+        rgba(0,0,0,.25);
 
     border:
-        1px solid
-        #23445b;
+        1px solid rgba(255,255,255,.10);
 
     border-radius:10px;
 
@@ -734,216 +610,171 @@ main{
 
     font-family:inherit;
 
-    font-size:14px;
+    font-size:13px;
+
+    line-height:1.5;
 }
 
-.hypothesis textarea:focus{
+textarea:focus{
 
     border-color:
         var(--blue);
 
     box-shadow:
-        0 0 0 2px
-        rgba(56,189,248,.08);
+        0 0 0 3px rgba(56,189,248,.07);
 }
 
 
 /* =====================================================
-   CONTROLS
+   PARAMETERS
 ===================================================== */
 
-.control-grid{
+.parameters{
 
     display:grid;
 
     grid-template-columns:
         repeat(3,1fr);
 
-    gap:14px;
+    gap:12px;
 
     margin-bottom:20px;
 }
 
-.control{
+.parameter{
 
     padding:15px;
 
     border:
-        1px solid
-        rgba(255,255,255,.08);
+        1px solid rgba(255,255,255,.08);
 
-    border-radius:11px;
+    border-radius:12px;
 
     background:
         rgba(255,255,255,.025);
 }
 
-.control label{
+.parameter label{
 
     display:block;
 
-    color:#91a9ba;
+    color:#8299ab;
 
     font-size:11px;
 
     margin-bottom:7px;
 }
 
-.control input,
-.control select{
+.parameter input{
 
     width:100%;
 
-    padding:9px;
+    padding:9px 10px;
 
-    color:#edf7ff;
+    color:var(--text);
 
     background:
-        #07121d;
+        rgba(0,0,0,.28);
 
     border:
-        1px solid
-        #24455c;
-
-    border-radius:7px;
-
-    outline:none;
-}
-
-
-/* =====================================================
-   BUTTONS
-===================================================== */
-
-.buttons{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    gap:9px;
-
-    margin:15px 0;
-}
-
-button{
-
-    font-family:inherit;
-}
-
-.btn{
-
-    padding:
-        10px 15px;
+        1px solid rgba(255,255,255,.10);
 
     border-radius:8px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.12);
+    outline:none;
 
-    background:
-        rgba(255,255,255,.04);
-
-    color:#e9f5fb;
-
-    cursor:pointer;
-
-    font-weight:bold;
-
-    font-size:12px;
+    font-size:14px;
 }
 
-.btn:hover{
-
-    background:
-        rgba(255,255,255,.09);
-}
-
-.btn-primary{
-
-    color:#03110c;
-
-    background:
-        var(--green);
+.parameter input:focus{
 
     border-color:
         var(--green);
 }
 
-.btn-blue{
+.unit{
 
-    color:#03101a;
+    color:#6f899f;
 
-    background:
-        var(--blue);
+    font-size:10px;
 
-    border-color:
-        var(--blue);
-}
-
-.btn-red{
-
-    background:
-        rgba(251,113,133,.08);
-
-    border-color:
-        rgba(251,113,133,.40);
-
-    color:#fb9aad;
+    margin-top:5px;
 }
 
 
 /* =====================================================
-   SIMULATION
+   EXPERIMENT AREA
 ===================================================== */
+
+.experiment-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1.35fr .65fr;
+
+    gap:18px;
+
+    margin-bottom:20px;
+}
 
 .simulation{
 
-    margin-top:20px;
+    position:relative;
+
+    min-height:350px;
 
     border:
-        1px solid
-        rgba(56,189,248,.20);
+        1px solid rgba(255,255,255,.08);
 
-    border-radius:14px;
+    border-radius:15px;
 
     overflow:hidden;
 
     background:
-        #020810;
+        linear-gradient(
+            180deg,
+            #071321,
+            #030911
+        );
 }
 
-.sim-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:
-        12px 15px;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.07);
-
-    color:#9eb4c5;
-
-    font-size:11px;
-}
-
-canvas{
-
-    display:block;
+#simulationCanvas{
 
     width:100%;
 
-    height:auto;
+    height:350px;
+
+    display:block;
+}
+
+.simulation-status{
+
+    position:absolute;
+
+    top:13px;
+
+    left:13px;
+
+    padding:
+        7px 10px;
+
+    border-radius:8px;
+
+    color:#b9cad7;
 
     background:
-        #020810;
+        rgba(0,0,0,.45);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:
+        blur(6px);
+
+    font-size:10px;
+
+    font-weight:bold;
 }
 
 
@@ -951,66 +782,177 @@ canvas{
    LIVE VALUES
 ===================================================== */
 
-.live-values{
+.live{
 
     display:grid;
 
     grid-template-columns:
-        repeat(4,1fr);
+        repeat(2,1fr);
 
     gap:10px;
-
-    margin-top:14px;
 }
 
-.value{
+.live-value{
 
-    padding:14px;
+    padding:15px;
 
     border:
-        1px solid
-        rgba(255,255,255,.07);
+        1px solid rgba(255,255,255,.08);
 
-    border-radius:10px;
+    border-radius:12px;
 
     background:
         rgba(255,255,255,.025);
-
-    text-align:center;
 }
 
-.value span{
+.live-value span{
 
     display:block;
 
-    color:#71899b;
+    color:#728ba0;
 
     font-size:10px;
 
-    margin-bottom:5px;
+    margin-bottom:6px;
 }
 
-.value strong{
+.live-value strong{
 
-    font-size:17px;
+    font-size:20px;
+
+    color:#edf6ff;
 }
 
 
 /* =====================================================
-   MESSWERTE
+   CONTROLS
 ===================================================== */
+
+.controls{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:9px;
+
+    margin-top:15px;
+}
+
+button{
+
+    font-family:inherit;
+}
+
+.control{
+
+    border:0;
+
+    border-radius:9px;
+
+    padding:
+        10px 15px;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    color:#dcecf5;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid rgba(255,255,255,.10);
+}
+
+.control:hover{
+
+    background:
+        rgba(255,255,255,.10);
+}
+
+.control.start{
+
+    color:#04100d;
+
+    background:
+        var(--green);
+
+    border-color:
+        var(--green);
+}
+
+.control.measure{
+
+    color:#04100d;
+
+    background:
+        var(--yellow);
+
+    border-color:
+        var(--yellow);
+}
+
+.control:disabled{
+
+    opacity:.35;
+
+    cursor:not-allowed;
+}
+
+
+/* =====================================================
+   MEASUREMENT TABLE
+===================================================== */
+
+.section{
+
+    margin-top:22px;
+
+    padding-top:22px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+}
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:12px;
+}
+
+.section-title h3{
+
+    margin:0;
+
+    font-size:17px;
+}
+
+.section-title span{
+
+    color:#71899e;
+
+    font-size:10px;
+}
 
 .table-wrap{
 
     overflow-x:auto;
 
-    margin-top:18px;
-
     border:
-        1px solid
-        rgba(255,255,255,.08);
+        1px solid rgba(255,255,255,.08);
 
-    border-radius:11px;
+    border-radius:12px;
 }
 
 table{
@@ -1024,40 +966,83 @@ table{
 
 th{
 
-    color:#a8bfce;
+    text-align:left;
 
-    background:
-        rgba(255,255,255,.04);
+    color:#71899e;
+
+    font-size:10px;
 
     font-weight:bold;
-}
 
-th,td{
+    background:
+        rgba(255,255,255,.025);
 
     padding:
-        9px 11px;
+        11px 12px;
 
     border-bottom:
-        1px solid
-        rgba(255,255,255,.06);
-
-    text-align:right;
-}
-
-th:first-child,
-td:first-child{
-
-    text-align:left;
+        1px solid rgba(255,255,255,.07);
 }
 
 td{
 
-    color:#cbdbe5;
+    padding:
+        10px 12px;
+
+    color:#dce8f0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.05);
+}
+
+tr:last-child td{
+
+    border-bottom:0;
+}
+
+.empty{
+
+    color:#657d91;
+
+    text-align:center;
+
+    padding:22px;
 }
 
 
 /* =====================================================
-   AUSWERTUNG
+   CHART
+===================================================== */
+
+.chart-box{
+
+    position:relative;
+
+    height:350px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:15px;
+
+    background:
+        rgba(0,0,0,.16);
+
+    overflow:hidden;
+}
+
+#chartCanvas{
+
+    width:100%;
+
+    height:100%;
+
+    display:block;
+}
+
+
+/* =====================================================
+   ANALYSIS
 ===================================================== */
 
 .analysis-grid{
@@ -1065,132 +1050,149 @@ td{
     display:grid;
 
     grid-template-columns:
-        repeat(2,1fr);
+        repeat(3,1fr);
 
-    gap:15px;
-
-    margin-top:20px;
+    gap:12px;
 }
 
 .analysis-card{
 
-    padding:20px;
+    padding:17px;
 
     border:
-        1px solid
-        rgba(255,255,255,.08);
+        1px solid rgba(255,255,255,.08);
 
-    border-radius:13px;
+    border-radius:12px;
 
     background:
         rgba(255,255,255,.025);
 }
 
-.analysis-card h3{
+.analysis-card .small{
 
-    margin:
-        0 0 8px;
+    color:#71899e;
 
-    font-size:14px;
+    font-size:10px;
+
+    margin-bottom:7px;
+}
+
+.analysis-card strong{
+
+    display:block;
+
+    font-size:20px;
+
+    color:#edf6ff;
 }
 
 .analysis-card p{
 
-    margin:0;
-
-    color:#8fa7b9;
-
-    line-height:1.6;
-
-    font-size:13px;
-}
-
-.result-number{
-
-    color:var(--green);
-
-    font-size:26px;
-
-    font-weight:bold;
-
-    margin:7px 0;
-}
-
-
-/* =====================================================
-   ERKLÄRUNG
-===================================================== */
-
-.explanation{
-
-    margin-top:20px;
-
-    padding:20px;
-
-    border:
-        1px solid
-        rgba(52,211,153,.25);
-
-    border-radius:13px;
-
-    background:
-        rgba(52,211,153,.05);
-}
-
-.explanation h3{
-
     margin:
-        0 0 10px;
+        6px 0 0;
 
-    color:var(--green);
-}
-
-.explanation p{
-
-    margin:0;
-
-    color:#b5c8d4;
-
-    line-height:1.7;
-
-    font-size:14px;
-}
-
-
-/* =====================================================
-   STATUS
-===================================================== */
-
-.status{
-
-    margin-top:12px;
-
-    min-height:20px;
-
-    color:#8fa8ba;
-
-    font-size:12px;
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-footer{
-
-    padding:
-        30px;
-
-    text-align:center;
-
-    color:#71899e;
+    color:#8299ab;
 
     font-size:11px;
 
-    border-top:
-        1px solid
-        rgba(56,189,248,.10);
+    line-height:1.5;
+}
+
+
+/* =====================================================
+   RESULT
+===================================================== */
+
+.result-box{
+
+    padding:20px;
+
+    border-radius:14px;
+
+    border:
+        1px solid rgba(52,211,153,.20);
+
+    background:
+        rgba(52,211,153,.045);
+}
+
+.result-box h3{
+
+    margin:
+        0 0 12px;
+
+    color:var(--green);
+
+    font-size:17px;
+}
+
+.result-box p{
+
+    margin:
+        8px 0;
+
+    color:#b8cad7;
+
+    font-size:13px;
+
+    line-height:1.7;
+}
+
+.result-highlight{
+
+    margin-top:15px;
+
+    padding:13px;
+
+    border-radius:9px;
+
+    background:
+        rgba(0,0,0,.22);
+
+    color:#edf6ff;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* =====================================================
+   RESET EXPERIMENT
+===================================================== */
+
+.new-experiment{
+
+    margin-top:20px;
+
+    width:100%;
+
+    padding:13px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    color:#dcecf5;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.new-experiment:hover{
+
+    border-color:
+        var(--blue);
+
+    background:
+        rgba(56,189,248,.06);
 }
 
 
@@ -1198,7 +1200,7 @@ footer{
    RESPONSIVE
 ===================================================== */
 
-@media(max-width:1000px){
+@media(max-width:1050px){
 
     .lab-layout{
 
@@ -1207,57 +1209,45 @@ footer{
 
     .sidebar{
 
-        position:static;
+        position:relative;
 
-        display:grid;
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-        gap:8px;
+        top:auto;
     }
 
-    .sidebar-title{
+    .experiment-grid{
 
-        grid-column:
-            1/-1;
-    }
-
-    .topic{
-
-        margin:0;
+        grid-template-columns:1fr;
     }
 
 }
 
-@media(max-width:700px){
+@media(max-width:750px){
 
-    .control-grid,
+    .parameters{
+
+        grid-template-columns:1fr;
+    }
+
     .analysis-grid{
 
         grid-template-columns:1fr;
     }
 
-    .live-values{
-
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
     .header-inner{
 
-        align-items:flex-start;
+        padding:
+            14px 16px;
     }
 
-    .sidebar{
+    main{
 
-        grid-template-columns:1fr;
+        padding:
+            30px 15px 50px;
     }
 
-    .experiment-body,
-    .experiment-header{
+    .panel-body{
 
-        padding:18px;
+        padding:17px;
     }
 
 }
@@ -1278,126 +1268,96 @@ footer{
 
 <div class="header-inner">
 
-<a
-    href="../"
-    class="back"
-    title="Zurück zum Physiklabor"
->
-←
-</a>
+<div class="brand">
 
 <div class="logo">
 🧪
 </div>
 
-<div>
+<div class="brand-text">
 
-<div class="brand">
+<strong>
 S.MICHAELIS · PHYSIKLABOR
-</div>
+</strong>
 
-<h1>
+<span>
 Experiment-Labor
-</h1>
+</span>
 
-<div class="header-sub">
-Physik nicht nur berechnen – Physik selbst untersuchen.
 </div>
 
 </div>
+
+
+<a
+    href="../"
+    class="back-button"
+>
+← Zurück zum Physiklabor
+</a>
 
 </div>
 
 </header>
 
 
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
 <main>
 
 
-<!-- =====================================================
-     HERO
-===================================================== -->
-
 <section class="hero">
 
-<div class="hero-label">
-WISSENSCHAFTLICHES ARBEITEN
+<div class="label">
+FORSCHEN · MESSEN · AUSWERTEN
 </div>
 
-<h2>
-Experimentieren · Messen · Verstehen
-</h2>
+<h1>
+Experiment-Labor
+</h1>
 
 <p>
-Hier beginnt Physik nicht mit einer fertigen Formel.
-Du stellst eine Frage, formulierst eine Vermutung,
-führst ein Experiment durch, sammelst Messwerte,
-erstellst Diagramme und vergleichst deine Messung
-mit dem theoretischen Modell.
+Physik beginnt mit einer Frage.
+Formuliere eine Hypothese, führe einen Versuch durch,
+sammle eigene Messwerte und überprüfe anschließend,
+ob deine Messung zur physikalischen Theorie passt.
 </p>
 
-<div class="scientific-chain">
 
-<div class="chain-item">
-Frage
-</div>
+<div class="process">
 
-<div class="chain-arrow">
-→
-</div>
+<span>Forschungsfrage</span>
 
-<div class="chain-item">
-Vermutung
-</div>
+<b>→</b>
 
-<div class="chain-arrow">
-→
-</div>
+<span>Hypothese</span>
 
-<div class="chain-item">
-Experiment
-</div>
+<b>→</b>
 
-<div class="chain-arrow">
-→
-</div>
+<span>Experiment</span>
 
-<div class="chain-item">
-Messung
-</div>
+<b>→</b>
 
-<div class="chain-arrow">
-→
-</div>
+<span>Messung</span>
 
-<div class="chain-item">
-Diagramm
-</div>
+<b>→</b>
 
-<div class="chain-arrow">
-→
-</div>
+<span>Diagramm</span>
 
-<div class="chain-item">
-Auswertung
-</div>
+<b>→</b>
 
-<div class="chain-arrow">
-→
-</div>
+<span>Auswertung</span>
 
-<div class="chain-item">
-Erklärung
-</div>
+<b>→</b>
+
+<span>Erklärung</span>
 
 </div>
 
 </section>
 
-
-<!-- =====================================================
-     LABOR
-===================================================== -->
 
 <div class="lab-layout">
 
@@ -1409,1909 +1369,336 @@ Erklärung
 <aside class="sidebar">
 
 <div class="sidebar-title">
-EXPERIMENTBEREICHE
+VERSUCHSAUSWAHL
 </div>
 
 
-<button
-    class="topic active"
-    style="--topic-color:#38bdf8"
-    data-topic="kinematik"
->
-<div class="topic-icon">
-→
-</div>
+<button class="topic active">
+→ Kinematik
+</button>
 
-<div class="topic-text">
+<button class="topic">
+↓ Freier Fall
+</button>
 
-<strong>
-Kinematik
-</strong>
+<button class="topic">
+↗ Schiefer Wurf
+</button>
 
-<small>
-Bewegung messen
-</small>
+<button class="topic">
+F Newton
+</button>
 
-</div>
+<button class="topic">
+↻ Kreisbewegung
+</button>
+
+<button class="topic">
+W Arbeit · Energie
+</button>
+
+<button class="topic">
+↗ Vektoren
+</button>
+
+<button class="topic">
+sin Trigonometrie
 </button>
 
 
-<button
-    class="topic"
-    style="--topic-color:#34d399"
-    data-topic="fall"
->
-<div class="topic-icon">
-↓
-</div>
+<div class="sidebar-info">
 
-<div class="topic-text">
+<strong>Aktiver Versuch</strong>
 
-<strong>
-Freier Fall
-</strong>
+<br><br>
 
-<small>
-Beschleunigung
-</small>
+Gleichmäßig beschleunigte
+Bewegung.
+
+<br><br>
+
+Die Messwerte werden während
+des Versuchs selbst erzeugt und
+anschließend ausgewertet.
 
 </div>
-</button>
-
-
-<button
-    class="topic"
-    style="--topic-color:#fbbf24"
-    data-topic="wurf"
->
-<div class="topic-icon">
-↗
-</div>
-
-<div class="topic-text">
-
-<strong>
-Wurfbewegungen
-</strong>
-
-<small>
-2D-Bewegung
-</small>
-
-</div>
-</button>
-
-
-<button
-    class="topic"
-    style="--topic-color:#fb923c"
-    data-topic="newton"
->
-<div class="topic-icon">
-F
-</div>
-
-<div class="topic-text">
-
-<strong>
-Newton
-</strong>
-
-<small>
-Kraft und Beschleunigung
-</small>
-
-</div>
-</button>
-
-
-<button
-    class="topic"
-    style="--topic-color:#22d3ee"
-    data-topic="kreis"
->
-<div class="topic-icon">
-↻
-</div>
-
-<div class="topic-text">
-
-<strong>
-Kreisbewegung
-</strong>
-
-<small>
-Zentripetalkraft
-</small>
-
-</div>
-</button>
-
-
-<button
-    class="topic"
-    style="--topic-color:#4ade80"
-    data-topic="energie"
->
-<div class="topic-icon">
-W
-</div>
-
-<div class="topic-text">
-
-<strong>
-Arbeit · Energie · Impuls
-</strong>
-
-<small>
-Erhaltung und Stoß
-</small>
-
-</div>
-</button>
-
-
-<button
-    class="topic"
-    style="--topic-color:#a78bfa"
-    data-topic="vektor"
->
-<div class="topic-icon">
-↗
-</div>
-
-<div class="topic-text">
-
-<strong>
-Vektoren
-</strong>
-
-<small>
-Richtung und Betrag
-</small>
-
-</div>
-</button>
-
-
-<button
-    class="topic"
-    style="--topic-color:#f472b6"
-    data-topic="trig"
->
-<div class="topic-icon">
-sin
-</div>
-
-<div class="topic-text">
-
-<strong>
-Trigonometrie
-</strong>
-
-<small>
-Dreieck messen
-</small>
-
-</div>
-</button>
-
-
-<button
-    class="topic"
-    style="--topic-color:#60a5fa"
-    data-topic="messung"
->
-<div class="topic-icon">
-Σ
-</div>
-
-<div class="topic-text">
-
-<strong>
-Messlabor
-</strong>
-
-<small>
-Fehler und Auswertung
-</small>
-
-</div>
-</button>
 
 </aside>
 
 
 <!-- =====================================================
-     EXPERIMENTS
+     EXPERIMENT
 ===================================================== -->
 
-<section>
+<section class="panel">
 
 
-<!-- =====================================================
-     KINEMATIK
-===================================================== -->
-
-<div
-    class="experiment active"
-    id="kinematik"
->
-
-<div class="experiment-header">
+<div class="panel-header">
 
 <h2>
-Kinematik – Bewegung selbst untersuchen
+Kinematik – Bewegungsmessung
 </h2>
 
 <p>
-Untersuche den Zusammenhang zwischen Zeit,
-Weg, Geschwindigkeit und Beschleunigung.
-Nimm eigene Messwerte auf und vergleiche sie
-mit dem theoretischen Modell.
+Untersuche experimentell den Zusammenhang zwischen
+Zeit, Strecke und Geschwindigkeit bei einer
+gleichmäßig beschleunigten Bewegung.
 </p>
 
 </div>
 
 
-<div class="experiment-tabs">
-
-<button
-    class="tab active"
-    data-step="kin-question"
->
-1 · Frage
-</button>
-
-<button
-    class="tab"
-    data-step="kin-experiment"
->
-2 · Experiment
-</button>
-
-<button
-    class="tab"
-    data-step="kin-analysis"
->
-3 · Auswertung
-</button>
-
-</div>
+<div class="panel-body">
 
 
-<div class="experiment-body">
-
-
-<!-- FRAGE -->
-
-<div
-    class="step active"
-    id="kin-question"
->
+<!-- =====================================================
+     FORSCHUNGSFRAGE
+===================================================== -->
 
 <div class="question-box">
 
-<h3>
-Forschungsfrage
-</h3>
+<div class="question-label">
+FORSCHUNGSFRAGE
+</div>
 
-<p>
-Wie verändert sich der zurückgelegte Weg,
-wenn sich die Geschwindigkeit eines Körpers
-gleichmäßig verändert?
-</p>
+<div class="question">
+Wie verändert sich die zurückgelegte Strecke
+mit der Zeit bei einer gleichmäßig beschleunigten Bewegung?
+</div>
 
 </div>
 
 
+<!-- =====================================================
+     HYPOTHESE
+===================================================== -->
+
 <div class="hypothesis">
 
-<label>
-Meine Vermutung:
+<label for="hypothesis">
+Meine Hypothese:
 </label>
 
 <textarea
-    id="kinHypothesis"
-    placeholder="Was erwartest du? Wie sieht das Weg-Zeit-Diagramm aus?"
+    id="hypothesis"
+    placeholder="Was erwartest du? Beschreibe deinen vermuteten Zusammenhang zwischen Zeit und Strecke."
 ></textarea>
 
 </div>
 
 
-<div class="buttons">
+<!-- =====================================================
+     PARAMETER
+===================================================== -->
 
-<button
-    class="btn btn-blue"
-    onclick="goStep('kin-experiment')"
->
-Zum Experiment →
-</button>
-
-</div>
-
-</div>
+<div class="parameters">
 
 
-<!-- EXPERIMENT -->
-
-<div
-    class="step"
-    id="kin-experiment"
->
-
-<div class="control-grid">
-
-<div class="control">
+<div class="parameter">
 
 <label>
-Bewegungsart
-</label>
-
-<select id="kinType">
-
-<option value="uniform">
-Gleichförmig
-</option>
-
-<option value="accelerated">
-Gleichmäßig beschleunigt
-</option>
-
-</select>
-
-</div>
-
-
-<div class="control">
-
-<label>
-Startgeschwindigkeit v₀ [m/s]
+Startgeschwindigkeit v₀
 </label>
 
 <input
-    id="kinV0"
+    id="v0"
+    type="number"
+    value="0"
+    min="0"
+    max="20"
+    step="0.1"
+>
+
+<div class="unit">
+m/s
+</div>
+
+</div>
+
+
+<div class="parameter">
+
+<label>
+Beschleunigung a
+</label>
+
+<input
+    id="acceleration"
     type="number"
     value="2"
+    min="0.1"
+    max="10"
     step="0.1"
 >
 
+<div class="unit">
+m/s²
+</div>
+
 </div>
 
 
-<div class="control">
+<div class="parameter">
 
 <label>
-Beschleunigung a [m/s²]
+Messfehler
 </label>
 
 <input
-    id="kinA"
+    id="error"
     type="number"
-    value="1"
-    step="0.1"
->
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-primary"
-    onclick="startKinematics()"
->
-▶ Start
-</button>
-
-<button
-    class="btn"
-    onclick="pauseSimulation()"
->
-Ⅱ Pause
-</button>
-
-<button
-    class="btn btn-red"
-    onclick="resetKinematics()"
->
-↺ Reset
-</button>
-
-<button
-    class="btn"
-    onclick="takeMeasurement()"
->
-＋ Messwert
-</button>
-
-</div>
-
-
-<div class="simulation">
-
-<div class="sim-header">
-
-<span>
-LIVE-SIMULATION
-</span>
-
-<span id="kinStatus">
-Bereit
-</span>
-
-</div>
-
-<canvas
-    id="kinCanvas"
-    width="900"
-    height="300"
-></canvas>
-
-</div>
-
-
-<div class="live-values">
-
-<div class="value">
-
-<span>
-Zeit
-</span>
-
-<strong id="kinTime">
-0.00 s
-</strong>
-
-</div>
-
-<div class="value">
-
-<span>
-Weg
-</span>
-
-<strong id="kinS">
-0.00 m
-</strong>
-
-</div>
-
-<div class="value">
-
-<span>
-Geschwindigkeit
-</span>
-
-<strong id="kinV">
-0.00 m/s
-</strong>
-
-</div>
-
-<div class="value">
-
-<span>
-Beschleunigung
-</span>
-
-<strong id="kinA_live">
-0.00 m/s²
-</strong>
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-blue"
-    onclick="goStep('kin-analysis')"
->
-Messwerte auswerten →
-</button>
-
-</div>
-
-</div>
-
-
-<!-- AUSWERTUNG -->
-
-<div
-    class="step"
-    id="kin-analysis"
->
-
-<h3>
-Messwerte
-</h3>
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>
-Messung
-</th>
-
-<th>
-t [s]
-</th>
-
-<th>
-s [m]
-</th>
-
-<th>
-v [m/s]
-</th>
-
-<th>
-a [m/s²]
-</th>
-
-</tr>
-
-</thead>
-
-<tbody id="kinTable">
-
-</tbody>
-
-</table>
-
-</div>
-
-
-<div class="analysis-grid">
-
-<div class="analysis-card">
-
-<h3>
-Theoretischer Endweg
-</h3>
-
-<div
-    class="result-number"
-    id="kinTheoryS"
->
-0.00 m
-</div>
-
-<p>
-Berechnet aus dem gewählten Bewegungsmodell.
-</p>
-
-</div>
-
-
-<div class="analysis-card">
-
-<h3>
-Gemessener Endweg
-</h3>
-
-<div
-    class="result-number"
-    id="kinMeasuredS"
->
-0.00 m
-</div>
-
-<p>
-Letzter aufgenommener Messwert.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="explanation">
-
-<h3>
-Physikalische Erklärung
-</h3>
-
-<p id="kinExplanation">
-Starte das Experiment und sammle Messwerte.
-Anschließend kannst du Theorie und Messung vergleichen.
-</p>
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     FREIER FALL
-===================================================== -->
-
-<div
-    class="experiment"
-    id="fall"
->
-
-<div class="experiment-header">
-
-<h2>
-Freier Fall – Beschleunigung durch Gravitation
-</h2>
-
-<p>
-Untersuche, wie sich Geschwindigkeit und Fallstrecke
-unter dem Einfluss der Erdbeschleunigung verändern.
-</p>
-
-</div>
-
-
-<div class="experiment-tabs">
-
-<button
-    class="tab active"
-    data-step="fall-question"
->
-1 · Frage
-</button>
-
-<button
-    class="tab"
-    data-step="fall-experiment"
->
-2 · Experiment
-</button>
-
-</div>
-
-
-<div class="experiment-body">
-
-
-<div
-    class="step active"
-    id="fall-question"
->
-
-<div class="question-box">
-
-<h3>
-Forschungsfrage
-</h3>
-
-<p>
-Wie verändert sich die Geschwindigkeit eines
-fallenden Körpers mit der Zeit?
-</p>
-
-</div>
-
-
-<div class="hypothesis">
-
-<label>
-Meine Vermutung:
-</label>
-
-<textarea
-    id="fallHypothesis"
-    placeholder="Was passiert mit der Geschwindigkeit?"
-></textarea>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-blue"
-    onclick="goStep('fall-experiment')"
->
-Zum Experiment →
-</button>
-
-</div>
-
-</div>
-
-
-<div
-    class="step"
-    id="fall-experiment"
->
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Fallhöhe h [m]
-</label>
-
-<input
-    id="fallHeight"
-    type="number"
-    value="20"
-    min="1"
-    step="1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Erdbeschleunigung g [m/s²]
-</label>
-
-<input
-    id="fallG"
-    type="number"
-    value="9.81"
-    step="0.01"
->
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-primary"
-    onclick="startFall()"
->
-▶ Start
-</button>
-
-<button
-    class="btn"
-    onclick="pauseSimulation()"
->
-Ⅱ Pause
-</button>
-
-<button
-    class="btn btn-red"
-    onclick="resetFall()"
->
-↺ Reset
-</button>
-
-</div>
-
-
-<div class="simulation">
-
-<div class="sim-header">
-
-<span>
-FREIER FALL
-</span>
-
-<span id="fallStatus">
-Bereit
-</span>
-
-</div>
-
-<canvas
-    id="fallCanvas"
-    width="900"
-    height="420"
-></canvas>
-
-</div>
-
-
-<div class="live-values">
-
-<div class="value">
-
-<span>
-Zeit
-</span>
-
-<strong id="fallTime">
-0.00 s
-</strong>
-
-</div>
-
-<div class="value">
-
-<span>
-Fallstrecke
-</span>
-
-<strong id="fallS">
-0.00 m
-</strong>
-
-</div>
-
-<div class="value">
-
-<span>
-Geschwindigkeit
-</span>
-
-<strong id="fallV">
-0.00 m/s
-</strong>
-
-</div>
-
-<div class="value">
-
-<span>
-Beschleunigung
-</span>
-
-<strong id="fallA">
-9.81 m/s²
-</strong>
-
-</div>
-
-</div>
-
-
-<div class="explanation">
-
-<h3>
-Physikalische Erklärung
-</h3>
-
-<p>
-Beim freien Fall aus der Ruhe gilt:
-s = ½ · g · t² und v = g · t.
-Die Geschwindigkeit nimmt deshalb gleichmäßig
-mit der Zeit zu, während der zurückgelegte Weg
-quadratisch mit der Zeit wächst.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     WURF
-===================================================== -->
-
-<div
-    class="experiment"
-    id="wurf"
->
-
-<div class="experiment-header">
-
-<h2>
-Wurfbewegungen – Bewegung in zwei Dimensionen
-</h2>
-
-<p>
-Untersuche, wie sich eine horizontale und vertikale
-Bewegung gleichzeitig überlagern.
-</p>
-
-</div>
-
-
-<div class="experiment-body">
-
-<div class="question-box">
-
-<h3>
-Forschungsfrage
-</h3>
-
-<p>
-Welche Form hat die Flugbahn eines Körpers,
-wenn er mit einer Anfangsgeschwindigkeit
-schräg nach oben geworfen wird?
-</p>
-
-</div>
-
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Anfangsgeschwindigkeit v₀ [m/s]
-</label>
-
-<input
-    id="throwV"
-    type="number"
-    value="15"
+    value="2"
+    min="0"
+    max="10"
     step="0.5"
 >
 
+<div class="unit">
+± %
 </div>
 
-<div class="control">
+</div>
 
-<label>
-Winkel α [°]
-</label>
+</div>
 
-<input
-    id="throwAngle"
-    type="number"
-    value="45"
-    min="1"
-    max="89"
+
+<!-- =====================================================
+     SIMULATION
+===================================================== -->
+
+<div class="experiment-grid">
+
+
+<div>
+
+<div class="simulation">
+
+<canvas id="simulationCanvas"></canvas>
+
+<div
+    class="simulation-status"
+    id="status"
 >
-
-</div>
-
-<div class="control">
-
-<label>
-Erdbeschleunigung g [m/s²]
-</label>
-
-<input
-    id="throwG"
-    type="number"
-    value="9.81"
-    step="0.01"
->
-
+BEREIT FÜR DAS EXPERIMENT
 </div>
 
 </div>
 
 
-<div class="buttons">
+<div class="controls">
 
 <button
-    class="btn btn-primary"
-    onclick="startThrow()"
+    class="control start"
+    id="startButton"
 >
-▶ Start
+▶ Experiment starten
 </button>
 
 <button
-    class="btn"
-    onclick="pauseSimulation()"
+    class="control"
+    id="pauseButton"
+    disabled
 >
 Ⅱ Pause
 </button>
 
 <button
-    class="btn btn-red"
-    onclick="resetThrow()"
+    class="control measure"
+    id="measureButton"
+    disabled
+>
+● Messwert aufnehmen
+</button>
+
+<button
+    class="control"
+    id="resetButton"
 >
 ↺ Reset
 </button>
 
 </div>
 
-
-<div class="simulation">
-
-<div class="sim-header">
-
-<span>
-SCHIEFER WURF
-</span>
-
-<span id="throwStatus">
-Bereit
-</span>
-
-</div>
-
-<canvas
-    id="throwCanvas"
-    width="900"
-    height="450"
-></canvas>
-
 </div>
 
 
-<div class="live-values">
+<div>
 
-<div class="value">
+<div class="live">
+
+<div class="live-value">
 
 <span>
-t
+ZEIT t
 </span>
 
-<strong id="throwTime">
-0.00 s
+<strong id="liveTime">
+0,00 s
 </strong>
 
 </div>
 
-<div class="value">
+
+<div class="live-value">
 
 <span>
-x
+STRECKE s
 </span>
 
-<strong id="throwX">
-0.00 m
+<strong id="liveDistance">
+0,00 m
 </strong>
 
 </div>
 
-<div class="value">
+
+<div class="live-value">
 
 <span>
-y
+GESCHWINDIGKEIT v
 </span>
 
-<strong id="throwY">
-0.00 m
+<strong id="liveVelocity">
+0,00 m/s
 </strong>
 
 </div>
 
-<div class="value">
+
+<div class="live-value">
 
 <span>
-v
+BESCHLEUNIGUNG a
 </span>
 
-<strong id="throwSpeed">
-0.00 m/s
+<strong id="liveAcceleration">
+0,00 m/s²
 </strong>
 
 </div>
 
 </div>
 
-
-<div class="explanation">
-
-<h3>
-Physikalische Erklärung
-</h3>
-
-<p>
-Die horizontale Bewegung ist gleichförmig,
-während die vertikale Bewegung gleichmäßig
-beschleunigt ist. Die Überlagerung beider
-Bewegungen erzeugt die Wurfparabel.
-</p>
-
-</div>
-
 </div>
 
 </div>
 
 
 <!-- =====================================================
-     NEWTON
+     MESSWERTE
 ===================================================== -->
 
-<div
-    class="experiment"
-    id="newton"
->
+<div class="section">
 
-<div class="experiment-header">
-
-<h2>
-Newton-Labor – Kraft und Beschleunigung
-</h2>
-
-<p>
-Untersuche experimentell den Zusammenhang
-zwischen Kraft, Masse und Beschleunigung.
-</p>
-
-</div>
-
-
-<div class="experiment-body">
-
-<div class="question-box">
+<div class="section-title">
 
 <h3>
-Forschungsfrage
+Messwert-Tabelle
 </h3>
 
-<p>
-Wie verändert sich die Beschleunigung eines Körpers,
-wenn die wirkende Kraft verändert wird?
-</p>
-
-</div>
-
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Masse m [kg]
-</label>
-
-<input
-    id="newtonMass"
-    type="number"
-    value="2"
-    step="0.1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Kraft F [N]
-</label>
-
-<input
-    id="newtonForce"
-    type="number"
-    value="10"
-    step="0.5"
->
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-primary"
-    onclick="calculateNewton()"
->
-Experiment auswerten
-</button>
-
-</div>
-
-
-<div class="analysis-grid">
-
-<div class="analysis-card">
-
-<h3>
-2. Newtonsches Gesetz
-</h3>
-
-<div
-    class="result-number"
-    id="newtonA"
->
-0.00 m/s²
-</div>
-
-<p>
-a = F / m
-</p>
-
-</div>
-
-
-<div class="analysis-card">
-
-<h3>
-Verdopplung der Kraft
-</h3>
-
-<div
-    class="result-number"
-    id="newtonA2"
->
-0.00 m/s²
-</div>
-
-<p>
-Was passiert bei gleicher Masse und doppelter Kraft?
-</p>
-
-</div>
-
-</div>
-
-
-<div class="explanation">
-
-<h3>
-Ergebnis
-</h3>
-
-<p id="newtonExplanation">
-Gib Kraft und Masse ein und starte die Auswertung.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     KREISBEWEGUNG
-===================================================== -->
-
-<div
-    class="experiment"
-    id="kreis"
->
-
-<div class="experiment-header">
-
-<h2>
-Kreisbewegung – Zentripetalkraft sichtbar machen
-</h2>
-
-<p>
-Untersuche den Zusammenhang zwischen Radius,
-Bahngeschwindigkeit und Zentripetalkraft.
-</p>
-
-</div>
-
-
-<div class="experiment-body">
-
-<div class="question-box">
-
-<h3>
-Forschungsfrage
-</h3>
-
-<p>
-Wie verändert sich die notwendige Zentripetalkraft,
-wenn die Geschwindigkeit eines Körpers erhöht wird?
-</p>
-
-</div>
-
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Masse m [kg]
-</label>
-
-<input
-    id="circleMass"
-    type="number"
-    value="1"
-    step="0.1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Radius r [m]
-</label>
-
-<input
-    id="circleRadius"
-    type="number"
-    value="2"
-    step="0.1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Geschwindigkeit v [m/s]
-</label>
-
-<input
-    id="circleSpeed"
-    type="number"
-    value="5"
-    step="0.1"
->
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-primary"
-    onclick="calculateCircle()"
->
-Experiment auswerten
-</button>
-
-</div>
-
-
-<div class="analysis-grid">
-
-<div class="analysis-card">
-
-<h3>
-Zentripetalbeschleunigung
-</h3>
-
-<div
-    class="result-number"
-    id="circleA"
->
-0.00 m/s²
-</div>
-
-<p>
-aᶻ = v² / r
-</p>
-
-</div>
-
-
-<div class="analysis-card">
-
-<h3>
-Zentripetalkraft
-</h3>
-
-<div
-    class="result-number"
-    id="circleF"
->
-0.00 N
-</div>
-
-<p>
-Fᶻ = m · v² / r
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     ENERGIE
-===================================================== -->
-
-<div
-    class="experiment"
-    id="energie"
->
-
-<div class="experiment-header">
-
-<h2>
-Arbeit · Energie · Impuls
-</h2>
-
-<p>
-Untersuche Energieumwandlungen und den Zusammenhang
-zwischen Arbeit, Kraft und Bewegung.
-</p>
-
-</div>
-
-
-<div class="experiment-body">
-
-<div class="question-box">
-
-<h3>
-Forschungsfrage
-</h3>
-
-<p>
-Wie wird Lageenergie beim Herunterfallen
-in Bewegungsenergie umgewandelt?
-</p>
-
-</div>
-
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Masse m [kg]
-</label>
-
-<input
-    id="energyMass"
-    type="number"
-    value="2"
-    step="0.1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Höhe h [m]
-</label>
-
-<input
-    id="energyHeight"
-    type="number"
-    value="5"
-    step="0.1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-g [m/s²]
-</label>
-
-<input
-    id="energyG"
-    type="number"
-    value="9.81"
-    step="0.01"
->
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-primary"
-    onclick="calculateEnergy()"
->
-Energie untersuchen
-</button>
-
-</div>
-
-
-<div class="analysis-grid">
-
-<div class="analysis-card">
-
-<h3>
-Lageenergie
-</h3>
-
-<div
-    class="result-number"
-    id="potentialEnergy"
->
-0.00 J
-</div>
-
-<p>
-Eₚ = m · g · h
-</p>
-
-</div>
-
-
-<div class="analysis-card">
-
-<h3>
-Bewegungsenergie am Boden
-</h3>
-
-<div
-    class="result-number"
-    id="kineticEnergy"
->
-0.00 J
-</div>
-
-<p>
-Ideales Modell ohne Luftwiderstand.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="explanation">
-
-<h3>
-Energieerhaltung
-</h3>
-
-<p>
-Im idealisierten Modell bleibt die mechanische
-Energie erhalten. Die Lageenergie nimmt ab,
-während die Bewegungsenergie zunimmt.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     VEKTOR
-===================================================== -->
-
-<div
-    class="experiment"
-    id="vektor"
->
-
-<div class="experiment-header">
-
-<h2>
-Vektor-Labor – Richtung und Betrag
-</h2>
-
-<p>
-Untersuche experimentell, wie sich zwei Vektoren
-zu einem resultierenden Vektor zusammensetzen.
-</p>
-
-</div>
-
-
-<div class="experiment-body">
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Vektor A – x
-</label>
-
-<input
-    id="vx1"
-    type="number"
-    value="4"
-    step="0.1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Vektor A – y
-</label>
-
-<input
-    id="vy1"
-    type="number"
-    value="2"
-    step="0.1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Vektor B – x
-</label>
-
-<input
-    id="vx2"
-    type="number"
-    value="2"
-    step="0.1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Vektor B – y
-</label>
-
-<input
-    id="vy2"
-    type="number"
-    value="4"
-    step="0.1"
->
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-primary"
-    onclick="calculateVector()"
->
-Vektoren addieren
-</button>
-
-</div>
-
-
-<div class="analysis-grid">
-
-<div class="analysis-card">
-
-<h3>
-Resultierender Vektor
-</h3>
-
-<div
-    class="result-number"
-    id="vectorResult"
->
-(0 | 0)
-</div>
-
-<p>
-R = A + B
-</p>
-
-</div>
-
-
-<div class="analysis-card">
-
-<h3>
-Betrag
-</h3>
-
-<div
-    class="result-number"
-    id="vectorMagnitude"
->
-0.00
-</div>
-
-<p>
-|R| = √(Rₓ² + Rᵧ²)
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     TRIGONOMETRIE
-===================================================== -->
-
-<div
-    class="experiment"
-    id="trig"
->
-
-<div class="experiment-header">
-
-<h2>
-Trigonometrie-Labor – Dreieck messen
-</h2>
-
-<p>
-Verändere Winkel und Hypotenuse und beobachte,
-wie sich die Seitenlängen des rechtwinkligen
-Dreiecks verändern.
-</p>
-
-</div>
-
-
-<div class="experiment-body">
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Hypotenuse c [cm]
-</label>
-
-<input
-    id="trigC"
-    type="number"
-    value="10"
-    step="0.1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Winkel α [°]
-</label>
-
-<input
-    id="trigAngle"
-    type="number"
-    value="30"
-    min="1"
-    max="89"
->
-
-</div>
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-primary"
-    onclick="calculateTrig()"
->
-Dreieck untersuchen
-</button>
-
-</div>
-
-
-<div class="analysis-grid">
-
-<div class="analysis-card">
-
-<h3>
-Gegenkathete
-</h3>
-
-<div
-    class="result-number"
-    id="trigOpp"
->
-0.00 cm
-</div>
-
-<p>
-a = c · sin(α)
-</p>
-
-</div>
-
-
-<div class="analysis-card">
-
-<h3>
-Ankathete
-</h3>
-
-<div
-    class="result-number"
-    id="trigAdj"
->
-0.00 cm
-</div>
-
-<p>
-b = c · cos(α)
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     MESSLABOR
-===================================================== -->
-
-<div
-    class="experiment"
-    id="messung"
->
-
-<div class="experiment-header">
-
-<h2>
-Messlabor – Messwerte wissenschaftlich auswerten
-</h2>
-
-<p>
-Mehrere Messungen durchführen, Mittelwert,
-Abweichung und relative Unsicherheit bestimmen.
-</p>
-
-</div>
-
-
-<div class="experiment-body">
-
-<div class="question-box">
-
-<h3>
-Warum messen wir mehrmals?
-</h3>
-
-<p>
-Ein einzelner Messwert ist niemals perfekt.
-Durch mehrere Messungen können wir zufällige
-Abweichungen erkennen und einen repräsentativen
-Mittelwert bestimmen.
-</p>
-
-</div>
-
-
-<div class="control">
-
-<label>
-Messwert eingeben
-</label>
-
-<input
-    id="measurementInput"
-    type="number"
-    step="0.01"
-    placeholder="z.B. 9.81"
->
-
-</div>
-
-
-<div class="buttons">
-
-<button
-    class="btn btn-primary"
-    onclick="addMeasurement()"
->
-＋ Messung hinzufügen
-</button>
-
-<button
-    class="btn btn-red"
-    onclick="clearMeasurements()"
->
-Messungen löschen
-</button>
+<span>
+Eigene Messungen
+</span>
 
 </div>
 
@@ -3329,18 +1716,43 @@ Nr.
 </th>
 
 <th>
-Messwert
+Zeit t / s
 </th>
 
 <th>
-Abweichung vom Mittelwert
+Strecke s / m
+</th>
+
+<th>
+Geschwindigkeit v / m/s
+</th>
+
+<th>
+Theorie s / m
+</th>
+
+<th>
+Abweichung / %
 </th>
 
 </tr>
 
 </thead>
 
-<tbody id="measurementTable">
+<tbody id="measurementBody">
+
+<tr>
+
+<td
+    colspan="6"
+    class="empty"
+>
+Noch keine Messwerte aufgenommen.
+Starte das Experiment und drücke
+„Messwert aufnehmen“.
+</td>
+
+</tr>
 
 </tbody>
 
@@ -3348,46 +1760,153 @@ Abweichung vom Mittelwert
 
 </div>
 
+</div>
+
+
+<!-- =====================================================
+     DIAGRAMM
+===================================================== -->
+
+<div class="section">
+
+<div class="section-title">
+
+<h3>
+s-t-Diagramm
+</h3>
+
+<span>
+Messwerte und theoretische Bewegung
+</span>
+
+</div>
+
+
+<div class="chart-box">
+
+<canvas id="chartCanvas"></canvas>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     AUSWERTUNG
+===================================================== -->
+
+<div class="section">
+
+<div class="section-title">
+
+<h3>
+Automatische Auswertung
+</h3>
+
+<span>
+aus deinen Messwerten
+</span>
+
+</div>
+
 
 <div class="analysis-grid">
 
-<div class="analysis-card">
-
-<h3>
-Arithmetisches Mittel
-</h3>
-
-<div
-    class="result-number"
-    id="meanResult"
->
-0.00
-</div>
-
-</div>
-
 
 <div class="analysis-card">
 
+<div class="small">
+MESSWERTE
+</div>
+
+<strong id="countResult">
+0
+</strong>
+
+<p>
+aufgenommene Messpunkte
+</p>
+
+</div>
+
+
+<div class="analysis-card">
+
+<div class="small">
+MITTLERE ABWEICHUNG
+</div>
+
+<strong id="meanError">
+–
+</strong>
+
+<p>
+zwischen Messung und Theorie
+</p>
+
+</div>
+
+
+<div class="analysis-card">
+
+<div class="small">
+LETZTER MESSWERT
+</div>
+
+<strong id="lastResult">
+–
+</strong>
+
+<p>
+gemessene Strecke
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     ERGEBNIS
+===================================================== -->
+
+<div class="section">
+
+<div class="result-box">
+
 <h3>
-Größte Abweichung
+Ergebnis und Erklärung
 </h3>
 
+<p id="resultText">
+Führe zuerst mehrere Messungen durch.
+Danach wird aus deinen Messwerten eine
+automatische Auswertung erstellt.
+</p>
+
 <div
-    class="result-number"
-    id="deviationResult"
+    class="result-highlight"
+    id="resultHighlight"
 >
-0.00
+Noch keine Auswertung vorhanden.
 </div>
 
 </div>
 
 </div>
 
-</div>
+
+<button
+    class="new-experiment"
+    id="newExperimentButton"
+>
+↺ Neues Experiment durchführen
+</button>
+
 
 </div>
-
 
 </section>
 
@@ -3396,1473 +1915,1148 @@ Größte Abweichung
 </main>
 
 
-<footer>
-
-S.Michaelis · Interaktives Physiklabor · Experiment-Labor
-
-</footer>
-
-
 <script>
 
 /* =====================================================
-   GLOBALE VARIABLEN
+   ELEMENTE
 ===================================================== */
 
-let animationID = null;
+const simulationCanvas =
+    document.getElementById("simulationCanvas");
+
+const simCtx =
+    simulationCanvas.getContext("2d");
+
+const chartCanvas =
+    document.getElementById("chartCanvas");
+
+const chartCtx =
+    chartCanvas.getContext("2d");
+
+
+const startButton =
+    document.getElementById("startButton");
+
+const pauseButton =
+    document.getElementById("pauseButton");
+
+const measureButton =
+    document.getElementById("measureButton");
+
+const resetButton =
+    document.getElementById("resetButton");
+
+const newExperimentButton =
+    document.getElementById("newExperimentButton");
+
+const status =
+    document.getElementById("status");
+
+
+const liveTime =
+    document.getElementById("liveTime");
+
+const liveDistance =
+    document.getElementById("liveDistance");
+
+const liveVelocity =
+    document.getElementById("liveVelocity");
+
+const liveAcceleration =
+    document.getElementById("liveAcceleration");
+
+
+const measurementBody =
+    document.getElementById("measurementBody");
+
+const countResult =
+    document.getElementById("countResult");
+
+const meanError =
+    document.getElementById("meanError");
+
+const lastResult =
+    document.getElementById("lastResult");
+
+const resultText =
+    document.getElementById("resultText");
+
+const resultHighlight =
+    document.getElementById("resultHighlight");
+
+
+/* =====================================================
+   ZUSTAND
+===================================================== */
+
 let running = false;
 
+let startTime = 0;
 
-/* =====================================================
-   EXPERIMENT WECHSELN
-===================================================== */
+let elapsed = 0;
 
-const topics =
-    document.querySelectorAll(".topic");
+let animationFrame = null;
 
-const experiments =
-    document.querySelectorAll(".experiment");
+let measurements = [];
 
-
-topics.forEach(topic => {
-
-    topic.addEventListener("click", () => {
-
-        const id =
-            topic.dataset.topic;
-
-        topics.forEach(t =>
-            t.classList.remove("active")
-        );
-
-        experiments.forEach(e =>
-            e.classList.remove("active")
-        );
-
-        topic.classList.add("active");
-
-        document
-            .getElementById(id)
-            .classList.add("active");
-
-    });
-
-});
+let lastFrameTime = 0;
 
 
 /* =====================================================
-   SCHRITTE
+   HILFSFUNKTIONEN
 ===================================================== */
 
-function goStep(id){
+function number(value){
 
-    const experiment =
-        document
-            .getElementById(id)
-            .closest(".experiment");
+    return Number(
+        String(value).replace(",", ".")
+    );
+}
 
-    experiment
-        .querySelectorAll(".step")
-        .forEach(step =>
-            step.classList.remove("active")
-        );
 
-    experiment
-        .querySelector("#" + id)
-        .classList.add("active");
+function format(value, digits=2){
 
-    experiment
-        .querySelectorAll(".tab")
-        .forEach(tab =>
-            tab.classList.remove("active")
-        );
+    return value
+        .toFixed(digits)
+        .replace(".", ",");
+}
+
+
+function getParameters(){
+
+    return {
+
+        v0:
+            number(
+                document.getElementById("v0").value
+            ),
+
+        a:
+            number(
+                document.getElementById("acceleration").value
+            ),
+
+        error:
+            number(
+                document.getElementById("error").value
+            )
+
+    };
 
 }
 
 
 /* =====================================================
-   PAUSE
+   PHYSIK
 ===================================================== */
 
-function pauseSimulation(){
+function theoreticalDistance(t){
 
-    running = false;
+    const p = getParameters();
 
-    if(animationID){
+    return (
+        p.v0 * t
+        +
+        0.5 * p.a * t * t
+    );
 
-        cancelAnimationFrame(
-            animationID
-        );
+}
 
-        animationID = null;
+
+function theoreticalVelocity(t){
+
+    const p = getParameters();
+
+    return (
+        p.v0
+        +
+        p.a * t
+    );
+
+}
+
+
+/* =====================================================
+   SIMULATION
+===================================================== */
+
+function startExperiment(){
+
+    if(running){
+        return;
     }
-
-}
-
-
-/* =====================================================
-   KINEMATIK
-===================================================== */
-
-let kinTime = 0;
-let kinMeasurements = [];
-
-function startKinematics(){
-
-    pauseSimulation();
 
     running = true;
 
-    const start =
-        performance.now() -
-        kinTime * 1000;
+    startTime =
+        performance.now()
+        -
+        elapsed * 1000;
 
-    function animate(now){
+    lastFrameTime =
+        performance.now();
 
-        if(!running)
-            return;
+    status.textContent =
+        "EXPERIMENT LÄUFT";
 
-        kinTime =
-            (now - start) / 1000;
+    startButton.disabled = true;
 
-        const type =
-            document
-                .getElementById("kinType")
-                .value;
+    pauseButton.disabled = false;
 
-        const v0 =
-            Number(
-                document
-                    .getElementById("kinV0")
-                    .value
-            );
+    measureButton.disabled = false;
 
-        const a =
-            type === "uniform"
-            ? 0
-            : Number(
-                document
-                    .getElementById("kinA")
-                    .value
-              );
+    animationFrame =
+        requestAnimationFrame(updateSimulation);
 
-        const v =
-            v0 + a * kinTime;
-
-        const s =
-            v0 * kinTime +
-            0.5 * a * kinTime * kinTime;
-
-        document
-            .getElementById("kinTime")
-            .textContent =
-                kinTime.toFixed(2) + " s";
-
-        document
-            .getElementById("kinS")
-            .textContent =
-                s.toFixed(2) + " m";
-
-        document
-            .getElementById("kinV")
-            .textContent =
-                v.toFixed(2) + " m/s";
-
-        document
-            .getElementById("kinA_live")
-            .textContent =
-                a.toFixed(2) + " m/s²";
-
-        drawKinematics(
-            kinTime,
-            s,
-            v0,
-            a
-        );
-
-        animationID =
-            requestAnimationFrame(animate);
-    }
-
-    animationID =
-        requestAnimationFrame(animate);
 }
 
 
-function drawKinematics(
-    time,
-    position,
-    v0,
-    acceleration
-){
+function pauseExperiment(){
 
-    const canvas =
-        document.getElementById(
-            "kinCanvas"
+    running = false;
+
+    cancelAnimationFrame(animationFrame);
+
+    status.textContent =
+        "PAUSIERT";
+
+    startButton.disabled = false;
+
+    pauseButton.disabled = true;
+
+}
+
+
+function resetExperiment(){
+
+    running = false;
+
+    cancelAnimationFrame(animationFrame);
+
+    elapsed = 0;
+
+    measurements = [];
+
+    status.textContent =
+        "BEREIT FÜR DAS EXPERIMENT";
+
+    startButton.disabled = false;
+
+    pauseButton.disabled = true;
+
+    measureButton.disabled = true;
+
+    updateLiveValues();
+
+    updateTable();
+
+    updateAnalysis();
+
+    drawSimulation();
+
+    drawChart();
+
+}
+
+
+function updateSimulation(timestamp){
+
+    if(!running){
+        return;
+    }
+
+    elapsed =
+        (timestamp - startTime) / 1000;
+
+    updateLiveValues();
+
+    drawSimulation();
+
+    if(elapsed >= 8){
+
+        pauseExperiment();
+
+        status.textContent =
+            "EXPERIMENT BEENDET";
+
+        return;
+    }
+
+    animationFrame =
+        requestAnimationFrame(updateSimulation);
+
+}
+
+
+/* =====================================================
+   LIVE-WERTE
+===================================================== */
+
+function updateLiveValues(){
+
+    const p = getParameters();
+
+    const s =
+        theoreticalDistance(elapsed);
+
+    const v =
+        theoreticalVelocity(elapsed);
+
+    liveTime.textContent =
+        format(elapsed) + " s";
+
+    liveDistance.textContent =
+        format(s) + " m";
+
+    liveVelocity.textContent =
+        format(v) + " m/s";
+
+    liveAcceleration.textContent =
+        format(p.a) + " m/s²";
+
+}
+
+
+/* =====================================================
+   MESSUNG
+===================================================== */
+
+function takeMeasurement(){
+
+    if(!running){
+        return;
+    }
+
+    const p = getParameters();
+
+    const theory =
+        theoreticalDistance(elapsed);
+
+    const errorFactor =
+        1 +
+        (
+            (Math.random() * 2 - 1)
+            *
+            p.error
+            /
+            100
         );
+
+    const measured =
+        theory * errorFactor;
+
+    const velocity =
+        theoreticalVelocity(elapsed);
+
+    const deviation =
+        theory === 0
+        ?
+        0
+        :
+        Math.abs(
+            measured - theory
+        )
+        /
+        Math.abs(theory)
+        *
+        100;
+
+    measurements.push({
+
+        t: elapsed,
+
+        s: measured,
+
+        v: velocity,
+
+        theory: theory,
+
+        deviation: deviation
+
+    });
+
+    updateTable();
+
+    updateAnalysis();
+
+    drawChart();
+
+}
+
+
+/* =====================================================
+   TABELLE
+===================================================== */
+
+function updateTable(){
+
+    if(measurements.length === 0){
+
+        measurementBody.innerHTML = `
+        <tr>
+            <td colspan="6" class="empty">
+                Noch keine Messwerte aufgenommen.
+                Starte das Experiment und drücke
+                „Messwert aufnehmen“.
+            </td>
+        </tr>
+        `;
+
+        return;
+    }
+
+
+    measurementBody.innerHTML =
+        measurements
+        .map((m,index)=>`
+
+        <tr>
+
+            <td>
+                ${index + 1}
+            </td>
+
+            <td>
+                ${format(m.t)}
+            </td>
+
+            <td>
+                ${format(m.s)}
+            </td>
+
+            <td>
+                ${format(m.v)}
+            </td>
+
+            <td>
+                ${format(m.theory)}
+            </td>
+
+            <td>
+                ${format(m.deviation)} %
+            </td>
+
+        </tr>
+
+        `)
+        .join("");
+
+}
+
+
+/* =====================================================
+   AUSWERTUNG
+===================================================== */
+
+function updateAnalysis(){
+
+    countResult.textContent =
+        measurements.length;
+
+
+    if(measurements.length === 0){
+
+        meanError.textContent = "–";
+
+        lastResult.textContent = "–";
+
+        resultText.textContent =
+            "Führe zuerst mehrere Messungen durch. Danach wird aus deinen Messwerten eine automatische Auswertung erstellt.";
+
+        resultHighlight.textContent =
+            "Noch keine Auswertung vorhanden.";
+
+        return;
+    }
+
+
+    const averageError =
+        measurements.reduce(
+            (sum,m)=>
+                sum + m.deviation,
+            0
+        )
+        /
+        measurements.length;
+
+
+    const last =
+        measurements[
+            measurements.length - 1
+        ];
+
+
+    meanError.textContent =
+        format(averageError) + " %";
+
+
+    lastResult.textContent =
+        format(last.s) + " m";
+
+
+    if(measurements.length < 3){
+
+        resultText.textContent =
+            "Es liegen bisher nur wenige Messwerte vor. Nimm mindestens drei bis fünf Messwerte auf, damit der Zusammenhang besser beurteilt werden kann.";
+
+        resultHighlight.textContent =
+            "Mehr Messungen → bessere experimentelle Aussage.";
+
+        return;
+    }
+
+
+    const p =
+        getParameters();
+
+
+    resultText.textContent =
+        "Die Messwerte zeigen einen Zusammenhang zwischen Zeit und zurückgelegter Strecke. Die theoretische Bewegung wird mit den experimentell aufgenommenen Werten verglichen.";
+
+
+    resultHighlight.innerHTML =
+
+        "Theorie: "
+        +
+        "<strong>s(t) = "
+        +
+        format(p.v0)
+        +
+        " · t + ½ · "
+        +
+        format(p.a)
+        +
+        " · t²</strong>"
+        +
+        "<br><br>"
+        +
+        "Mittlere relative Abweichung der Messwerte: "
+        +
+        "<strong>"
+        +
+        format(averageError)
+        +
+        " %</strong>"
+        +
+        "<br><br>"
+        +
+        (
+            averageError < 3
+            ?
+            "Die Messwerte stimmen sehr gut mit dem theoretischen Modell überein."
+            :
+            averageError < 7
+            ?
+            "Die Messwerte stimmen näherungsweise mit dem theoretischen Modell überein."
+            :
+            "Die Abweichung ist deutlich. Mögliche Ursachen sind Messunsicherheiten oder die gewählte Messmethode."
+        );
+
+}
+
+
+/* =====================================================
+   SIMULATION ZEICHNEN
+===================================================== */
+
+function resizeCanvas(canvas){
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+    canvas.width =
+        rect.width * dpr;
+
+    canvas.height =
+        rect.height * dpr;
 
     const ctx =
         canvas.getContext("2d");
 
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+}
+
+
+function drawSimulation(){
+
+    resizeCanvas(
+        simulationCanvas
+    );
+
     const w =
-        canvas.width;
+        simulationCanvas.clientWidth;
 
     const h =
-        canvas.height;
+        simulationCanvas.clientHeight;
 
-    ctx.clearRect(
-        0,0,w,h
+
+    simCtx.clearRect(
+        0,
+        0,
+        w,
+        h
     );
+
+
+    /* Hintergrund */
+
+    const gradient =
+        simCtx.createLinearGradient(
+            0,
+            0,
+            0,
+            h
+        );
+
+    gradient.addColorStop(
+        0,
+        "#081827"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#030911"
+    );
+
+    simCtx.fillStyle =
+        gradient;
+
+    simCtx.fillRect(
+        0,
+        0,
+        w,
+        h
+    );
+
+
+    /* Raster */
+
+    simCtx.strokeStyle =
+        "rgba(255,255,255,.045)";
+
+    simCtx.lineWidth = 1;
+
+    for(let x=0; x<w; x+=40){
+
+        simCtx.beginPath();
+
+        simCtx.moveTo(x,0);
+
+        simCtx.lineTo(x,h);
+
+        simCtx.stroke();
+
+    }
+
+    for(let y=0; y<h; y+=40){
+
+        simCtx.beginPath();
+
+        simCtx.moveTo(0,y);
+
+        simCtx.lineTo(w,y);
+
+        simCtx.stroke();
+
+    }
 
 
     /* Boden */
 
-    ctx.strokeStyle =
-        "#23465b";
+    const ground =
+        h - 65;
 
-    ctx.lineWidth = 2;
+    simCtx.strokeStyle =
+        "rgba(52,211,153,.55)";
 
-    ctx.beginPath();
+    simCtx.lineWidth = 2;
 
-    ctx.moveTo(
-        50,
-        h-70
+    simCtx.beginPath();
+
+    simCtx.moveTo(
+        35,
+        ground
     );
 
-    ctx.lineTo(
-        w-50,
-        h-70
+    simCtx.lineTo(
+        w-35,
+        ground
     );
 
-    ctx.stroke();
+    simCtx.stroke();
 
 
     /* Maßstab */
 
-    const scale =
-        45;
+    const maxDistance =
+        theoreticalDistance(8);
 
-    const x =
-        Math.min(
-            70 + position * scale,
-            w-80
+    const maxX =
+        w - 80;
+
+    const scale =
+        maxX / Math.max(
+            maxDistance,
+            1
         );
 
 
-    /* Objekt */
+    const distance =
+        theoreticalDistance(elapsed);
 
-    ctx.beginPath();
+    const x =
+        45 + distance * scale;
 
-    ctx.arc(
+
+    /* Schatten */
+
+    simCtx.fillStyle =
+        "rgba(0,0,0,.35)";
+
+    simCtx.beginPath();
+
+    simCtx.ellipse(
         x,
-        h-95,
-        16,
+        ground + 5,
+        18,
+        5,
+        0,
         0,
         Math.PI*2
     );
 
-    ctx.fillStyle =
+    simCtx.fill();
+
+
+    /* Körper */
+
+    simCtx.fillStyle =
         "#38bdf8";
 
-    ctx.shadowBlur = 20;
-    ctx.shadowColor =
-        "#38bdf8";
+    simCtx.shadowColor =
+        "rgba(56,189,248,.65)";
 
-    ctx.fill();
+    simCtx.shadowBlur = 20;
 
-    ctx.shadowBlur = 0;
+    simCtx.beginPath();
+
+    simCtx.arc(
+        x,
+        ground - 18,
+        14,
+        0,
+        Math.PI*2
+    );
+
+    simCtx.fill();
+
+    simCtx.shadowBlur = 0;
 
 
     /* Text */
 
-    ctx.fillStyle =
-        "#8ea7bb";
+    simCtx.fillStyle =
+        "#8ea6bd";
 
-    ctx.font =
-        "14px Arial";
+    simCtx.font =
+        "11px Arial";
 
-    ctx.fillText(
+    simCtx.fillText(
         "s = " +
-        position.toFixed(2) +
+        format(distance) +
         " m",
-        55,
-        35
-    );
-
-    ctx.fillText(
-        "t = " +
-        time.toFixed(2) +
-        " s",
-        55,
-        55
-    );
-
-}
-
-
-function takeMeasurement(){
-
-    const t =
-        kinTime;
-
-    const type =
-        document
-            .getElementById("kinType")
-            .value;
-
-    const v0 =
-        Number(
-            document
-                .getElementById("kinV0")
-                .value
-        );
-
-    const a =
-        type === "uniform"
-        ? 0
-        : Number(
-            document
-                .getElementById("kinA")
-                .value
-          );
-
-    const s =
-        v0*t +
-        0.5*a*t*t;
-
-    const v =
-        v0+a*t;
-
-    kinMeasurements.push({
-        t,
-        s,
-        v,
-        a
-    });
-
-    renderKinTable();
-}
-
-
-function renderKinTable(){
-
-    const tbody =
-        document
-            .getElementById(
-                "kinTable"
-            );
-
-    tbody.innerHTML = "";
-
-    kinMeasurements.forEach(
-        (m,i) => {
-
-            const row =
-                document.createElement(
-                    "tr"
-                );
-
-            row.innerHTML = `
-
-                <td>${i+1}</td>
-
-                <td>${m.t.toFixed(2)}</td>
-
-                <td>${m.s.toFixed(3)}</td>
-
-                <td>${m.v.toFixed(3)}</td>
-
-                <td>${m.a.toFixed(3)}</td>
-
-            `;
-
-            tbody.appendChild(row);
-
-        }
-    );
-
-    if(kinMeasurements.length){
-
-        const last =
-            kinMeasurements[
-                kinMeasurements.length-1
-            ];
-
-        const theory =
-            last.s;
-
-        document
-            .getElementById(
-                "kinTheoryS"
-            )
-            .textContent =
-                theory.toFixed(3)
-                + " m";
-
-        document
-            .getElementById(
-                "kinMeasuredS"
-            )
-            .textContent =
-                last.s.toFixed(3)
-                + " m";
-
-        document
-            .getElementById(
-                "kinExplanation"
-            )
-            .textContent =
-                "Die Messwerte folgen dem theoretischen "
-                + "Bewegungsmodell. Bei gleichförmiger Bewegung "
-                + "ist das Weg-Zeit-Gesetz linear. Bei konstanter "
-                + "Beschleunigung wächst der Weg quadratisch mit "
-                + "der Zeit.";
-    }
-
-}
-
-
-function resetKinematics(){
-
-    pauseSimulation();
-
-    kinTime = 0;
-
-    kinMeasurements = [];
-
-    document
-        .getElementById("kinTime")
-        .textContent =
-            "0.00 s";
-
-    document
-        .getElementById("kinS")
-        .textContent =
-            "0.00 m";
-
-    document
-        .getElementById("kinV")
-        .textContent =
-            "0.00 m/s";
-
-    renderKinTable();
-
-    drawKinematics(
-        0,
-        0,
-        0,
-        0
-    );
-}
-
-
-/* =====================================================
-   FREIER FALL
-===================================================== */
-
-let fallTime = 0;
-
-function startFall(){
-
-    pauseSimulation();
-
-    running = true;
-
-    const start =
-        performance.now() -
-        fallTime*1000;
-
-    function animate(now){
-
-        if(!running)
-            return;
-
-        fallTime =
-            (now-start)/1000;
-
-        const h =
-            Number(
-                document
-                    .getElementById(
-                        "fallHeight"
-                    )
-                    .value
-            );
-
-        const g =
-            Number(
-                document
-                    .getElementById(
-                        "fallG"
-                    )
-                    .value
-            );
-
-        const totalTime =
-            Math.sqrt(
-                2*h/g
-            );
-
-        if(fallTime >= totalTime){
-
-            fallTime =
-                totalTime;
-
-            running = false;
-        }
-
-        const s =
-            0.5*g*fallTime*fallTime;
-
-        const v =
-            g*fallTime;
-
-        document
-            .getElementById(
-                "fallTime"
-            )
-            .textContent =
-                fallTime.toFixed(2)
-                + " s";
-
-        document
-            .getElementById(
-                "fallS"
-            )
-            .textContent =
-                s.toFixed(2)
-                + " m";
-
-        document
-            .getElementById(
-                "fallV"
-            )
-            .textContent =
-                v.toFixed(2)
-                + " m/s";
-
-        drawFall(
-            s,
-            h
-        );
-
-        if(running){
-
-            animationID =
-                requestAnimationFrame(
-                    animate
-                );
-        }
-
-    }
-
-    animationID =
-        requestAnimationFrame(
-            animate
-        );
-}
-
-
-function drawFall(
-    distance,
-    height
-){
-
-    const canvas =
-        document.getElementById(
-            "fallCanvas"
-        );
-
-    const ctx =
-        canvas.getContext("2d");
-
-    const w =
-        canvas.width;
-
-    const h =
-        canvas.height;
-
-    ctx.clearRect(
-        0,0,w,h
-    );
-
-    const top = 45;
-    const bottom = h-45;
-
-    ctx.strokeStyle =
-        "#34566b";
-
-    ctx.lineWidth = 3;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        w/2,
-        top
-    );
-
-    ctx.lineTo(
-        w/2,
-        bottom
-    );
-
-    ctx.stroke();
-
-
-    const y =
-        top +
-        (distance/height) *
-        (bottom-top);
-
-
-    ctx.beginPath();
-
-    ctx.arc(
-        w/2,
-        y,
-        17,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fillStyle =
-        "#34d399";
-
-    ctx.shadowBlur = 20;
-
-    ctx.shadowColor =
-        "#34d399";
-
-    ctx.fill();
-
-    ctx.shadowBlur = 0;
-
-
-    ctx.fillStyle =
-        "#8ea7bb";
-
-    ctx.font =
-        "14px Arial";
-
-    ctx.fillText(
-        "h = " +
-        height.toFixed(1) +
-        " m",
-        40,
+        35,
         30
     );
 
 }
 
 
-function resetFall(){
-
-    pauseSimulation();
-
-    fallTime = 0;
-
-    document
-        .getElementById(
-            "fallTime"
-        )
-        .textContent =
-            "0.00 s";
-
-    document
-        .getElementById(
-            "fallS"
-        )
-        .textContent =
-            "0.00 m";
-
-    document
-        .getElementById(
-            "fallV"
-        )
-        .textContent =
-            "0.00 m/s";
-
-    const height =
-        Number(
-            document
-                .getElementById(
-                    "fallHeight"
-                )
-                .value
-        );
-
-    drawFall(
-        0,
-        height
-    );
-}
-
-
 /* =====================================================
-   SCHIEFER WURF
+   DIAGRAMM
 ===================================================== */
 
-let throwTime = 0;
+function drawChart(){
 
-function startThrow(){
-
-    pauseSimulation();
-
-    running = true;
-
-    const start =
-        performance.now() -
-        throwTime*1000;
-
-    function animate(now){
-
-        if(!running)
-            return;
-
-        throwTime =
-            (now-start)/1000;
-
-        const v0 =
-            Number(
-                document
-                    .getElementById(
-                        "throwV"
-                    )
-                    .value
-            );
-
-        const angle =
-            Number(
-                document
-                    .getElementById(
-                        "throwAngle"
-                    )
-                    .value
-            );
-
-        const g =
-            Number(
-                document
-                    .getElementById(
-                        "throwG"
-                    )
-                    .value
-            );
-
-        const rad =
-            angle*Math.PI/180;
-
-        const vx =
-            v0*Math.cos(rad);
-
-        const vy =
-            v0*Math.sin(rad);
-
-        const totalTime =
-            2*vy/g;
-
-        if(throwTime >= totalTime){
-
-            throwTime =
-                totalTime;
-
-            running = false;
-        }
-
-        const x =
-            vx*throwTime;
-
-        const y =
-            vy*throwTime -
-            0.5*g*
-            throwTime*
-            throwTime;
-
-        const verticalV =
-            vy-g*throwTime;
-
-        const speed =
-            Math.sqrt(
-                vx*vx +
-                verticalV*verticalV
-            );
-
-        document
-            .getElementById(
-                "throwTime"
-            )
-            .textContent =
-                throwTime.toFixed(2)
-                + " s";
-
-        document
-            .getElementById(
-                "throwX"
-            )
-            .textContent =
-                x.toFixed(2)
-                + " m";
-
-        document
-            .getElementById(
-                "throwY"
-            )
-            .textContent =
-                Math.max(0,y).toFixed(2)
-                + " m";
-
-        document
-            .getElementById(
-                "throwSpeed"
-            )
-            .textContent =
-                speed.toFixed(2)
-                + " m/s";
-
-        drawThrow(
-            throwTime,
-            v0,
-            angle,
-            g
-        );
-
-        if(running){
-
-            animationID =
-                requestAnimationFrame(
-                    animate
-                );
-        }
-
-    }
-
-    animationID =
-        requestAnimationFrame(
-            animate
-        );
-}
-
-
-function drawThrow(
-    time,
-    v0,
-    angle,
-    g
-){
-
-    const canvas =
-        document.getElementById(
-            "throwCanvas"
-        );
-
-    const ctx =
-        canvas.getContext("2d");
+    resizeCanvas(
+        chartCanvas
+    );
 
     const w =
-        canvas.width;
+        chartCanvas.clientWidth;
 
     const h =
-        canvas.height;
+        chartCanvas.clientHeight;
 
-    ctx.clearRect(
-        0,0,w,h
+
+    chartCtx.clearRect(
+        0,
+        0,
+        w,
+        h
     );
 
-    const rad =
-        angle*Math.PI/180;
 
-    const vx =
-        v0*Math.cos(rad);
+    chartCtx.fillStyle =
+        "#050d17";
 
-    const vy =
-        v0*Math.sin(rad);
+    chartCtx.fillRect(
+        0,
+        0,
+        w,
+        h
+    );
 
-    const total =
-        2*vy/g;
 
-    const maxX =
-        vx*total;
+    const left = 55;
+    const right = 20;
+    const top = 25;
+    const bottom = 45;
 
-    const maxY =
-        vy*vy/(2*g);
 
-    const scaleX =
-        (w-120)/Math.max(maxX,1);
+    const graphW =
+        w - left - right;
 
-    const scaleY =
-        (h-80)/Math.max(maxY,1);
+    const graphH =
+        h - top - bottom;
 
-    const scale =
-        Math.min(
-            scaleX,
-            scaleY
+
+    /* Wertebereich */
+
+    const maxT =
+        Math.max(
+            8,
+            ...measurements.map(m=>m.t)
         );
 
-    ctx.strokeStyle =
-        "#35566b";
-
-    ctx.lineWidth=2;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        50,
-        h-45
-    );
-
-    ctx.lineTo(
-        w-40,
-        h-45
-    );
-
-    ctx.stroke();
+    const maxS =
+        Math.max(
+            theoreticalDistance(maxT),
+            ...measurements.map(m=>m.s),
+            1
+        )
+        * 1.1;
 
 
-    ctx.beginPath();
+    /* Raster */
 
-    for(
-        let t=0;
-        t<=total;
-        t+=total/100
-    ){
+    chartCtx.strokeStyle =
+        "rgba(255,255,255,.06)";
+
+    chartCtx.lineWidth=1;
+
+    for(let i=0;i<=8;i++){
 
         const x =
-            vx*t;
+            left +
+            graphW *
+            i / 8;
 
-        const y =
-            vy*t -
-            0.5*g*t*t;
+        chartCtx.beginPath();
 
-        const px =
-            50+x*scale;
+        chartCtx.moveTo(
+            x,
+            top
+        );
 
-        const py =
-            h-45-y*scale;
+        chartCtx.lineTo(
+            x,
+            h-bottom
+        );
 
-        if(t===0)
-            ctx.moveTo(px,py);
-        else
-            ctx.lineTo(px,py);
+        chartCtx.stroke();
 
     }
 
-    ctx.strokeStyle =
-        "#fbbf24";
 
-    ctx.lineWidth=3;
+    for(let i=0;i<=6;i++){
 
-    ctx.stroke();
+        const y =
+            top +
+            graphH *
+            i / 6;
 
+        chartCtx.beginPath();
 
-    const x =
-        vx*time;
-
-    const y =
-        Math.max(
-            0,
-            vy*time -
-            0.5*g*time*time
+        chartCtx.moveTo(
+            left,
+            y
         );
 
-    const px =
-        50+x*scale;
+        chartCtx.lineTo(
+            w-right,
+            y
+        );
 
-    const py =
-        h-45-y*scale;
+        chartCtx.stroke();
+
+    }
 
 
-    ctx.beginPath();
+    /* Achsen */
 
-    ctx.arc(
-        px,
-        py,
-        10,
+    chartCtx.strokeStyle =
+        "#698196";
+
+    chartCtx.lineWidth=1.5;
+
+    chartCtx.beginPath();
+
+    chartCtx.moveTo(
+        left,
+        top
+    );
+
+    chartCtx.lineTo(
+        left,
+        h-bottom
+    );
+
+    chartCtx.lineTo(
+        w-right,
+        h-bottom
+    );
+
+    chartCtx.stroke();
+
+
+    /* Achsenbeschriftung */
+
+    chartCtx.fillStyle =
+        "#8ea6bd";
+
+    chartCtx.font =
+        "11px Arial";
+
+    chartCtx.fillText(
+        "s / m",
+        12,
+        18
+    );
+
+    chartCtx.fillText(
+        "t / s",
+        w-35,
+        h-12
+    );
+
+
+    /* Theoriekurve */
+
+    chartCtx.strokeStyle =
+        "#34d399";
+
+    chartCtx.lineWidth=2;
+
+    chartCtx.beginPath();
+
+
+    for(let i=0;i<=120;i++){
+
+        const t =
+            maxT * i / 120;
+
+        const s =
+            theoreticalDistance(t);
+
+        const x =
+            left +
+            (t/maxT) *
+            graphW;
+
+        const y =
+            h-bottom -
+            (s/maxS) *
+            graphH;
+
+
+        if(i===0){
+
+            chartCtx.moveTo(
+                x,
+                y
+            );
+
+        }else{
+
+            chartCtx.lineTo(
+                x,
+                y
+            );
+
+        }
+
+    }
+
+    chartCtx.stroke();
+
+
+    /* Messpunkte */
+
+    measurements.forEach(m=>{
+
+        const x =
+            left +
+            (m.t/maxT) *
+            graphW;
+
+        const y =
+            h-bottom -
+            (m.s/maxS) *
+            graphH;
+
+
+        chartCtx.fillStyle =
+            "#fbbf24";
+
+        chartCtx.beginPath();
+
+        chartCtx.arc(
+            x,
+            y,
+            5,
+            0,
+            Math.PI*2
+        );
+
+        chartCtx.fill();
+
+    });
+
+
+    /* Legende */
+
+    chartCtx.fillStyle =
+        "#34d399";
+
+    chartCtx.fillRect(
+        left+12,
+        top+10,
+        20,
+        3
+    );
+
+    chartCtx.fillStyle =
+        "#b8cad7";
+
+    chartCtx.fillText(
+        "Theorie",
+        left+40,
+        top+14
+    );
+
+
+    chartCtx.fillStyle =
+        "#fbbf24";
+
+    chartCtx.beginPath();
+
+    chartCtx.arc(
+        left+115,
+        top+12,
+        4,
         0,
         Math.PI*2
     );
 
-    ctx.fillStyle =
-        "#fbbf24";
-
-    ctx.shadowBlur=20;
-
-    ctx.shadowColor =
-        "#fbbf24";
-
-    ctx.fill();
-
-    ctx.shadowBlur=0;
-
-}
-
-
-/* =====================================================
-   NEWTON
-===================================================== */
-
-function calculateNewton(){
-
-    const m =
-        Number(
-            document
-                .getElementById(
-                    "newtonMass"
-                )
-                .value
-        );
-
-    const F =
-        Number(
-            document
-                .getElementById(
-                    "newtonForce"
-                )
-                .value
-        );
-
-    const a =
-        F/m;
-
-    const a2 =
-        2*F/m;
-
-    document
-        .getElementById(
-            "newtonA"
-        )
-        .textContent =
-            a.toFixed(2)
-            + " m/s²";
-
-    document
-        .getElementById(
-            "newtonA2"
-        )
-        .textContent =
-            a2.toFixed(2)
-            + " m/s²";
-
-    document
-        .getElementById(
-            "newtonExplanation"
-        )
-        .textContent =
-            "Bei konstanter Masse ist die Beschleunigung "
-            + "direkt proportional zur Kraft. Wird die Kraft "
-            + "verdoppelt, verdoppelt sich auch die Beschleunigung.";
-}
-
-
-/* =====================================================
-   KREISBEWEGUNG
-===================================================== */
-
-function calculateCircle(){
-
-    const m =
-        Number(
-            document
-                .getElementById(
-                    "circleMass"
-                )
-                .value
-        );
-
-    const r =
-        Number(
-            document
-                .getElementById(
-                    "circleRadius"
-                )
-                .value
-        );
-
-    const v =
-        Number(
-            document
-                .getElementById(
-                    "circleSpeed"
-                )
-                .value
-        );
-
-    const a =
-        v*v/r;
-
-    const F =
-        m*a;
-
-    document
-        .getElementById(
-            "circleA"
-        )
-        .textContent =
-            a.toFixed(2)
-            + " m/s²";
-
-    document
-        .getElementById(
-            "circleF"
-        )
-        .textContent =
-            F.toFixed(2)
-            + " N";
-}
-
-
-/* =====================================================
-   ENERGIE
-===================================================== */
-
-function calculateEnergy(){
-
-    const m =
-        Number(
-            document
-                .getElementById(
-                    "energyMass"
-                )
-                .value
-        );
-
-    const h =
-        Number(
-            document
-                .getElementById(
-                    "energyHeight"
-                )
-                .value
-        );
-
-    const g =
-        Number(
-            document
-                .getElementById(
-                    "energyG"
-                )
-                .value
-        );
-
-    const Ep =
-        m*g*h;
-
-    const Ek =
-        Ep;
-
-    document
-        .getElementById(
-            "potentialEnergy"
-        )
-        .textContent =
-            Ep.toFixed(2)
-            + " J";
-
-    document
-        .getElementById(
-            "kineticEnergy"
-        )
-        .textContent =
-            Ek.toFixed(2)
-            + " J";
-}
-
-
-/* =====================================================
-   VEKTOR
-===================================================== */
-
-function calculateVector(){
-
-    const x1 =
-        Number(
-            document
-                .getElementById(
-                    "vx1"
-                )
-                .value
-        );
-
-    const y1 =
-        Number(
-            document
-                .getElementById(
-                    "vy1"
-                )
-                .value
-        );
-
-    const x2 =
-        Number(
-            document
-                .getElementById(
-                    "vx2"
-                )
-                .value
-        );
-
-    const y2 =
-        Number(
-            document
-                .getElementById(
-                    "vy2"
-                )
-                .value
-        );
-
-    const x =
-        x1+x2;
-
-    const y =
-        y1+y2;
-
-    const magnitude =
-        Math.sqrt(
-            x*x+y*y
-        );
-
-    document
-        .getElementById(
-            "vectorResult"
-        )
-        .textContent =
-            "(" +
-            x.toFixed(2) +
-            " | " +
-            y.toFixed(2) +
-            ")";
-
-    document
-        .getElementById(
-            "vectorMagnitude"
-        )
-        .textContent =
-            magnitude.toFixed(2);
-}
-
-
-/* =====================================================
-   TRIGONOMETRIE
-===================================================== */
-
-function calculateTrig(){
-
-    const c =
-        Number(
-            document
-                .getElementById(
-                    "trigC"
-                )
-                .value
-        );
-
-    const angle =
-        Number(
-            document
-                .getElementById(
-                    "trigAngle"
-                )
-                .value
-        );
-
-    const rad =
-        angle*Math.PI/180;
-
-    const opposite =
-        c*Math.sin(rad);
-
-    const adjacent =
-        c*Math.cos(rad);
-
-    document
-        .getElementById(
-            "trigOpp"
-        )
-        .textContent =
-            opposite.toFixed(2)
-            + " cm";
-
-    document
-        .getElementById(
-            "trigAdj"
-        )
-        .textContent =
-            adjacent.toFixed(2)
-            + " cm";
-}
-
-
-/* =====================================================
-   MESSLABOR
-===================================================== */
-
-let measurements = [];
-
-
-function addMeasurement(){
-
-    const input =
-        document
-            .getElementById(
-                "measurementInput"
-            );
-
-    const value =
-        Number(input.value);
-
-    if(
-        !Number.isFinite(value)
-    )
-        return;
-
-    measurements.push(value);
-
-    input.value = "";
-
-    renderMeasurements();
-}
-
-
-function renderMeasurements(){
-
-    const table =
-        document
-            .getElementById(
-                "measurementTable"
-            );
-
-    table.innerHTML = "";
-
-    if(!measurements.length){
-
-        document
-            .getElementById(
-                "meanResult"
-            )
-            .textContent =
-                "0.00";
-
-        document
-            .getElementById(
-                "deviationResult"
-            )
-            .textContent =
-                "0.00";
-
-        return;
-    }
-
-    const sum =
-        measurements.reduce(
-            (a,b) => a+b,
-            0
-        );
-
-    const mean =
-        sum/
-        measurements.length;
-
-    let maxDeviation = 0;
-
-    measurements.forEach(
-        (value,index) => {
-
-            const deviation =
-                Math.abs(
-                    value-mean
-                );
-
-            maxDeviation =
-                Math.max(
-                    maxDeviation,
-                    deviation
-                );
-
-            const row =
-                document.createElement(
-                    "tr"
-                );
-
-            row.innerHTML = `
-
-                <td>
-                    ${index+1}
-                </td>
-
-                <td>
-                    ${value.toFixed(3)}
-                </td>
-
-                <td>
-                    ${deviation.toFixed(3)}
-                </td>
-
-            `;
-
-            table.appendChild(row);
-
-        }
+    chartCtx.fill();
+
+    chartCtx.fillStyle =
+        "#b8cad7";
+
+    chartCtx.fillText(
+        "Messwerte",
+        left+128,
+        top+16
     );
 
-    document
-        .getElementById(
-            "meanResult"
-        )
-        .textContent =
-            mean.toFixed(3);
-
-    document
-        .getElementById(
-            "deviationResult"
-        )
-        .textContent =
-            maxDeviation.toFixed(3);
-}
-
-
-function clearMeasurements(){
-
-    measurements = [];
-
-    renderMeasurements();
 }
 
 
 /* =====================================================
-   INITIALISIERUNG
+   EVENTS
+===================================================== */
+
+startButton.addEventListener(
+    "click",
+    startExperiment
+);
+
+pauseButton.addEventListener(
+    "click",
+    pauseExperiment
+);
+
+measureButton.addEventListener(
+    "click",
+    takeMeasurement
+);
+
+resetButton.addEventListener(
+    "click",
+    resetExperiment
+);
+
+newExperimentButton.addEventListener(
+    "click",
+    resetExperiment
+);
+
+
+/* =====================================================
+   PARAMETER ÄNDERUNG
+===================================================== */
+
+[
+    "v0",
+    "acceleration",
+    "error"
+].forEach(id=>{
+
+    document
+        .getElementById(id)
+        .addEventListener(
+            "input",
+            ()=>{
+                updateLiveValues();
+                drawSimulation();
+                drawChart();
+            }
+        );
+
+});
+
+
+/* =====================================================
+   START
 ===================================================== */
 
 window.addEventListener(
-    "load",
-    () => {
-
-        resetKinematics();
-
-        resetFall();
-
-        drawThrow(
-            0,
-            15,
-            45,
-            9.81
-        );
-
-        calculateNewton();
-
-        calculateCircle();
-
-        calculateEnergy();
-
-        calculateVector();
-
-        calculateTrig();
-
-        renderMeasurements();
-
+    "resize",
+    ()=>{
+        drawSimulation();
+        drawChart();
     }
 );
 
-</script>
+updateLiveValues();
 
+drawSimulation();
+
+drawChart();
+
+</script>
 
 </body>
 </html>
