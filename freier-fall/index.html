@@ -1,1 +1,2006 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freier Fall – Interaktives Physiklabor | S.Michaelis</title>
+
+<style>
+:root{
+    --bg:#07111f;
+    --panel:#0d1b2e;
+    --panel2:#11243b;
+    --line:#28425f;
+    --text:#eef5ff;
+    --muted:#9fb3c8;
+    --blue:#43a5ff;
+    --cyan:#45e0ff;
+    --green:#42e695;
+    --orange:#ffad42;
+    --red:#ff6378;
+    --yellow:#ffd85a;
+    --shadow:0 18px 45px rgba(0,0,0,.32);
+}
+
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:
+        radial-gradient(circle at 15% 10%,rgba(67,165,255,.13),transparent 30%),
+        radial-gradient(circle at 85% 20%,rgba(69,224,255,.08),transparent 25%),
+        linear-gradient(145deg,#050c16,#091827 55%,#07111f);
+    color:var(--text);
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    min-height:100vh;
+}
+
+header{
+    padding:28px 24px 22px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(4,11,20,.72);
+    backdrop-filter:blur(14px);
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.header-inner{
+    max-width:1450px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    width:54px;
+    height:54px;
+    border-radius:16px;
+    display:grid;
+    place-items:center;
+    font-size:27px;
+    background:linear-gradient(145deg,#14395e,#0b2139);
+    border:1px solid #2f5d86;
+    box-shadow:0 0 25px rgba(67,165,255,.15);
+}
+
+.brand small{
+    display:block;
+    color:var(--cyan);
+    letter-spacing:2px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.brand h1{
+    margin:3px 0 0;
+    font-size:22px;
+}
+
+.header-badge{
+    padding:9px 14px;
+    border:1px solid #294761;
+    border-radius:999px;
+    color:#b9d9f6;
+    font-size:13px;
+    background:#0b1929;
+}
+
+main{
+    max-width:1450px;
+    margin:auto;
+    padding:28px 20px 50px;
+}
+
+.hero{
+    display:grid;
+    grid-template-columns:1.4fr .6fr;
+    gap:20px;
+    margin-bottom:20px;
+}
+
+.hero-card,
+.panel{
+    background:linear-gradient(145deg,rgba(17,36,59,.96),rgba(8,23,39,.96));
+    border:1px solid var(--line);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.hero-card{
+    padding:28px;
+}
+
+.hero-card h2{
+    font-size:31px;
+    margin:0 0 10px;
+}
+
+.hero-card p{
+    color:var(--muted);
+    line-height:1.7;
+    max-width:850px;
+    margin:0;
+}
+
+.formula-box{
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align:center;
+}
+
+.formula-main{
+    font-family:Georgia,serif;
+    font-size:25px;
+    margin:7px 0;
+}
+
+.formula-sub{
+    color:var(--muted);
+    font-size:13px;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:390px 1fr;
+    gap:20px;
+}
+
+.panel{
+    padding:20px;
+}
+
+.panel-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.panel-title h3{
+    margin:0;
+    font-size:17px;
+}
+
+.panel-title span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.input-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+label{
+    color:#b9cadb;
+    font-size:12px;
+    font-weight:700;
+}
+
+input,select{
+    width:100%;
+    padding:11px 12px;
+    border-radius:10px;
+    border:1px solid #31516d;
+    background:#071522;
+    color:white;
+    outline:none;
+    font-size:14px;
+}
+
+input:focus,select:focus{
+    border-color:var(--cyan);
+    box-shadow:0 0 0 3px rgba(69,224,255,.1);
+}
+
+.unit{
+    position:relative;
+}
+
+.unit span{
+    position:absolute;
+    right:10px;
+    top:11px;
+    color:#6f8ba6;
+    font-size:12px;
+    pointer-events:none;
+}
+
+.section{
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.section h4{
+    margin:0 0 12px;
+    color:#dcecff;
+    font-size:13px;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+}
+
+button{
+    border:0;
+    padding:11px 13px;
+    border-radius:10px;
+    cursor:pointer;
+    color:white;
+    background:#17314b;
+    border:1px solid #2e526f;
+    font-weight:700;
+    transition:.18s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+    border-color:#4c83ad;
+    background:#1b3c5d;
+}
+
+button.primary{
+    background:linear-gradient(135deg,#087ac5,#0e9fc4);
+    border-color:#32c8ef;
+}
+
+button.green{
+    background:linear-gradient(135deg,#157b55,#1aa86e);
+    border-color:#3cdb9c;
+}
+
+button.orange{
+    background:linear-gradient(135deg,#9a5714,#bf751c);
+    border-color:#e8a64b;
+}
+
+button.red{
+    background:linear-gradient(135deg,#8c273b,#bd3c55);
+    border-color:#ef687c;
+}
+
+.check{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#bdcad7;
+    font-size:13px;
+}
+
+.check input{
+    width:auto;
+}
+
+.results{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:11px;
+}
+
+.result{
+    background:#081827;
+    border:1px solid #25415c;
+    border-radius:13px;
+    padding:13px;
+    min-height:82px;
+}
+
+.result .r-label{
+    color:#7993ab;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+}
+
+.result .r-value{
+    margin-top:8px;
+    font-size:21px;
+    font-weight:800;
+}
+
+.result .r-unit{
+    color:#8fa9c0;
+    font-size:11px;
+}
+
+.blue{color:var(--blue)}
+.green-text{color:var(--green)}
+.orange-text{color:var(--orange)}
+.red-text{color:var(--red)}
+.yellow-text{color:var(--yellow)}
+.cyan{color:var(--cyan)}
+
+.simulation{
+    margin-top:20px;
+}
+
+.sim-toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:14px;
+}
+
+.sim-area{
+    display:grid;
+    grid-template-columns:minmax(500px,1fr) 280px;
+    gap:15px;
+}
+
+canvas{
+    width:100%;
+    display:block;
+    background:#06111c;
+    border:1px solid #29455e;
+    border-radius:15px;
+}
+
+#simCanvas{
+    height:570px;
+}
+
+.side-stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    align-content:start;
+}
+
+.stat-card{
+    padding:14px;
+    border-radius:13px;
+    border:1px solid #25435e;
+    background:#091a2a;
+}
+
+.stat-card.full{
+    grid-column:1/-1;
+}
+
+.stat-label{
+    color:#7591aa;
+    font-size:11px;
+    text-transform:uppercase;
+}
+
+.stat-value{
+    font-size:23px;
+    font-weight:800;
+    margin-top:6px;
+}
+
+.progress{
+    height:7px;
+    background:#07131f;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress div{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--cyan),var(--blue));
+}
+
+.graphs{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+    margin-top:14px;
+}
+
+.graph canvas{
+    height:230px;
+}
+
+.graph-title{
+    padding:11px 12px 0;
+    color:#b9cde0;
+    font-size:12px;
+    font-weight:700;
+}
+
+.table-wrap{
+    overflow:auto;
+    max-height:320px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12px;
+}
+
+th,td{
+    padding:9px;
+    border-bottom:1px solid #1b334a;
+    text-align:right;
+}
+
+th{
+    color:#91abc2;
+    position:sticky;
+    top:0;
+    background:#0b1c2c;
+}
+
+.formulas{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.formula{
+    background:#081724;
+    border:1px solid #24425d;
+    border-radius:12px;
+    padding:14px;
+}
+
+.formula code{
+    display:block;
+    color:#dff4ff;
+    font-size:15px;
+    margin-bottom:7px;
+}
+
+.formula small{
+    color:#7991a6;
+    line-height:1.5;
+}
+
+.notice{
+    margin-top:15px;
+    padding:13px;
+    border-radius:11px;
+    background:rgba(255,173,66,.07);
+    border:1px solid rgba(255,173,66,.25);
+    color:#d9c4a7;
+    font-size:12px;
+    line-height:1.55;
+}
+
+footer{
+    text-align:center;
+    color:#607890;
+    padding:25px;
+    font-size:12px;
+}
+
+@media(max-width:1050px){
+    .layout{grid-template-columns:1fr}
+    .hero{grid-template-columns:1fr}
+    .sim-area{grid-template-columns:1fr}
+    .side-stats{grid-template-columns:repeat(4,1fr)}
+}
+
+@media(max-width:750px){
+    .results{grid-template-columns:1fr 1fr}
+    .graphs{grid-template-columns:1fr}
+    .formulas{grid-template-columns:1fr}
+    .side-stats{grid-template-columns:1fr 1fr}
+    .input-grid{grid-template-columns:1fr}
+    .field.full{grid-column:auto}
+    #simCanvas{height:500px}
+    .header-badge{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="header-inner">
+    <div class="brand">
+        <div class="logo">↓</div>
+        <div>
+            <small>S.MICHAELIS</small>
+            <h1>Interaktives Freier-Fall-Labor</h1>
+        </div>
+    </div>
+    <div class="header-badge">PHYSIK • KINEMATIK • SIMULATION</div>
+</div>
+</header>
+
+<main>
+
+<section class="hero">
+    <div class="hero-card">
+        <h2>🟠 Freier Fall</h2>
+        <p>
+            Untersuche die Bewegung eines Körpers im homogenen Gravitationsfeld.
+            Alle wichtigen Größen können vorgegeben oder berechnet werden:
+            Höhe, Zeit, Geschwindigkeit, Beschleunigung, Masse, Gewichtskraft
+            und Energie. Die Simulation zeigt die Bewegung gleichzeitig
+            physikalisch und grafisch.
+        </p>
+    </div>
+
+    <div class="hero-card formula-box">
+        <div class="formula-sub">Grundmodell · positive Richtung nach oben</div>
+        <div class="formula-main">y(t) = h₀ + v₀t − ½gt²</div>
+        <div class="formula-main">v(t) = v₀ − gt</div>
+    </div>
+</section>
+
+
+<div class="layout">
+
+<!-- ================= INPUT ================= -->
+
+<section class="panel">
+
+<div class="panel-title">
+    <h3>⚙️ Versuchsparameter</h3>
+    <span>frei einstellbar</span>
+</div>
+
+<div class="input-grid">
+
+    <div class="field">
+        <label>Startposition h₀</label>
+        <div class="unit">
+            <input id="h0" type="number" value="20" step="0.1" min="0">
+            <span>m</span>
+        </div>
+    </div>
+
+    <div class="field">
+        <label>Anfangsgeschwindigkeit v₀</label>
+        <div class="unit">
+            <input id="v0" type="number" value="0" step="0.1">
+            <span>m/s</span>
+        </div>
+    </div>
+
+    <div class="field">
+        <label>Erdbeschleunigung g</label>
+        <div class="unit">
+            <input id="g" type="number" value="9.81" step="0.01" min="0.01">
+            <span>m/s²</span>
+        </div>
+    </div>
+
+    <div class="field">
+        <label>Masse m</label>
+        <div class="unit">
+            <input id="mass" type="number" value="1" step="0.01" min="0.001">
+            <span>kg</span>
+        </div>
+    </div>
+
+    <div class="field">
+        <label>Simulationsgeschwindigkeit</label>
+        <select id="speed">
+            <option value="0.25">0,25 ×</option>
+            <option value="0.5">0,5 ×</option>
+            <option value="1" selected>1 ×</option>
+            <option value="2">2 ×</option>
+            <option value="4">4 ×</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Zeitschritt / Messintervall</label>
+        <div class="unit">
+            <input id="dt" type="number" value="0.1" step="0.01" min="0.01">
+            <span>s</span>
+        </div>
+    </div>
+
+</div>
+
+<div class="section">
+<h4>🌬️ Luftwiderstand – optional</h4>
+
+<label class="check">
+    <input id="air" type="checkbox">
+    Luftwiderstand in der Simulation berücksichtigen
+</label>
+
+<div class="input-grid" style="margin-top:12px">
+
+    <div class="field">
+        <label>Widerstandsbeiwert cᵈ</label>
+        <input id="cd" type="number" value="0.47" step="0.01" min="0">
+    </div>
+
+    <div class="field">
+        <label>Querschnitt A</label>
+        <div class="unit">
+            <input id="area" type="number" value="0.01" step="0.001" min="0">
+            <span>m²</span>
+        </div>
+    </div>
+
+    <div class="field full">
+        <label>Luftdichte ρ</label>
+        <div class="unit">
+            <input id="rho" type="number" value="1.225" step="0.001" min="0">
+            <span>kg/m³</span>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<div class="section">
+
+<h4>🎯 Berechnungsmodus</h4>
+
+<select id="calcMode">
+    <option value="direct">Direkte Berechnung: h₀ + v₀ + g + t</option>
+    <option value="height">Zeit aus Höhe bestimmen</option>
+    <option value="velocity">Zeit aus Geschwindigkeit bestimmen</option>
+    <option value="gravity">g aus Fallhöhe und Zeit bestimmen</option>
+</select>
+
+<div class="field" style="margin-top:12px">
+    <label>Zielzeit t</label>
+    <div class="unit">
+        <input id="targetTime" type="number" value="1.5" step="0.01" min="0">
+        <span>s</span>
+    </div>
+</div>
+
+<div class="field" style="margin-top:10px">
+    <label>Zielhöhe y</label>
+    <div class="unit">
+        <input id="targetHeight" type="number" value="10" step="0.1">
+        <span>m</span>
+    </div>
+</div>
+
+<div class="field" style="margin-top:10px">
+    <label>Zielgeschwindigkeit v</label>
+    <div class="unit">
+        <input id="targetVelocity" type="number" value="-10" step="0.1">
+        <span>m/s</span>
+    </div>
+</div>
+
+</div>
+
+<div class="section">
+<div class="buttons">
+    <button class="primary" onclick="calculate()">🧮 Berechnen</button>
+    <button class="green" onclick="applyResults()">↙ Werte übernehmen</button>
+    <button onclick="resetAll()">↺ Zurücksetzen</button>
+    <button class="orange" onclick="example()">🎓 Beispiel</button>
+</div>
+</div>
+
+</section>
+
+
+<!-- ================= RESULTS ================= -->
+
+<section>
+
+<div class="panel">
+
+<div class="panel-title">
+    <h3>📊 Berechnungsergebnisse</h3>
+    <span>Live-Auswertung</span>
+</div>
+
+<div class="results">
+
+<div class="result">
+    <div class="r-label">Position y</div>
+    <div id="resY" class="r-value blue">—</div>
+    <div class="r-unit">m</div>
+</div>
+
+<div class="result">
+    <div class="r-label">Geschwindigkeit v</div>
+    <div id="resV" class="r-value green-text">—</div>
+    <div class="r-unit">m/s</div>
+</div>
+
+<div class="result">
+    <div class="r-label">Beschleunigung a</div>
+    <div id="resA" class="r-value orange-text">—</div>
+    <div class="r-unit">m/s²</div>
+</div>
+
+<div class="result">
+    <div class="r-label">Fallzeit</div>
+    <div id="resT" class="r-value cyan">—</div>
+    <div class="r-unit">s</div>
+</div>
+
+<div class="result">
+    <div class="r-label">Aufprallgeschwindigkeit</div>
+    <div id="resImpactV" class="r-value red-text">—</div>
+    <div class="r-unit">m/s</div>
+</div>
+
+<div class="result">
+    <div class="r-label">Maximale Höhe</div>
+    <div id="resMaxH" class="r-value yellow-text">—</div>
+    <div class="r-unit">m</div>
+</div>
+
+<div class="result">
+    <div class="r-label">Gewichtskraft</div>
+    <div id="resF" class="r-value">—</div>
+    <div class="r-unit">N</div>
+</div>
+
+<div class="result">
+    <div class="r-label">Kinetische Energie</div>
+    <div id="resEkin" class="r-value">—</div>
+    <div class="r-unit">J</div>
+</div>
+
+</div>
+
+<div class="notice" id="message">
+    Modell: Luftwiderstand ausgeschaltet. Der Körper bewegt sich ausschließlich unter dem Einfluss der Gravitation.
+</div>
+
+</div>
+
+
+<!-- ================= SIMULATION ================= -->
+
+<div class="panel simulation">
+
+<div class="panel-title">
+    <h3>🎬 Professionelle Simulation</h3>
+    <span id="simState">Bereit</span>
+</div>
+
+<div class="sim-toolbar">
+    <button class="primary" onclick="startSimulation()">▶ Start</button>
+    <button onclick="pauseSimulation()">Ⅱ Pause</button>
+    <button onclick="stepSimulation()">⏭ Schritt</button>
+    <button onclick="resetSimulation()">↺ Reset</button>
+    <button onclick="jumpImpact()">🎯 Aufprall</button>
+</div>
+
+<div class="sim-area">
+
+<div>
+    <canvas id="simCanvas" width="900" height="570"></canvas>
+
+    <div style="margin-top:9px">
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+    </div>
+</div>
+
+<div class="side-stats">
+
+<div class="stat-card">
+    <div class="stat-label">Zeit</div>
+    <div id="simT" class="stat-value cyan">0,00 s</div>
+</div>
+
+<div class="stat-card">
+    <div class="stat-label">Höhe</div>
+    <div id="simH" class="stat-value blue">0,00 m</div>
+</div>
+
+<div class="stat-card">
+    <div class="stat-label">Geschwindigkeit</div>
+    <div id="simV" class="stat-value green-text">0,00 m/s</div>
+</div>
+
+<div class="stat-card">
+    <div class="stat-label">Beschleunigung</div>
+    <div id="simA" class="stat-value orange-text">−9,81 m/s²</div>
+</div>
+
+<div class="stat-card full">
+    <div class="stat-label">Energie</div>
+    <div id="simEnergy" class="stat-value">0 J</div>
+</div>
+
+<div class="stat-card full">
+    <div class="stat-label">Modell</div>
+    <div id="simModel" style="margin-top:7px;color:#aac0d4;font-size:13px">
+        Idealer freier Fall
+    </div>
+</div>
+
+</div>
+</div>
+
+<div class="graphs">
+
+<div class="graph panel" style="padding:0">
+    <div class="graph-title">Höhe y(t)</div>
+    <canvas id="graphY" width="500" height="230"></canvas>
+</div>
+
+<div class="graph panel" style="padding:0">
+    <div class="graph-title">Geschwindigkeit v(t)</div>
+    <canvas id="graphV" width="500" height="230"></canvas>
+</div>
+
+<div class="graph panel" style="padding:0">
+    <div class="graph-title">Beschleunigung a(t)</div>
+    <canvas id="graphA" width="500" height="230"></canvas>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= TABLE ================= -->
+
+<div class="panel" style="margin-top:20px">
+
+<div class="panel-title">
+    <h3>📋 Messwerttabelle</h3>
+    <button onclick="clearTable()">Tabelle löschen</button>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+    <th>t [s]</th>
+    <th>y [m]</th>
+    <th>v [m/s]</th>
+    <th>a [m/s²]</th>
+    <th>Eₚₒₜ [J]</th>
+    <th>Eₖᵢₙ [J]</th>
+    <th>Eₘₑcₕ [J]</th>
+</tr>
+</thead>
+<tbody id="dataTable"></tbody>
+</table>
+</div>
+
+</div>
+
+
+<!-- ================= FORMULAS ================= -->
+
+<div class="panel" style="margin-top:20px">
+
+<div class="panel-title">
+    <h3>📐 Physikalische Gleichungen</h3>
+    <span>Idealmodell</span>
+</div>
+
+<div class="formulas">
+
+<div class="formula">
+<code>y(t) = h₀ + v₀ · t − ½ · g · t²</code>
+<small>Position als Funktion der Zeit</small>
+</div>
+
+<div class="formula">
+<code>v(t) = v₀ − g · t</code>
+<small>Momentangeschwindigkeit</small>
+</div>
+
+<div class="formula">
+<code>a(t) = −g</code>
+<small>Konstante Beschleunigung</small>
+</div>
+
+<div class="formula">
+<code>v² = v₀² − 2g(y − h₀)</code>
+<small>Geschwindigkeit ohne Zeit</small>
+</div>
+
+<div class="formula">
+<code>F_G = m · g</code>
+<small>Gewichtskraft</small>
+</div>
+
+<div class="formula">
+<code>Eₚₒₜ = m · g · y</code>
+<small>Potenzielle Energie</small>
+</div>
+
+<div class="formula">
+<code>Eₖᵢₙ = ½ · m · v²</code>
+<small>Kinetische Energie</small>
+</div>
+
+<div class="formula">
+<code>Eₘₑcₕ = Eₚₒₜ + Eₖᵢₙ</code>
+<small>Mechanische Gesamtenergie</small>
+</div>
+
+</div>
+
+<div class="notice">
+<strong>Physikalische Modellannahme:</strong>
+Im idealen Modell wird der Luftwiderstand vernachlässigt.
+Die Masse beeinflusst dabei die Fallbeschleunigung nicht.
+Bei eingeschaltetem Luftwiderstand wird die Bewegung numerisch simuliert.
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+<footer>
+S.Michaelis · Interaktives Physiklabor · Freier Fall
+</footer>
+
+
+<script>
+
+/* =========================================================
+   HILFSFUNKTIONEN
+========================================================= */
+
+const $ = id => document.getElementById(id);
+
+function num(id){
+    return parseFloat($(id).value) || 0;
+}
+
+function fmt(x,d=2){
+    if(!Number.isFinite(x)) return "—";
+    return x.toFixed(d).replace(".",",");
+}
+
+function clamp(x,a,b){
+    return Math.max(a,Math.min(b,x));
+}
+
+
+/* =========================================================
+   PHYSIK
+========================================================= */
+
+function getParams(){
+    return {
+        h0:Math.max(0,num("h0")),
+        v0:num("v0"),
+        g:Math.max(.0001,num("g")),
+        m:Math.max(.000001,num("mass")),
+        dt:Math.max(.001,num("dt")),
+        air:$("air").checked,
+        cd:Math.max(0,num("cd")),
+        area:Math.max(0,num("area")),
+        rho:Math.max(0,num("rho"))
+    };
+}
+
+
+/*
+    Positive direction = upward.
+
+    Ideal:
+    y = h0 + v0 t - 1/2 g t²
+    v = v0 - g t
+*/
+
+function idealState(t,p){
+
+    const y = p.h0 + p.v0*t - .5*p.g*t*t;
+    const v = p.v0 - p.g*t;
+    const a = -p.g;
+
+    return {y,v,a};
+}
+
+
+/* Positive impact time:
+   h0 + v0 t - .5 g t² = 0
+*/
+
+function impactTime(p){
+
+    const D = p.v0*p.v0 + 2*p.g*p.h0;
+
+    if(D < 0) return null;
+
+    const t = (p.v0 + Math.sqrt(D))/p.g;
+
+    return t >= 0 ? t : null;
+}
+
+
+function maxHeight(p){
+
+    if(p.v0 <= 0) return p.h0;
+
+    return p.h0 + (p.v0*p.v0)/(2*p.g);
+}
+
+
+function timeToMaximum(p){
+
+    if(p.v0 <= 0) return 0;
+
+    return p.v0/p.g;
+}
+
+
+function impactVelocity(p){
+
+    const t = impactTime(p);
+
+    if(t === null) return null;
+
+    return p.v0 - p.g*t;
+}
+
+
+/* =========================================================
+   CALCULATOR
+========================================================= */
+
+let currentResults = {};
+
+function calculate(){
+
+    const p = getParams();
+    const mode = $("calcMode").value;
+
+    let t = num("targetTime");
+    let y = num("targetHeight");
+    let v = num("targetVelocity");
+    let g = p.g;
+
+    if(mode === "height"){
+
+        /*
+          h = h0 + v0 t - 1/2 gt²
+          Solve quadratic.
+        */
+
+        const A = -.5*g;
+        const B = p.v0;
+        const C = p.h0-y;
+
+        const D = B*B - 4*A*C;
+
+        if(D < 0){
+            showMessage("Für diese Höhe existiert unter den gewählten Bedingungen keine reale Lösung.");
+            return;
+        }
+
+        const t1=(-B+Math.sqrt(D))/(2*A);
+        const t2=(-B-Math.sqrt(D))/(2*A);
+
+        const candidates=[t1,t2].filter(x=>x>=0);
+
+        if(!candidates.length){
+            showMessage("Keine positive Zeitlösung gefunden.");
+            return;
+        }
+
+        t=Math.min(...candidates);
+    }
+
+    if(mode === "velocity"){
+        t=(p.v0-v)/g;
+
+        if(t<0){
+            showMessage("Die eingegebene Geschwindigkeit wird mit den gewählten Parametern nicht bei t ≥ 0 erreicht.");
+            return;
+        }
+    }
+
+    if(mode === "gravity"){
+
+        if(t<=0){
+            showMessage("Für die Bestimmung von g muss t > 0 sein.");
+            return;
+        }
+
+        /*
+          y = h0 + v0 t - 1/2 g t²
+          g = 2(h0 + v0t - y)/t²
+        */
+
+        g=2*(p.h0+p.v0*t-y)/(t*t);
+
+        if(g<=0){
+            showMessage("Die berechnete Erdbeschleunigung ist nicht positiv. Prüfe die Eingaben.");
+            return;
+        }
+    }
+
+    const pp={...p,g};
+
+    const state=idealState(t,pp);
+    const impactT=impactTime(pp);
+    const impactV=impactVelocity(pp);
+    const maxH=maxHeight(pp);
+    const tMax=timeToMaximum(pp);
+
+    const force=pp.m*pp.g;
+    const ePot=pp.m*pp.g*Math.max(state.y,0);
+    const eKin=.5*pp.m*state.v*state.v;
+
+    currentResults={
+        ...state,
+        t,
+        g,
+        impactT,
+        impactV,
+        maxH,
+        tMax,
+        force,
+        ePot,
+        eKin,
+        energy:ePot+eKin
+    };
+
+    $("resY").textContent=fmt(state.y);
+    $("resV").textContent=fmt(state.v);
+    $("resA").textContent=fmt(state.a);
+    $("resT").textContent=fmt(t);
+    $("resImpactV").textContent=impactV===null?"—":fmt(impactV);
+    $("resMaxH").textContent=fmt(maxH);
+    $("resF").textContent=fmt(force);
+    $("resEkin").textContent=fmt(eKin);
+
+    if(mode==="gravity"){
+        showMessage(
+            `Aus den eingegebenen Werten ergibt sich g = ${fmt(g,4)} m/s².`
+        );
+    }else{
+        showMessage(
+            `Bei t = ${fmt(t)} s befindet sich der Körper bei y = ${fmt(state.y)} m und hat v = ${fmt(state.v)} m/s.`
+        );
+    }
+
+    updateSimulationData(pp,impactT);
+}
+
+
+function applyResults(){
+
+    if(!currentResults.t){
+        calculate();
+    }
+
+    if(currentResults.t !== undefined){
+        $("targetTime").value=currentResults.t;
+    }
+
+    if(currentResults.y !== undefined){
+        $("targetHeight").value=currentResults.y;
+    }
+
+    if(currentResults.v !== undefined){
+        $("targetVelocity").value=currentResults.v;
+    }
+
+    if(currentResults.g !== undefined){
+        $("g").value=currentResults.g;
+    }
+}
+
+
+function showMessage(text){
+    $("message").textContent=text;
+}
+
+
+/* =========================================================
+   SIMULATION
+========================================================= */
+
+const simCanvas=$("simCanvas");
+const ctx=simCanvas.getContext("2d");
+
+let sim={
+    running:false,
+    t:0,
+    lastTime:0,
+    impact:null,
+    p:null,
+    samples:[]
+};
+
+
+function updateSimulationData(p,impact){
+
+    sim.p=p;
+    sim.impact=impact;
+    sim.t=0;
+    sim.samples=[];
+    resetSimulation();
+
+    if(impact){
+        $("simState").textContent=`Aufprall bei ${fmt(impact)} s`;
+    }
+}
+
+
+function resetSimulation(){
+
+    sim.running=false;
+    sim.t=0;
+    sim.samples=[];
+
+    $("simState").textContent="Bereit";
+
+    drawSimulation();
+
+    updateSimStats();
+    drawAllGraphs();
+}
+
+
+function startSimulation(){
+
+    if(!sim.p) calculate();
+
+    if(!sim.p) return;
+
+    if(sim.impact!==null && sim.t>=sim.impact){
+        sim.t=0;
+        sim.samples=[];
+    }
+
+    sim.running=true;
+    sim.lastTime=performance.now();
+    $("simState").textContent="▶ Simulation läuft";
+
+    requestAnimationFrame(animationLoop);
+}
+
+
+function pauseSimulation(){
+
+    sim.running=false;
+    $("simState").textContent="Ⅱ Pause";
+}
+
+
+function stepSimulation(){
+
+    if(!sim.p) calculate();
+
+    const p=sim.p;
+
+    sim.t+=p.dt;
+
+    if(sim.impact!==null && sim.t>sim.impact){
+        sim.t=sim.impact;
+    }
+
+    addSample();
+    drawSimulation();
+    updateSimStats();
+    drawAllGraphs();
+}
+
+
+function jumpImpact(){
+
+    if(!sim.p) calculate();
+
+    if(sim.impact!==null){
+        sim.t=sim.impact;
+        addSample();
+        drawSimulation();
+        updateSimStats();
+        drawAllGraphs();
+    }
+}
+
+
+function animationLoop(now){
+
+    if(!sim.running) return;
+
+    const elapsed=(now-sim.lastTime)/1000;
+    sim.lastTime=now;
+
+    const factor=parseFloat($("speed").value);
+
+    sim.t += elapsed*factor;
+
+    if(sim.impact!==null && sim.t>=sim.impact){
+
+        sim.t=sim.impact;
+        sim.running=false;
+
+        $("simState").textContent="🎯 Aufprall";
+    }
+
+    addSample();
+
+    drawSimulation();
+    updateSimStats();
+    drawAllGraphs();
+
+    if(sim.running){
+        requestAnimationFrame(animationLoop);
+    }
+}
+
+
+function addSample(){
+
+    if(!sim.p) return;
+
+    const p=sim.p;
+    const s=sim.air
+        ? numericalState(sim.t,p)
+        : idealState(sim.t,p);
+
+    if(s.y<0) s.y=0;
+
+    const last=sim.samples[sim.samples.length-1];
+
+    if(!last || Math.abs(last.t-sim.t)>.035){
+
+        sim.samples.push({
+            t:sim.t,
+            y:s.y,
+            v:s.v,
+            a:s.a,
+            ep:p.m*p.g*Math.max(s.y,0),
+            ek:.5*p.m*s.v*s.v
+        });
+
+        if(sim.samples.length>700){
+            sim.samples.shift();
+        }
+
+        updateTable();
+    }
+}
+
+
+/* =========================================================
+   AIR RESISTANCE
+========================================================= */
+
+/*
+   Numerical model:
+   F_drag = 1/2 rho Cd A v²
+   Direction opposite velocity.
+
+   Acceleration:
+   a = -g - drag/m
+   when v > 0
+   a = -g + drag/m
+   when v < 0
+
+   Euler integration with small dt.
+*/
+
+function numericalState(targetT,p){
+
+    let y=p.h0;
+    let v=p.v0;
+    let t=0;
+
+    const step=.0025;
+
+    while(t<targetT){
+
+        const h=Math.min(step,targetT-t);
+
+        const drag=.5*p.rho*p.cd*p.area*v*Math.abs(v);
+
+        const a=-p.g-drag/p.m;
+
+        v+=a*h;
+        y+=v*h;
+
+        if(y<=0){
+            y=0;
+            break;
+        }
+
+        t+=h;
+    }
+
+    const drag=.5*p.rho*p.cd*p.area*v*Math.abs(v);
+    const a=-p.g-drag/p.m;
+
+    return {y,v,a};
+}
+
+
+/* =========================================================
+   SIMULATION DRAWING
+========================================================= */
+
+function drawSimulation(){
+
+    const w=simCanvas.width;
+    const h=simCanvas.height;
+
+    ctx.clearRect(0,0,w,h);
+
+    /* background */
+    const grad=ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0,"#06111d");
+    grad.addColorStop(1,"#0b1d2d");
+
+    ctx.fillStyle=grad;
+    ctx.fillRect(0,0,w,h);
+
+    if(!sim.p){
+
+        ctx.fillStyle="#718ba3";
+        ctx.font="18px Segoe UI";
+        ctx.textAlign="center";
+        ctx.fillText("Parameter eingeben und „Berechnen“ drücken.",w/2,h/2);
+
+        return;
+    }
+
+    const p=sim.p;
+
+    const marginTop=45;
+    const ground=h-70;
+    const top=marginTop;
+
+    const maxH=Math.max(
+        p.h0,
+        maxHeight(p),
+        1
+    );
+
+    const scale=(ground-top)/maxH;
+
+    const x=w*.48;
+
+    /* sky grid */
+    ctx.strokeStyle="rgba(100,150,190,.09)";
+    ctx.lineWidth=1;
+
+    for(let yy=top;yy<=ground;yy+=35){
+
+        ctx.beginPath();
+        ctx.moveTo(50,yy);
+        ctx.lineTo(w-30,yy);
+        ctx.stroke();
+    }
+
+    /* height axis */
+    ctx.strokeStyle="#41627c";
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+    ctx.moveTo(x,top);
+    ctx.lineTo(x,ground);
+    ctx.stroke();
+
+    /* scale labels */
+    ctx.fillStyle="#7894ad";
+    ctx.font="11px Segoe UI";
+    ctx.textAlign="right";
+
+    const divisions=8;
+
+    for(let i=0;i<=divisions;i++){
+
+        const value=maxH*(i/divisions);
+        const yy=ground-value*scale;
+
+        ctx.fillText(`${fmt(value,1)} m`,x-12,yy+4);
+
+        ctx.strokeStyle="rgba(100,150,190,.16)";
+        ctx.beginPath();
+        ctx.moveTo(x-6,yy);
+        ctx.lineTo(x+6,yy);
+        ctx.stroke();
+    }
+
+    /* ground */
+    ctx.fillStyle="#182c3d";
+    ctx.fillRect(30,ground,w-60,35);
+
+    ctx.strokeStyle="#3b647f";
+    ctx.beginPath();
+    ctx.moveTo(30,ground);
+    ctx.lineTo(w-30,ground);
+    ctx.stroke();
+
+    /* current state */
+    const state=sim.air
+        ? numericalState(sim.t,p)
+        : idealState(sim.t,p);
+
+    const y=clamp(state.y,0,maxH);
+
+    const py=ground-y*scale;
+
+    /* velocity vector */
+    const arrowLen=clamp(Math.abs(state.v)*4,15,130);
+    const direction=state.v>=0?-1:1;
+
+    ctx.strokeStyle="#49e0ff";
+    ctx.fillStyle="#49e0ff";
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+    ctx.moveTo(x+48,py);
+    ctx.lineTo(x+48,py+direction*arrowLen);
+    ctx.stroke();
+
+    ctx.beginPath();
+
+    if(direction<0){
+        ctx.moveTo(x+48,py-arrowLen);
+        ctx.lineTo(x+39,py-arrowLen+14);
+        ctx.lineTo(x+57,py-arrowLen+14);
+    }else{
+        ctx.moveTo(x+48,py+arrowLen);
+        ctx.lineTo(x+39,py+arrowLen-14);
+        ctx.lineTo(x+57,py+arrowLen-14);
+    }
+
+    ctx.fill();
+
+    /* acceleration arrow */
+    ctx.strokeStyle="#ffad42";
+    ctx.fillStyle="#ffad42";
+    ctx.lineWidth=3;
+
+    ctx.beginPath();
+    ctx.moveTo(x-55,py-35);
+    ctx.lineTo(x-55,py+45);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x-55,py+55);
+    ctx.lineTo(x-64,py+40);
+    ctx.lineTo(x-46,py+40);
+    ctx.fill();
+
+    /* object glow */
+    const glow=ctx.createRadialGradient(x,py,3,x,py,32);
+    glow.addColorStop(0,"rgba(69,224,255,.45)");
+    glow.addColorStop(1,"rgba(69,224,255,0)");
+
+    ctx.fillStyle=glow;
+    ctx.beginPath();
+    ctx.arc(x,py,32,0,Math.PI*2);
+    ctx.fill();
+
+    /* object */
+    const ballGrad=ctx.createRadialGradient(
+        x-5,py-7,2,
+        x,py,18
+    );
+
+    ballGrad.addColorStop(0,"#ffffff");
+    ballGrad.addColorStop(.2,"#70e8ff");
+    ballGrad.addColorStop(1,"#1478bc");
+
+    ctx.fillStyle=ballGrad;
+    ctx.beginPath();
+    ctx.arc(x,py,16,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.strokeStyle="#b8f4ff";
+    ctx.lineWidth=2;
+    ctx.stroke();
+
+    /* labels */
+
+    ctx.textAlign="left";
+    ctx.fillStyle="#d8edff";
+    ctx.font="bold 13px Segoe UI";
+
+    ctx.fillText(`y = ${fmt(state.y)} m`,x+75,py-15);
+
+    ctx.fillStyle="#49e0ff";
+    ctx.fillText(`v = ${fmt(state.v)} m/s`,x+75,py+5);
+
+    ctx.fillStyle="#ffad42";
+    ctx.fillText(`a = ${fmt(state.a)} m/s²`,x+75,py+25);
+
+    /* title */
+    ctx.fillStyle="#d9ebfb";
+    ctx.font="bold 15px Segoe UI";
+    ctx.textAlign="left";
+    ctx.fillText(
+        sim.air ? "Numerische Simulation mit Luftwiderstand" :
+        "Idealer freier Fall",
+        25,28
+    );
+
+    /* time */
+    ctx.textAlign="right";
+    ctx.fillStyle="#91abc1";
+    ctx.font="12px Segoe UI";
+    ctx.fillText(`t = ${fmt(sim.t)} s`,w-25,28);
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateSimStats(){
+
+    if(!sim.p) return;
+
+    const p=sim.p;
+
+    const s=sim.air
+        ? numericalState(sim.t,p)
+        : idealState(sim.t,p);
+
+    const y=Math.max(0,s.y);
+    const ep=p.m*p.g*y;
+    const ek=.5*p.m*s.v*s.v;
+
+    $("simT").textContent=`${fmt(sim.t)} s`;
+    $("simH").textContent=`${fmt(y)} m`;
+    $("simV").textContent=`${fmt(s.v)} m/s`;
+    $("simA").textContent=`${fmt(s.a)} m/s²`;
+
+    $("simEnergy").textContent=
+        `${fmt(ep+ek)} J`;
+
+    $("simModel").textContent=
+        sim.air
+        ? "Numerische Bewegung mit Luftwiderstand"
+        : "Idealer freier Fall · Luftwiderstand = 0";
+
+    let progress=0;
+
+    if(sim.impact && sim.impact>0){
+        progress=100*sim.t/sim.impact;
+    }
+
+    $("progressBar").style.width=
+        `${clamp(progress,0,100)}%`;
+}
+
+
+/* =========================================================
+   GRAPHS
+========================================================= */
+
+function drawGraph(canvasId,key,label,unit){
+
+    const canvas=$(canvasId);
+    const c=canvas.getContext("2d");
+
+    const w=canvas.width;
+    const h=canvas.height;
+
+    c.clearRect(0,0,w,h);
+
+    c.fillStyle="#06121e";
+    c.fillRect(0,0,w,h);
+
+    const data=sim.samples;
+
+    if(data.length<2){
+
+        c.fillStyle="#536e85";
+        c.font="12px Segoe UI";
+        c.textAlign="center";
+        c.fillText("Simulation starten",w/2,h/2);
+
+        return;
+    }
+
+    const pad={l:48,r:15,t:15,b:32};
+
+    const pw=w-pad.l-pad.r;
+    const ph=h-pad.t-pad.b;
+
+    const xs=data.map(d=>d.t);
+    const ys=data.map(d=>d[key]);
+
+    let xmin=0;
+    let xmax=Math.max(...xs,.1);
+
+    let ymin=Math.min(...ys);
+    let ymax=Math.max(...ys);
+
+    if(ymin===ymax){
+        ymin-=1;
+        ymax+=1;
+    }
+
+    const extra=(ymax-ymin)*.12;
+
+    ymin-=extra;
+    ymax+=extra;
+
+    function X(x){
+        return pad.l+(x-xmin)/(xmax-xmin)*pw;
+    }
+
+    function Y(y){
+        return pad.t+(ymax-y)/(ymax-ymin)*ph;
+    }
+
+    /* grid */
+
+    c.strokeStyle="rgba(120,160,190,.12)";
+    c.lineWidth=1;
+
+    for(let i=0;i<=5;i++){
+
+        const yy=pad.t+i*ph/5;
+
+        c.beginPath();
+        c.moveTo(pad.l,yy);
+        c.lineTo(w-pad.r,yy);
+        c.stroke();
+    }
+
+    for(let i=0;i<=5;i++){
+
+        const xx=pad.l+i*pw/5;
+
+        c.beginPath();
+        c.moveTo(xx,pad.t);
+        c.lineTo(xx,h-pad.b);
+        c.stroke();
+    }
+
+    /* zero line */
+
+    if(ymin<0 && ymax>0){
+
+        const zy=Y(0);
+
+        c.strokeStyle="#536e85";
+        c.setLineDash([5,5]);
+
+        c.beginPath();
+        c.moveTo(pad.l,zy);
+        c.lineTo(w-pad.r,zy);
+        c.stroke();
+
+        c.setLineDash([]);
+    }
+
+    /* curve */
+
+    c.strokeStyle=
+        key==="y" ? "#43a5ff" :
+        key==="v" ? "#42e695" :
+        "#ffad42";
+
+    c.lineWidth=2.5;
+
+    c.beginPath();
+
+    data.forEach((d,i)=>{
+
+        const xx=X(d.t);
+        const yy=Y(d[key]);
+
+        if(i===0) c.moveTo(xx,yy);
+        else c.lineTo(xx,yy);
+    });
+
+    c.stroke();
+
+    /* axes labels */
+
+    c.fillStyle="#718ba1";
+    c.font="10px Segoe UI";
+
+    c.textAlign="center";
+    c.fillText("t [s]",pad.l+pw/2,h-8);
+
+    c.save();
+    c.translate(12,pad.t+ph/2);
+    c.rotate(-Math.PI/2);
+    c.fillText(`${label} [${unit}]`,0,0);
+    c.restore();
+
+    c.textAlign="right";
+    c.fillText(fmt(ymax,1),pad.l-5,pad.t+4);
+    c.fillText(fmt(ymin,1),pad.l-5,h-pad.b);
+}
+
+
+function drawAllGraphs(){
+
+    drawGraph("graphY","y","Höhe","m");
+    drawGraph("graphV","v","Geschwindigkeit","m/s");
+    drawGraph("graphA","a","Beschleunigung","m/s²");
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+function updateTable(){
+
+    const tbody=$("dataTable");
+
+    tbody.innerHTML="";
+
+    const data=sim.samples.slice(-80);
+
+    data.forEach(d=>{
+
+        const tr=document.createElement("tr");
+
+        tr.innerHTML=`
+            <td>${fmt(d.t,2)}</td>
+            <td>${fmt(d.y,2)}</td>
+            <td>${fmt(d.v,2)}</td>
+            <td>${fmt(d.a,2)}</td>
+            <td>${fmt(d.ep,2)}</td>
+            <td>${fmt(d.ek,2)}</td>
+            <td>${fmt(d.ep+d.ek,2)}</td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
+
+function clearTable(){
+    $("dataTable").innerHTML="";
+}
+
+
+/* =========================================================
+   EXAMPLE / RESET
+========================================================= */
+
+function example(){
+
+    $("h0").value=20;
+    $("v0").value=0;
+    $("g").value=9.81;
+    $("mass").value=1;
+    $("targetTime").value=1.5;
+    $("targetHeight").value=10;
+    $("targetVelocity").value=-10;
+
+    $("air").checked=false;
+
+    calculate();
+}
+
+
+function resetAll(){
+
+    $("h0").value=20;
+    $("v0").value=0;
+    $("g").value=9.81;
+    $("mass").value=1;
+    $("dt").value=.1;
+
+    $("cd").value=.47;
+    $("area").value=.01;
+    $("rho").value=1.225;
+
+    $("targetTime").value=1.5;
+    $("targetHeight").value=10;
+    $("targetVelocity").value=-10;
+
+    $("air").checked=false;
+
+    resetSimulation();
+
+    $("resY").textContent="—";
+    $("resV").textContent="—";
+    $("resA").textContent="—";
+    $("resT").textContent="—";
+    $("resImpactV").textContent="—";
+    $("resMaxH").textContent="—";
+    $("resF").textContent="—";
+    $("resEkin").textContent="—";
+
+    showMessage(
+        "Parameter zurückgesetzt. Drücke „Berechnen“, um den Versuch zu starten."
+    );
+}
+
+
+/* =========================================================
+   AIR TOGGLE
+========================================================= */
+
+$("air").addEventListener("change",()=>{
+
+    if(!$("air").checked){
+
+        $("message").textContent=
+            "Ideales Modell: Luftwiderstand ausgeschaltet.";
+    }else{
+
+        $("message").textContent=
+            "Luftwiderstand aktiviert. Die Bewegung wird numerisch berechnet.";
+    }
+
+    if(sim.p){
+
+        drawSimulation();
+        updateSimStats();
+        drawAllGraphs();
+    }
+});
+
+
+/* =========================================================
+   LIVE PARAMETER UPDATE
+========================================================= */
+
+[
+    "h0","v0","g","mass",
+    "dt","cd","area","rho",
+    "targetTime","targetHeight","targetVelocity"
+].forEach(id=>{
+
+    $(id).addEventListener("change",()=>{
+
+        if(sim.running) pauseSimulation();
+    });
+});
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener("keydown",e=>{
+
+    if(e.code==="Space"){
+
+        e.preventDefault();
+
+        if(sim.running) pauseSimulation();
+        else startSimulation();
+    }
+
+    if(e.key==="r" || e.key==="R"){
+        resetSimulation();
+    }
+});
+
+
+/* =========================================================
+   START
+========================================================= */
+
+resetSimulation();
+
+</script>
+
+</body>
+</html>
