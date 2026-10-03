@@ -1,1 +1,3976 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>S.Michaelis – Kreisbewegung</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #050b14;
+    --panel: #0b1624;
+    --panel2: #0f1d2d;
+    --border: #1d3852;
+    --text: #edf6ff;
+    --muted: #8ea6bd;
+
+    --cyan: #22d3ee;
+    --blue: #38bdf8;
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --orange: #fb923c;
+    --red: #fb7185;
+    --purple: #a78bfa;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    color: var(--text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 0%,
+            #10344a 0%,
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 5%,
+            #102d46 0%,
+            transparent 30%
+        ),
+        var(--bg);
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+    padding: 42px 24px 30px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    background:
+        rgba(4,10,18,.82);
+
+    backdrop-filter:
+        blur(14px);
+}
+
+.header-inner {
+    max-width: 1450px;
+    margin: auto;
+}
+
+.top-line {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 54px;
+    height: 54px;
+
+    color: var(--cyan);
+
+    background:
+        rgba(34,211,238,.08);
+
+    border:
+        1px solid rgba(34,211,238,.4);
+
+    border-radius: 15px;
+
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.brand {
+    color: var(--cyan);
+
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: 4px;
+}
+
+h1 {
+    margin:
+        22px 0 8px;
+
+    font-size:
+        clamp(34px, 5vw, 58px);
+
+    line-height: 1;
+}
+
+.subtitle {
+    max-width: 820px;
+
+    color: var(--muted);
+
+    font-size: 16px;
+
+    line-height: 1.65;
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main {
+    max-width: 1450px;
+
+    margin: auto;
+
+    padding:
+        30px 24px 70px;
+}
+
+.section-title {
+    margin:
+        38px 0 18px;
+}
+
+.section-title h2 {
+    margin: 0;
+
+    font-size: 24px;
+}
+
+.section-title p {
+    margin:
+        7px 0 0;
+
+    color: var(--muted);
+
+    line-height: 1.5;
+}
+
+/* =====================================================
+   LAYOUT
+===================================================== */
+
+.workspace {
+    display: grid;
+
+    grid-template-columns:
+        340px
+        minmax(500px, 1fr)
+        340px;
+
+    gap: 18px;
+
+    align-items: start;
+}
+
+.panel {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,31,48,.97),
+            rgba(7,16,28,.98)
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.22);
+}
+
+.panel-header {
+    padding:
+        18px 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+}
+
+.panel-header h3 {
+    margin: 0;
+
+    font-size: 16px;
+}
+
+.panel-header p {
+    margin:
+        5px 0 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.controls {
+    padding: 18px;
+}
+
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-group label {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+
+    color: #c7d8e8;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.input-unit {
+    color: var(--muted);
+
+    font-weight: normal;
+}
+
+input[type="number"],
+select {
+    width: 100%;
+
+    padding:
+        11px 12px;
+
+    color: var(--text);
+
+    background:
+        #07111e;
+
+    border:
+        1px solid #29435c;
+
+    border-radius: 9px;
+
+    outline: none;
+}
+
+input[type="number"]:focus,
+select:focus {
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(34,211,238,.08);
+}
+
+input[type="range"] {
+    width: 100%;
+
+    accent-color:
+        var(--cyan);
+
+    cursor: pointer;
+}
+
+.range-value {
+    margin-top: 5px;
+
+    color: var(--cyan);
+
+    font-size: 12px;
+    text-align: right;
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.button-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+button {
+    padding:
+        11px 12px;
+
+    color: var(--text);
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    transition:
+        .18s ease;
+}
+
+button:hover {
+    border-color:
+        var(--cyan);
+
+    background:
+        rgba(34,211,238,.08);
+
+    transform:
+        translateY(-1px);
+}
+
+button.primary {
+    color: #02151b;
+
+    background:
+        var(--cyan);
+
+    border-color:
+        var(--cyan);
+}
+
+button.primary:hover {
+    background:
+        #67e8f9;
+}
+
+button.danger:hover {
+    border-color:
+        var(--red);
+}
+
+button.full {
+    width: 100%;
+
+    margin-top: 8px;
+}
+
+/* =====================================================
+   SIMULATION
+===================================================== */
+
+.simulation {
+    padding: 14px;
+}
+
+.canvas-wrap {
+    position: relative;
+
+    width: 100%;
+
+    min-height: 570px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #11283b 0%,
+            #07111d 58%,
+            #040a12 100%
+        );
+
+    border:
+        1px solid #203c55;
+
+    border-radius: 14px;
+}
+
+#circleCanvas {
+    display: block;
+
+    width: 100%;
+    height: 570px;
+}
+
+.sim-overlay {
+    position: absolute;
+
+    top: 15px;
+    left: 15px;
+
+    padding:
+        10px 12px;
+
+    background:
+        rgba(3,9,16,.72);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius: 10px;
+
+    backdrop-filter:
+        blur(7px);
+
+    font-size: 12px;
+
+    line-height: 1.65;
+}
+
+.sim-overlay strong {
+    color: var(--cyan);
+}
+
+.sim-status {
+    position: absolute;
+
+    right: 15px;
+    top: 15px;
+
+    padding:
+        7px 10px;
+
+    color: var(--green);
+
+    background:
+        rgba(52,211,153,.08);
+
+    border:
+        1px solid rgba(52,211,153,.25);
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* =====================================================
+   LIVE VALUES
+===================================================== */
+
+.value-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+
+    padding: 14px;
+}
+
+.value-box {
+    padding:
+        12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.07);
+
+    border-radius: 10px;
+}
+
+.value-label {
+    color: var(--muted);
+
+    font-size: 10px;
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.value {
+    margin-top: 5px;
+
+    color: var(--cyan);
+
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.value-unit {
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+/* =====================================================
+   FORMULAS
+===================================================== */
+
+.formula-box {
+    margin:
+        14px;
+
+    padding:
+        17px;
+
+    background:
+        #07111e;
+
+    border:
+        1px solid #203b54;
+
+    border-radius: 12px;
+}
+
+.formula {
+    margin-bottom: 12px;
+
+    color: #dff9ff;
+
+    font-family:
+        "DejaVu Sans Mono",
+        monospace;
+
+    font-size: 18px;
+}
+
+.formula:last-child {
+    margin-bottom: 0;
+}
+
+.formula-name {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: var(--muted);
+
+    font-family: Arial, sans-serif;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+/* =====================================================
+   EINHEITSKREIS
+===================================================== */
+
+.unit-circle-section {
+    margin-top: 20px;
+}
+
+.unit-circle-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(350px, 1fr)
+        minmax(350px, 1fr);
+
+    gap: 18px;
+}
+
+#unitCanvas {
+    display: block;
+
+    width: 100%;
+    height: 430px;
+}
+
+.unit-info {
+    padding: 18px;
+}
+
+.unit-number {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+.big-number {
+    padding:
+        17px;
+
+    background:
+        rgba(34,211,238,.045);
+
+    border:
+        1px solid rgba(34,211,238,.15);
+
+    border-radius: 12px;
+}
+
+.big-number span {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.big-number strong {
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--cyan);
+
+    font-size: 22px;
+}
+
+/* =====================================================
+   GRAPHS
+===================================================== */
+
+.graph-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.graph-panel {
+    padding: 14px;
+}
+
+.graph-title {
+    padding:
+        5px 5px 12px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.graph-canvas {
+    display: block;
+
+    width: 100%;
+    height: 250px;
+
+    background:
+        #07111e;
+
+    border:
+        1px solid #1d344a;
+
+    border-radius: 10px;
+}
+
+/* =====================================================
+   CALCULATOR
+===================================================== */
+
+.calculator-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+
+    padding: 18px;
+}
+
+.calc-result {
+    grid-column:
+        1 / -1;
+
+    padding:
+        16px;
+
+    background:
+        rgba(34,211,238,.045);
+
+    border:
+        1px solid rgba(34,211,238,.18);
+
+    border-radius: 12px;
+}
+
+.calc-result-title {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.calc-result-value {
+    margin-top: 7px;
+
+    color: var(--cyan);
+
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-wrap {
+    overflow-x: auto;
+
+    padding: 14px;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 12px;
+}
+
+th {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    letter-spacing: .8px;
+}
+
+th,
+td {
+    padding:
+        10px 9px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.06);
+}
+
+td {
+    color: #d4e4f0;
+}
+
+/* =====================================================
+   TASK MODE
+===================================================== */
+
+.task {
+    padding: 20px;
+}
+
+.task-question {
+    padding:
+        18px;
+
+    color: #e7f5ff;
+
+    background:
+        #07111e;
+
+    border:
+        1px solid #203c55;
+
+    border-radius: 12px;
+
+    line-height: 1.7;
+}
+
+.task-answer {
+    display: none;
+
+    margin-top: 14px;
+
+    padding:
+        16px;
+
+    color: #bfefff;
+
+    background:
+        rgba(34,211,238,.05);
+
+    border:
+        1px solid rgba(34,211,238,.2);
+
+    border-radius: 12px;
+
+    line-height: 1.7;
+}
+
+.task-answer.show {
+    display: block;
+}
+
+/* =====================================================
+   INFO CARDS
+===================================================== */
+
+.concept-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.concept-card {
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,31,48,.96),
+            rgba(7,16,28,.98)
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+}
+
+.concept-number {
+    color: var(--cyan);
+
+    font-size: 11px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+.concept-card h3 {
+    margin:
+        10px 0;
+
+    font-size: 18px;
+}
+
+.concept-card p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.65;
+}
+
+/* =====================================================
+   PRESENTATION
+===================================================== */
+
+.presentation {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background:
+        rgba(2,7,13,.94);
+}
+
+.presentation.show {
+    display: flex;
+}
+
+.presentation-inner {
+    width: min(1000px, 100%);
+
+    padding: 35px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0e2032,
+            #07111d
+        );
+
+    border:
+        1px solid #294761;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.6);
+}
+
+.presentation-inner h2 {
+    margin-top: 0;
+
+    color: var(--cyan);
+
+    font-size: 36px;
+}
+
+.presentation-formula {
+    margin:
+        25px 0;
+
+    padding:
+        25px;
+
+    background:
+        #050c15;
+
+    border-radius: 14px;
+
+    color: white;
+
+    font-family:
+        "DejaVu Sans Mono",
+        monospace;
+
+    font-size: 27px;
+
+    text-align: center;
+}
+
+.presentation-text {
+    color: #c8dbea;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    padding:
+        35px 20px 50px;
+
+    color: #536c84;
+
+    text-align: center;
+
+    font-size: 12px;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width: 1150px) {
+
+    .workspace {
+        grid-template-columns:
+            300px
+            minmax(400px, 1fr);
+    }
+
+    .workspace > .right-column {
+        grid-column:
+            1 / -1;
+    }
+
+    .concept-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 850px) {
+
+    .workspace {
+        grid-template-columns:
+            1fr;
+    }
+
+    .workspace > .right-column {
+        grid-column: auto;
+    }
+
+    .unit-circle-grid,
+    .graph-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .calculator-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .concept-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .canvas-wrap {
+        min-height: 430px;
+    }
+
+    #circleCanvas {
+        height: 430px;
+    }
+}
+
+@media(max-width: 600px) {
+
+    header {
+        padding:
+            30px 16px 25px;
+    }
+
+    main {
+        padding:
+            20px 14px 50px;
+    }
+
+    .unit-number {
+        grid-template-columns:
+            1fr;
+    }
+
+    .value-grid {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="header-inner">
+
+<div class="top-line">
+
+<div class="logo">
+↻
+</div>
+
+<div class="brand">
+S.MICHAELIS · PHYSIKLABOR
+</div>
+
+</div>
+
+<h1>
+Kreisbewegung
+</h1>
+
+<div class="subtitle">
+Die gleichförmige Kreisbewegung interaktiv untersuchen:
+Winkelgeschwindigkeit, Bahngeschwindigkeit,
+Zentripetalbeschleunigung und Zentripetalkraft
+berechnen, simulieren und visualisieren.
+</div>
+
+</div>
+
+</header>
+
+
+<main>
+
+
+<!-- =====================================================
+     SIMULATION
+===================================================== -->
+
+<div class="section-title">
+
+<h2>
+01 · Interaktive Simulation
+</h2>
+
+<p>
+Beobachte, wie sich Geschwindigkeit, Beschleunigung
+und Kraft bei einer Kreisbewegung verhalten.
+</p>
+
+</div>
+
+
+<div class="workspace">
+
+
+<!-- =====================================================
+     LEFT CONTROLS
+===================================================== -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+<h3>
+Parameter
+</h3>
+
+<p>
+Verändere die Bedingungen der Bewegung.
+</p>
+
+</div>
+
+
+<div class="controls">
+
+
+<div class="input-group">
+
+<label>
+Masse m
+<span class="input-unit">kg</span>
+</label>
+
+<input
+    id="mass"
+    type="number"
+    min="0.01"
+    step="0.1"
+    value="2.0">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Radius r
+<span class="input-unit">m</span>
+</label>
+
+<input
+    id="radius"
+    type="number"
+    min="0.1"
+    step="0.1"
+    value="3.0">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Umlaufzeit T
+<span class="input-unit">s</span>
+</label>
+
+<input
+    id="period"
+    type="number"
+    min="0.1"
+    step="0.1"
+    value="4.0">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Startwinkel φ
+<span class="input-unit">°</span>
+</label>
+
+<input
+    id="angle"
+    type="number"
+    step="1"
+    value="0">
+
+</div>
+
+
+<div class="input-group">
+
+<label>
+Simulationsgeschwindigkeit
+</label>
+
+<input
+    id="speed"
+    type="range"
+    min="0.25"
+    max="4"
+    step="0.25"
+    value="1">
+
+<div class="range-value">
+<span id="speedValue">1.00</span> ×
+</div>
+
+</div>
+
+
+<div class="button-grid">
+
+<button
+    class="primary"
+    onclick="startSimulation()">
+Start
+</button>
+
+<button
+    onclick="pauseSimulation()">
+Pause
+</button>
+
+<button
+    onclick="stepSimulation()">
+Schritt
+</button>
+
+<button
+    onclick="resetSimulation()">
+Reset
+</button>
+
+</div>
+
+
+<button
+    class="full"
+    onclick="clearTrace()">
+Spur löschen
+</button>
+
+
+<button
+    class="full"
+    onclick="openPresentation()">
+Präsentation
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CENTER SIMULATION
+===================================================== -->
+
+<div class="panel">
+
+<div class="simulation">
+
+<div class="canvas-wrap">
+
+<canvas id="circleCanvas"></canvas>
+
+
+<div class="sim-overlay">
+
+Zeit:
+<strong id="timeLive">0.00 s</strong>
+<br>
+
+Winkel:
+<strong id="angleLive">0.00°</strong>
+<br>
+
+Umläufe:
+<strong id="turnsLive">0.00</strong>
+
+</div>
+
+
+<div
+    class="sim-status"
+    id="statusLive">
+
+BEREIT
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="value-grid">
+
+
+<div class="value-box">
+
+<div class="value-label">
+Geschwindigkeit
+</div>
+
+<div class="value">
+<span id="vLive">0.00</span>
+<span class="value-unit">m/s</span>
+</div>
+
+</div>
+
+
+<div class="value-box">
+
+<div class="value-label">
+Winkelgeschwindigkeit
+</div>
+
+<div class="value">
+<span id="omegaLive">0.00</span>
+<span class="value-unit">rad/s</span>
+</div>
+
+</div>
+
+
+<div class="value-box">
+
+<div class="value-label">
+Zentripetalbeschleunigung
+</div>
+
+<div class="value">
+<span id="azLive">0.00</span>
+<span class="value-unit">m/s²</span>
+</div>
+
+</div>
+
+
+<div class="value-box">
+
+<div class="value-label">
+Zentripetalkraft
+</div>
+
+<div class="value">
+<span id="fzLive">0.00</span>
+<span class="value-unit">N</span>
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     RIGHT INFORMATION
+===================================================== -->
+
+<div class="panel right-column">
+
+<div class="panel-header">
+
+<h3>
+Physikalische Größen
+</h3>
+
+<p>
+Die wichtigsten Zusammenhänge der Kreisbewegung.
+</p>
+
+</div>
+
+
+<div class="formula-box">
+
+
+<div class="formula">
+
+<span class="formula-name">
+Frequenz
+</span>
+
+f = 1 / T
+
+</div>
+
+
+<div class="formula">
+
+<span class="formula-name">
+Winkelgeschwindigkeit
+</span>
+
+ω = 2π / T
+
+</div>
+
+
+<div class="formula">
+
+<span class="formula-name">
+Bahngeschwindigkeit
+</span>
+
+v = ω · r
+
+</div>
+
+
+<div class="formula">
+
+<span class="formula-name">
+Zentripetalbeschleunigung
+</span>
+
+a<sub>z</sub> = v² / r
+
+</div>
+
+
+<div class="formula">
+
+<span class="formula-name">
+Alternative Form
+</span>
+
+a<sub>z</sub> = ω² · r
+
+</div>
+
+
+<div class="formula">
+
+<span class="formula-name">
+Zentripetalkraft
+</span>
+
+F<sub>z</sub> = m · a<sub>z</sub>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     EINHEITSKREIS
+===================================================== -->
+
+<div class="section-title">
+
+<h2>
+02 · Einheitskreis
+</h2>
+
+<p>
+Der Winkel φ verbindet Kreisbewegung, Sinus und Cosinus.
+</p>
+
+</div>
+
+
+<div class="unit-circle-grid">
+
+
+<div class="panel">
+
+<canvas
+    id="unitCanvas">
+</canvas>
+
+</div>
+
+
+<div class="panel">
+
+<div class="unit-info">
+
+<div class="unit-number">
+
+
+<div class="big-number">
+
+<span>
+Winkel φ
+</span>
+
+<strong id="phiUnit">
+0.00°
+</strong>
+
+</div>
+
+
+<div class="big-number">
+
+<span>
+Winkel φ
+</span>
+
+<strong id="phiRad">
+0.000 rad
+</strong>
+
+</div>
+
+
+<div class="big-number">
+
+<span>
+cos(φ)
+</span>
+
+<strong id="cosValue">
+1.000
+</strong>
+
+</div>
+
+
+<div class="big-number">
+
+<span>
+sin(φ)
+</span>
+
+<strong id="sinValue">
+0.000
+</strong>
+
+</div>
+
+
+</div>
+
+
+<div class="formula-box"
+     style="margin:18px 0 0;">
+
+
+<div class="formula">
+
+x = r · cos(φ)
+
+</div>
+
+
+<div class="formula">
+
+y = r · sin(φ)
+
+</div>
+
+
+<div class="formula">
+
+ω = Δφ / Δt
+
+</div>
+
+
+<p style="
+color:var(--muted);
+font-size:12px;
+line-height:1.7;
+margin-bottom:0;
+">
+
+Bei einer gleichförmigen Kreisbewegung
+ändert sich der Betrag der Geschwindigkeit
+nicht. Die Richtung des Geschwindigkeitsvektors
+ändert sich jedoch ständig.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     GRAPHS
+===================================================== -->
+
+<div class="section-title">
+
+<h2>
+03 · Bewegungsdiagramme
+</h2>
+
+<p>
+Die Diagramme zeigen die zeitliche Entwicklung der Bewegung.
+</p>
+
+</div>
+
+
+<div class="graph-grid">
+
+
+<div class="panel graph-panel">
+
+<div class="graph-title">
+x(t) · horizontale Position
+</div>
+
+<canvas
+    id="xGraph"
+    class="graph-canvas">
+</canvas>
+
+</div>
+
+
+<div class="panel graph-panel">
+
+<div class="graph-title">
+y(t) · vertikale Position
+</div>
+
+<canvas
+    id="yGraph"
+    class="graph-canvas">
+</canvas>
+
+</div>
+
+
+<div class="panel graph-panel">
+
+<div class="graph-title">
+v(t) · Bahngeschwindigkeit
+</div>
+
+<canvas
+    id="vGraph"
+    class="graph-canvas">
+</canvas>
+
+</div>
+
+
+<div class="panel graph-panel">
+
+<div class="graph-title">
+a<sub>z</sub>(t) · Zentripetalbeschleunigung
+</div>
+
+<canvas
+    id="aGraph"
+    class="graph-canvas">
+</canvas>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     CALCULATOR
+===================================================== -->
+
+<div class="section-title">
+
+<h2>
+04 · Kreisbewegung-Rechner
+</h2>
+
+<p>
+Berechne die wichtigsten Größen der Kreisbewegung.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<div class="calculator-grid">
+
+
+<div class="input-group">
+
+<label>
+Radius r
+<span class="input-unit">m</span>
+</label>
+
+<input
+    id="calcR"
+    type="number"
+    value="2">
+</div>
+
+
+<div class="input-group">
+
+<label>
+Umlaufzeit T
+<span class="input-unit">s</span>
+</label>
+
+<input
+    id="calcT"
+    type="number"
+    value="4">
+</div>
+
+
+<div class="input-group">
+
+<label>
+Masse m
+<span class="input-unit">kg</span>
+</label>
+
+<input
+    id="calcM"
+    type="number"
+    value="5">
+</div>
+
+
+<div
+    class="calc-result"
+    id="calcResult">
+
+<div class="calc-result-title">
+Ergebnis
+</div>
+
+<div
+    class="calc-result-value"
+    id="calcMain">
+Berechnung starten
+</div>
+
+<div
+    id="calcDetails"
+    style="
+    margin-top:12px;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:13px;
+    ">
+</div>
+
+</div>
+
+
+<button
+    class="primary"
+    onclick="calculateAll()"
+    style="grid-column:1/-1;">
+
+Alles berechnen
+
+</button>
+
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     MEASUREMENT TABLE
+===================================================== -->
+
+<div class="section-title">
+
+<h2>
+05 · Messwerttabelle
+</h2>
+
+<p>
+Während der Simulation werden Messwerte aufgezeichnet.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+t / s
+</th>
+
+<th>
+φ / °
+</th>
+
+<th>
+x / m
+</th>
+
+<th>
+y / m
+</th>
+
+<th>
+v / m/s
+</th>
+
+<th>
+a<sub>z</sub> / m/s²
+</th>
+
+<th>
+F<sub>z</sub> / N
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="measurementBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     TASK MODE
+===================================================== -->
+
+<div class="section-title">
+
+<h2>
+06 · Aufgabenmodus
+</h2>
+
+<p>
+Teste dein Verständnis der Kreisbewegung.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<div class="task">
+
+<div
+    class="task-question"
+    id="taskQuestion">
+
+Ein Körper bewegt sich mit einer
+Geschwindigkeit von 8,0 m/s auf einer
+Kreisbahn mit einem Radius von 4,0 m.
+
+Berechne die Zentripetalbeschleunigung.
+
+</div>
+
+
+<div
+    class="task-answer"
+    id="taskAnswer">
+
+<strong>Lösung</strong>
+
+<br><br>
+
+a<sub>z</sub> = v² / r
+
+<br>
+
+a<sub>z</sub> = (8,0 m/s)² / 4,0 m
+
+<br>
+
+a<sub>z</sub> = 64 / 4
+
+<br>
+
+<strong>
+a<sub>z</sub> = 16,0 m/s²
+</strong>
+
+</div>
+
+
+<div class="button-grid">
+
+<button
+    class="primary"
+    onclick="showTaskAnswer()">
+
+Lösung anzeigen
+
+</button>
+
+<button
+    onclick="newTask()">
+
+Neue Aufgabe
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CONCEPTS
+===================================================== -->
+
+<div class="section-title">
+
+<h2>
+07 · Physikalisches Verständnis
+</h2>
+
+<p>
+Was steckt hinter der Kreisbewegung?
+</p>
+
+</div>
+
+
+<div class="concept-grid">
+
+
+<div class="concept-card">
+
+<div class="concept-number">
+01 · GESCHWINDIGKEIT
+</div>
+
+<h3>
+Die Geschwindigkeit ist tangential
+</h3>
+
+<p>
+Der Geschwindigkeitsvektor zeigt immer
+in Richtung der Tangente an die Kreisbahn.
+Er zeigt nicht zum Mittelpunkt.
+</p>
+
+</div>
+
+
+<div class="concept-card">
+
+<div class="concept-number">
+02 · BESCHLEUNIGUNG
+</div>
+
+<h3>
+Die Beschleunigung zeigt nach innen
+</h3>
+
+<p>
+Obwohl der Betrag der Geschwindigkeit
+konstant bleiben kann, ändert sich ihre
+Richtung ständig. Deshalb gibt es eine
+Beschleunigung zum Mittelpunkt.
+</p>
+
+</div>
+
+
+<div class="concept-card">
+
+<div class="concept-number">
+03 · ZENTRIPETALKRAFT
+</div>
+
+<h3>
+Keine neue Kraftart
+</h3>
+
+<p>
+Die Zentripetalkraft ist keine zusätzliche
+Kraft. Sie bezeichnet die resultierende
+Kraft, die zum Mittelpunkt der Kreisbahn
+gerichtet ist.
+</p>
+
+</div>
+
+
+<div class="concept-card">
+
+<div class="concept-number">
+04 · FREQUENZ
+</div>
+
+<h3>
+Wie oft wird die Runde durchlaufen?
+</h3>
+
+<p>
+Die Frequenz gibt an, wie viele vollständige
+Umdrehungen pro Sekunde stattfinden.
+f = 1 / T
+</p>
+
+</div>
+
+
+<div class="concept-card">
+
+<div class="concept-number">
+05 · WINKELGESCHWINDIGKEIT
+</div>
+
+<h3>
+Wie schnell ändert sich der Winkel?
+</h3>
+
+<p>
+Die Winkelgeschwindigkeit beschreibt,
+wie schnell sich der Drehwinkel verändert.
+ω = 2π / T
+</p>
+
+</div>
+
+
+<div class="concept-card">
+
+<div class="concept-number">
+06 · REALITÄT
+</div>
+
+<h3>
+Wo begegnet uns Kreisbewegung?</h3>
+
+<p>
+Kurvenfahrt, Karussell, Satelliten,
+Planetenbewegung, Zentrifugen,
+Waschmaschinen und viele technische Systeme.
+</p>
+
+</div>
+
+
+</div>
+
+
+</main>
+
+
+<!-- =====================================================
+     PRESENTATION MODE
+===================================================== -->
+
+<div
+    class="presentation"
+    id="presentation">
+
+<div class="presentation-inner">
+
+<h2>
+Kreisbewegung
+</h2>
+
+<div class="presentation-formula">
+a<sub>z</sub> = v² / r
+</div>
+
+<div class="presentation-text">
+
+Bei einer gleichförmigen Kreisbewegung
+bleibt der Betrag der Geschwindigkeit konstant.
+
+<br><br>
+
+Aber die Richtung des Geschwindigkeitsvektors
+ändert sich ständig.
+
+<br><br>
+
+Deshalb ist der Körper beschleunigt.
+
+<br><br>
+
+Die Beschleunigung zeigt immer zum Mittelpunkt
+der Kreisbahn.
+
+</div>
+
+<button
+    class="primary"
+    onclick="closePresentation()"
+    style="margin-top:25px;">
+
+Schließen
+
+</button>
+
+</div>
+
+</div>
+
+
+<footer>
+
+S.Michaelis · Interaktives Physiklabor · Kreisbewegung
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const canvas =
+    document.getElementById("circleCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+const unitCanvas =
+    document.getElementById("unitCanvas");
+
+const uctx =
+    unitCanvas.getContext("2d");
+
+
+const xGraph =
+    document.getElementById("xGraph");
+
+const yGraph =
+    document.getElementById("yGraph");
+
+const vGraph =
+    document.getElementById("vGraph");
+
+const aGraph =
+    document.getElementById("aGraph");
+
+
+/* =====================================================
+   SIMULATION STATE
+===================================================== */
+
+let running = false;
+
+let time = 0;
+
+let trace = [];
+
+let measurements = [];
+
+let lastFrame = performance.now();
+
+
+/* =====================================================
+   PHYSICS
+===================================================== */
+
+function getPhysics() {
+
+    const m =
+        Math.max(
+            0.01,
+            parseFloat(
+                document.getElementById("mass").value
+            ) || 1
+        );
+
+    const r =
+        Math.max(
+            0.1,
+            parseFloat(
+                document.getElementById("radius").value
+            ) || 1
+        );
+
+    const T =
+        Math.max(
+            0.1,
+            parseFloat(
+                document.getElementById("period").value
+            ) || 1
+        );
+
+    const startDeg =
+        parseFloat(
+            document.getElementById("angle").value
+        ) || 0;
+
+    const phi0 =
+        startDeg * Math.PI / 180;
+
+    const f =
+        1 / T;
+
+    const omega =
+        2 * Math.PI / T;
+
+    const v =
+        omega * r;
+
+    const az =
+        v * v / r;
+
+    const Fz =
+        m * az;
+
+    return {
+        m,
+        r,
+        T,
+        startDeg,
+        phi0,
+        f,
+        omega,
+        v,
+        az,
+        Fz
+    };
+}
+
+
+/* =====================================================
+   CANVAS RESIZE
+===================================================== */
+
+function resizeCanvas(canvas) {
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+    canvas.width =
+        Math.max(1, Math.round(rect.width * dpr));
+
+    canvas.height =
+        Math.max(1, Math.round(rect.height * dpr));
+
+    const context =
+        canvas.getContext("2d");
+
+    context.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+    return {
+        width: rect.width,
+        height: rect.height
+    };
+}
+
+
+/* =====================================================
+   MAIN SIMULATION DRAWING
+===================================================== */
+
+function drawSimulation() {
+
+    const size =
+        resizeCanvas(canvas);
+
+    const width =
+        size.width;
+
+    const height =
+        size.height;
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+    const p =
+        getPhysics();
+
+    const cx =
+        width / 2;
+
+    const cy =
+        height / 2;
+
+    const displayRadius =
+        Math.min(width, height) * .32;
+
+
+    /* GRID */
+
+    ctx.strokeStyle =
+        "rgba(130,180,210,.08)";
+
+    ctx.lineWidth = 1;
+
+    for (
+        let x = cx % 40;
+        x < width;
+        x += 40
+    ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+
+        ctx.stroke();
+    }
+
+    for (
+        let y = cy % 40;
+        y < height;
+        y += 40
+    ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+
+        ctx.stroke();
+    }
+
+
+    /* AXES */
+
+    ctx.strokeStyle =
+        "rgba(190,220,240,.28)";
+
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(20, cy);
+    ctx.lineTo(width - 20, cy);
+
+    ctx.moveTo(cx, 20);
+    ctx.lineTo(cx, height - 20);
+
+    ctx.stroke();
+
+
+    /* CIRCLE */
+
+    ctx.strokeStyle =
+        "rgba(34,211,238,.30)";
+
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy,
+        displayRadius,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.stroke();
+
+
+    /* TRACE */
+
+    if (trace.length > 1) {
+
+        ctx.strokeStyle =
+            "rgba(34,211,238,.22)";
+
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+
+        trace.forEach(
+            (point, index) => {
+
+                if (index === 0) {
+
+                    ctx.moveTo(
+                        point.x,
+                        point.y
+                    );
+
+                } else {
+
+                    ctx.lineTo(
+                        point.x,
+                        point.y
+                    );
+                }
+
+            }
+        );
+
+        ctx.stroke();
+    }
+
+
+    const phi =
+        p.phi0 +
+        p.omega * time;
+
+
+    const x =
+        cx +
+        displayRadius * Math.cos(phi);
+
+    const y =
+        cy -
+        displayRadius * Math.sin(phi);
+
+
+    /* RADIUS */
+
+    ctx.strokeStyle =
+        "rgba(255,255,255,.28)";
+
+    ctx.lineWidth = 1.5;
+
+    ctx.setLineDash([6,5]);
+
+    ctx.beginPath();
+
+    ctx.moveTo(cx, cy);
+
+    ctx.lineTo(x, y);
+
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+
+
+    /* TANGENTIAL VECTOR */
+
+    const tangentScale =
+        42;
+
+    const tx =
+        -Math.sin(phi) * tangentScale;
+
+    const ty =
+        -Math.cos(phi) * tangentScale;
+
+    drawArrow(
+        ctx,
+        x,
+        y,
+        x + tx,
+        y + ty,
+        "#fbbf24",
+        3
+    );
+
+
+    /* CENTRIPETAL VECTOR */
+
+    const vectorScale =
+        70;
+
+    const ax =
+        -Math.cos(phi) * vectorScale;
+
+    const ay =
+        Math.sin(phi) * vectorScale;
+
+    drawArrow(
+        ctx,
+        x,
+        y,
+        x + ax,
+        y + ay,
+        "#fb7185",
+        3
+    );
+
+
+    /* PARTICLE */
+
+    ctx.shadowColor =
+        "#22d3ee";
+
+    ctx.shadowBlur =
+        25;
+
+    ctx.fillStyle =
+        "#22d3ee";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y,
+        10,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+
+
+    /* CENTER */
+
+    ctx.fillStyle =
+        "#fbbf24";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy,
+        5,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /* LABELS */
+
+    ctx.font =
+        "bold 12px Arial";
+
+    ctx.fillStyle =
+        "#fbbf24";
+
+    ctx.fillText(
+        "v",
+        x + tx + 8,
+        y + ty
+    );
+
+    ctx.fillStyle =
+        "#fb7185";
+
+    ctx.fillText(
+        "aₙ",
+        x + ax + 8,
+        y + ay
+    );
+
+    ctx.fillStyle =
+        "#8ea6bd";
+
+    ctx.fillText(
+        "r",
+        (cx + x) / 2 + 5,
+        (cy + y) / 2
+    );
+
+    ctx.fillStyle =
+        "#fbbf24";
+
+    ctx.fillText(
+        "M",
+        cx + 9,
+        cy - 8
+    );
+}
+
+
+/* =====================================================
+   ARROW
+===================================================== */
+
+function drawArrow(
+    context,
+    x1,
+    y1,
+    x2,
+    y2,
+    color,
+    width
+) {
+
+    const angle =
+        Math.atan2(
+            y2 - y1,
+            x2 - x1
+        );
+
+    const head =
+        9;
+
+    context.strokeStyle =
+        color;
+
+    context.fillStyle =
+        color;
+
+    context.lineWidth =
+        width;
+
+    context.beginPath();
+
+    context.moveTo(x1, y1);
+
+    context.lineTo(x2, y2);
+
+    context.stroke();
+
+
+    context.beginPath();
+
+    context.moveTo(
+        x2,
+        y2
+    );
+
+    context.lineTo(
+        x2 -
+        head * Math.cos(angle - Math.PI / 6),
+        y2 -
+        head * Math.sin(angle - Math.PI / 6)
+    );
+
+    context.lineTo(
+        x2 -
+        head * Math.cos(angle + Math.PI / 6),
+        y2 -
+        head * Math.sin(angle + Math.PI / 6)
+    );
+
+    context.closePath();
+
+    context.fill();
+}
+
+
+/* =====================================================
+   UNIT CIRCLE
+===================================================== */
+
+function drawUnitCircle() {
+
+    const size =
+        resizeCanvas(unitCanvas);
+
+    const width =
+        size.width;
+
+    const height =
+        size.height;
+
+    uctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+    const cx =
+        width / 2;
+
+    const cy =
+        height / 2;
+
+    const radius =
+        Math.min(width, height) * .32;
+
+    const p =
+        getPhysics();
+
+    const phi =
+        p.phi0 +
+        p.omega * time;
+
+
+    /* GRID */
+
+    uctx.strokeStyle =
+        "rgba(150,200,220,.08)";
+
+    uctx.lineWidth = 1;
+
+    for (
+        let x = cx % 30;
+        x < width;
+        x += 30
+    ) {
+
+        uctx.beginPath();
+
+        uctx.moveTo(x,0);
+        uctx.lineTo(x,height);
+
+        uctx.stroke();
+    }
+
+    for (
+        let y = cy % 30;
+        y < height;
+        y += 30
+    ) {
+
+        uctx.beginPath();
+
+        uctx.moveTo(0,y);
+        uctx.lineTo(width,y);
+
+        uctx.stroke();
+    }
+
+
+    /* AXES */
+
+    uctx.strokeStyle =
+        "rgba(220,240,250,.4)";
+
+    uctx.lineWidth = 1.5;
+
+    uctx.beginPath();
+
+    uctx.moveTo(20,cy);
+    uctx.lineTo(width-20,cy);
+
+    uctx.moveTo(cx,20);
+    uctx.lineTo(cx,height-20);
+
+    uctx.stroke();
+
+
+    /* CIRCLE */
+
+    uctx.strokeStyle =
+        "rgba(34,211,238,.45)";
+
+    uctx.lineWidth = 2;
+
+    uctx.beginPath();
+
+    uctx.arc(
+        cx,
+        cy,
+        radius,
+        0,
+        Math.PI * 2
+    );
+
+    uctx.stroke();
+
+
+    /* POINT */
+
+    const px =
+        cx +
+        radius *
+        Math.cos(phi);
+
+    const py =
+        cy -
+        radius *
+        Math.sin(phi);
+
+
+    /* RADIUS */
+
+    uctx.strokeStyle =
+        "rgba(255,255,255,.28)";
+
+    uctx.setLineDash([5,5]);
+
+    uctx.beginPath();
+
+    uctx.moveTo(cx,cy);
+    uctx.lineTo(px,py);
+
+    uctx.stroke();
+
+    uctx.setLineDash([]);
+
+
+    /* X PROJECTION */
+
+    uctx.strokeStyle =
+        "#34d399";
+
+    uctx.lineWidth = 2;
+
+    uctx.beginPath();
+
+    uctx.moveTo(px,py);
+    uctx.lineTo(px,cy);
+
+    uctx.stroke();
+
+
+    /* Y PROJECTION */
+
+    uctx.strokeStyle =
+        "#fbbf24";
+
+    uctx.beginPath();
+
+    uctx.moveTo(px,py);
+    uctx.lineTo(cx,py);
+
+    uctx.stroke();
+
+
+    /* POINT */
+
+    uctx.shadowColor =
+        "#22d3ee";
+
+    uctx.shadowBlur =
+        20;
+
+    uctx.fillStyle =
+        "#22d3ee";
+
+    uctx.beginPath();
+
+    uctx.arc(
+        px,
+        py,
+        9,
+        0,
+        Math.PI * 2
+    );
+
+    uctx.fill();
+
+    uctx.shadowBlur = 0;
+
+
+    /* ANGLE ARC */
+
+    uctx.strokeStyle =
+        "#a78bfa";
+
+    uctx.lineWidth = 3;
+
+    uctx.beginPath();
+
+    uctx.arc(
+        cx,
+        cy,
+        radius * .27,
+        0,
+        -phi,
+        phi > 0
+    );
+
+    uctx.stroke();
+
+
+    /* LABELS */
+
+    uctx.font =
+        "bold 12px Arial";
+
+    uctx.fillStyle =
+        "#8ea6bd";
+
+    uctx.fillText(
+        "x",
+        width - 28,
+        cy - 8
+    );
+
+    uctx.fillText(
+        "y",
+        cx + 8,
+        27
+    );
+
+    uctx.fillStyle =
+        "#34d399";
+
+    uctx.fillText(
+        "cos(φ)",
+        px + 8,
+        cy + 18
+    );
+
+    uctx.fillStyle =
+        "#fbbf24";
+
+    uctx.fillText(
+        "sin(φ)",
+        cx + 8,
+        py - 8
+    );
+
+    uctx.fillStyle =
+        "#a78bfa";
+
+    uctx.fillText(
+        "φ",
+        cx + 20,
+        cy - 10
+    );
+}
+
+
+/* =====================================================
+   GRAPHS
+===================================================== */
+
+function drawGraph(
+    canvasElement,
+    data,
+    color,
+    label,
+    minY,
+    maxY
+) {
+
+    const size =
+        resizeCanvas(canvasElement);
+
+    const context =
+        canvasElement.getContext("2d");
+
+    const width =
+        size.width;
+
+    const height =
+        size.height;
+
+    context.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    const left = 42;
+    const right = 12;
+    const top = 15;
+    const bottom = 30;
+
+
+    const plotW =
+        width - left - right;
+
+    const plotH =
+        height - top - bottom;
+
+
+    /* GRID */
+
+    context.strokeStyle =
+        "rgba(150,190,210,.08)";
+
+    context.lineWidth = 1;
+
+    for (
+        let i = 0;
+        i <= 5;
+        i++
+    ) {
+
+        const y =
+            top +
+            plotH * i / 5;
+
+        context.beginPath();
+
+        context.moveTo(left,y);
+
+        context.lineTo(
+            width-right,
+            y
+        );
+
+        context.stroke();
+    }
+
+
+    /* AXIS */
+
+    context.strokeStyle =
+        "rgba(190,220,240,.2)";
+
+    context.beginPath();
+
+    context.moveTo(left,top);
+    context.lineTo(left,height-bottom);
+
+    context.lineTo(width-right,height-bottom);
+
+    context.stroke();
+
+
+    if (data.length < 2)
+        return;
+
+
+    const visible =
+        data.slice(
+            Math.max(0, data.length - 240)
+        );
+
+
+    const minX =
+        visible[0].t;
+
+    const maxX =
+        Math.max(
+            visible[visible.length-1].t,
+            minX + .01
+        );
+
+
+    context.strokeStyle =
+        color;
+
+    context.lineWidth = 2;
+
+    context.beginPath();
+
+
+    visible.forEach(
+        (point,index) => {
+
+            const x =
+                left +
+                (
+                    (point.t-minX) /
+                    (maxX-minX)
+                ) *
+                plotW;
+
+            const value =
+                point.value;
+
+            const y =
+                top +
+                (
+                    1 -
+                    (
+                        value-minY
+                    ) /
+                    (maxY-minY)
+                ) *
+                plotH;
+
+
+            if (index === 0)
+                context.moveTo(x,y);
+            else
+                context.lineTo(x,y);
+
+        }
+    );
+
+
+    context.stroke();
+
+
+    /* LABEL */
+
+    context.fillStyle =
+        color;
+
+    context.font =
+        "bold 11px Arial";
+
+    context.fillText(
+        label,
+        left + 7,
+        top + 14
+    );
+
+
+    /* ZERO LINE */
+
+    if (
+        minY < 0 &&
+        maxY > 0
+    ) {
+
+        const zeroY =
+            top +
+            (
+                1 -
+                (0-minY) /
+                (maxY-minY)
+            ) *
+            plotH;
+
+        context.strokeStyle =
+            "rgba(255,255,255,.16)";
+
+        context.beginPath();
+
+        context.moveTo(
+            left,
+            zeroY
+        );
+
+        context.lineTo(
+            width-right,
+            zeroY
+        );
+
+        context.stroke();
+    }
+}
+
+
+/* =====================================================
+   UPDATE UI
+===================================================== */
+
+function updateUI() {
+
+    const p =
+        getPhysics();
+
+    const phi =
+        p.phi0 +
+        p.omega * time;
+
+    const degrees =
+        (
+            phi * 180 / Math.PI
+        ) % 360;
+
+    const positiveDegrees =
+        degrees < 0
+            ? degrees + 360
+            : degrees;
+
+
+    document.getElementById(
+        "timeLive"
+    ).textContent =
+        time.toFixed(2) + " s";
+
+
+    document.getElementById(
+        "angleLive"
+    ).textContent =
+        positiveDegrees.toFixed(2) + "°";
+
+
+    document.getElementById(
+        "turnsLive"
+    ).textContent =
+        (
+            phi / (2*Math.PI)
+        ).toFixed(2);
+
+
+    document.getElementById(
+        "vLive"
+    ).textContent =
+        p.v.toFixed(2);
+
+
+    document.getElementById(
+        "omegaLive"
+    ).textContent =
+        p.omega.toFixed(2);
+
+
+    document.getElementById(
+        "azLive"
+    ).textContent =
+        p.az.toFixed(2);
+
+
+    document.getElementById(
+        "fzLive"
+    ).textContent =
+        p.Fz.toFixed(2);
+
+
+    document.getElementById(
+        "phiUnit"
+    ).textContent =
+        positiveDegrees.toFixed(2) + "°";
+
+
+    document.getElementById(
+        "phiRad"
+    ).textContent =
+        (
+            phi % (2*Math.PI)
+        ).toFixed(3) + " rad";
+
+
+    document.getElementById(
+        "cosValue"
+    ).textContent =
+        Math.cos(phi).toFixed(3);
+
+
+    document.getElementById(
+        "sinValue"
+    ).textContent =
+        Math.sin(phi).toFixed(3);
+
+
+    document.getElementById(
+        "speedValue"
+    ).textContent =
+        parseFloat(
+            document.getElementById("speed").value
+        ).toFixed(2);
+
+
+    const x =
+        p.r * Math.cos(phi);
+
+    const y =
+        p.r * Math.sin(phi);
+
+
+    const dataX =
+        trace.map(
+            item => ({
+                t: item.t,
+                value: item.x
+            })
+        );
+
+    const dataY =
+        trace.map(
+            item => ({
+                t: item.t,
+                value: item.y
+            })
+        );
+
+    const dataV =
+        trace.map(
+            item => ({
+                t: item.t,
+                value: item.v
+            })
+        );
+
+    const dataA =
+        trace.map(
+            item => ({
+                t: item.t,
+                value: item.az
+            })
+        );
+
+
+    const range =
+        p.r * 1.25;
+
+
+    drawGraph(
+        xGraph,
+        dataX,
+        "#34d399",
+        "x",
+        -range,
+        range
+    );
+
+
+    drawGraph(
+        yGraph,
+        dataY,
+        "#fbbf24",
+        "y",
+        -range,
+        range
+    );
+
+
+    drawGraph(
+        vGraph,
+        dataV,
+        "#22d3ee",
+        "v",
+        0,
+        Math.max(
+            1,
+            p.v * 1.2
+        )
+    );
+
+
+    drawGraph(
+        aGraph,
+        dataA,
+        "#fb7185",
+        "a_z",
+        0,
+        Math.max(
+            1,
+            p.az * 1.2
+        )
+    );
+
+
+    updateMeasurementTable();
+
+}
+
+
+/* =====================================================
+   MEASUREMENT TABLE
+===================================================== */
+
+function updateMeasurementTable() {
+
+    const body =
+        document.getElementById(
+            "measurementBody"
+        );
+
+    body.innerHTML = "";
+
+    const recent =
+        measurements.slice(-10);
+
+
+    recent.forEach(
+        row => {
+
+            const tr =
+                document.createElement("tr");
+
+            tr.innerHTML = `
+
+                <td>${row.t.toFixed(2)}</td>
+
+                <td>${row.phi.toFixed(1)}</td>
+
+                <td>${row.x.toFixed(2)}</td>
+
+                <td>${row.y.toFixed(2)}</td>
+
+                <td>${row.v.toFixed(2)}</td>
+
+                <td>${row.az.toFixed(2)}</td>
+
+                <td>${row.Fz.toFixed(2)}</td>
+
+            `;
+
+            body.appendChild(tr);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RECORD
+===================================================== */
+
+function recordPoint() {
+
+    const p =
+        getPhysics();
+
+    const phi =
+        p.phi0 +
+        p.omega * time;
+
+
+    const x =
+        p.r * Math.cos(phi);
+
+    const y =
+        p.r * Math.sin(phi);
+
+
+    trace.push({
+
+        t: time,
+
+        x,
+
+        y,
+
+        v: p.v,
+
+        az: p.az
+
+    });
+
+
+    if (trace.length > 500)
+        trace.shift();
+
+
+    measurements.push({
+
+        t: time,
+
+        phi:
+            (
+                phi * 180 / Math.PI
+            ) % 360,
+
+        x,
+
+        y,
+
+        v: p.v,
+
+        az: p.az,
+
+        Fz: p.Fz
+
+    });
+
+
+    if (measurements.length > 100)
+        measurements.shift();
+
+}
+
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+function animationLoop(now) {
+
+    const dt =
+        Math.min(
+            0.05,
+            (now - lastFrame) / 1000
+        );
+
+    lastFrame = now;
+
+
+    if (running) {
+
+        const speed =
+            parseFloat(
+                document.getElementById(
+                    "speed"
+                ).value
+            ) || 1;
+
+
+        time +=
+            dt * speed;
+
+
+        const p =
+            getPhysics();
+
+
+        const sampleInterval =
+            0.05;
+
+
+        if (
+            trace.length === 0 ||
+            time -
+            trace[trace.length-1].t
+            >= sampleInterval
+        ) {
+
+            recordPoint();
+
+        }
+
+
+        updateUI();
+        drawSimulation();
+        drawUnitCircle();
+
+    }
+
+
+    requestAnimationFrame(
+        animationLoop
+    );
+}
+
+
+/* =====================================================
+   CONTROLS
+===================================================== */
+
+function startSimulation() {
+
+    running = true;
+
+    document.getElementById(
+        "statusLive"
+    ).textContent =
+        "LÄUFT";
+
+    document.getElementById(
+        "statusLive"
+    ).style.color =
+        "#34d399";
+}
+
+
+function pauseSimulation() {
+
+    running = false;
+
+    document.getElementById(
+        "statusLive"
+    ).textContent =
+        "PAUSIERT";
+
+    document.getElementById(
+        "statusLive"
+    ).style.color =
+        "#fbbf24";
+}
+
+
+function stepSimulation() {
+
+    running = false;
+
+    const p =
+        getPhysics();
+
+    time +=
+        p.T / 60;
+
+    recordPoint();
+
+    updateUI();
+
+    drawSimulation();
+
+    drawUnitCircle();
+
+    document.getElementById(
+        "statusLive"
+    ).textContent =
+        "SCHRITT";
+}
+
+
+function resetSimulation() {
+
+    running = false;
+
+    time = 0;
+
+    trace = [];
+
+    measurements = [];
+
+    recordPoint();
+
+    updateUI();
+
+    drawSimulation();
+
+    drawUnitCircle();
+
+    document.getElementById(
+        "statusLive"
+    ).textContent =
+        "BEREIT";
+
+    document.getElementById(
+        "statusLive"
+    ).style.color =
+        "#34d399";
+}
+
+
+function clearTrace() {
+
+    trace = [];
+
+    measurements = [];
+
+    recordPoint();
+
+    updateUI();
+}
+
+
+/* =====================================================
+   CALCULATOR
+===================================================== */
+
+function calculateAll() {
+
+    const r =
+        parseFloat(
+            document.getElementById(
+                "calcR"
+            ).value
+        );
+
+    const T =
+        parseFloat(
+            document.getElementById(
+                "calcT"
+            ).value
+        );
+
+    const m =
+        parseFloat(
+            document.getElementById(
+                "calcM"
+            ).value
+        );
+
+
+    if (
+        !Number.isFinite(r) ||
+        !Number.isFinite(T) ||
+        !Number.isFinite(m) ||
+        r <= 0 ||
+        T <= 0 ||
+        m <= 0
+    ) {
+
+        document.getElementById(
+            "calcMain"
+        ).textContent =
+            "Bitte gültige Werte eingeben.";
+
+        return;
+    }
+
+
+    const f =
+        1 / T;
+
+    const omega =
+        2 * Math.PI / T;
+
+    const v =
+        omega * r;
+
+    const az =
+        v * v / r;
+
+    const Fz =
+        m * az;
+
+
+    document.getElementById(
+        "calcMain"
+    ).textContent =
+        `Fz = ${Fz.toFixed(2)} N`;
+
+
+    document.getElementById(
+        "calcDetails"
+    ).innerHTML = `
+
+        f = ${f.toFixed(3)} Hz<br>
+
+        ω = ${omega.toFixed(3)} rad/s<br>
+
+        v = ${v.toFixed(3)} m/s<br>
+
+        a<sub>z</sub> = ${az.toFixed(3)} m/s²<br>
+
+        F<sub>z</sub> = ${Fz.toFixed(3)} N
+
+    `;
+}
+
+
+/* =====================================================
+   TASKS
+===================================================== */
+
+const tasks = [
+
+    {
+        q:
+        "Ein Körper bewegt sich mit einer Geschwindigkeit von 8,0 m/s auf einer Kreisbahn mit einem Radius von 4,0 m. Berechne die Zentripetalbeschleunigung.",
+
+        a:
+        "a_z = v² / r = (8,0 m/s)² / 4,0 m = <strong>16,0 m/s²</strong>."
+    },
+
+    {
+        q:
+        "Ein Körper benötigt für eine vollständige Umdrehung 2,0 s. Berechne die Frequenz und die Winkelgeschwindigkeit.",
+
+        a:
+        "f = 1/T = <strong>0,50 Hz</strong><br>ω = 2π/T = <strong>3,14 rad/s</strong>."
+    },
+
+    {
+        q:
+        "Ein Körper bewegt sich mit r = 3,0 m und T = 6,0 s. Berechne seine Bahngeschwindigkeit.",
+
+        a:
+        "v = 2πr/T = 2π · 3,0 / 6,0 = <strong>3,14 m/s</strong>."
+    },
+
+    {
+        q:
+        "Ein Körper mit m = 2,0 kg bewegt sich mit v = 5,0 m/s auf einer Kreisbahn mit r = 2,5 m. Berechne die Zentripetalkraft.",
+
+        a:
+        "F_z = mv²/r = 2,0 · 25 / 2,5 = <strong>20 N</strong>."
+    },
+
+    {
+        q:
+        "Die Winkelgeschwindigkeit beträgt 4,0 rad/s und der Radius 2,0 m. Berechne die Zentripetalbeschleunigung.",
+
+        a:
+        "a_z = ω²r = 4,0² · 2,0 = <strong>32 m/s²</strong>."
+    }
+
+];
+
+
+let currentTask = 0;
+
+
+function showTaskAnswer() {
+
+    document.getElementById(
+        "taskAnswer"
+    ).classList.add("show");
+
+}
+
+
+function newTask() {
+
+    currentTask =
+        (
+            currentTask + 1
+        ) %
+        tasks.length;
+
+
+    document.getElementById(
+        "taskQuestion"
+    ).textContent =
+        tasks[currentTask].q;
+
+
+    document.getElementById(
+        "taskAnswer"
+    ).innerHTML =
+        "<strong>Lösung</strong><br><br>" +
+        tasks[currentTask].a;
+
+
+    document.getElementById(
+        "taskAnswer"
+    ).classList.remove("show");
+
+}
+
+
+/* =====================================================
+   PRESENTATION
+===================================================== */
+
+function openPresentation() {
+
+    document.getElementById(
+        "presentation"
+    ).classList.add("show");
+
+}
+
+
+function closePresentation() {
+
+    document.getElementById(
+        "presentation"
+    ).classList.remove("show");
+
+}
+
+
+/* =====================================================
+   KEYBOARD
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.code === "Space"
+        ) {
+
+            event.preventDefault();
+
+            if (running)
+                pauseSimulation();
+            else
+                startSimulation();
+
+        }
+
+
+        if (
+            event.key.toLowerCase() === "r"
+        ) {
+
+            resetSimulation();
+
+        }
+
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closePresentation();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   INPUT CHANGE
+===================================================== */
+
+[
+    "mass",
+    "radius",
+    "period",
+    "angle"
+].forEach(
+    id => {
+
+        document.getElementById(id)
+            .addEventListener(
+                "input",
+                () => {
+
+                    updateUI();
+
+                    drawSimulation();
+
+                    drawUnitCircle();
+
+                }
+            );
+
+    }
+);
+
+
+document.getElementById(
+    "speed"
+).addEventListener(
+    "input",
+    updateUI
+);
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        drawSimulation();
+
+        drawUnitCircle();
+
+        updateUI();
+
+    }
+);
+
+
+recordPoint();
+
+updateUI();
+
+drawSimulation();
+
+drawUnitCircle();
+
+calculateAll();
+
+requestAnimationFrame(
+    animationLoop
+);
+
+</script>
+
+</body>
+</html>
