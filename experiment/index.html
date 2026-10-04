@@ -1,8 +1,4 @@
-cd ~/physiklabor1 || exit 1
 
-mkdir -p experiment
-
-cat > experiment/index.html <<'EOF'
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -1947,20 +1943,5 @@ requestAnimationFrame(loop);
 
 </body>
 </html>
-EOF
 
-git add experiment/index.html
-git commit -m "Add real-world interactive experiment scenes"
-git push
 
-echo
-echo "=============================================="
-echo " Experiment-Labor wurde aktualisiert."
-echo "=============================================="
-echo
-echo "GitHub Pages:"
-echo "https://smichaelis46.github.io/physiklabor1/experiment/"
-echo
-echo "Falls GitHub Pages noch die alte Version zeigt:"
-echo "Strg+F5 im Browser drücken."
-echo
